@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/services.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -85,17 +86,13 @@ class _LoginPageState extends State<LoginPage>
                     image:  new AssetImage('assets/img/login_logo.png')
                   ),
                 ),
-
-                Padding(
-                  padding: EdgeInsets.only(top: 30.0),
-                  child:   _buildMenuBar(context),
-                ),
                 
                 Expanded(
                   flex: 2,
 
                   child: PageView(
                     controller: _pageController,
+                    scrollDirection: Axis.horizontal,
 
                     onPageChanged: (i) {
                       if (i == 0) {
@@ -126,6 +123,11 @@ class _LoginPageState extends State<LoginPage>
                     ],
 
                   ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 30.0),
+                  child:   _buildMenuBar(context),
                 ),
 
               ],
