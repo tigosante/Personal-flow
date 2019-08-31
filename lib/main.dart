@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Projeto Integrador I',
 
       theme: new ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.grey,
       ),
 
       home: new LoginPage(),

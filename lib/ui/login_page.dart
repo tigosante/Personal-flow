@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage>
 
   PageController _pageController;
 
-  Color left  = Colors.black;
+  Color left  = Colors.white;
   Color right = Colors.white;
 
   @override
@@ -47,15 +47,10 @@ class _LoginPageState extends State<LoginPage>
       key: _scaffoldKey,
 
       body: NotificationListener<OverscrollIndicatorNotification>(
-        // onNotification: (overscroll) {
-        //   overscroll.disallowGlow();
-        // },
-
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(50.0),
             width:   MediaQuery.of(context).size.width,
-            height:  MediaQuery.of(context).size.height >= 775.0 ? MediaQuery.of(context).size.height : 775.0,
+            height:  MediaQuery.of(context).size.height >= 700.0 ? MediaQuery.of(context).size.height : 700.0,
 
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
@@ -67,7 +62,6 @@ class _LoginPageState extends State<LoginPage>
                 begin:    const FractionalOffset(0.0, 0.0),
                 end:      const FractionalOffset(1.0, 1.0),
                 stops:    [0.0, 1.0],
-                tileMode: TileMode.clamp
               ),
             ),
 
@@ -85,33 +79,29 @@ class _LoginPageState extends State<LoginPage>
                     image:  new AssetImage('assets/img/login_logo.png')
                   ),
                 ),
-
-                Padding(
-                  padding: EdgeInsets.only(top: 30.0),
-                  child:   _buildMenuBar(context),
-                ),
                 
                 Expanded(
                   flex: 2,
 
                   child: PageView(
                     controller: _pageController,
+                    scrollDirection: Axis.horizontal,
 
-                    onPageChanged: (i) {
-                      if (i == 0) {
-                        setState(() {
-                          right = Colors.white;
-                          left  = Colors.black;
-                        });
+                    // onPageChanged: (i) {
+                    //   if (i == 0) {
+                    //     setState(() {
+                    //       right = Colors.white;
+                    //       left  = Colors.black;
+                    //     });
 
-                      } else if (i == 1) {
-                        setState(() {
-                          right = Colors.black;
-                          left  = Colors.white;
-                        });
+                    //   } else if (i == 1) {
+                    //     setState(() {
+                    //       right = Colors.black;
+                    //       left  = Colors.white;
+                    //     });
 
-                      }
-                    },
+                    //   }
+                    // },
 
                     children: <Widget>[
                       new ConstrainedBox(
@@ -126,6 +116,11 @@ class _LoginPageState extends State<LoginPage>
                     ],
 
                   ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(30.0),
+                  child:   _buildMenuBar(context),
                 ),
 
               ],
@@ -210,16 +205,14 @@ class _LoginPageState extends State<LoginPage>
           children: <Widget>[
             Expanded(
               child: FlatButton(
-                splashColor:    Colors.transparent,
-                highlightColor: Colors.transparent,
                 onPressed:      _onSignInButtonPress,
 
                 child: Text(
                   "Existing",
 
                   style: TextStyle(
-                    color:      left,
-                    fontSize:    16.0,
+                    color:      Colors.white,
+                    fontSize:   16.0,
                     fontFamily: "WorkSansSemiBold"
                   ),
                 ),
@@ -229,21 +222,19 @@ class _LoginPageState extends State<LoginPage>
 
             //Container(
             //   height: 33.0,
-            //   width: 1.0,
-            //   color: Colors.white
+            //   width:  1.0,
+            //   color:  Colors.white
             // ),
 
             Expanded(
               child: FlatButton(
-                splashColor:    Colors.transparent,
-                highlightColor: Colors.transparent,
                 onPressed:      _onSignUpButtonPress,
 
                 child: Text(
                   "New",
 
                   style: TextStyle(
-                    color:      right,
+                    color:      Colors.white,
                     fontSize:   16.0,
                     fontFamily: "WorkSansSemiBold"
                   ),
@@ -276,11 +267,11 @@ class _LoginPageState extends State<LoginPage>
                 color:     Colors.white,
 
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
 
                 child: Container(
-                  width:  300.0,
+                  width:  500.0,
                   height: 190.0,
 
                   child: Column(
@@ -325,17 +316,17 @@ class _LoginPageState extends State<LoginPage>
                       ),
 
                       Container(
-                        width:  250.0,
+                        width:  425.0,
                         height: 1.0,
                         color:  Colors.grey[400],
                       ),
 
                       Padding(
                         padding: EdgeInsets.only(
-                          top: 20.0,
+                          top:    20.0,
                           bottom: 20.0,
-                          left: 25.0,
-                          right: 25.0,
+                          left:   25.0,
+                          right:  25.0,
                         ),
 
                         child: TextField(
@@ -362,7 +353,7 @@ class _LoginPageState extends State<LoginPage>
 
                             hintStyle: TextStyle(
                               fontFamily: "WorkSansSemiBold",
-                              fontSize: 17.0
+                              fontSize:   17.0
                             ),
 
                             suffixIcon: GestureDetector(
@@ -370,7 +361,7 @@ class _LoginPageState extends State<LoginPage>
 
                               child: Icon(
                                 _obscureTextLogin ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
-                                size: 15.0,
+                                size:  15.0,
                                 color: Colors.black,
                               ),
                             ),
@@ -392,40 +383,14 @@ class _LoginPageState extends State<LoginPage>
                   borderRadius: BorderRadius.all(
                     Radius.circular(5.0),
                   ),
-
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color:      Theme.Colors.loginGradientStart,
-                      offset:     Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-
-                    BoxShadow(
-                      color:      Theme.Colors.loginGradientEnd,
-                      offset:     Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                  ],
-
-                  gradient: new LinearGradient(
-                    colors: [
-                      Theme.Colors.loginGradientEnd,
-                      Theme.Colors.loginGradientStart
-                    ],
-
-                    begin:    const FractionalOffset(0.2, 0.2),
-                    end:      const FractionalOffset(1.0, 1.0),
-                    stops:    [0.0, 1.0],
-                    tileMode: TileMode.clamp
-                  ),
                 ),
 
                 child: MaterialButton(
                   highlightColor: Colors.transparent,
-                  splashColor: Theme.Colors.loginGradientEnd,
+                  color:          Colors.amber,
 
                   shape: RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(5.0)
+                    borderRadius: new BorderRadius.circular(30.0)
                   ),
 
                   child: Padding(
@@ -620,12 +585,12 @@ class _LoginPageState extends State<LoginPage>
               Card(
                 elevation: 2.0,
                 color:     Colors.white,
-                shape:      RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+                shape:     RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
 
                 child: Container(
-                  width:  300.0,
+                  width:  500.0,
                   height: 360.0,
 
                   child: Column(
@@ -670,7 +635,7 @@ class _LoginPageState extends State<LoginPage>
                       ),
 
                       Container(
-                        width:  250.0,
+                        width:  425.0,
                         height: 1.0,
                         color:  Colors.grey[400],
                       ),
@@ -714,17 +679,17 @@ class _LoginPageState extends State<LoginPage>
                       ),
 
                       Container(
-                        width:  250.0,
+                        width:  425.0,
                         height: 1.0,
                         color:  Colors.grey[400],
                       ),
 
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 20.0,
+                            top:    20.0,
                             bottom: 20.0,
-                            left: 25.0,
-                            right: 25.0
+                            left:   25.0,
+                            right:  25.0
                           ),
 
                         child: TextField(
@@ -767,7 +732,7 @@ class _LoginPageState extends State<LoginPage>
                       ),
 
                       Container(
-                        width:  250.0,
+                        width:  425.0,
                         height: 1.0,
                         color:  Colors.grey[400],
                       ),
@@ -831,40 +796,14 @@ class _LoginPageState extends State<LoginPage>
 
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5.0)),
-
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                      color:      Theme.Colors.loginGradientStart,
-                      offset:     Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-
-                    BoxShadow(
-                      color:      Theme.Colors.loginGradientEnd,
-                      offset:     Offset(1.0, 6.0),
-                      blurRadius: 20.0,
-                    ),
-                  ],
-
-                  gradient: new LinearGradient(
-                    colors: [
-                      Theme.Colors.loginGradientEnd,
-                      Theme.Colors.loginGradientStart
-                    ],
-
-                    begin:    const FractionalOffset(0.2, 0.2),
-                    end:      const FractionalOffset(1.0, 1.0),
-                    stops:    [0.0, 1.0],
-                    tileMode: TileMode.clamp
-                  ),
                 ),
 
                 child: MaterialButton(
                   highlightColor: Colors.transparent,
-                  splashColor:    Theme.Colors.loginGradientEnd,
+                  color:          Colors.amber,
 
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0))
+                    borderRadius: BorderRadius.all(Radius.circular(30.0))
                   ),
 
                   child: Padding(
