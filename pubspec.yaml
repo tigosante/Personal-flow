@@ -39,3 +39,16 @@ flutter:
     - family: WorkSansMedium
       fonts:
         - asset: assets/fonts/Work_Sans/WorkSans-Medium.ttf
+
+
+    - family: ComfortaaLight
+      fonts:
+        - asset: assets/fonts/comfortaa/Comfortaa-Light.ttf
+
+    - family: ComfortaaRegular
+      fonts:
+        - asset: assets/fonts/comfortaa/Comfortaa-Regular.ttf
+
+    - family: ComfortaaBold
+      fonts:
+        - asset: assets/fonts/comfortaa/Comfortaa-Bold.ttf

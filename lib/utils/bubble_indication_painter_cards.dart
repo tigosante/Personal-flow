@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class TabIndicationPainter extends CustomPainter {
+class TabIndicationPainterCards extends CustomPainter {
   Paint painter;
 
   final double dxTarget;
@@ -12,13 +12,14 @@ class TabIndicationPainter extends CustomPainter {
 
   final PageController pageController;
 
-  TabIndicationPainter(
-      {this.dxTarget = 125.0,
-        this.dxEntry = 25.0,
-        this.radius  = 21.0,
-        this.dy      = 25.0, this.pageController}) : super(repaint: pageController) {
+  TabIndicationPainterCards(
+      {this.dxTarget = 141.0,
+        this.dxEntry = 23.0,
+        this.radius  = 20.0,
+        this.dy      = 23.0,
+        this.pageController}) : super(repaint: pageController) {
           painter = new Paint()
-            ..color = Colors.amber
+            ..color = Colors.teal[50]
             ..style = PaintingStyle.fill;
         }
 
@@ -49,6 +50,6 @@ class TabIndicationPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(TabIndicationPainter oldDelegate) => true;
+  bool shouldRepaint(TabIndicationPainterCards oldDelegate) => true;
 
 }

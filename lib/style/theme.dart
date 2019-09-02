@@ -7,12 +7,12 @@ class Colors {
 
   const Colors();
 
-  static const Color loginGradientStart    = const Color.fromRGBO(255, 191, 0, 100);
-  static const Color loginGradientEnd      = const Color.fromRGBO(200, 20, 60, 100);
-  static const Color loginGradientbuttun   = const Color.fromRGBO(10, 10, 10, 100);
+  static const Color corLight     = const Color.fromRGBO(255, 255, 0, 100);
+  static const Color corDark      = const Color.fromRGBO(206, 17, 17, 100);
+  static const Color corBotao     = const Color.fromRGBO(255, 255, 0, 100);
 
-  static const primaryGradient = const LinearGradient(
-    colors: const [loginGradientStart, loginGradientEnd, loginGradientbuttun],
+  static const cores = const LinearGradient(
+    colors: const [corLight, corDark, corBotao],
     stops:  const [0.0, 1.0],
 
     begin:  Alignment.topCenter,

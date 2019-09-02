@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:projeto_integrador_i/style/theme.dart' as Theme;
-import 'package:projeto_integrador_i/utils/bubble_indication_painter.dart';
+import 'package:projeto_integrador_i/utils/bubble_indication_painter_login.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -55,8 +55,8 @@ class _LoginPageState extends State<LoginPage>
             decoration: new BoxDecoration(
               gradient: new LinearGradient(
                 colors:[
-                  Theme.Colors.loginGradientStart,
-                  Theme.Colors.loginGradientEnd
+                  Theme.Colors.corLight,
+                  Theme.Colors.corDark
                 ],
 
                 begin:    const FractionalOffset(0.0, 0.0),
@@ -189,7 +189,7 @@ class _LoginPageState extends State<LoginPage>
       height: 50.0,
 
       decoration: BoxDecoration(
-        color: Theme.Colors.loginGradientbuttun,
+        color: Theme.Colors.corBotao,
 
         borderRadius: BorderRadius.all(
           Radius.circular(25.0)
@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage>
       ),
 
       child: CustomPaint(
-        painter: TabIndicationPainter(pageController: _pageController),
+        painter: TabIndicationPainterLogin(pageController: _pageController),
 
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
