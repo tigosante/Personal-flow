@@ -1,4 +1,4 @@
-package com.example.pi_i
+package com.example.personal_flow
 
 import android.os.Bundle
 

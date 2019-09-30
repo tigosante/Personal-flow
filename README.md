@@ -1,4 +1,4 @@
-# pi_i
+# personal_flow
 
 A new Flutter project.
 

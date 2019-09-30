@@ -1,3 +1,4 @@
+import 'package:firebase/firebase.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
 import 'package:primary_secondary_progress_bar/primary_secondary_progress_bar.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -55,6 +56,7 @@ class _HomeState extends State<Home>{
   @override
   initState(){
     super.initState();
+
     _readyData().then((data){
       setState(() {
         subtarefas._toDoList = jsonDecode(data);
@@ -78,12 +80,12 @@ class _HomeState extends State<Home>{
 
         _lista = List<Widget>.generate(subtarefas._toDoList.length, (int index) =>buildItem(context, index));
 
-        // for(int i=0;i<subtarefas._toDoList.length;i++){
-        //   _sub = List<Widget>.generate(subtarefas._toDoList[i]["details"].length, (int index) =>buildBody(context, index));
-        //   _subDetails.add(_sub);
-        // }
+    //     // for(int i=0;i<subtarefas._toDoList.length;i++){
+    //     //   _sub = List<Widget>.generate(subtarefas._toDoList[i]["details"].length, (int index) =>buildBody(context, index));
+    //     //   _subDetails.add(_sub);
+    //     // }
 
-        // subtarefasSize();
+    //     // subtarefasSize();
 
       });
     });
@@ -159,7 +161,7 @@ class _HomeState extends State<Home>{
             backgroundColor: Colors.transparent,
             child: 
             Icon(
-              Icons.timeline,
+              Icons.poll,
               color: _selectedIndex == 0 ? Colors.black : Colors.orange[100],
             ),
           ),
@@ -840,7 +842,7 @@ class _HomeState extends State<Home>{
 
   Future<Null> _refreshCadastro() async{
     setState(() {
-      
+
     });
 
     return null;

@@ -17,6 +17,7 @@ dependencies:
   # async_loader: ^0.1.2
   #
 
+  firebase: ^5.0.4
   expandable: ^3.0.0+1
   path_provider: ^1.3.0
   pull_to_refresh: ^1.5.6
@@ -31,41 +32,3 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
-
-flutter:
-  assets:
-    - assets/fundo.png
-  uses-material-design: true
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
