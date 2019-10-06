@@ -1,25 +1,29 @@
-import 'package:flutter/material.dart';
 
-import 'package:projeto_integrador_i/ui/login_page.dart';
+import 'package:flutter/material.dart';
+import 'package:personal_flow/app/screens/home/home2.dart';
+// import 'package:personal_flow/app/screens/home/home.dart';
+import 'package:personal_flow/app/screens/login/login.dart';
 
 
 void main() => runApp(new MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
 
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Projeto Integrador I',
-
+      debugShowCheckedModeBanner: false,
       theme: new ThemeData(
-        primarySwatch: Colors.grey,
+        primarySwatch: Colors.orange
       ),
 
-      home: new LoginPage(),
-
+      home: true ? new Home() : Login()
     );
-
   }
-
 }
