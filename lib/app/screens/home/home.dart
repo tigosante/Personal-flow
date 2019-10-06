@@ -1,7 +1,6 @@
-import 'package:firebase/firebase.dart';
+import 'package:titled_navigation_bar/titled_navigation_bar.dart';
 import 'package:flutter_inner_drawer/inner_drawer.dart';
-import 'package:primary_secondary_progress_bar/primary_secondary_progress_bar.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,10 +12,9 @@ import 'dart:io';
 
 class Subtarefas{
   List _toDoList               =  [];
-  TextEditingController _textoToDODetails;
   List<TextEditingController> _textoToDODetaiLisvet = [];
 
-  double completos = 0;
+  int completos = 0;
 }
 
 
@@ -39,16 +37,11 @@ class _HomeState extends State<Home>{
   List<bool> _cardCrontroller  =  [];
 
   final _textoToDOTitle    =  TextEditingController();
-  final _textoToDODetails  =  TextEditingController();
 
   Subtarefas subtarefas = new Subtarefas();
   int _subtarefasSize = 1;
-  int _quantidadeDetails = 1;
 
   List<int> _quantidadeItens = [];
-  List<Widget> _lista = [];
-  List<Widget> _sub = [];
-  List _subDetails = [];
 
   Color _cor = Colors.red[200];
   String _tarefas = "";
@@ -78,25 +71,13 @@ class _HomeState extends State<Home>{
           _quantidadeItens.add(i);
         }
 
-        _lista = List<Widget>.generate(subtarefas._toDoList.length, (int index) =>buildItem(context, index));
-
-    //     // for(int i=0;i<subtarefas._toDoList.length;i++){
-    //     //   _sub = List<Widget>.generate(subtarefas._toDoList[i]["details"].length, (int index) =>buildBody(context, index));
-    //     //   _subDetails.add(_sub);
-    //     // }
-
-    //     // subtarefasSize();
-
       });
     });
   }
 
 
   Future<Null> _refresh() async{
-    // initState();
-
     setState(() {
-      // _toDoList.sort - Função que ordena os itens na tela. Compara 'a' e 'b' e coloca os concluídos em cima.
       subtarefas._toDoList.sort((a, b){
         if       (a["ok"]   &&  !b["ok"])  return 1;
         else if  (!a["ok"]  &&  b["ok"])   return -1;
@@ -131,16 +112,15 @@ class _HomeState extends State<Home>{
 
   @override
   Widget build(BuildContext context) {
-    List pages = [buildCards(context), Container(color: Colors.orange[100],)];
+    List pages = [buildCards(context), Container(color: Colors.white,)];
 
     return new Scaffold(
       body: pages.elementAt(_selectedIndex),
 
-      bottomNavigationBar: CurvedNavigationBar(
-        index: _selectedIndex,
-        color: Colors.grey[100],
-        backgroundColor: Colors.orange[100],
-        buttonBackgroundColor: Colors.black,
+      bottomNavigationBar: TitledBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        activeColor: Colors.blue[600],
+        curve: Curves.easeInOut,
 
         onTap: (tapPage){
           setState(() {
@@ -148,22 +128,15 @@ class _HomeState extends State<Home>{
           });
         },
 
-        items: <Widget>[
-          CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: Icon(
-              Icons.playlist_add_check,
-              color: _selectedIndex == 1 ? Colors.black : Colors.orange[100],
-            ),
+        items: [
+          TitledNavigationBarItem(
+            title: "Tarefas",
+            icon: Icons.playlist_add_check,
           ),
 
-          CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: 
-            Icon(
-              Icons.poll,
-              color: _selectedIndex == 0 ? Colors.black : Colors.orange[100],
-            ),
+          TitledNavigationBarItem(
+            title: "Gráfico",
+            icon: Icons.poll,
           ),
         ],
       ),
@@ -180,7 +153,7 @@ class _HomeState extends State<Home>{
       leftChild: Scaffold(
         body: Center(
           child: Container(
-            color: Colors.orange[100],
+            color: Colors.white,
             child: Center(
               child: Text("Painel com opções de vavegação: Arquivados, configurações, lixeira(talvez)"),
             ),
@@ -189,12 +162,13 @@ class _HomeState extends State<Home>{
       ),
 
       scaffold: new Scaffold(
+        backgroundColor: Colors.white,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
 
         floatingActionButton: FloatingActionButton.extended(
           elevation: 3,
           clipBehavior: Clip.antiAlias,
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.blue[600],
 
           label: Text(
             "adicionar",
@@ -225,7 +199,7 @@ class _HomeState extends State<Home>{
           controller: _refreshController,
 
           header: WaterDropMaterialHeader(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.blue[600],
           ),
           
           child: Column(
@@ -293,11 +267,15 @@ class _HomeState extends State<Home>{
                     child: buildCardsDetails(context)
                 ),
               ),
+
+              // Expanded(
+              //   child: Center(
+              //     child: buildArquivados(context),
+              //   ),
+              // ),
             ],
           ),
         ),
-
-        backgroundColor: Colors.orange[100]
       ),
     );
 
@@ -343,7 +321,19 @@ class _HomeState extends State<Home>{
     return Column(
       children: <Widget>[
         Expanded(
-          child: ListView.builder(
+          child: 
+          // ReorderableListView(
+          //   children: List<Widget>.generate(subtarefas._toDoList.length, (int index) =>buildItem(context, index, ValueKey(index))),
+          //   onReorder: (int oldIndex, int newIndex) {
+          //     // setState(() {
+          //     //   print(newIndex);
+          //     //     var item = subtarefas._toDoList[oldIndex];
+          //     //     subtarefas._toDoList.removeAt(oldIndex);
+          //     //     subtarefas._toDoList.insert(newIndex, item);
+          //     // });
+          //   },
+          // )
+          ListView.builder(
             padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).size.width * 0.15,
             ),
@@ -357,17 +347,25 @@ class _HomeState extends State<Home>{
 
   Widget buildItem(context, index){
     return Center(
-      child: Card(
-        elevation: 1.5,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-          
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
-        ),
+      // key: _key,
 
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.85,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.85,
+        child: Card(
+          // elevation: 1.5,
+          elevation: 0,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+            
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.04),
+          ),
 
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: index%2 == 0 ? Colors.blue[100] : Colors.orange[100],),
+              borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width * 0.04))
+              
+            ),
             child: Slidable(
               actionPane: SlidableDrawerActionPane(),
 
@@ -380,7 +378,7 @@ class _HomeState extends State<Home>{
                       header: Container(
                         padding: EdgeInsets.only(
                           top:     MediaQuery.of(context).size.width * 0.005,
-                          bottom:     MediaQuery.of(context).size.width * 0.005,
+                          bottom:  MediaQuery.of(context).size.width * 0.005,
                           left:    MediaQuery.of(context).size.width * 0.03,
                         ),
 
@@ -391,11 +389,12 @@ class _HomeState extends State<Home>{
                                 subtarefas._toDoList[index]["title"],
 
                                 style: TextStyle(
+                                  color: index%2 == 0 ? Colors.blue[900] : Colors.orange[900],
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
-
-                              subtitle:  subtarefas._toDoList[index]["details"].length < 1 ? null : (subtarefas._toDoList[index]["details"].length == 1 ? Text( "${subtarefas._toDoList[index]["details"].length} subtarefa não concluída." ,style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.bold)) : Text( "${subtarefas._toDoList[index]["details"].length} ubtarefas não concluídas." ,style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.bold))),
+                              
+                              subtitle:  subtarefas._toDoList[index]["details"].length < 1 ? null : (subtarefas._toDoList[index]["details"].length == 1 ? Text( "${subtarefas._toDoList[index]["details"].length} subtarefa não concluída." ,style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.bold, color: index%2 == 0 ? Colors.blue[600] : Colors.orange[600],)) : Text( "${subtarefas._toDoList[index]["details"].length} subtarefas não concluídas." ,style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.bold, color: index%2 == 0 ? Colors.blue[600] : Colors.orange[600],))),
                             ),
                           ],
                         ),
@@ -410,7 +409,7 @@ class _HomeState extends State<Home>{
                                 "Progresso:",
 
                                 style: TextStyle(
-                                  color: Colors.grey[700],
+                                  color: index%2 == 0 ? Colors.blue[400] : Colors.orange[400],
                                   fontSize: MediaQuery.of(context).size.width * 0.032,
                                   fontWeight: FontWeight.bold
                                 ),
@@ -430,7 +429,7 @@ class _HomeState extends State<Home>{
                                 children: <Widget>[
                                   Card(
                                     elevation: 0,
-                                    color: Colors.amber[100],
+                                    color: index%2 == 0 ? Colors.blue[100] : Colors.orange[100],
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
@@ -439,9 +438,7 @@ class _HomeState extends State<Home>{
                                     child:Column(
                                       mainAxisAlignment:   MainAxisAlignment.spaceEvenly,
                                       crossAxisAlignment:  CrossAxisAlignment.start,
-                                      children: 
-                                      // _subDetails[index],
-                                      List<Widget>.generate(subtarefas._toDoList[index]["details"].length, (int index) =>buildBody(context, index))
+                                      children: List<Widget>.generate(subtarefas._toDoList[index]["details"].length, (int index) =>buildBody(context, index))
                                     ),
                                   ),
 
@@ -462,7 +459,7 @@ class _HomeState extends State<Home>{
                                           "Priorizar",
                                           
                                           style: TextStyle(
-                                            color: Colors.black
+                                            color: index%2 == 0 ? Colors.blue[600] : Colors.orange[600],
                                           ),
                                         ),
 
@@ -479,44 +476,51 @@ class _HomeState extends State<Home>{
                                           "Concluir",
 
                                           style: TextStyle(
-                                            color: Colors.black
+                                            color: Colors.black,
                                           ),
                                         ),
-                                        color: Colors.blue[100],
+                                        color: index%2 == 0 ? Colors.blue[50] : Colors.orange[50],
 
                                         onPressed: (){
                                           setState(() {
-                                            List<bool> antigo =[];
+                                            if(!subtarefas._toDoList[index]["ok"]){
+                                              List<bool> antigo =[];
 
-                                            for(int i=0;i<subtarefas._toDoList[index]["details"].length;i++){
-                                              antigo.add(subtarefas._toDoList[index]["details"]["$i"]["bool"]);
-                                              subtarefas._toDoList[index]["details"]["$i"]["bool"] = true;
+                                              if(!subtarefas._toDoList[index]["ok"]){
+                                                subtarefas._toDoList[index]["ok"] = !subtarefas._toDoList[index]["ok"];
+                                              }
+
+                                              for(int i=0;i<subtarefas._toDoList[index]["details"].length;i++){
+                                                antigo.add(subtarefas._toDoList[index]["details"]["$i"]["bool"]);
+                                                subtarefas._toDoList[index]["details"]["$i"]["bool"] = true;
+                                                subtarefas.completos++;
+                                              }
+
+                                              final snack = SnackBar(
+                                                content: Text("Tarefa concluídas"),
+                                                duration: Duration(seconds: 2),
+
+                                                action: SnackBarAction(
+                                                  label: "Desfazer",
+
+                                                  onPressed: (){
+                                                    setState(() {
+                                                      for(int i=0;i<subtarefas._toDoList[index]["details"].length;i++){
+                                                        subtarefas._toDoList[index]["details"]["$i"]["bool"] = antigo[i];
+                                                        subtarefas.completos--;
+                                                      }
+
+                                                      subtarefas._toDoList[index]["ok"] = false;
+
+                                                      _saveData();
+                                                  });
+                                                },
+                                                ),
+                                              );
+
+                                              Scaffold.of(context).removeCurrentSnackBar();
+                                              Scaffold.of(context).showSnackBar(snack);
                                             }
-                                            
-                                            _calclulateProgress(index);
-
-                                            final snack = SnackBar(
-                                              content: Text("Tarefa concluídas"),
-                                              duration: Duration(seconds: 2),
-
-                                              action: SnackBarAction(
-                                                label: "Desfazer",
-
-                                                onPressed: (){
-                                                  setState(() {
-                                                    for(int i=0;i<subtarefas._toDoList[index]["details"].length;i++){
-                                                      subtarefas._toDoList[index]["details"]["$i"]["bool"] = antigo[i];
-                                                    }
-
-                                                    _calclulateProgress(index);
-                                                    _saveData();
-                                                });
-                                              },
-                                              ),
-                                            );
-
-                                            Scaffold.of(context).removeCurrentSnackBar();
-                                            Scaffold.of(context).showSnackBar(snack);
                                           });
                                         },
                                       )
@@ -533,6 +537,11 @@ class _HomeState extends State<Home>{
                             ),
                         ],
                       ),
+                    ),
+
+                    Container(
+                      height: MediaQuery.of(context).size.width * 0.02,
+                      color: index%2 == 0 ? Colors.blue[100] : Colors.orange[100],
                     ),
                   ],
                 ),
@@ -589,6 +598,7 @@ class _HomeState extends State<Home>{
               ),
             ],
 
+              ),
           ),
         ),
       ),
@@ -600,10 +610,9 @@ class _HomeState extends State<Home>{
       padding: EdgeInsets.only(
         top: subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["0"] ? MediaQuery.of(context).size.width * 0.03 : 0,
         bottom: subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["${-1}"] ? MediaQuery.of(context).size.width * 0.03 : 0,
-        left: MediaQuery.of(context).size.width * 0.02,
-        right: MediaQuery.of(context).size.width * 0.02,
+        left: subtarefas._toDoList[index]["details"]["0"]["bool"] ? 0 : MediaQuery.of(context).size.width * 0.02,
+        right: subtarefas._toDoList[index]["details"]["0"]["bool"] ? MediaQuery.of(context).size.width * 0.02 : 0,
       ),
-      // color: (index%2 != 0) ? null : Colors.blue[400],
       
       child: Column(
         children: <Widget>[
@@ -613,34 +622,77 @@ class _HomeState extends State<Home>{
 
             children: <Widget>[
               Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.02,
-                    right: MediaQuery.of(context).size.width * 0.02,
-                  ),
-
-                  child: Text(
+                child: ListTile(
+                  title: Text(
                     subtarefas._toDoList[index]["details"]["0"]["title"],
 
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
-                      // fontStyle: FontStyle.italic
                     ),
                   ),
+
+                  leading: subtarefas._toDoList[index]["details"]["0"]["bool"] ?
+                      IconButton(
+                        icon: Icon(Icons.check_circle, color: Colors.black54,),
+                        onPressed: (){
+                          setState(() {
+                            if(subtarefas._toDoList[index]["details"].length > 1){
+                              if(subtarefas._toDoList[index]["details"]["0"]["bool"]){
+                                subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                                subtarefas.completos--;
+                              }else{
+                                subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                                subtarefas.completos++;
+                              }
+                            }else{
+                              if(subtarefas._toDoList[index]["details"]["0"]["bool"]){
+                                subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                                subtarefas.completos--;
+                                subtarefas._toDoList[index]["ok"] = false;
+                              }else{
+                                subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                                subtarefas.completos++;
+                                subtarefas._toDoList[index]["ok"] = true;
+                              }
+                            }
+
+                            _saveData();
+                          });
+                        },
+                      ) : null,
+
+                  trailing: subtarefas._toDoList[index]["details"]["0"]["bool"] ? null :
+                      IconButton(
+                        icon: subtarefas._toDoList[index]["details"]["0"]["bool"] ?  Icon(Icons.check_circle, color: Colors.transparent,) : Icon(Icons.panorama_fish_eye, color: Colors.black,),
+                        onPressed: (){
+                          setState(() {
+                            if(subtarefas._toDoList[index]["details"].length > 1){
+                              if(subtarefas._toDoList[index]["details"]["0"]["bool"]){
+                                subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                                subtarefas.completos--;
+                              }else{
+                                subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                                subtarefas.completos++;
+                              }
+                            }else{
+                              if(subtarefas._toDoList[index]["details"]["0"]["bool"]){
+                                subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                                subtarefas.completos--;
+                                subtarefas._toDoList[index]["ok"] = false;
+                              }else{
+                                subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                                subtarefas.completos++;
+                                subtarefas._toDoList[index]["ok"] = true;
+                              }
+                            }
+
+                            _saveData();
+                          });
+                        },
+                      )
                 ),
               ),
-
-              IconButton(
-                icon: subtarefas._toDoList[index]["details"]["0"]["bool"] ?  Icon(Icons.check_circle, color: Colors.black54,) : Icon(Icons.panorama_fish_eye, color: Colors.black,),
-                onPressed: (){
-                  setState(() {
-                    subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
-                    _calclulateProgress(index);
-                    _saveData();
-                  });
-                },
-              )
             ],
           ),
 
@@ -651,7 +703,7 @@ class _HomeState extends State<Home>{
             )
           ),
 
-          subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["${-1}"] ?  Divider(height: 0, color: Colors.black, indent: MediaQuery.of(context).size.width * 0.02, endIndent: MediaQuery.of(context).size.width * 0.14,) : Divider(height: 0, color: Colors.transparent,),
+          subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["${-1}"] ?  Divider(height: 0, color: Colors.blue[600], indent: MediaQuery.of(context).size.width * 0.02, endIndent: MediaQuery.of(context).size.width * 0.14,) : Divider(height: 0, color: Colors.transparent,),
 
           Padding(
             padding:
@@ -672,7 +724,7 @@ class _HomeState extends State<Home>{
         backgroundColor: Colors.transparent,
       ),
 
-      body:Column(
+      body: Column(
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(
@@ -699,16 +751,15 @@ class _HomeState extends State<Home>{
                     border: InputBorder.none,
                     
                     labelStyle: TextStyle(
-                      color: Colors.black,
+                      color: Colors.blue[600],
                     ),
                   ),
                 ),
               ),
             ),
           ),
-
           Column(
-            children: List<Widget>.generate(_subtarefasSize, (int index) =>buildDetailsBody(context, index)),
+            children: List<Widget>.generate(_subtarefasSize, (int index) =>buildDetailsBody(context, index)).toList(),
           ),
         ],
       ),
@@ -720,6 +771,7 @@ class _HomeState extends State<Home>{
         onPressed: (){
           setState(() {
             if(_addToDo()){
+              _refresh();
               Navigator.pop(context);
             }
           });
@@ -727,17 +779,17 @@ class _HomeState extends State<Home>{
 
         icon: Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.blue[600],
         ),
 
         label: Text(
           "Adicionar",
           style: TextStyle(
-            color: Colors.black
+            color: Colors.blue[600]
           ),
         ),
       ),
-      backgroundColor: Colors.orange[100],
+      backgroundColor: Colors.white,
     );
   }
 
@@ -748,55 +800,46 @@ class _HomeState extends State<Home>{
         right: MediaQuery.of(context).size.width * 0.05,
       ),
 
-      child: Card(
-        elevation: 0,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
-        ),
+      child: Row(
+        mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+        mainAxisSize:       MainAxisSize.max,
 
-        child: Row(
-          mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-          mainAxisSize:       MainAxisSize.max,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.02,
+                right: MediaQuery.of(context).size.width * 0.02,
+              ),
 
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.02,
-                  right: MediaQuery.of(context).size.width * 0.02,
-                ),
+              child: TextField(
+                controller: subtarefas._textoToDODetaiLisvet[index],
 
-                child: TextField(
-                  controller: subtarefas._textoToDODetaiLisvet[index],
-
-                  decoration: InputDecoration(
-                    hintText: "Tarefa",
-                    border: InputBorder.none,
-                    
-                    labelStyle: TextStyle(
-                      color: Colors.black,
-                    ),
+                decoration: InputDecoration(
+                  hintText: "Tarefa",
+                  border: InputBorder.none,
+                  
+                  labelStyle: TextStyle(
+                    color: Colors.blue[600],
                   ),
                 ),
               ),
             ),
+          ),
 
-            IconButton(
-              icon: Icon(Icons.add_circle),
-              onPressed: _addSub,
-            ),
-          ],
+          IconButton(
+            icon: Icon(Icons.add_circle),
+            onPressed: _addSub,
+          ),
+        ],
 
-        ),
       ),
     );
   }
 
   Widget buildcategoryProgress(BuildContext context, index) {
     return Container(
-      height: MediaQuery.of(context).size.width * 0.05,
+      height: MediaQuery.of(context).size.width * 0.06,
       child: Card(
           elevation: 0,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -805,33 +848,41 @@ class _HomeState extends State<Home>{
             borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.1),
           ),
 
-          child: PrimarySecondaryProgressBar(
-            context,
-            primaryValue: subtarefas.completos,
-            primaryMax: subtarefas._toDoList[index]["details"].length + 0.0,
-            activeColor: _cor
-            // subtarefas._toDoList[index]["details"].length == 1 ? subtarefas.completos == subtarefas._toDoList[index]["details"].length ? Colors.teal[200] : Colors.red[200] : subtarefas.completos>subtarefas._toDoList[index]["details"].length/2 ? Colors.teal[200] : Colors.red[200],
+          child: FAProgressBar(
+            displayText: "  ",
+            maxValue: subtarefas._toDoList[index]["details"].length,
+            currentValue: subtarefas.completos,
+            progressColor: index%2 == 0 ? Colors.blue[300] : Colors.orange[300],
+            backgroundColor: Colors.grey[50]
           ),
       ),
     );
   }
 
-  void _color(index){
-    setState(() {
-      _cor = subtarefas._toDoList[index]["details"].length == 1 ? subtarefas.completos == (subtarefas._toDoList[index]["details"].length + 0.0) ? Colors.teal[200] : Colors.red[200] : subtarefas.completos>subtarefas._toDoList[index]["details"].length/2 ? Colors.teal[200] : Colors.red[200];
-    });
+  Widget buildArquivados(BuildContext context) {
+    bool isExpandedCab = false;
+    return ExpansionPanelList(
+      expansionCallback: (item, isExpanded){
+        setState(() {
+          isExpandedCab = isExpanded;
+        });
+      },
+      
+
+      children: <ExpansionPanel>[
+        ExpansionPanel(
+          canTapOnHeader: true,
+          isExpanded: isExpandedCab,
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return Text("Terefas arquivadas");
+          },
+
+          body: buildCardsDetails(context),
+        )
+      ],
+    );
   }
 
-  void _calclulateProgress(index) {
-    setState(() {
-      for (int i=0;i<subtarefas._toDoList[index]["details"].length;i++) {
-        if(subtarefas._toDoList[index]["details"]["$index"]["bool"]){
-          subtarefas.completos++;
-        }
-      }
-      _color(index);
-    });
-  }
 
   void _addSub(){
     setState(() {
@@ -839,15 +890,6 @@ class _HomeState extends State<Home>{
       _subtarefasSize++;
     });
   }
-
-  Future<Null> _refreshCadastro() async{
-    setState(() {
-
-    });
-
-    return null;
-  }
-
 
   Future<File> _saveData() async{
     String data  =  jsonEncode(subtarefas._toDoList);
@@ -873,21 +915,6 @@ class _HomeState extends State<Home>{
 
 }
 
-class ViewPadding extends StatefulWidget {
-  ViewPadding({Key key}) : super(key: key);
-
-  @override
-  _ViewPaddingState createState() => new _ViewPaddingState();
-}
-
-class _ViewPaddingState extends State<ViewPadding>{
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-    );
-  }
-}
 
 class DataSearch extends SearchDelegate<String>{
   Subtarefas subtarefas = Subtarefas();
@@ -929,8 +956,8 @@ class DataSearch extends SearchDelegate<String>{
 
     final segestions = query.isEmpty ? sugestoes : cities;
     return ListView.builder(
-      itemBuilder: (context, index)=> ListTile(leading: Icon(Icons.location_city), title: Text(sugestoes[index]),),
       itemCount: segestions.length,
+      itemBuilder: (context, index)=> ListTile(leading: Icon(Icons.location_city), title: Text(sugestoes[index]),),
     );
   }
 	

@@ -1,6 +1,8 @@
-import 'package:personal_flow/screens/login.dart';
-import 'package:personal_flow/screens/home.dart';
+
 import 'package:flutter/material.dart';
+import 'package:personal_flow/app/screens/home/home2.dart';
+// import 'package:personal_flow/app/screens/home/home.dart';
+import 'package:personal_flow/app/screens/login/login.dart';
 
 
 void main() => runApp(new MyApp());
