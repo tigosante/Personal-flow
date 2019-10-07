@@ -11,7 +11,7 @@ class _CategoryProgressState extends State<CategoryProgress> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.width * 0.05,
+      height: MediaQuery.of(context).size.width * 0.06,
       child: Card(
           elevation: 0,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -24,10 +24,10 @@ class _CategoryProgressState extends State<CategoryProgress> {
             displayText: "  ",
             maxValue: 10,
             currentValue: 2,
-            progressColor: Colors.blue[300],
+            progressColor: Colors.orange[300],
             // maxValue: subtarefas._toDoList[index]["details"].length,
             // currentValue: subtarefas.completos,
-            // progressColor: index%2 == 0 ? Colors.blue[300] : Colors.orange[300],
+            // progressColor: index%2 != 0 ? Colors.blue[300] : Colors.orange[300],
             backgroundColor: Colors.grey[50]
           ),
       ),

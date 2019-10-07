@@ -32,19 +32,20 @@ class _CardStructState extends State<CardStruct>{
   Widget buildCardStruct(BuildContext context, index) {
     return Center(
       child: Card(
-        elevation: 0,
+        color: index%2 != 0 ? Colors.blue[100] : Colors.orange[100],
+        elevation: 5,
         clipBehavior: Clip.antiAliasWithSaveLayer,
           
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
+          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.04),
         ),
 
         child: Container(
           width: MediaQuery.of(context).size.width * 0.85,
           decoration: BoxDecoration(
             // BLOC
-            border: Border.all(color: index%2 == 0 ? Colors.blue[100] : Colors.orange[100],),
-            borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width * 0.05))
+            // border: Border.all(color: Colors.grey[400],),
+            borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width * 0.04))
           ),
 
             child: Slidable(
@@ -69,10 +70,21 @@ class _CardStructState extends State<CardStruct>{
                                 "Reconstruindo toda a estrutura dividindo cada componente em arquivo. Também criando um BLOC para fazer as funções.",
 
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold
+                                  fontSize: MediaQuery.of(context).size.width * 0.035
+                                  // fontWeight: FontWeight.bold,
+                                  // fontFamily: 'Qontra'
                                 ),
                               ),
-                              subtitle: Text("Subtítulo da tarefa"),
+                              subtitle: Padding(
+                                padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.03),
+                                child: Text(
+                                  "Subtítulo da tarefa",
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context).size.width * 0.03,
+                                    fontFamily: 'orkney-bold',
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -88,7 +100,8 @@ class _CardStructState extends State<CardStruct>{
 
                                 style: TextStyle(
                                   color: Colors.grey[700],
-                                  fontSize: MediaQuery.of(context).size.width * 0.032,
+                                  fontSize: MediaQuery.of(context).size.width * 0.033,
+                                  fontFamily: 'orkney-bold',
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
@@ -99,8 +112,8 @@ class _CardStructState extends State<CardStruct>{
 
                           Container(
                             padding: EdgeInsets.only(
-                              left:   MediaQuery.of(context).size.width * 0.02,
-                              right:  MediaQuery.of(context).size.width * 0.02,
+                              left:   MediaQuery.of(context).size.width * 0.005,
+                              right:  MediaQuery.of(context).size.width * 0.005,
                             ),
 
                             child: Column(
@@ -108,93 +121,100 @@ class _CardStructState extends State<CardStruct>{
                                 Card(
                                   elevation: 0,
                                   // BLOC
-                                  color: index%2 == 0 ? Colors.blue[100] : Colors.orange[100],
+                                  color: index%2 != 0 ? Colors.blue[100] : Colors.orange[100],
+                                  // color: Colors.blue[900],
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
+                                    borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.04),
                                   ),
 
                                   child: CardContent(),
                                 ),
 
-                                Divider(
-                                  color:  Colors.transparent,
-                                  height: MediaQuery.of(context).size.width * 0.08,
-                                ),
+                                Padding(
+                                  padding:  EdgeInsets.only(
+                                    right: MediaQuery.of(context).size.width * 0.01,
+                                    top: MediaQuery.of(context).size.width * 0.01,
+                                  ),
 
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    FlatButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
-                                      ),
-
-                                      child: Text(
-                                        "Priorizar",
-                                        
-                                        style: TextStyle(
-                                          color: Colors.black
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      FlatButton(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
                                         ),
-                                      ),
 
-                                      onPressed: (){},
-                                    ),
-
-                                    RaisedButton(
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
-                                      ),
-
-                                      child: Text(
-                                        "Concluir",
-
-                                        style: TextStyle(
-                                          color: Colors.white
-                                        ),
-                                      ),
-                                      color: index%2 == 0 ? Colors.blue[400] : Colors.orange[400],
-                                      onPressed: (){},
-
-                                      // BLOC
-                                      // onPressed: (){
-                                      //   setState(() {
-                                      //     List<bool> antigo =[];
-
-                                      //     for(int i=0;i<subtarefas._toDoList[index]["details"].length;i++){
-                                      //       antigo.add(subtarefas._toDoList[index]["details"]["$i"]["bool"]);
-                                      //       subtarefas._toDoList[index]["details"]["$i"]["bool"] = true;
-                                      //     }
+                                        child: Text(
+                                          "Priorizar",
                                           
-                                      //     _calclulateProgress(index);
+                                          style: TextStyle(
+                                            fontFamily: 'orkney-bold',
+                                            // fontWeight: FontWeight.bold,
+                                            color: Colors.black
+                                          ),
+                                        ),
 
-                                      //     final snack = SnackBar(
-                                      //       content: Text("Tarefa concluídas"),
-                                      //       duration: Duration(seconds: 2),
+                                        onPressed: (){},
+                                      ),
 
-                                      //       action: SnackBarAction(
-                                      //         label: "Desfazer",
+                                      RaisedButton(
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.05),
+                                        ),
 
-                                      //         onPressed: (){
-                                      //           setState(() {
-                                      //             for(int i=0;i<subtarefas._toDoList[index]["details"].length;i++){
-                                      //               subtarefas._toDoList[index]["details"]["$i"]["bool"] = antigo[i];
-                                      //             }
+                                        child: Text(
+                                          "Concluir",
 
-                                      //             _calclulateProgress(index);
-                                      //             _saveData();
-                                      //         });
-                                      //       },
-                                      //       ),
-                                      //     );
+                                          style: TextStyle(
+                                            fontFamily: 'orkney-bold',
+                                            // fontWeight: FontWeight.bold,
+                                            color: Colors.white
+                                          ),
+                                        ),
+                                        color: index%2 != 0 ? Colors.blue[400] : Colors.orange[400],
+                                        onPressed: (){},
 
-                                      //     Scaffold.of(context).removeCurrentSnackBar();
-                                      //     Scaffold.of(context).showSnackBar(snack);
-                                      //   });
-                                      // },
-                                    )
-                                  ],
+                                        // BLOC
+                                        // onPressed: (){
+                                        //   setState(() {
+                                        //     List<bool> antigo =[];
+
+                                        //     for(int i=0;i<subtarefas._toDoList[index]["details"].length;i++){
+                                        //       antigo.add(subtarefas._toDoList[index]["details"]["$i"]["bool"]);
+                                        //       subtarefas._toDoList[index]["details"]["$i"]["bool"] = true;
+                                        //     }
+                                            
+                                        //     _calclulateProgress(index);
+
+                                        //     final snack = SnackBar(
+                                        //       content: Text("Tarefa concluídas"),
+                                        //       duration: Duration(seconds: 2),
+
+                                        //       action: SnackBarAction(
+                                        //         label: "Desfazer",
+
+                                        //         onPressed: (){
+                                        //           setState(() {
+                                        //             for(int i=0;i<subtarefas._toDoList[index]["details"].length;i++){
+                                        //               subtarefas._toDoList[index]["details"]["$i"]["bool"] = antigo[i];
+                                        //             }
+
+                                        //             _calclulateProgress(index);
+                                        //             _saveData();
+                                        //         });
+                                        //       },
+                                        //       ),
+                                        //     );
+
+                                        //     Scaffold.of(context).removeCurrentSnackBar();
+                                        //     Scaffold.of(context).showSnackBar(snack);
+                                        //   });
+                                        // },
+                                      )
+                                    ],
+                                  ),
                                 ),
 
                                 Divider(
@@ -206,10 +226,6 @@ class _CardStructState extends State<CardStruct>{
                           ),
                         ],
                       ),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.width * 0.02,
-                      color: index%2 == 0 ? Colors.blue[100] : Colors.orange[100],
                     ),
                   ],
                 ),

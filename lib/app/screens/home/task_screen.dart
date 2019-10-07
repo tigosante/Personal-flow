@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_flow/app/screens/home/components/card_struct.dart';
-import 'package:personal_flow/app/screens/home/components/data_search.dart';
+import 'package:personal_flow/app/screens/home/components/header.dart';
 import 'package:personal_flow/app/screens/new_task/new_task.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -27,42 +27,7 @@ class _TaskScreenState extends State<TaskScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.width * 0.15,
-                bottom: MediaQuery.of(context).size.width * 0.02,
-                left: MediaQuery.of(context).size.width * 0.07,
-                right: MediaQuery.of(context).size.width * 0.07,
-              ),
-              child: ListTile(
-                title: Text(
-                  "Oi, Tiago!",
-                  style: TextStyle(
-                      color: Colors.grey[800],
-                      fontSize: MediaQuery.of(context).size.width * 0.045,
-                      fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                  "Tarefas não concluídas.",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: MediaQuery.of(context).size.width * 0.03,
-                  ),
-                ),
-
-                trailing: IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.blue[600],
-                  ),
-                  //  BLOC
-                  onPressed: () {
-                    showSearch(context: context, delegate: DataSearch());
-                  },
-                ),
-              ),
-            ),
-
+            Header(),
             Expanded(
               child: Center(child: CardStruct()),
             ),
@@ -73,18 +38,18 @@ class _TaskScreenState extends State<TaskScreen> {
       backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
-        elevation: 3,
+        elevation: 5,
         clipBehavior: Clip.antiAlias,
-        backgroundColor: Colors.blue[600],
+        backgroundColor: Colors.white,
 
         label: Text(
           "adicionar",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'orkey-bold'),
         ),
 
         icon: Icon(
           Icons.add,
-          color: Colors.white,
+          color: Colors.black,
         ),
         // BLOC
         onPressed: () {

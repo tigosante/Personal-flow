@@ -389,7 +389,7 @@ class _HomeState extends State<Home>{
                                 subtarefas._toDoList[index]["title"],
 
                                 style: TextStyle(
-                                  color: index%2 == 0 ? Colors.blue[900] : Colors.orange[900],
+                                  color: index%2 != 0 ? Colors.blue[900] : Colors.orange[900],
                                   fontWeight: FontWeight.bold
                                 ),
                               ),
@@ -409,7 +409,7 @@ class _HomeState extends State<Home>{
                                 "Progresso:",
 
                                 style: TextStyle(
-                                  color: index%2 == 0 ? Colors.blue[400] : Colors.orange[400],
+                                  color: index%2 != 0 ? Colors.blue[400] : Colors.orange[400],
                                   fontSize: MediaQuery.of(context).size.width * 0.032,
                                   fontWeight: FontWeight.bold
                                 ),
@@ -429,7 +429,7 @@ class _HomeState extends State<Home>{
                                 children: <Widget>[
                                   Card(
                                     elevation: 0,
-                                    color: index%2 == 0 ? Colors.blue[100] : Colors.orange[100],
+                                    color: index%2 != 0 ? Colors.blue[100] : Colors.orange[100],
                                     clipBehavior: Clip.antiAliasWithSaveLayer,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.03),
@@ -459,7 +459,7 @@ class _HomeState extends State<Home>{
                                           "Priorizar",
                                           
                                           style: TextStyle(
-                                            color: index%2 == 0 ? Colors.blue[600] : Colors.orange[600],
+                                            color: index%2 != 0 ? Colors.blue[600] : Colors.orange[600],
                                           ),
                                         ),
 
@@ -479,7 +479,7 @@ class _HomeState extends State<Home>{
                                             color: Colors.black,
                                           ),
                                         ),
-                                        color: index%2 == 0 ? Colors.blue[50] : Colors.orange[50],
+                                        color: index%2 != 0 ? Colors.blue[50] : Colors.orange[50],
 
                                         onPressed: (){
                                           setState(() {
@@ -541,7 +541,7 @@ class _HomeState extends State<Home>{
 
                     Container(
                       height: MediaQuery.of(context).size.width * 0.02,
-                      color: index%2 == 0 ? Colors.blue[100] : Colors.orange[100],
+                      color: index%2 != 0 ? Colors.blue[100] : Colors.orange[100],
                     ),
                   ],
                 ),
@@ -852,7 +852,7 @@ class _HomeState extends State<Home>{
             displayText: "  ",
             maxValue: subtarefas._toDoList[index]["details"].length,
             currentValue: subtarefas.completos,
-            progressColor: index%2 == 0 ? Colors.blue[300] : Colors.orange[300],
+            progressColor: index%2 != 0 ? Colors.blue[300] : Colors.orange[300],
             backgroundColor: Colors.grey[50]
           ),
       ),

@@ -12,81 +12,54 @@ class _CardContentState extends State<CardContent> {
     return Column(
       mainAxisAlignment:   MainAxisAlignment.spaceEvenly,
       crossAxisAlignment:  CrossAxisAlignment.start,
-      children: List<Widget>.generate(5, (int index) => buildBody(context, index))
+      children: List<Widget>.generate(4, (int index) => buildBody(context, index))
     );
   }
 
   Widget buildBody(context, index){
-    return Container(
-      // BLOC
-      padding: EdgeInsets.only(
-        top: // subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["0"] ? 
-        MediaQuery.of(context).size.width * 0.03, //: 0,
-        bottom: // subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["${-1}"] ? MediaQuery.of(context).size.width * 0.03 :
-         0,
-        left: MediaQuery.of(context).size.width * 0.02,
-        right: MediaQuery.of(context).size.width * 0.02,
-      ),
-      
-      child: Column(
-        children: <Widget>[
-          Row(
-            mainAxisAlignment:  MainAxisAlignment.spaceBetween,
-            mainAxisSize:       MainAxisSize.max,
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.01),
+      child: Container(
+        decoration: BoxDecoration(
+          color: index%2 == 0 ? Colors.grey[100] : Colors.grey[300],
+          borderRadius: BorderRadius.all(Radius.circular(MediaQuery.of(context).size.width * 0.04))
+        ),
+        // BLOC
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.width * 0.01,
+          bottom: MediaQuery.of(context).size.width * 0.01,
+        ),
+        
+        child: Row(
+          mainAxisAlignment:  MainAxisAlignment.spaceBetween,
+          mainAxisSize:       MainAxisSize.max,
 
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0.02,
-                    right: MediaQuery.of(context).size.width * 0.02,
-                  ),
+          children: <Widget>[
+            Expanded(
+              child: ListTile(
+                title: Text(
+                  "Reconstruindo toda a estrutura dividindo cada componente em arquivos Também criando um BLOC para fazer as funções.",
 
-                  child: Text(
-                    "Reconstruindo toda a estrutura dividindo cada componente em arquivos Também criando um BLOC para fazer as funções.",
-
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: MediaQuery.of(context).size.width * 0.034
                   ),
                 ),
+
+                trailing: IconButton(
+                  icon: Icon(Icons.panorama_fish_eye, color: Colors.black), //subtarefas._toDoList[index]["details"]["0"]["bool"] ?  Icon(Icons.check_circle, color: Colors.black54,) : Icon(Icons.panorama_fish_eye, color: Colors.black,),
+                  onPressed: null
+                    // setState(() {
+                    //   subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
+                    //   _calclulateProgress(index);
+                    //   _saveData();
+                    // });
+                  // },
+                ),
               ),
-
-              IconButton(
-                icon: Icon(Icons.panorama_fish_eye), //subtarefas._toDoList[index]["details"]["0"]["bool"] ?  Icon(Icons.check_circle, color: Colors.black54,) : Icon(Icons.panorama_fish_eye, color: Colors.black,),
-                onPressed: (){
-                  // setState(() {
-                  //   subtarefas._toDoList[index]["details"]["0"]["bool"] = !subtarefas._toDoList[index]["details"]["0"]["bool"];
-                  //   _calclulateProgress(index);
-                  //   _saveData();
-                  // });
-                },
-              )
-            ],
-          ),
-
-          // BLOC
-          Padding(
-            padding: EdgeInsets.only(
-              top: // subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["0"] ? 
-              MediaQuery.of(context).size.width * 0.035 //: 0,
-            )
-          ),
-
-          // BLOC
-          // subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["${-1}"] ? 
-          //  Divider(height: 0, color: Colors.black, indent: MediaQuery.of(context).size.width * 0.02, endIndent: MediaQuery.of(context).size.width * 0.14,), //: Divider(height: 0, color: Colors.transparent,),
-
-          // BLOC
-          Padding(
-            padding:
-            EdgeInsets.only(
-              bottom: //subtarefas._toDoList[index]["details"]["$index"] == subtarefas._toDoList[index]["details"]["${-1}"] ? 
-              MediaQuery.of(context).size.width * 0.005 //: 0,
-            )
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }
