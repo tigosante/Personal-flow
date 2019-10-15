@@ -11,27 +11,11 @@ class _HeaderGraphicState extends State<HeaderGraphic> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // theme: ThemeData.dark(),
-      home: Scaffold(
-        body: Column(
-          children: <Widget>[
-            Center(
-              child: Container(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).size.width * 0.15),
-                width: MediaQuery.of(context).size.width * 0.95,
-                child: Card(
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.04),
-                  ),
-                  child: Container(
-                    child: Text("foi"),
-                    color: Colors.amber,
-                  ),
-                ),
-              ),
-            )
-          ],
+      home: Center(
+        child: Center(
+          child: Card(
+            child: Text("foi"),
+          ),
         ),
       ),
     );
