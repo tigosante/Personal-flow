@@ -58,7 +58,6 @@ class _CardContentState extends State<CardContent> {
           child: Text(
             "Tarefas concluídas:",
             style: TextStyle(
-                color: Colors.grey[700],
                 fontSize: size_screem * 0.025,
                 fontFamily: font_button,
                 fontWeight: FontWeight.bold),
@@ -75,60 +74,75 @@ class _CardContentState extends State<CardContent> {
               width: size_screem * 0.83,
               child: Column(
                 children: <Widget>[
-                  Card(
-                    elevation: 0,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Column(
-                        children: List<Widget>.generate(
-                            toDoList[widget.valor]["details"].length,
-                            (int index) => buildBody(context, index))),
-                  ),
-                  Padding(
+                  Column(
+                    children: List<Widget>.generate(
+                      toDoList[widget.valor]["details"].length,
+                      (int index) => buildBody(context, index))),
+                  Container(
                     padding: EdgeInsets.only(
-                      left: size_screem * 0.007,
-                      right: size_screem * 0.007,
+                      left: size_screem * 0.025,
                     ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color:
-                              toDoList[widget.valor]["details"].length % 2 ==
-                                      0
-                                  ? Colors.white
-                                  : Colors.grey[100],
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(size_screem * 0.01))),
-                      child: Row(children: <Widget>[
-                        Expanded(
-                          child: ListTile(
-                            title: TextField(
-                              controller: controller,
-                              decoration: InputDecoration(
-                                hintText: "Nova tarefa",
-                                border: InputBorder.none,
-                              ),
-                            ),
-                            trailing: IconButton(
-                              icon: Icon(Icons.add_circle, color: Colors.blue[600],),
-                              onPressed: () {
-                                setState(() {
-                                  if (controller.text.trim() != "") {
-                                    Map<String, dynamic> content = Map();
-
-                                    content["title"] = controller.text.trim();
-                                    content["bool"] = false;
-                                    toDoList[widget.valor]["details"][
-                                            "${toDoList[widget.valor]["details"].length}"] =
-                                        content;
-                                    toDoList[widget.valor]["ok"] = false;
-                                    saveData();
-                                  }
-                                });
-                              },
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(size_screem * 0.01))),
+                    child: Row(children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                            controller: controller,
+                            maxLines: 8,
+                            minLines: 1,
+                            decoration: InputDecoration(
+                              hintText: "Nova tarefa",
+                              border: InputBorder.none,
                             ),
                           ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.add_circle, color: Colors.blue[600],),
+                        onPressed: () {
+                          setState(() {
+                            if (controller.text.trim() != "") {
+                              Map<String, dynamic> content = Map();
+
+                              content["title"] = controller.text.trim();
+                              content["bool"] = false;
+                              toDoList[widget.valor]["details"][
+                                      "${toDoList[widget.valor]["details"].length}"] =
+                                  content;
+                              toDoList[widget.valor]["ok"] = false;
+                              saveData();
+                            }
+                          });
+                        },
+                      ),
+                    ]),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey,),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(size_screem * 0.02),
+                            bottomLeft: Radius.circular(size_screem * 0.02),
+                            bottomRight: Radius.circular(size_screem * 0.02),
+                          )),
+                        child: dtHr(context, index, size_screem),
+                      ),
+                      IconButton(
+                        color: Colors.blue[600],
+                        icon: Icon(
+                          Icons.calendar_today,
                         ),
-                      ]),
-                    ),
+                        onPressed: () {
+                          setState(() {
+                            // press = false;
+                          });
+                        },
+                      )
+                    ],
                   )
                 ],
               ),
@@ -149,7 +163,6 @@ class _CardContentState extends State<CardContent> {
                     child: Text(
                       "Priorizar",
                       style: TextStyle(
-                          color: Colors.black,
                           fontFamily: font_button,
                           fontSize: size_screem * 0.025),
                     ),
@@ -157,7 +170,6 @@ class _CardContentState extends State<CardContent> {
                   ),
                   RaisedButton(
                     elevation: 0,
-                    color: Colors.blue[600],
                     shape: RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.circular(size_screem * 0.05),
@@ -165,8 +177,6 @@ class _CardContentState extends State<CardContent> {
                     child: Text(
                       "Concluir",
                       style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: font_button,
                           fontSize: size_screem * 0.025),
                     ),
                     onPressed: () {
@@ -243,8 +253,7 @@ class _CardContentState extends State<CardContent> {
   }
 
   Widget buildBody(context, index) {
-    Informacoes informacoes =
-        Informacoes(toDoList: toDoList, index: widget.valor, index_sub: index);
+    Informacoes informacoes = Informacoes(toDoList: toDoList, index: widget.valor, index_sub: index);
     String title_sub = informacoes.titleSub();
     bool boolSub = informacoes.boolSub();
     Icon leadIconSub = informacoes.leadIconSub();
@@ -255,25 +264,24 @@ class _CardContentState extends State<CardContent> {
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
-      child: Container(
-        decoration: BoxDecoration(
-            color: index % 2 == 0 ? Colors.white : Colors.grey[100],
-            borderRadius:
-                BorderRadius.all(Radius.circular(size_screem * 0.01))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Expanded(
-              child: ListTile(
-                title: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Tarefa",
-                  ),
-                  controller: controllerText,
-                ),
-                leading: boolSub
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: size_screem * 0.01),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey,),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(size_screem * 0.02),
+                  topRight: Radius.circular(size_screem * 0.02),
+                  bottomLeft: Radius.circular(size_screem * 0.02),
+                )
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  boolSub
                     ? IconButton(
                         icon: leadIconSub,
                         onPressed: () {
@@ -283,10 +291,26 @@ class _CardContentState extends State<CardContent> {
                           });
                         },
                       )
-                    : null,
-                trailing: controllerText.text == title_sub
+                    : Container(color: Colors.transparent,),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: size_screem * 0.025,
+                      ),
+                      child: TextField(
+                        maxLines: 8,
+                        minLines: 1,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Tarefa",
+                        ),
+                        controller: controllerText,
+                      ),
+                    ),
+                  ),
+                  controllerText.text == title_sub
                     ? (boolSub
-                        ? null
+                        ? Container(color: Colors.transparent,)
                         : IconButton(
                             icon: traiIcon,
                             onPressed: () {
@@ -307,10 +331,37 @@ class _CardContentState extends State<CardContent> {
                           });
                         },
                       ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey,),
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(size_screem * 0.02),
+                    bottomLeft: Radius.circular(size_screem * 0.02),
+                    bottomRight: Radius.circular(size_screem * 0.02),
+                  )),
+                child: dtHr(context, index, size_screem),
+              ),
+              IconButton(
+                color: Colors.blue[600],
+                icon: Icon(
+                  Icons.calendar_today,
+                ),
+                onPressed: () {
+                  setState(() {
+                    // press = false;
+                  });
+                },
+              )
+            ],
+          )
+        ],
       ),
       secondaryActions: <Widget>[
         IconSlideAction(
@@ -395,19 +446,99 @@ class _CardContentState extends State<CardContent> {
     );
   }
 
+  Widget dtHr(context, index, size_screem){
+    dynamic retorno;
+
+    if (toDoList != null){
+      retorno = Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          InkWell(
+            child: Container(
+              margin: EdgeInsets.only(
+                top: size_screem * 0.02,
+                left: size_screem * 0.02,
+                right: size_screem * 0.02,
+                bottom: size_screem * 0.02,
+              ),
+              child: Text(
+                "Dom, 20 Out",
+                style: TextStyle(
+                  color: Colors.blue[600],
+                  fontSize: size_screem * 0.025,
+                  fontFamily: 'Orkney-bold'),
+              ),
+            ),
+            onTap:() async {
+              final DateTime picked = await showDatePicker(
+                context: context,
+                firstDate: new DateTime(2000),
+                lastDate: new DateTime(2030),
+                initialDate: new DateTime.now(),
+              );
+              setState(() {
+                print("Foi");
+                // DataHora dataHora = DataHora(picked: picked);
+                // dynamic retor = dataHora.calendario();
+                // data_list["$index"] = retor;
+              });
+            },
+          ),
+          Text(
+            "-",
+            style: TextStyle(
+              color: Colors.blue[600],
+              fontSize: size_screem * 0.025,
+              fontFamily: 'Orkney-bold'),
+          ),
+          InkWell(
+            child: Container(
+              margin: EdgeInsets.only(
+                top: size_screem * 0.02,
+                left: size_screem * 0.02,
+                right: size_screem * 0.02,
+                bottom: size_screem * 0.02,
+              ),
+              child: Text(
+                "13:30",
+                style: TextStyle(
+                  color: Colors.blue[600],
+                  fontSize: size_screem * 0.025,
+                  fontFamily: 'Orkney-bold'),
+              ),
+            ),
+            onTap:() async {
+              final TimeOfDay picked = await showTimePicker(
+                context: context,
+                initialTime: TimeOfDay.now(),
+              );
+              setState(() {
+                print("Foi");
+                // DataHora dataHora = DataHora(picked: picked);
+                // dynamic retor = dataHora.calendario();
+                // data_list["$index"] = retor;
+              });
+            },
+          ),
+        ],
+      );
+    }
+    return retorno;
+  }
+
   categoryProgress(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
           height: size_screem * 0.035,
-          width: size_screem * 0.8,
+          width: size_screem * 0.85,
           child: FAProgressBar(
               displayText: "  ",
               maxValue: done_title(),
               currentValue: done(),
               progressColor: Colors.teal[200],
-              backgroundColor: Colors.white),
+              ),
         ),
       ],
     );

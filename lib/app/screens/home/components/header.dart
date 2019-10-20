@@ -21,14 +21,14 @@ class _HeaderState extends State<Header> {
         title: Text(
           "Olá, Tiago!",
           style: TextStyle(
-              color: Colors.grey[800],
+              // color: Colors.grey[800],
               fontSize: MediaQuery.of(context).size.width * 0.045,
               fontWeight: FontWeight.bold),
         ),
         trailing: IconButton(
           icon: Icon(
             Icons.search,
-            color: Colors.blue[600],
+            // color: Colors.blue[600],
           ),
           //  BLOC
           onPressed: () {

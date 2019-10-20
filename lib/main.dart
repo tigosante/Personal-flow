@@ -20,10 +20,25 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: [const Locale("pt", "BR")],
       debugShowCheckedModeBanner: false,
-      theme: 
-      // new ThemeData.dark(),
-      ThemeData(
-        primarySwatch: Colors.grey,
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.blue,
+        buttonColor: Colors.blue,
+        buttonTheme: ButtonThemeData(
+          textTheme: ButtonTextTheme.primary,
+          buttonColor: Colors.blue
+        ),
+        bottomAppBarColor: Colors.white,
+        primaryColorBrightness: Brightness.dark,
+        fontFamily: 'Orkney-medium',
+      ),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        buttonColor: Colors.blue,
+        buttonTheme: ButtonThemeData(
+          textTheme: ButtonTextTheme.primary,
+        ),
+        primarySwatch: Colors.blue,
         fontFamily: 'Orkney-medium'
       ),
 

@@ -1,6 +1,5 @@
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 
 class GeneratioCards {
   dynamic context_screen;
@@ -108,107 +107,57 @@ class Informacoes {
   Informacoes({@required this.toDoList, @required this.index, this.index_sub});
 }
 
-// class DataHora{
-//   dynamic toDoList;
-//   dynamic data_list;
-//   dynamic data_atual;
-//   dynamic context;
+class DataHora{
+  dynamic data_no_form_list;
+  dynamic data_no_form_atual;
+  dynamic context;
+  dynamic picked;
+  int index;
 
-//   // calendario() async {
-//   //   final List<DateTime> picked = await DateRagePicker.showDatePicker(
-//   //     context: context,
-//   //     firstDate: new DateTime(2000),
-//   //     lastDate: new DateTime(2030),
-//   //     initialFirstDate: new DateTime.now(),
-//   //     initialLastDate: (new DateTime.now()).add(new Duration(days: 4)),
-//   //   );
+  calendario() {
+    if (picked != null) {
+      Map<String, dynamic> content = Map();
+      Map<String, dynamic> details = Map();
 
-//   //   if (picked != null && picked.length <= 2) {
-//   //     // Map<String, dynamic> newToDo = Map();
-//   //     Map<String, dynamic> content = Map();
-//   //     Map<String, dynamic> details = Map();
+      String data_no_form;
+      String data_form;
 
-//   //     String dt_start;
-//   //     String dt_end;
-//   //     String dt_inicial;
-//   //     String dt_final;
-
-//   //     int day_st;
-//   //     int mot_st;
-//   //     int yea_st;
-//   //     int day_ed;
-//   //     int mot_ed;
-//   //     int yea_ed;
+      int day;
+      int mot;
+      int yea;
       
 
-//   //     dt_start  =  picked[0].toString().split(" ").removeAt(0).replaceAll("-", "/");
-//   //     yea_st    =  int.parse(dt_start.split("/").toList()[0].toString());
-//   //     mot_st    =  int.parse(dt_start.split("/").toList()[1].toString());
-//   //     day_st    =  int.parse(dt_start.split("/").toList()[2].toString());
+      data_no_form  =  picked.toString().split(" ").removeAt(0).replaceAll("-", "/");
+      yea   =  int.parse(data_no_form.split("/").toList()[0].toString());
+      mot   =  int.parse(data_no_form.split("/").toList()[1].toString());
+      day   =  int.parse(data_no_form.split("/").toList()[2].toString());
 
-//   //     dt_end  =  picked[1].toString().split(" ").removeAt(0).replaceAll("-", "/");
-//   //     yea_ed  =  int.parse(dt_end.split("/").toList()[0].toString().trim());
-//   //     mot_ed  =  int.parse(dt_end.split("/").toList()[1].toString().trim());
-//   //     day_ed  =  int.parse(dt_end.split("/").toList()[2].toString().trim());
+      data_form = formatDate(DateTime(yea, mot, day), [D, ', ', d, ' ', M]);
 
-//   //     dt_inicial  =  formatDate(DateTime(yea_st, mot_st, day_st), [D, ', ', d, ' ', M]);
-//   //     dt_final    =  formatDate(DateTime(yea_st, mot_ed, day_ed), [D, ', ', d, ' ', M]);
-
-//   //     for(int i = 0; i<12; i++){
-//   //       dt_inicial = dt_inicial.replaceAll("Feb", "Fev");
-//   //       dt_inicial = dt_inicial.replaceAll("Apr", "Abr");
-//   //       dt_inicial = dt_inicial.replaceAll("May", "Mai");
-//   //       dt_inicial = dt_inicial.replaceAll("Aug", "Ago");
-//   //       dt_inicial = dt_inicial.replaceAll("Sep", "Set");
-//   //       dt_inicial = dt_inicial.replaceAll("Oct", "Out");
-//   //       dt_inicial = dt_inicial.replaceAll("Dec", "Dez");
+      for(int i = 0; i<12; i++){
+        data_form = data_form.replaceAll("Feb", "Fev");
+        data_form = data_form.replaceAll("Apr", "Abr");
+        data_form = data_form.replaceAll("May", "Mai");
+        data_form = data_form.replaceAll("Aug", "Ago");
+        data_form = data_form.replaceAll("Sep", "Set");
+        data_form = data_form.replaceAll("Oct", "Out");
+        data_form = data_form.replaceAll("Dec", "Dez");
         
-//   //       dt_inicial = dt_inicial.replaceAll("Sun", "Dom");
-//   //       dt_inicial = dt_inicial.replaceAll("Mon", "Seg");
-//   //       dt_inicial = dt_inicial.replaceAll("Tue", "Ter");
-//   //       dt_inicial = dt_inicial.replaceAll("Wed", "Qua");
-//   //       dt_inicial = dt_inicial.replaceAll("Thur", "Qui");
-//   //       dt_inicial = dt_inicial.replaceAll("Fri", "Sex");
-//   //       dt_inicial = dt_inicial.replaceAll("Sat", "Sáb");
+        data_form = data_form.replaceAll("Sun", "Dom");
+        data_form = data_form.replaceAll("Mon", "Seg");
+        data_form = data_form.replaceAll("Tue", "Ter");
+        data_form = data_form.replaceAll("Wed", "Qua");
+        data_form = data_form.replaceAll("Thur", "Qui");
+        data_form = data_form.replaceAll("Fri", "Sex");
+        data_form = data_form.replaceAll("Sat", "Sáb");
+      }
+      
+      content["data_form"] = data_form;
+      content["data_no_form"] = data_no_form;
 
+      return content;
+    }
+  }
 
-//   //       dt_final = dt_final.replaceAll("Feb", "Fev");
-//   //       dt_final = dt_final.replaceAll("Apr", "Abr");
-//   //       dt_final = dt_final.replaceAll("May", "Mai");
-//   //       dt_final = dt_final.replaceAll("Aug", "Ago");
-//   //       dt_final = dt_final.replaceAll("Sep", "Set");
-//   //       dt_final = dt_final.replaceAll("Oct", "Out");
-//   //       dt_final = dt_final.replaceAll("Dec", "Dez");
-        
-//   //       dt_final = dt_final.replaceAll("Sun", "Dom");
-//   //       dt_final = dt_final.replaceAll("Mon", "Seg");
-//   //       dt_final = dt_final.replaceAll("Tue", "Ter");
-//   //       dt_final = dt_final.replaceAll("Wed", "Qua");
-//   //       dt_final = dt_final.replaceAll("Thur", "Qui");
-//   //       dt_final = dt_final.replaceAll("Fri", "Sex");
-//   //       dt_final = dt_final.replaceAll("Sat", "Sáb");
-//   //     }
-
-//   //     content["dt_start"] = dt_start;
-//   //     content["dt_end"] = dt_end;
-
-//   //     content["dt_inicial"] = dt_inicial;
-//   //     content["dt_final"] = dt_final;
-
-//   //     // content["title"] = toDoList[0]["details"]["0"]["title"];
-//   //     content["bool"] = false;
-
-//   //     // details["$index"] = content;
-
-//   //     // newToDo["title"] = toDoList[0]["title"];
-//   //     // newToDo["details"] = details;
-//   //     // newToDo["ok"] = false;
-
-//   //     // toDoList.insert(0, newToDo);
-
-//   //     print(toDoList);
-//   //   }
-//   // }
-
-//   DataHora({this.context, this.data_atual, this.data_list, this.toDoList,});
-// }
+  DataHora({this.context, this.data_no_form_atual, this.data_no_form_list, this.picked, this.index});
+}

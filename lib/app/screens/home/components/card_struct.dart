@@ -20,7 +20,6 @@ class CardStruct extends StatefulWidget {
 
 class _CardStructState extends State<CardStruct> {
   List toDoList = [];
-  dynamic conteudo = Container(color: Colors.white,);
 
   @override
   initState() {
@@ -69,7 +68,6 @@ class _CardStructState extends State<CardStruct> {
           ),
         ],
       ),
-      backgroundColor: Colors.white,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
         elevation: 5,
@@ -113,15 +111,14 @@ class _CardStructState extends State<CardStruct> {
     return Center(
       child: Card(
         elevation: 0,
-        color: Colors.white,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(size_screem * 0.04),
         ),
         child: Container(
-          width: size_screem * 0.85,
+          width: size_screem * 0.9,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey[300]),
+            border: Border.all(color: Colors.grey),
               borderRadius:
                   BorderRadius.all(Radius.circular(size_screem * 0.04))),
           child: Slidable(
