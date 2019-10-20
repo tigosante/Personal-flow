@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+// import 'package:local_notifications/local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
+// import 'package:personal_flow/app/shared/notifications.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 
 class CardContent extends StatefulWidget {
@@ -38,6 +40,8 @@ class _CardContentState extends State<CardContent> {
 
   @override
   Widget build(BuildContext context) {
+    // Notifications notifications = Notifications();
+
     TextEditingController controller = TextEditingController();
     setState(() {
       index = widget.index;
@@ -55,50 +59,56 @@ class _CardContentState extends State<CardContent> {
             "Tarefas concluídas:",
             style: TextStyle(
                 color: Colors.grey[700],
-                fontSize: size_screem * 0.03,
+                fontSize: size_screem * 0.025,
                 fontFamily: font_button,
                 fontWeight: FontWeight.bold),
           ),
         ),
         categoryProgress(context),
-        Padding(
-          padding: EdgeInsets.only(
-            left: size_screem * 0.003,
-            right: size_screem * 0.003,
-          ),
-          child: Column(
-            children: <Widget>[
-              Card(
-                elevation: 0,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(size_screem * 0.03),
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+        Divider(
+          color: Colors.transparent,
+          height: size_screem * 0.02,
+        ),
+        Column(
+          children: <Widget>[
+            Container(
+              width: size_screem * 0.83,
+              child: Column(
+                children: <Widget>[
+                  Card(
+                    elevation: 0,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: Column(
                         children: List<Widget>.generate(
                             toDoList[widget.valor]["details"].length,
                             (int index) => buildBody(context, index))),
-                    Container(
-                      height: size_screem * 0.14,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: size_screem * 0.007,
+                      right: size_screem * 0.007,
+                    ),
+                    child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                      ),
+                          color:
+                              toDoList[widget.valor]["details"].length % 2 ==
+                                      0
+                                  ? Colors.white
+                                  : Colors.grey[100],
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(size_screem * 0.01))),
                       child: Row(children: <Widget>[
                         Expanded(
                           child: ListTile(
                             title: TextField(
+                              controller: controller,
                               decoration: InputDecoration(
                                 hintText: "Nova tarefa",
                                 border: InputBorder.none,
                               ),
-                              controller: controller,
                             ),
                             trailing: IconButton(
-                              icon: Icon(Icons.add_circle),
+                              icon: Icon(Icons.add_circle, color: Colors.blue[600],),
                               onPressed: () {
                                 setState(() {
                                   if (controller.text.trim() != "") {
@@ -109,6 +119,7 @@ class _CardContentState extends State<CardContent> {
                                     toDoList[widget.valor]["details"][
                                             "${toDoList[widget.valor]["details"].length}"] =
                                         content;
+                                    toDoList[widget.valor]["ok"] = false;
                                     saveData();
                                   }
                                 });
@@ -117,116 +128,115 @@ class _CardContentState extends State<CardContent> {
                           ),
                         ),
                       ]),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: size_screem * 0.01,
-                  right: size_screem * 0.01,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    FlatButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(size_screem * 0.05),
-                      ),
-                      child: Text(
-                        "Priorizar",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: font_button,
-                            fontSize: size_screem * 0.03),
-                      ),
-                      onPressed: () {},
                     ),
-                    RaisedButton(
-                      elevation: 0,
-                      color: corConcluir,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(size_screem * 0.05),
-                      ),
-                      child: Text(
-                        "Concluir",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: font_button,
-                            fontSize: size_screem * 0.03),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          print(toDoList[index]["ok"]);
-                          if (!toDoList[index]["ok"]) {
-                            List<bool> antigo = [];
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: size_screem * 0.04,
+                right: size_screem * 0.01,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  FlatButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(size_screem * 0.05),
+                    ),
+                    child: Text(
+                      "Priorizar",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: font_button,
+                          fontSize: size_screem * 0.025),
+                    ),
+                    onPressed: () {},
+                  ),
+                  RaisedButton(
+                    elevation: 0,
+                    color: Colors.blue[600],
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(size_screem * 0.05),
+                    ),
+                    child: Text(
+                      "Concluir",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: font_button,
+                          fontSize: size_screem * 0.025),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (!toDoList[index]["ok"]) {
+                          toDoList[index]["ok"] = true;
 
-                            if (!toDoList[index]["ok"]) {
-                              toDoList[index]["ok"] = true;
-                            }
+                          List<bool> antigo = [];
 
-                            for (int i = 0;
-                                i < toDoList[index]["details"].length;
-                                i++) {
-                              antigo.add(
-                                  toDoList[index]["details"]["$i"]["bool"]);
-                              toDoList[index]["details"]["$i"]["bool"] = true;
-                            }
-
-                            saveData();
-
-                            Flushbar flushbar;
-                            bool _wasButtonClicked;
-
-                            flushbar = Flushbar<bool>(
-                              animationDuration: Duration(milliseconds: 650),
-                              message: "Tarefa concluída",
-                              borderRadius: size_screem * 0.05,
-                              margin: EdgeInsets.only(
-                                bottom: size_screem * 0.15,
-                                left: size_screem * 0.1,
-                                right: size_screem * 0.1,
-                              ),
-                              duration: Duration(seconds: 2),
-                              mainButton: FlatButton(
-                                child: Text(
-                                  "Desfazer",
-                                  style: TextStyle(color: Colors.amber),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    for (int i = 0;
-                                        i < toDoList[index]["details"].length;
-                                        i++) {
-                                      toDoList[index]["details"]["$i"]["bool"] =
-                                          antigo[i];
-                                    }
-                                    toDoList[index]["ok"] = false;
-
-                                    saveData();
-
-                                    flushbar.dismiss(true);
-                                  });
-                                },
-                              ),
-                            )..show(context).then((result) {
-                                setState(() {
-                                  _wasButtonClicked = result;
-                                });
-                              });
+                          for (int i = 0;
+                              i < toDoList[index]["details"].length;
+                              i++) {
+                            antigo.add(
+                                toDoList[index]["details"]["$i"]["bool"]);
+                            toDoList[index]["details"]["$i"]["bool"] = true;
                           }
-                        });
-                      },
-                    )
-                  ],
-                ),
+
+                          saveData();
+
+                          Flushbar flushbar;
+                          bool _wasButtonClicked;
+
+                          flushbar = Flushbar<bool>(
+                            animationDuration: Duration(milliseconds: 650),
+                            message: "Tarefa concluída",
+                            borderRadius: size_screem * 0.05,
+                            margin: EdgeInsets.only(
+                              bottom: size_screem * 0.15,
+                              left: size_screem * 0.1,
+                              right: size_screem * 0.1,
+                            ),
+                            duration: Duration(seconds: 2),
+                            mainButton: FlatButton(
+                              child: Text(
+                                "Desfazer",
+                                style: TextStyle(color: Colors.amber),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  for (int i = 0;
+                                      i < toDoList[index]["details"].length;
+                                      i++) {
+                                    toDoList[index]["details"]["$i"]
+                                        ["bool"] = antigo[i];
+                                  }
+                                  toDoList[index]["ok"] = false;
+
+                                  saveData();
+
+                                  flushbar.dismiss(true);
+                                });
+                              },
+                            ),
+                          )..show(context).then((result) {
+                              setState(() {
+                                _wasButtonClicked = result;
+                              });
+                            });
+                        }
+                      });
+                    },
+                  )
+                ],
               ),
-              Divider(
-                color: Colors.transparent,
-                height: size_screem * 0.02,
-              ),
-            ],
-          ),
+            ),
+            Divider(
+              color: Colors.transparent,
+              height: size_screem * 0.02,
+            ),
+          ],
         ),
       ],
     );
@@ -245,63 +255,61 @@ class _CardContentState extends State<CardContent> {
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
-      child: Padding(
-        padding: EdgeInsets.only(bottom: size_screem * 0.0),
-        child: Container(
-          decoration: BoxDecoration(
+      child: Container(
+        decoration: BoxDecoration(
             color: index % 2 == 0 ? Colors.white : Colors.grey[100],
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: ListTile(
-                  title: TextField(
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: "Tarefa",
-                    ),
-                    controller: controllerText,
+            borderRadius:
+                BorderRadius.all(Radius.circular(size_screem * 0.01))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Expanded(
+              child: ListTile(
+                title: TextField(
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Tarefa",
                   ),
-                  leading: boolSub
-                      ? IconButton(
-                          icon: leadIconSub,
-                          onPressed: () {
-                            setState(() {
-                              toDoList = informacoes.stateIconLead();
-                              saveData();
-                            });
-                          },
-                        )
-                      : null,
-                  trailing: controllerText.text == title_sub
-                      ? (boolSub
-                          ? null
-                          : IconButton(
-                              icon: traiIcon,
-                              onPressed: () {
-                                setState(() {
-                                  toDoList = informacoes.stateIconTrai();
-                                  saveData();
-                                });
-                              },
-                            ))
-                      : IconButton(
-                          icon: Icon(Icons.save_alt),
-                          onPressed: () {
-                            setState(() {
-                              toDoList[widget.valor]["details"]["$index"]
-                                  ["title"] = controllerText.text;
-                              toDoList = informacoes.stateIconLead();
-                              saveData();
-                            });
-                          },
-                        ),
+                  controller: controllerText,
                 ),
+                leading: boolSub
+                    ? IconButton(
+                        icon: leadIconSub,
+                        onPressed: () {
+                          setState(() {
+                            toDoList = informacoes.stateIconLead();
+                            saveData();
+                          });
+                        },
+                      )
+                    : null,
+                trailing: controllerText.text == title_sub
+                    ? (boolSub
+                        ? null
+                        : IconButton(
+                            icon: traiIcon,
+                            onPressed: () {
+                              setState(() {
+                                toDoList = informacoes.stateIconTrai();
+                                saveData();
+                              });
+                            },
+                          ))
+                    : IconButton(
+                        icon: Icon(Icons.save_alt),
+                        onPressed: () {
+                          setState(() {
+                            toDoList[widget.valor]["details"]["$index"]
+                                ["title"] = controllerText.text;
+                            toDoList = informacoes.stateIconLead();
+                            saveData();
+                          });
+                        },
+                      ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       secondaryActions: <Widget>[
@@ -330,7 +338,15 @@ class _CardContentState extends State<CardContent> {
               for (int i = 0; i <= toDo.length; i++) {
                 if (toDo["$i"] != null) {
                   toDoNovo.add(toDo["$i"]);
+
+                  if (toDoList[widget.valor]["details"]["$i"]["bool"]) {
+                    valor++;
+                  }
                 }
+              }
+
+              if (valor == toDoNovo.length) {
+                toDoList[widget.valor]["ok"] = true;
               }
 
               for (int i = 0; i < toDoNovo.length; i++) {
@@ -380,21 +396,20 @@ class _CardContentState extends State<CardContent> {
   }
 
   categoryProgress(BuildContext context) {
-    return Container(
-      height: size_screem * 0.07,
-      child: Card(
-        elevation: 0,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(size_screem * 0.5),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          height: size_screem * 0.035,
+          width: size_screem * 0.8,
+          child: FAProgressBar(
+              displayText: "  ",
+              maxValue: done_title(),
+              currentValue: done(),
+              progressColor: Colors.teal[200],
+              backgroundColor: Colors.white),
         ),
-        child: FAProgressBar(
-            displayText: "  ",
-            maxValue: done_title(),
-            currentValue: done(),
-            progressColor: Colors.orange[300],
-            backgroundColor: Colors.grey[50]),
-      ),
+      ],
     );
   }
 

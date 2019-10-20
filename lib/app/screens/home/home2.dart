@@ -2,6 +2,7 @@ import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_flow/app/screens/graphic/graphic.dart';
 import 'package:personal_flow/app/screens/home/components/card_struct.dart';
+import 'package:personal_flow/app/shared/notification_widget.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -14,7 +15,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    List pages = [CardStruct(), Graphic()];
+    List pages = [CardStruct(), NotificationWidget()];
 
     return Scaffold(
       body: pages.elementAt(_selectedIndex),

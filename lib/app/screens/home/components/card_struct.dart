@@ -20,6 +20,7 @@ class CardStruct extends StatefulWidget {
 
 class _CardStructState extends State<CardStruct> {
   List toDoList = [];
+  dynamic conteudo = Container(color: Colors.white,);
 
   @override
   initState() {
@@ -47,7 +48,12 @@ class _CardStructState extends State<CardStruct> {
               children: <Widget>[
                 Expanded(
                   child: toDoList.length < 1
-                      ? Container(color: Colors.white)
+                      ? Image.asset(
+                          "assets/background.png",
+                          height: size_screem * 0.5,
+                          width: size_screem * 0.5,
+                          color: Colors.grey[200],
+                        )
                       : ListView.builder(
                           padding: EdgeInsets.only(
                             bottom: size_screem * 0.15,
@@ -80,7 +86,7 @@ class _CardStructState extends State<CardStruct> {
           Icons.add,
           color: Colors.black,
         ),
-        onPressed: () async {
+        onPressed:() async {
           var retorno = await Navigator.push(
               context,
               MaterialPageRoute(
@@ -95,21 +101,19 @@ class _CardStructState extends State<CardStruct> {
     );
   }
 
-  Widget buildCardStruct(
-      BuildContext context, index, size_screem, font_button) {
+  Widget buildCardStruct(BuildContext context, index, size_screem, font_button) {
     Informacoes informacoes = Informacoes(toDoList: toDoList, index: index);
     String title = informacoes.outTitle;
     TextEditingController controller = TextEditingController(text: title);
 
     Buttons buttons =
         Buttons(toDoList: toDoList, index: index, context: context);
-    final concluir = buttons.concluir;
     Color corConcluir = buttons.cor_concluir();
 
     return Center(
       child: Card(
-        elevation: 5,
-        color: Colors.orange[100],
+        elevation: 0,
+        color: Colors.white,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(size_screem * 0.04),
@@ -117,6 +121,7 @@ class _CardStructState extends State<CardStruct> {
         child: Container(
           width: size_screem * 0.85,
           decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[300]),
               borderRadius:
                   BorderRadius.all(Radius.circular(size_screem * 0.04))),
           child: Slidable(
@@ -179,6 +184,8 @@ class _CardStructState extends State<CardStruct> {
                     lastRemovedPos = index;
 
                     toDoList.removeAt(index);
+
+                    saveData();
 
                     Flushbar flushbar;
                     bool _wasButtonClicked;
