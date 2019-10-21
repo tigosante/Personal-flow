@@ -108,56 +108,84 @@ class Informacoes {
 }
 
 class DataHora{
-  dynamic data_no_form_list;
-  dynamic data_no_form_atual;
   dynamic context;
   dynamic picked;
+  String title;
+  bool boolen;
   int index;
 
   calendario() {
-    if (picked != null) {
-      Map<String, dynamic> content = Map();
-      Map<String, dynamic> details = Map();
+      if (picked != null) {
+        Map<String, dynamic> content = Map();
 
-      String data_no_form;
-      String data_form;
+        String data_no_form;
+        String data_form;
 
-      int day;
-      int mot;
-      int yea;
-      
+        int day;
+        int mot;
+        int yea;
 
-      data_no_form  =  picked.toString().split(" ").removeAt(0).replaceAll("-", "/");
-      yea   =  int.parse(data_no_form.split("/").toList()[0].toString());
-      mot   =  int.parse(data_no_form.split("/").toList()[1].toString());
-      day   =  int.parse(data_no_form.split("/").toList()[2].toString());
+        data_no_form  =  picked.toString().split(" ").removeAt(0).replaceAll("-", "/");
+        yea   =  int.parse(data_no_form.split("/").toList()[0].toString());
+        mot   =  int.parse(data_no_form.split("/").toList()[1].toString());
+        day   =  int.parse(data_no_form.split("/").toList()[2].toString());
 
-      data_form = formatDate(DateTime(yea, mot, day), [D, ', ', d, ' ', M]);
+        data_form = formatDate(DateTime(yea, mot, day), [D, ', ', d, ' ', M]);
 
-      for(int i = 0; i<12; i++){
-        data_form = data_form.replaceAll("Feb", "Fev");
-        data_form = data_form.replaceAll("Apr", "Abr");
-        data_form = data_form.replaceAll("May", "Mai");
-        data_form = data_form.replaceAll("Aug", "Ago");
-        data_form = data_form.replaceAll("Sep", "Set");
-        data_form = data_form.replaceAll("Oct", "Out");
-        data_form = data_form.replaceAll("Dec", "Dez");
+        for(int i = 0; i<12; i++){
+          data_form = data_form.replaceAll("Feb", "Fev");
+          data_form = data_form.replaceAll("Apr", "Abr");
+          data_form = data_form.replaceAll("May", "Mai");
+          data_form = data_form.replaceAll("Aug", "Ago");
+          data_form = data_form.replaceAll("Sep", "Set");
+          data_form = data_form.replaceAll("Oct", "Out");
+          data_form = data_form.replaceAll("Dec", "Dez");
+          
+          data_form = data_form.replaceAll("Sun", "Dom");
+          data_form = data_form.replaceAll("Mon", "Seg");
+          data_form = data_form.replaceAll("Tue", "Ter");
+          data_form = data_form.replaceAll("Wed", "Qua");
+          data_form = data_form.replaceAll("Thur", "Qui");
+          data_form = data_form.replaceAll("Fri", "Sex");
+          data_form = data_form.replaceAll("Sat", "Sáb");
+        }
+
+        content["hora"] = null;
+        content["data_form"] = data_form;
         
-        data_form = data_form.replaceAll("Sun", "Dom");
-        data_form = data_form.replaceAll("Mon", "Seg");
-        data_form = data_form.replaceAll("Tue", "Ter");
-        data_form = data_form.replaceAll("Wed", "Qua");
-        data_form = data_form.replaceAll("Thur", "Qui");
-        data_form = data_form.replaceAll("Fri", "Sex");
-        data_form = data_form.replaceAll("Sat", "Sáb");
-      }
-      
-      content["data_form"] = data_form;
-      content["data_no_form"] = data_no_form;
+        if(title != null && boolen != null){
+          content["title"] = title;
+          content["bool"] = boolen;
+        }
 
-      return content;
+        return content;
+      }else{
+        Map<String, dynamic> content = Map();
+
+        content["hora"] = null;
+        content["data_form"] = null;
+        
+        content["title"] = null;
+        content["bool"] = null;
+        
+        if(title != null && boolen != null){
+          content["title"] = title;
+          content["bool"] = boolen;
+        }
+
+        return content;
+      }
+    }
+
+  hora() {
+    if (picked != null && picked != TimeOfDay.now()) {
+      String retorno = picked.toString()
+          .split("TimeOfDay(")[1]
+          .split(")")[0];
+
+      return retorno;
     }
   }
 
-  DataHora({this.context, this.data_no_form_atual, this.data_no_form_list, this.picked, this.index});
+  DataHora({this.context, this.picked, this.index, this.boolen, this.title});
 }

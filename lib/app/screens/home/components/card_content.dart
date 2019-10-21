@@ -37,10 +37,18 @@ class _CardContentState extends State<CardContent> {
   double size_screem;
   dynamic font_button;
   Color corConcluir;
+  Map<String, dynamic> list_data = Map();
 
   @override
   Widget build(BuildContext context) {
     // Notifications notifications = Notifications();
+
+    IconButton bt_calendar = IconButton(
+        color: Colors.blue[600],
+        icon: Icon(
+          Icons.calendar_today,
+        ),
+        onPressed: () {});
 
     TextEditingController controller = TextEditingController();
     setState(() {
@@ -58,7 +66,7 @@ class _CardContentState extends State<CardContent> {
           child: Text(
             "Tarefas concluídas:",
             style: TextStyle(
-                fontSize: size_screem * 0.025,
+                fontSize: size_screem * 0.02,
                 fontFamily: font_button,
                 fontWeight: FontWeight.bold),
           ),
@@ -74,21 +82,32 @@ class _CardContentState extends State<CardContent> {
               width: size_screem * 0.83,
               child: Column(
                 children: <Widget>[
-                  Column(
-                    children: List<Widget>.generate(
-                      toDoList[widget.valor]["details"].length,
-                      (int index) => buildBody(context, index))),
-                  Container(
+                  toDoList[widget.valor]["details"].length > 0
+                      ? Column(
+                          children: List<Widget>.generate(
+                              toDoList[widget.valor]["details"].length,
+                              (int index) => buildBody(context, index)))
+                      : Container(
+                          color: Colors.transparent,
+                        ),
+                  Padding(
                     padding: EdgeInsets.only(
-                      left: size_screem * 0.025,
+                      top: size_screem * 0.03,
                     ),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.all(
-                            Radius.circular(size_screem * 0.01))),
-                    child: Row(children: <Widget>[
-                      Expanded(
-                        child: TextField(
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        left: size_screem * 0.02,
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(size_screem * 0.02),
+                            topRight: Radius.circular(size_screem * 0.02),
+                            bottomLeft: Radius.circular(size_screem * 0.02),
+                          )),
+                      child: Row(children: <Widget>[
+                        Expanded(
+                          child: TextField(
                             controller: controller,
                             maxLines: 8,
                             minLines: 1,
@@ -97,51 +116,74 @@ class _CardContentState extends State<CardContent> {
                               border: InputBorder.none,
                             ),
                           ),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.add_circle, color: Colors.blue[600],),
-                        onPressed: () {
-                          setState(() {
-                            if (controller.text.trim() != "") {
-                              Map<String, dynamic> content = Map();
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.add_circle,
+                            color: Colors.blue[600],
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              if (controller.text.trim() != "") {
+                                Map<String, dynamic> content = Map();
 
-                              content["title"] = controller.text.trim();
-                              content["bool"] = false;
-                              toDoList[widget.valor]["details"][
-                                      "${toDoList[widget.valor]["details"].length}"] =
-                                  content;
-                              toDoList[widget.valor]["ok"] = false;
-                              saveData();
-                            }
-                          });
-                        },
-                      ),
-                    ]),
+                                content["title"] = controller.text.trim();
+                                content["bool"] = false;
+                                content["hora"] = null;
+                                content["data_form"] = null;
+
+                                if (list_data.length > 0) {
+                                  content["hora"] = list_data["hora"];
+                                  content["data_form"] = list_data["data_form"];
+                                }
+
+                                toDoList[widget.valor]["details"][
+                                        "${toDoList[widget.valor]["details"].length}"] =
+                                    content;
+                                toDoList[widget.valor]["ok"] = false;
+
+                                list_data["hora"] = null;
+                                list_data["data_form"] = null;
+
+                                saveData();
+                              }
+                            });
+                          },
+                        ),
+                      ]),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey,),
-                          borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(size_screem * 0.02),
-                            bottomLeft: Radius.circular(size_screem * 0.02),
-                            bottomRight: Radius.circular(size_screem * 0.02),
-                          )),
-                        child: dtHr(context, index, size_screem),
-                      ),
-                      IconButton(
-                        color: Colors.blue[600],
-                        icon: Icon(
-                          Icons.calendar_today,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            // press = false;
-                          });
-                        },
-                      )
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(size_screem * 0.02),
+                                bottomLeft: Radius.circular(size_screem * 0.02),
+                                bottomRight:
+                                    Radius.circular(size_screem * 0.02),
+                              )),
+                          child: dtHrNovo(context)),
+                      list_data == null
+                          ? bt_calendar
+                          : list_data["data_form"] == null
+                              ? bt_calendar
+                              : IconButton(
+                                  color: Colors.red[600],
+                                  icon: Icon(
+                                    Icons.close,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      list_data["data_form"] = null;
+                                      list_data["hora"] = null;
+                                    });
+                                  },
+                                )
                     ],
                   )
                 ],
@@ -157,8 +199,7 @@ class _CardContentState extends State<CardContent> {
                 children: <Widget>[
                   FlatButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(size_screem * 0.05),
+                      borderRadius: BorderRadius.circular(size_screem * 0.05),
                     ),
                     child: Text(
                       "Priorizar",
@@ -171,13 +212,11 @@ class _CardContentState extends State<CardContent> {
                   RaisedButton(
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(size_screem * 0.05),
+                      borderRadius: BorderRadius.circular(size_screem * 0.05),
                     ),
                     child: Text(
                       "Concluir",
-                      style: TextStyle(
-                          fontSize: size_screem * 0.025),
+                      style: TextStyle(fontSize: size_screem * 0.025),
                     ),
                     onPressed: () {
                       setState(() {
@@ -189,8 +228,8 @@ class _CardContentState extends State<CardContent> {
                           for (int i = 0;
                               i < toDoList[index]["details"].length;
                               i++) {
-                            antigo.add(
-                                toDoList[index]["details"]["$i"]["bool"]);
+                            antigo
+                                .add(toDoList[index]["details"]["$i"]["bool"]);
                             toDoList[index]["details"]["$i"]["bool"] = true;
                           }
 
@@ -219,8 +258,8 @@ class _CardContentState extends State<CardContent> {
                                   for (int i = 0;
                                       i < toDoList[index]["details"].length;
                                       i++) {
-                                    toDoList[index]["details"]["$i"]
-                                        ["bool"] = antigo[i];
+                                    toDoList[index]["details"]["$i"]["bool"] =
+                                        antigo[i];
                                   }
                                   toDoList[index]["ok"] = false;
 
@@ -253,7 +292,8 @@ class _CardContentState extends State<CardContent> {
   }
 
   Widget buildBody(context, index) {
-    Informacoes informacoes = Informacoes(toDoList: toDoList, index: widget.valor, index_sub: index);
+    Informacoes informacoes =
+        Informacoes(toDoList: toDoList, index: widget.valor, index_sub: index);
     String title_sub = informacoes.titleSub();
     bool boolSub = informacoes.boolSub();
     Icon leadIconSub = informacoes.leadIconSub();
@@ -262,268 +302,431 @@ class _CardContentState extends State<CardContent> {
     TextEditingController controllerText =
         TextEditingController(text: title_sub);
 
-    return Slidable(
-      actionPane: SlidableDrawerActionPane(),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: size_screem * 0.01),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey,),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(size_screem * 0.02),
-                  topRight: Radius.circular(size_screem * 0.02),
-                  bottomLeft: Radius.circular(size_screem * 0.02),
-                )
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  boolSub
-                    ? IconButton(
-                        icon: leadIconSub,
-                        onPressed: () {
-                          setState(() {
-                            toDoList = informacoes.stateIconLead();
-                            saveData();
-                          });
-                        },
-                      )
-                    : Container(color: Colors.transparent,),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: size_screem * 0.025,
-                      ),
-                      child: TextField(
-                        maxLines: 8,
-                        minLines: 1,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Tarefa",
-                        ),
-                        controller: controllerText,
-                      ),
+    IconButton bt_calendar = IconButton(
+        color: Colors.blue[600],
+        icon: Icon(
+          Icons.calendar_today,
+        ),
+        onPressed: () {});
+
+    return Card(
+      elevation: 0,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(size_screem * 0.03),
+      ),
+      child: Slidable(
+        actionPane: SlidableDrawerActionPane(),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: size_screem * 0.01),
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey,
                     ),
-                  ),
-                  controllerText.text == title_sub
-                    ? (boolSub
-                        ? Container(color: Colors.transparent,)
-                        : IconButton(
-                            icon: traiIcon,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(size_screem * 0.02),
+                      topRight: Radius.circular(size_screem * 0.02),
+                      bottomLeft: Radius.circular(size_screem * 0.02),
+                    )),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    boolSub
+                        ? IconButton(
+                            icon: leadIconSub,
                             onPressed: () {
                               setState(() {
-                                toDoList = informacoes.stateIconTrai();
+                                toDoList = informacoes.stateIconLead();
                                 saveData();
                               });
                             },
-                          ))
-                    : IconButton(
-                        icon: Icon(Icons.save_alt),
-                        onPressed: () {
-                          setState(() {
-                            toDoList[widget.valor]["details"]["$index"]
-                                ["title"] = controllerText.text;
-                            toDoList = informacoes.stateIconLead();
-                            saveData();
-                          });
-                        },
+                          )
+                        : Container(
+                            color: Colors.transparent,
+                          ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: size_screem * 0.02,
+                        ),
+                        child: TextField(
+                          maxLines: 8,
+                          minLines: 1,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Tarefa",
+                          ),
+                          controller: controllerText,
+                        ),
                       ),
-                ],
+                    ),
+                    controllerText.text == title_sub
+                        ? (boolSub
+                            ? Container(
+                                color: Colors.transparent,
+                              )
+                            : IconButton(
+                                icon: traiIcon,
+                                onPressed: () {
+                                  setState(() {
+                                    toDoList = informacoes.stateIconTrai();
+                                    saveData();
+                                  });
+                                },
+                              ))
+                        : IconButton(
+                            icon: Icon(Icons.save_alt),
+                            onPressed: () {
+                              setState(() {
+                                toDoList[widget.valor]["details"]["$index"]
+                                    ["title"] = controllerText.text;
+                                toDoList = informacoes.stateIconLead();
+                                saveData();
+                              });
+                            },
+                          ),
+                  ],
+                ),
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey,),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(size_screem * 0.02),
-                    bottomLeft: Radius.circular(size_screem * 0.02),
-                    bottomRight: Radius.circular(size_screem * 0.02),
-                  )),
-                child: dtHr(context, index, size_screem),
-              ),
-              IconButton(
-                color: Colors.blue[600],
-                icon: Icon(
-                  Icons.calendar_today,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      ),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(size_screem * 0.02),
+                        bottomLeft: Radius.circular(size_screem * 0.02),
+                        bottomRight: Radius.circular(size_screem * 0.02),
+                      )),
+                  child: dtHr(context, index),
                 ),
-                onPressed: () {
-                  setState(() {
-                    // press = false;
-                  });
-                },
-              )
-            ],
-          )
-        ],
-      ),
-      secondaryActions: <Widget>[
-        IconSlideAction(
-          caption: "Excluir",
-          color: Colors.red,
-          icon: Icons.delete,
-          onTap: () {
-            setState(() {
-              int valor = 0;
-              int lastRemovedPos;
-              dynamic lastRemoved;
-              Map<String, dynamic> toDo = Map();
-              Map<String, dynamic> toDoAntigo = Map();
-              Map<String, dynamic> toNovo = Map();
-              List toDoNovo = [];
+                toDoList[widget.valor]["details"]["$index"] == null
+                    ? bt_calendar
+                    : toDoList[widget.valor]["details"]["$index"]["data_form"] ==
+                            null
+                        ? bt_calendar
+                        : IconButton(
+                            color: Colors.red[600],
+                            icon: Icon(
+                              Icons.close,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                toDoList[widget.valor]["details"]["$index"]
+                                    ["data_form"] = null;
+                                toDoList[widget.valor]["details"]["$index"]
+                                    ["hora"] = null;
+                              });
+                            },
+                          )
+              ],
+            )
+          ],
+        ),
+        secondaryActions: <Widget>[
+          IconSlideAction(
+            caption: "Excluir",
+            color: Colors.red,
+            icon: Icons.delete,
+            onTap: () {
+              setState(() {
+                int valor = 0;
+                int lastRemovedPos;
+                dynamic lastRemoved;
+                Map<String, dynamic> toDo = Map();
+                Map<String, dynamic> toDoAntigo = Map();
+                Map<String, dynamic> toNovo = Map();
+                List toDoNovo = [];
 
-              lastRemoved = toDoList[widget.valor]["details"]["$index"];
-              lastRemovedPos = index;
+                lastRemoved = toDoList[widget.valor]["details"]["$index"];
+                lastRemovedPos = index;
 
-              toDo = Map.from(toDoList[widget.valor]["details"]);
-              toDoAntigo = Map.from(toDoList[widget.valor]["details"]);
+                toDo = Map.from(toDoList[widget.valor]["details"]);
+                toDoAntigo = Map.from(toDoList[widget.valor]["details"]);
 
-              toDo.remove("$lastRemovedPos");
+                toDo.remove("$lastRemovedPos");
 
-              for (int i = 0; i <= toDo.length; i++) {
-                if (toDo["$i"] != null) {
-                  toDoNovo.add(toDo["$i"]);
+                for (int i = 0; i <= toDo.length; i++) {
+                  if (toDo["$i"] != null) {
+                    toDoNovo.add(toDo["$i"]);
 
-                  if (toDoList[widget.valor]["details"]["$i"]["bool"]) {
-                    valor++;
+                    if (toDoList[widget.valor]["details"]["$i"]["bool"]) {
+                      valor++;
+                    }
                   }
                 }
-              }
 
-              if (valor == toDoNovo.length) {
-                toDoList[widget.valor]["ok"] = true;
-              }
+                if (valor == toDoNovo.length) {
+                  toDoList[widget.valor]["ok"] = true;
+                }
 
-              for (int i = 0; i < toDoNovo.length; i++) {
-                toNovo["$i"] = toDoNovo[i];
-              }
+                for (int i = 0; i < toDoNovo.length; i++) {
+                  toNovo["$i"] = toDoNovo[i];
+                }
 
-              toDoList[widget.valor]["details"] = toNovo;
+                toDoList[widget.valor]["details"] = toNovo;
 
-              saveData();
+                saveData();
 
-              Flushbar flushbar;
-              bool _wasButtonClicked;
+                Flushbar flushbar;
+                bool _wasButtonClicked;
 
-              flushbar = Flushbar<bool>(
-                animationDuration: Duration(milliseconds: 650),
-                message: "Tarefa removida",
-                borderRadius: size_screem * 0.05,
-                margin: EdgeInsets.only(
-                  bottom: size_screem * 0.15,
-                  left: size_screem * 0.1,
-                  right: size_screem * 0.1,
-                ),
-                duration: Duration(seconds: 2),
-                mainButton: FlatButton(
-                  child: Text(
-                    "Desfazer",
-                    style: TextStyle(color: Colors.amber),
+                flushbar = Flushbar<bool>(
+                  animationDuration: Duration(milliseconds: 650),
+                  message: "Tarefa removida",
+                  borderRadius: size_screem * 0.05,
+                  margin: EdgeInsets.only(
+                    bottom: size_screem * 0.15,
+                    left: size_screem * 0.1,
+                    right: size_screem * 0.1,
                   ),
-                  onPressed: () {
+                  duration: Duration(seconds: 2),
+                  mainButton: FlatButton(
+                    child: Text(
+                      "Desfazer",
+                      style: TextStyle(color: Colors.amber),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        toDoList[widget.valor]["details"] = toDoAntigo;
+                        saveData();
+                        flushbar.dismiss(true);
+                      });
+                    },
+                  ),
+                )..show(context).then((result) {
                     setState(() {
-                      toDoList[widget.valor]["details"] = toDoAntigo;
-                      saveData();
-                      flushbar.dismiss(true);
+                      _wasButtonClicked = result;
                     });
-                  },
-                ),
-              )..show(context).then((result) {
-                  setState(() {
-                    _wasButtonClicked = result;
                   });
-                });
+              });
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget dtHr(context, index) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        InkWell(
+          child: Container(
+            margin: EdgeInsets.only(
+              top: size_screem * 0.02,
+              left: size_screem * 0.02,
+              right: size_screem * 0.02,
+              bottom: size_screem * 0.02,
+            ),
+            child: Text(
+              toDoList[widget.valor]["details"]["$index"] == null
+                  ? "Data"
+                  : toDoList[widget.valor]["details"]["$index"]["data_form"] ==
+                          null
+                      ? "Data"
+                      : toDoList[widget.valor]["details"]["$index"]
+                          ["data_form"],
+              style: TextStyle(
+                  color: Colors.blue[600],
+                  fontSize: size_screem * 0.025,
+                  fontFamily: 'Orkney-bold'),
+            ),
+          ),
+          onTap: () async {
+            final DateTime picked = await showDatePicker(
+              context: context,
+              firstDate: new DateTime(2000),
+              lastDate: new DateTime(2030),
+              initialDate: new DateTime.now(),
+            );
+            setState(() {
+              DataHora dataHora = DataHora(
+                  picked: picked,
+                  title: toDoList[widget.valor]["details"]["$index"]["title"],
+                  boolen: toDoList[widget.valor]["details"]["$index"]["bool"]);
+              toDoList[widget.valor]["details"]["$index"] =
+                  dataHora.calendario();
+              saveData();
             });
           },
         ),
+        Text(
+          "-",
+          style: TextStyle(
+              color: Colors.blue[600],
+              fontSize: size_screem * 0.025,
+              fontFamily: 'Orkney-bold'),
+        ),
+        toDoList[widget.valor]["details"]["$index"] == null
+            ? Text(
+                "   Hora   ",
+                style: TextStyle(
+                    color: Colors.blue[600],
+                    fontSize: size_screem * 0.025,
+                    fontFamily: 'Orkney-bold'),
+              )
+            : toDoList[widget.valor]["details"]["$index"]["data_form"] == null
+                ? Text(
+                    "   Hora   ",
+                    style: TextStyle(
+                        color: Colors.blue[600],
+                        fontSize: size_screem * 0.025,
+                        fontFamily: 'Orkney-bold'),
+                  )
+                : InkWell(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: size_screem * 0.02,
+                        left: size_screem * 0.02,
+                        right: size_screem * 0.02,
+                        bottom: size_screem * 0.02,
+                      ),
+                      child: Text(
+                        toDoList[widget.valor]["details"]["$index"]["hora"] ==
+                                    "" ||
+                                toDoList[widget.valor]["details"]["$index"]
+                                        ["hora"] ==
+                                    null
+                            ? "Hora"
+                            : toDoList[widget.valor]["details"]["$index"]
+                                    ["hora"]
+                                .toString(),
+                        style: TextStyle(
+                            color: Colors.blue[600],
+                            fontSize: size_screem * 0.025,
+                            fontFamily: 'Orkney-bold'),
+                      ),
+                    ),
+                    onTap: () async {
+                      final TimeOfDay picked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      setState(() {
+                        DataHora dataHora = DataHora(picked: picked);
+                        String retorno = dataHora.hora().toString();
+                        if (retorno != "null") {
+                          toDoList[widget.valor]["details"]["$index"]["hora"] =
+                              retorno;
+                        } else {
+                          toDoList[widget.valor]["details"]["$index"]["hora"] =
+                              null;
+                        }
+                        saveData();
+                      });
+                    },
+                  )
       ],
     );
   }
 
-  Widget dtHr(context, index, size_screem){
-    dynamic retorno;
-
-    if (toDoList != null){
-      retorno = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          InkWell(
-            child: Container(
-              margin: EdgeInsets.only(
-                top: size_screem * 0.02,
-                left: size_screem * 0.02,
-                right: size_screem * 0.02,
-                bottom: size_screem * 0.02,
-              ),
-              child: Text(
-                "Dom, 20 Out",
-                style: TextStyle(
+  Widget dtHrNovo(context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        InkWell(
+          child: Container(
+            margin: EdgeInsets.only(
+              top: size_screem * 0.02,
+              left: size_screem * 0.02,
+              right: size_screem * 0.02,
+              bottom: size_screem * 0.02,
+            ),
+            child: Text(
+              list_data == null
+                  ? "Data"
+                  : list_data["data_form"] == null
+                      ? "Data"
+                      : list_data["data_form"],
+              style: TextStyle(
                   color: Colors.blue[600],
                   fontSize: size_screem * 0.025,
                   fontFamily: 'Orkney-bold'),
-              ),
             ),
-            onTap:() async {
-              final DateTime picked = await showDatePicker(
-                context: context,
-                firstDate: new DateTime(2000),
-                lastDate: new DateTime(2030),
-                initialDate: new DateTime.now(),
-              );
-              setState(() {
-                print("Foi");
-                // DataHora dataHora = DataHora(picked: picked);
-                // dynamic retor = dataHora.calendario();
-                // data_list["$index"] = retor;
-              });
-            },
           ),
-          Text(
-            "-",
-            style: TextStyle(
+          onTap: () async {
+            final DateTime picked = await showDatePicker(
+              context: context,
+              firstDate: new DateTime(2000),
+              lastDate: new DateTime(2030),
+              initialDate: new DateTime.now(),
+            );
+            setState(() {
+              DataHora dataHora = DataHora(
+                picked: picked,
+              );
+              list_data = dataHora.calendario();
+            });
+          },
+        ),
+        Text(
+          "-",
+          style: TextStyle(
               color: Colors.blue[600],
               fontSize: size_screem * 0.025,
               fontFamily: 'Orkney-bold'),
-          ),
-          InkWell(
-            child: Container(
-              margin: EdgeInsets.only(
-                top: size_screem * 0.02,
-                left: size_screem * 0.02,
-                right: size_screem * 0.02,
-                bottom: size_screem * 0.02,
-              ),
-              child: Text(
-                "13:30",
+        ),
+        list_data == null
+            ? Text(
+                "   Hora   ",
                 style: TextStyle(
-                  color: Colors.blue[600],
-                  fontSize: size_screem * 0.025,
-                  fontFamily: 'Orkney-bold'),
-              ),
-            ),
-            onTap:() async {
-              final TimeOfDay picked = await showTimePicker(
-                context: context,
-                initialTime: TimeOfDay.now(),
-              );
-              setState(() {
-                print("Foi");
-                // DataHora dataHora = DataHora(picked: picked);
-                // dynamic retor = dataHora.calendario();
-                // data_list["$index"] = retor;
-              });
-            },
-          ),
-        ],
-      );
-    }
-    return retorno;
+                    color: Colors.blue[600],
+                    fontSize: size_screem * 0.025,
+                    fontFamily: 'Orkney-bold'),
+              )
+            : list_data["data_form"] == null
+                ? Text(
+                    "   Hora   ",
+                    style: TextStyle(
+                        color: Colors.blue[600],
+                        fontSize: size_screem * 0.025,
+                        fontFamily: 'Orkney-bold'),
+                  )
+                : InkWell(
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: size_screem * 0.02,
+                        left: size_screem * 0.02,
+                        right: size_screem * 0.02,
+                        bottom: size_screem * 0.02,
+                      ),
+                      child: Text(
+                        list_data["hora"] == null
+                            ? "Hora"
+                            : list_data["hora"].toString(),
+                        style: TextStyle(
+                            color: Colors.blue[600],
+                            fontSize: size_screem * 0.025,
+                            fontFamily: 'Orkney-bold'),
+                      ),
+                    ),
+                    onTap: () async {
+                      final TimeOfDay picked = await showTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                      );
+                      setState(() {
+                        DataHora dataHora = DataHora(picked: picked);
+                        String retorno = dataHora.hora().toString();
+                        if (retorno != "null") {
+                          list_data["hora"] = retorno;
+                        } else {
+                          list_data["hora"] = null;
+                        }
+                      });
+                    },
+                  )
+      ],
+    );
   }
 
   categoryProgress(BuildContext context) {
@@ -534,11 +737,11 @@ class _CardContentState extends State<CardContent> {
           height: size_screem * 0.035,
           width: size_screem * 0.85,
           child: FAProgressBar(
-              displayText: "  ",
-              maxValue: done_title(),
-              currentValue: done(),
-              progressColor: Colors.teal[200],
-              ),
+            displayText: "  ",
+            maxValue: done_title(),
+            currentValue: done(),
+            progressColor: Colors.teal[200],
+          ),
         ),
       ],
     );
@@ -556,6 +759,22 @@ class _CardContentState extends State<CardContent> {
       }
     }
     return completos;
+  }
+
+  hora(index, context) async {
+    final TimeOfDay picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (picked != null && picked != TimeOfDay.now()) {
+      toDoList[widget.valor]["details"]["$index"]["hora"] = picked
+          .toString()
+          .split("TimeOfDay(")
+          .toList()[1]
+          .split(")")[0]
+          .toString();
+    }
   }
 
   done_title() {

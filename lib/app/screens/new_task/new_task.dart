@@ -37,7 +37,9 @@ class _NewTaskState extends State<NewTask> {
             ),
             child: Container(
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey,),
+                  border: Border.all(
+                    color: Colors.grey,
+                  ),
                   borderRadius:
                       BorderRadius.all(Radius.circular(size_screem * 0.02))),
               child: Padding(
@@ -50,7 +52,6 @@ class _NewTaskState extends State<NewTask> {
                     labelStyle: TextStyle(
                       color: Colors.grey,
                     ),
-
                   ),
                 ),
               ),
@@ -107,7 +108,9 @@ class _NewTaskState extends State<NewTask> {
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey,),
+              border: Border.all(
+                color: Colors.grey,
+              ),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(size_screem * 0.02),
                 topRight: Radius.circular(size_screem * 0.02),
@@ -124,6 +127,7 @@ class _NewTaskState extends State<NewTask> {
                     controller: controller_sub[index],
                     decoration: InputDecoration(
                       hintText: "Tarefa",
+                      hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                     ),
                     maxLines: 8,
@@ -150,18 +154,32 @@ class _NewTaskState extends State<NewTask> {
                         ),
                         onPressed: () {
                           setState(() {
+                            List toDoNovo = [];
+                            Map<String, dynamic> toDo = Map();
+                            Map<String, dynamic> toNovo = Map();
+
                             controller_sub.removeAt(index);
                             data_list["$index"] = null;
+
+                            toDo = Map.from(data_list);
+
+                            for (int i = 0; i <= toDo.length; i++) {
+                              if (toDo["$i"] != null) {
+                                toDoNovo.add(toDo["$i"]);
+                              }
+                            }
+
+                            for (int i = 0; i < toDoNovo.length; i++) {
+                              toNovo["$i"] = toDoNovo[i];
+                            }
+
+                            data_list = toNovo;
                           });
                         },
                       ),
               ],
             ),
           ),
-        ),
-        Divider(
-          color: Colors.transparent,
-          height: size_screem * 0.005,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -176,12 +194,21 @@ class _NewTaskState extends State<NewTask> {
   }
 
   Widget dataHora(context, size_screem, index) {
+    IconButton bt_calendar = IconButton(
+        color: Colors.blue[600],
+        icon: Icon(
+          Icons.calendar_today,
+        ),
+        onPressed: () {});
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
         Container(
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey,),
+              border: Border.all(
+                color: Colors.grey,
+              ),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(size_screem * 0.02),
                 bottomLeft: Radius.circular(size_screem * 0.02),
@@ -190,140 +217,121 @@ class _NewTaskState extends State<NewTask> {
           child: dtHr(context, index, size_screem),
         ),
         data_list["$index"] == null
-            ? IconButton(
-                color: Colors.blue[600],
-                icon: Icon(
-                  Icons.calendar_today,
-                ),
-                onPressed: () {
-                  setState(() {
-                    press = false;
-                  });
-                },
-              )
-            : IconButton(
-                color: Colors.red[600],
-                icon: Icon(
-                  Icons.close,
-                ),
-                onPressed: () {
-                  setState(() {
-                    press = true;
-                  });
-                },
-              ),
+            ? bt_calendar
+            : data_list["$index"]["data_form"] == null
+                ? bt_calendar
+                : IconButton(
+                    color: Colors.red[600],
+                    icon: Icon(
+                      Icons.close,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        data_list["$index"]["data_form"] = null;
+                        data_list["$index"]["hora"] = null;
+                      });
+                    },
+                  ),
       ],
     );
   }
 
   Widget dtHr(context, index, size_screem) {
-    dynamic retorno;
-
-    if (data_list["$index"] == null) {
-      retorno = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          InkWell(
-            child: Container(
-              margin: EdgeInsets.only(
-                top: size_screem * 0.025,
-                left: size_screem * 0.02,
-                right: size_screem * 0.02,
-                bottom: size_screem * 0.025,
-              ),
-              child: Text(
-                "Data",
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        InkWell(
+          child: Container(
+            margin: EdgeInsets.only(
+              top: size_screem * 0.02,
+              left: size_screem * 0.02,
+              right: size_screem * 0.02,
+              bottom: size_screem * 0.02,
+            ),
+            child: Text(
+              data_list["$index"] == null
+                  ? "Data"
+                  : data_list["$index"]["data_form"] == null
+                      ? "Data"
+                      : data_list["$index"]["data_form"],
+              style: TextStyle(
+                  color: Colors.blue[600],
+                  fontSize: size_screem * 0.025,
+                  fontFamily: 'Orkney-bold'),
+            ),
+          ),
+          onTap: () async {
+            final DateTime picked = await showDatePicker(
+              context: context,
+              firstDate: new DateTime(2000),
+              lastDate: new DateTime(2030),
+              initialDate: new DateTime.now(),
+            );
+            setState(() {
+              DataHora dataHora = DataHora(picked: picked);
+              data_list["$index"] = dataHora.calendario();
+            });
+          },
+        ),
+        Text(
+          "-",
+          style: TextStyle(
+              color: Colors.blue[600],
+              fontSize: size_screem * 0.025,
+              fontFamily: 'Orkney-bold'),
+        ),
+        data_list["$index"] == null
+            ? Text(
+                "   Hora   ",
                 style: TextStyle(
                     color: Colors.blue[600],
                     fontSize: size_screem * 0.025,
                     fontFamily: 'Orkney-bold'),
-              ),
-            ),
-            onTap: () async {
-              final DateTime picked = await showDatePicker(
-                context: context,
-                firstDate: new DateTime(2000),
-                lastDate: new DateTime(2030),
-                initialDate: new DateTime.now(),
-              );
-              setState(() {
-                DataHora dataHora = DataHora(picked: picked);
-                dynamic retorno = dataHora.calendario();
-                data_list["$index"] = retorno;
-              });
-            },
-          ),
-        ],
-      );
-    } else {
-      retorno = Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          InkWell(
-            child: Container(
-              margin: EdgeInsets.only(
-                top: size_screem * 0.025,
-                left: size_screem * 0.02,
-                right: size_screem * 0.02,
-                bottom: size_screem * 0.025,
-              ),
-              child: Text(
-                data_list["$index"]["data_form"],
+              )
+            : data_list["$index"]["data_form"] == null ?
+            Text(
+                "   Hora   ",
                 style: TextStyle(
                     color: Colors.blue[600],
                     fontSize: size_screem * 0.025,
                     fontFamily: 'Orkney-bold'),
-              ),
-            ),
-            onTap: () async {
-              final DateTime picked = await showDatePicker(
-                context: context,
-                firstDate: new DateTime(2000),
-                lastDate: new DateTime(2030),
-                initialDate: new DateTime.now(),
-              );
-              setState(() {
-                DataHora dataHora = DataHora(picked: picked);
-                dynamic retorno = dataHora.calendario();
-                data_list["$index"] = retorno;
-              });
-            },
-          ),
-          Text(
-            " -",
-            style: TextStyle(
-                color: Colors.blue[600],
-                fontSize: size_screem * 0.025,
-                fontFamily: 'Orkney-bold'),
-          ),
-          InkWell(
-            child: Container(
-              margin: EdgeInsets.only(
-                top: size_screem * 0.025,
-                left: size_screem * 0.02,
-                right: size_screem * 0.02,
-                bottom: size_screem * 0.025,
-              ),
-              child: Text(
-                data_list["$index"]["hora"] == null
-                    ? "Hora"
-                    : data_list["$index"]["hora"],
-                style: TextStyle(
-                    color: Colors.blue[600],
-                    fontSize: size_screem * 0.025,
-                    fontFamily: 'Orkney-bold'),
-              ),
-            ),
-            onTap: () {
-              setState(() {
-                hora(index);
-              });
-            },
-          )
-        ],
-      );
-    }
-    return retorno;
+              ) 
+              :InkWell(
+                child: Container(
+                  margin: EdgeInsets.only(
+                    top: size_screem * 0.02,
+                    left: size_screem * 0.02,
+                    right: size_screem * 0.02,
+                    bottom: size_screem * 0.02,
+                  ),
+                  child: Text(
+                    data_list["$index"]["hora"] == null || data_list["$index"]["hora"] == ""
+                        ? "Hora"
+                        : data_list["$index"]["hora"],
+                    style: TextStyle(
+                        color: Colors.blue[600],
+                        fontSize: size_screem * 0.025,
+                        fontFamily: 'Orkney-bold'),
+                  ),
+                ),
+                onTap: () async {
+                  final TimeOfDay picked = await showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                  );
+                  setState(() {
+                    DataHora dataHora = DataHora(picked: picked);
+                    String retorno = dataHora.hora().toString();
+                    if(retorno != "null"){
+                      data_list["$index"]["hora"] = retorno;
+                    }else{
+                      data_list["$index"]["hora"] = null;
+                    }
+                  });
+                },
+              )
+      ],
+    );
   }
 
   addToDo() {
@@ -337,8 +345,15 @@ class _NewTaskState extends State<NewTask> {
       for (int i = 0; i < controller_sub.length; i++) {
         if (controller_sub[i].text.trim() != "") {
           Map<String, dynamic> content = Map();
+
+          if(data_list["$i"] != null){
+            content["hora"] = data_list["$i"]["hora"];
+            content["data_form"] = data_list["$i"]["data_form"];
+          }
+
           content["title"] = controller_sub[i].text.trim();
           content["bool"] = false;
+          
           details["$i"] = content;
         }
       }
@@ -350,29 +365,6 @@ class _NewTaskState extends State<NewTask> {
       return true;
     } else {
       return false;
-    }
-  }
-
-  hora(index) async {
-    final TimeOfDay picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    if (picked != null && picked != TimeOfDay.now()) {
-      String hora;
-      dynamic hora_form;
-
-      hora = picked.toString();
-      hora_form = hora
-          .split("TimeOfDay")[1]
-          .split("(")
-          .toList()[1]
-          .split(")")[0]
-          .toString();
-      print(hora_form);
-      data_list["$index"]["hora"] = hora_form;
-      print(data_list["$index"]);
     }
   }
 }
