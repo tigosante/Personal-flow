@@ -34,7 +34,7 @@ dependencies:
   fancy_bottom_navigation: ^0.3.2
   flutter_local_notifications: ^0.8.4
   flutter_animation_progress_bar: ^1.0.0
-  
+
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
@@ -46,7 +46,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/background.png
+    - assets/no_tasks.png
   
   fonts:
     - family: Metropolis

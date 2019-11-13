@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:local_notifications/local_notifications.dart';
+
 
 import 'notifications_helper.dart';
 
@@ -10,40 +12,30 @@ class NotificationWidget extends StatefulWidget {
 }
 
 class _NotificationWidgetState extends State<NotificationWidget> {
-  FlutterLocalNotificationsPlugin notifications = new FlutterLocalNotificationsPlugin();
+  // FlutterLocalNotificationsPlugin notifications = new FlutterLocalNotificationsPlugin();
 
   @override
   initState() {
     super.initState();
 
-    var initializationSettingsAndroid =
-        new AndroidInitializationSettings('app_icon');
+    // var android =
+    //     new AndroidInitializationSettings('ic_launcher');
 
-    var initializationSettingsIOS = new IOSInitializationSettings(
-        onDidReceiveLocalNotification:null);
-        // onDidReceiveLocalNotification:(id, title, body, playload)=> onDidReceiveLocalNotification(playload));
+    // var ios = new IOSInitializationSettings();
 
-    var initializationSettings = new InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+    // var initSettings = new InitializationSettings(android, ios);
         
-    notifications.initialize(initializationSettings,
-        onSelectNotification: null);
+    // notifications.initialize(initSettings,onSelectNotification: null);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: ListView(
-         children: <Widget>[
-           Container(
-             child: Text("Básico"),
-           ),
-           RaisedButton(
-             child: Text("Mastrar notificações"),
-             onPressed: ()=> showOngoingNotification(notifications, title: "Comprar ovos", body: "2 tarefas concluídas de 5.", id: 0),
-           )
-         ],
-       ),
+    return RaisedButton(
+      child: Text("Mostrar notificações"),
+      onPressed: (){
+        
+      },
+    //  onPressed: ()=> showOngoingNotification(notifications, title: "test asdasde", body: "2 tarefas concluídas de 5.", id: 0, notificationTime: Time(23,03), dayNotification: Day(25)),
     );
   }
 }

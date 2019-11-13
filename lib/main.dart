@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:personal_flow/app/screens/home/home2.dart';
+import 'package:personal_flow/app/screens/home/components/card_struct.dart';
 // import 'package:personal_flow/app/screens/home/home.dart';
 
 void main() => runApp(new MyApp());
@@ -14,6 +14,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+      title: "Personal Flow",
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
@@ -21,16 +22,16 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: [const Locale("pt", "BR")],
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
-        buttonColor: Colors.blue,
-        buttonTheme: ButtonThemeData(
-          textTheme: ButtonTextTheme.primary,
-          buttonColor: Colors.blue
-        ),
-        bottomAppBarColor: Colors.white,
-        primaryColorBrightness: Brightness.dark,
-        fontFamily: 'Orkney-medium',
+      brightness: Brightness.dark,
+      primarySwatch: Colors.blue,
+      buttonColor: Colors.blue,
+      buttonTheme: ButtonThemeData(
+        textTheme: ButtonTextTheme.primary,
+        buttonColor: Colors.blue
+      ),
+      bottomAppBarColor: Colors.white,
+      primaryColorBrightness: Brightness.dark,
+      fontFamily: 'Orkney-medium',
       ),
       theme: ThemeData(
         brightness: Brightness.light,
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Orkney-medium'
       ),
 
-      home: Home(),
+      home: CardStruct(),
     );
   }
 }
