@@ -8,13 +8,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.0"
-  bloc_pattern:
-    dependency: "direct main"
-    description:
-      name: bloc_pattern
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.4.0+2"
   boolean_selector:
     dependency: transitive
     description:
@@ -50,20 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.6"
-  date_range_picker:
-    dependency: "direct main"
-    description:
-      name: date_range_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.6"
-  draggable_flutter_list:
-    dependency: "direct main"
-    description:
-      name: draggable_flutter_list
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   expandable:
     dependency: "direct main"
     description:
@@ -71,13 +50,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0+1"
-  fancy_bottom_navigation:
-    dependency: "direct main"
-    description:
-      name: fancy_bottom_navigation
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.2"
   flushbar:
     dependency: "direct main"
     description:
@@ -97,13 +69,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  flutter_inner_drawer:
-    dependency: "direct main"
-    description:
-      name: flutter_inner_drawer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -128,15 +93,8 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  graph_widget:
-    dependency: "direct main"
-    description:
-      name: graph_widget
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.13"
   intl:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: intl
       url: "https://pub.dartlang.org"
