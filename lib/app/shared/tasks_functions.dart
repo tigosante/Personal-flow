@@ -37,7 +37,6 @@ class Buttons {
   Buttons(
       {@required this.toDoList, @required this.index, @required this.context});
 
-  // Color cor_concluir() {}
 }
 
 class Informacoes {
@@ -78,10 +77,14 @@ class Informacoes {
   stateIconLead() {
     if (toDoList[index]["details"].length <= 1) {
       toDoList[index]["details"]["$index_sub"]["bool"] = false;
+      toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
+      toDoList[index]["conclusao"] = 0;
     } else {
       toDoList[index]["details"]["$index_sub"]["bool"] = false;
+      toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
+      toDoList[index]["conclusao"] = 0;
     }
     return toDoList;
   }
@@ -89,7 +92,9 @@ class Informacoes {
   stateIconTrai() {
     if (toDoList[index]["details"].length <= 1) {
       toDoList[index]["details"]["$index_sub"]["bool"] = true;
+      toDoList[index]["details"]["$index_sub"]["conclusao"] = 1;
       toDoList[index]["bool"] = true;
+      toDoList[index]["conclusao"] = 1;
     } else {
       toDoList[index]["details"]["$index_sub"]["bool"] = true;
     }

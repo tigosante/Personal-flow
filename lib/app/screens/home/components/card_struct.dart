@@ -9,7 +9,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:personal_flow/app/screens/home/components/card_content.dart';
 import 'package:personal_flow/app/screens/home/components/card_content_unica.dart';
-import 'package:personal_flow/app/screens/home/components/teste.dart';
 import 'package:personal_flow/app/screens/new_task/new_task.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 
@@ -35,6 +34,8 @@ Icon actionIcon = Icon(
 
 double size_screen = 0;
 String font_button;
+
+int arquivo = 0;
 
 class _CardStructState extends State<CardStruct> {
   List toDoList = [];
@@ -70,6 +71,9 @@ class _CardStructState extends State<CardStruct> {
     });
 
     _IsSearching = false;
+    for (int index; index<toDoList.length; index++){
+      arquivo += toDoList[index]["dt_inativacao"] == null ? 1 : 0;
+    }
   }
 
   @override
@@ -85,7 +89,7 @@ class _CardStructState extends State<CardStruct> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: toDoList.length < 1
+            child: arquivo < 1
                 ? Center(
                     child: Image.asset(
                     "assets/no_tasks.png",
@@ -101,10 +105,10 @@ class _CardStructState extends State<CardStruct> {
                         itemCount: toDoList.length,
                         itemBuilder: (BuildContext context, int index) =>
                             toDoList[index]["tipo"] == "simples"
-                                ? buildCardUnica(
-                                    context, font_button, toDoList, index)
-                                : buildCardGrupo(
-                                    context, index, font_button, toDoList),
+                                ? toDoList[index]["dt_inativacao"] == null ? buildCardUnica(
+                                    context, font_button, toDoList, index) : Container(color: Colors.transparent,)
+                                : toDoList[index]["dt_inativacao"] == null ? buildCardGrupo(
+                                    context, index, font_button, toDoList) : Container(color: Colors.transparent,),
                       ),
           ),
         ],
@@ -175,10 +179,7 @@ class _CardStructState extends State<CardStruct> {
                     int lastRemovedPos;
                     Map<String, dynamic> lastRemoved;
 
-                    lastRemoved = Map.from(toDoList[index]);
-                    lastRemovedPos = index;
-
-                    toDoList.removeAt(index);
+                    toDoList[index]["dt_inativacao"] = 111;
 
                     saveData();
 
@@ -202,7 +203,7 @@ class _CardStructState extends State<CardStruct> {
                         ),
                         onPressed: () {
                           setState(() {
-                            toDoList.insert(lastRemovedPos, lastRemoved);
+                            toDoList[index]["dt_inativacao"] = null;
                             saveData();
                             flushbar.dismiss(true);
                           });
@@ -282,10 +283,7 @@ class _CardStructState extends State<CardStruct> {
                     int lastRemovedPos;
                     Map<String, dynamic> lastRemoved;
 
-                    lastRemoved = Map.from(toDoList[index]);
-                    lastRemovedPos = index;
-
-                    toDoList.removeAt(index);
+                    toDoList[index]["dt_inativacao"] = 111;
 
                     saveData();
 
@@ -309,7 +307,7 @@ class _CardStructState extends State<CardStruct> {
                         ),
                         onPressed: () {
                           setState(() {
-                            toDoList.insert(lastRemovedPos, lastRemoved);
+                            toDoList[index]["dt_inativacao"] = null;
                             saveData();
                             flushbar.dismiss(true);
                           });

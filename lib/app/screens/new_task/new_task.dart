@@ -19,7 +19,7 @@ dynamic toDoList_dialog;
 class _NewTaskState extends State<NewTask> {
   Map<String, dynamic> data_list = Map();
   Map<String, dynamic> data_unica = Map();
-  bool press = true;
+
   TextEditingController controller_titulo = TextEditingController();
   List<TextEditingController> controller_sub = [TextEditingController()];
   TextEditingController controller_unica = TextEditingController();
@@ -54,13 +54,14 @@ class _NewTaskState extends State<NewTask> {
           setState(() {
             if (tipo_tarefa) {
               List retorno = addToDo();
+              print(retorno[1]);
               if (retorno[0]) {
-                // if(retorno[2]){
-                dialog_composta(size_screen, context, retorno);
-                // }else{
-                //   widget.toDoList.insert(0, retorno[3]);
-                //   Navigator.pop(context, toDoList);
-                // }
+                if (retorno[2]) {
+                  dialog_composta(size_screen, context, retorno);
+                } else {
+                  widget.toDoList.insert(0, retorno[3]);
+                  Navigator.pop(context, toDoList);
+                }
               } else {
                 Navigator.pop(context, null);
               }
@@ -118,7 +119,6 @@ class _NewTaskState extends State<NewTask> {
                       value: value,
                       child: Text(
                         value,
-                        // style: TextStyle(color: Colors.grey),
                       ),
                     );
                   }).toList(),
@@ -134,6 +134,10 @@ class _NewTaskState extends State<NewTask> {
                           : tipo_tarefa_drop == "Simples"
                               ? "Você pode criar apenas uma terefa."
                               : "Você pode criar um grupo com várias subtarefas.";
+
+                      controller_unica = TextEditingController();
+                      controller_titulo = TextEditingController();
+                      controller_sub = [TextEditingController()];
                     });
                   },
                 ),
@@ -144,7 +148,6 @@ class _NewTaskState extends State<NewTask> {
               child: Center(
                 child: Text(
                   info_tipo_tarefa,
-                  // style: TextStyle(color: Colors.black),
                 ),
               ),
             )
@@ -778,6 +781,7 @@ class _NewTaskState extends State<NewTask> {
     if (controller_titulo.text.trim() != "") {
       Map<String, dynamic> newToDo = Map();
       Map<String, dynamic> details = Map();
+      int qnt_tarefas = 0;
 
       Composta trefa = Composta(tarefa: controller_titulo.text.trim());
 
@@ -785,6 +789,7 @@ class _NewTaskState extends State<NewTask> {
       newToDo["bool"] = false;
 
       newToDo["tipo"] = "composta";
+      newToDo["conclusao"] = 0;
       newToDo["programada"] = false;
       newToDo["dt_inativacao"] = null;
       newToDo["title_formatado"] = trefa.formatar_titulo();
@@ -805,9 +810,16 @@ class _NewTaskState extends State<NewTask> {
           content["repeticao"] = 1;
           content["conclusao"] = 0;
           content["tipo"] = "subtarefa";
+          content["title_formatado"] = trefa.formatar_sub_titulo(content["title"]);
 
           details["$i"] = content;
+
+          qnt_tarefas++;
         }
+      }
+
+      if (qnt_tarefas == 0) {
+        return [false];
       }
 
       newToDo["details"] = details;
@@ -815,7 +827,6 @@ class _NewTaskState extends State<NewTask> {
       Composta repete = Composta(toDoList: widget.toDoList, newToDo: newToDo);
 
       int repeticao = 0;
-      bool conclusao = false;
       List porcentagem_repete = [];
 
       repeticao = repete.repeticao_titulo_tarefa();
@@ -830,8 +841,7 @@ class _NewTaskState extends State<NewTask> {
 
       newToDo["repeticao"] = repeticao;
       newToDo["data_grupo"] = concluir.data_grupo();
-
-      // dynamic data_repetida = newToDo["data_grupo"] ? concluir.data_repetica() : false;
+      newToDo["data_repetica"] = newToDo["data_grupo"] ? concluir.data_repetica() : false;
 
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();
@@ -841,13 +851,13 @@ class _NewTaskState extends State<NewTask> {
 
       return retorno;
     } else {
-      List retorno = [false];
-      return retorno;
+      return [false];
     }
   }
 }
 
-List<bool> tarefas_selecionadas = [];
+List<bool> valor = [];
+bool check_titulo = false;
 
 class Corpo_Composta extends StatefulWidget {
   Corpo_Composta({Key key, this.size_screen, this.lista_retorno})
@@ -864,7 +874,6 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
   Widget build(BuildContext context) {
     List lista_retorno = widget.lista_retorno;
     double size_screen = widget.size_screen;
-    Map<String, dynamic> data_unica = Map();
 
     dynamic toDoList = lista_retorno[3];
     dynamic backup = toDoList;
@@ -872,9 +881,9 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
     TextEditingController controller =
         TextEditingController(text: toDoList["title"]);
 
-    if (tarefas_selecionadas.length < toDoList["details"].length) {
+    if (valor.length < toDoList["details"].length) {
       setState(() {
-        tarefas_selecionadas.add(false);
+        valor.add(false);
       });
     }
 
@@ -883,15 +892,11 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(size_screen * 0.04),
       ),
-      title: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Text(
-            "Parece que você já criou essa tarea anteriormente!\n",
-          ),
-          Text("Que tal deixa-la progamada?"),
-        ],
+      title: ListTile(
+        title: Text(
+          "Parece que você já criou essa tarefa anteriormente!\n",
+        ),
+        subtitle: Text("Que tal deixa-la progamada?"),
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -911,6 +916,24 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                       minLines: 1,
                     ),
                   ),
+                  Checkbox(
+                    value: check_titulo,
+                    onChanged: (bool value){
+                      setState(() {
+                        check_titulo = !check_titulo;
+
+                        if(check_titulo){
+                          for(int i=0; i<valor.length; i++){
+                            valor[i] = true;
+                          }
+                        }else{
+                          for(int i=0; i<valor.length; i++){
+                            valor[i] = false;
+                          }
+                        }
+                      });
+                    },
+                  )
                 ],
               ),
             ),
@@ -969,7 +992,15 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                             ),
                           ],
                         ),
-                        trailing: Check(index: index)),
+                        trailing: Checkbox(
+                          value: valor[index],
+                          onChanged: (bool press) {
+                            setState(() {
+                              valor[index] = !valor[index];
+                              print(valor.length);
+                            });
+                          },
+                        )),
                   ],
                 );
               }).toList(),
@@ -995,105 +1026,18 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
         FlatButton(
           child: Text(
             "Adiconar",
-            style: TextStyle(color: Colors.teal),
           ),
           onPressed: () {
             setState(() {
-              // acao_dialog = true;
-              // tarefa_dialog = tarefa;
-              // toDoList_dialog.insert(0, tarefa);
+              acao_dialog = true;
+              tarefa_dialog = toDoList;
+              toDoList_dialog.insert(0, toDoList);
             });
             Navigator.pop(context);
             Navigator.pop(context, toDoList_dialog);
           },
         ),
       ],
-    );
-  }
-
-  Widget conteudo(toDoList, index) {
-    TextEditingController controller =
-        TextEditingController(text: toDoList["details"]["$index"]["title"]);
-
-    return ListTile(
-      title: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Text("Tarefa: "),
-                  Expanded(
-                    child: TextField(
-                      controller: controller,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 8,
-                      minLines: 1,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
-      subtitle: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text("Data e hora: "),
-              toDoList["details"]["$index"]["data_form"] == null
-                  ? Text("Adicionar")
-                  : Text(toDoList["details"]["$index"]["data_form"].toString()),
-              toDoList["details"]["$index"]["data_form"] != null
-                  ? Text(" - ")
-                  : Container(
-                      color: Colors.transparent,
-                    ),
-              toDoList["details"]["$index"]["hora"] == null
-                  ? toDoList["details"]["$index"]["data_form"] != null
-                      ? Text("hora")
-                      : Container(
-                          color: Colors.transparent,
-                        )
-                  : Text(toDoList["details"]["$index"]["hora"].toString()),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Check extends StatefulWidget {
-  Check({Key key, this.index}) : super(key: key);
-
-  int index;
-  @override
-  _CheckState createState() => _CheckState();
-}
-
-class _CheckState extends State<Check> {
-  bool valor = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Checkbox(
-      value: valor,
-      onChanged: (bool press) {
-        setState(() {
-          valor = !valor;
-          tarefas_selecionadas[widget.index] = valor;
-        });
-      },
     );
   }
 }
@@ -1124,47 +1068,94 @@ class _Corpo_simplesState extends State<Corpo_simples> {
       data_unica["data_form"] = tarefa["data_form"];
     });
     return AlertDialog(
-      title: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: <Widget>[
-          Text(
-            "Parece que você já criou essa tarea algumas vezes!\n",
-          ),
-          Text("Que tal deixa-la progamada?")
-        ],
+      title: ListTile(
+        title: Text(
+          "Parece que você já criou essa tarefa algumas vezes!\n",
+        ),
+        subtitle: Text("Que tal deixa-la progamada?"),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text("Tarefa: "),
-              Expanded(
-                child: TextField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
+          ListTile(
+            title: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    controller: controller,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                    ),
+                    maxLines: 8,
+                    minLines: 1,
                   ),
-                  maxLines: 8,
-                  minLines: 1,
                 ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Text("Data e hora: "),
-              data_unica["data_form"] == null
-                  ? Text("data")
-                  : Text(data_unica["data_form"].toString()),
-              Text(" - "),
-              data_unica["hora"] == null
-                  ? Text("hora")
-                  : Text(data_unica["hora"].toString()),
-            ],
+              ],
+            ),
+            subtitle: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: size_screen * 0.015,
+                      right: size_screen * 0.015,
+                      bottom: size_screen * 0.015,
+                    ),
+                    child: tarefa["data_form"] == null
+                        ? Text("Data e hora")
+                        : Text(tarefa["data_form"] + ","),
+                  ),
+                  onTap: () async {
+                    final DateTime picked = await showDatePicker(
+                      context: context,
+                      firstDate: new DateTime(2000),
+                      lastDate: new DateTime(2030),
+                      initialDate: new DateTime.now(),
+                    );
+                    setState(() {
+                      DataHora dataHora = DataHora(picked: picked);
+                      data_unica = dataHora.calendario();
+                      tarefa["data_form"] = data_unica["data_form"];
+
+                      tarefa["hora"] = null;
+                    });
+                  },
+                ),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: size_screen * 0.015,
+                      right: size_screen * 0.015,
+                      bottom: size_screen * 0.015,
+                    ),
+                    child: tarefa["data_form"] != null
+                        ? tarefa["hora"] == null
+                            ? Text("hora")
+                            : Text(tarefa["hora"])
+                        : Container(
+                            color: Colors.transparent,
+                          ),
+                  ),
+                  onTap: () async {
+                    final TimeOfDay picked = await showTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay.now(),
+                    );
+                    setState(() {
+                      DataHora dataHora = DataHora(picked: picked);
+                      String retorno = dataHora.hora();
+                      if (retorno != null) {
+                        tarefa["hora"] = retorno;
+                      } else {
+                        tarefa["hora"] = null;
+                      }
+                    });
+                  },
+                )
+              ],
+            ),
           ),
         ],
       ),
@@ -1184,51 +1175,13 @@ class _Corpo_simplesState extends State<Corpo_simples> {
           },
         ),
         FlatButton(
-          child: Text("Data"),
-          onPressed: () async {
-            final DateTime picked = await showDatePicker(
-              context: context,
-              firstDate: new DateTime(2000),
-              lastDate: new DateTime(2030),
-              initialDate: new DateTime.now(),
-            );
-            setState(() {
-              DataHora dataHora = DataHora(picked: picked);
-              data_unica = dataHora.calendario();
-              tarefa["data_form"] = data_unica["data_form"];
-
-              data_unica["hora"] = null;
-              tarefa["hora"] = null;
-            });
-          },
-        ),
-        FlatButton(
-          child: Text("Hora"),
-          onPressed: () async {
-            final TimeOfDay picked = await showTimePicker(
-              context: context,
-              initialTime: TimeOfDay.now(),
-            );
-            setState(() {
-              DataHora dataHora = DataHora(picked: picked);
-              String retorno = dataHora.hora();
-              if (retorno != null) {
-                data_unica["hora"] = retorno;
-                tarefa["hora"] = data_unica["hora"];
-              } else {
-                data_unica["hora"] = null;
-                tarefa["hora"] = null;
-              }
-            });
-          },
-        ),
-        FlatButton(
           child: Text(
             "Adiconar",
-            style: TextStyle(color: Colors.teal),
           ),
           onPressed: () {
             setState(() {
+
+
               acao_dialog = true;
               tarefa_dialog = tarefa;
               toDoList_dialog.insert(0, tarefa);

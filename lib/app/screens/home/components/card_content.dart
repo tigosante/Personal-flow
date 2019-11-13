@@ -39,7 +39,6 @@ class _CardContentState extends State<CardContent> {
 
   @override
   Widget build(BuildContext context) {
-
     IconButton bt_calendar = IconButton(
         color: Colors.grey[600],
         icon: Icon(
@@ -79,10 +78,16 @@ class _CardContentState extends State<CardContent> {
               child: Column(
                 children: <Widget>[
                   toDoList[widget.valor]["details"].length > 0
-                        ? Column(
+                      ? Column(
                           children: List<Widget>.generate(
                               toDoList[widget.valor]["details"].length,
-                              (int index) => buildBody(context, index)))
+                              (int index) => toDoList[widget.valor]["details"]
+                                          ["$index"]["dt_inativacao"] ==
+                                      null
+                                  ? buildBody(context, index)
+                                  : Container(
+                                      color: Colors.transparent,
+                                    )))
                       : Container(
                           color: Colors.transparent,
                         ),
@@ -256,6 +261,7 @@ class _CardContentState extends State<CardContent> {
                       setState(() {
                         if (!toDoList[index]["bool"]) {
                           toDoList[index]["bool"] = true;
+                          toDoList[index]["conclusao"] = 1;
 
                           List<bool> antigo = [];
 
@@ -265,6 +271,7 @@ class _CardContentState extends State<CardContent> {
                             antigo
                                 .add(toDoList[index]["details"]["$i"]["bool"]);
                             toDoList[index]["details"]["$i"]["bool"] = true;
+                            toDoList[index]["details"]["$i"]["conclusao"] = 1;
                           }
 
                           saveData();
@@ -294,8 +301,11 @@ class _CardContentState extends State<CardContent> {
                                       i++) {
                                     toDoList[index]["details"]["$i"]["bool"] =
                                         antigo[i];
+                                    toDoList[index]["details"]["$i"]
+                                        ["conclusao"] = 0;
                                   }
                                   toDoList[index]["bool"] = false;
+                                  toDoList[index]["conclusao"] = 0;
 
                                   saveData();
 
@@ -333,8 +343,8 @@ class _CardContentState extends State<CardContent> {
     Icon okIconSub = informacoes.okIconSub();
     Icon noOkIconSub = informacoes.noOkIconSub();
 
-    TextEditingController controllerText =
-        TextEditingController(text: toDoList[widget.valor]["details"]["$index"]["title"]);
+    TextEditingController controllerText = TextEditingController(
+        text: toDoList[widget.valor]["details"]["$index"]["title"]);
 
     IconButton bt_calendar = IconButton(
       color: Colors.blue[600],
@@ -392,14 +402,12 @@ class _CardContentState extends State<CardContent> {
                         child: InkWell(
                           child: Container(
                             margin: EdgeInsets.only(
-                              top:size_screen * 0.025,
-                              bottom:size_screen * 0.025
-                            ),
-                            child: Text(
-                              toDoList[widget.valor]["details"]["$index"]["title"]
-                            ),
+                                top: size_screen * 0.025,
+                                bottom: size_screen * 0.025),
+                            child: Text(toDoList[widget.valor]["details"]
+                                ["$index"]["title"]),
                           ),
-                          onTap: (){
+                          onTap: () {
                             modal(context, index, size_screen);
                           },
                         ),
@@ -509,40 +517,9 @@ class _CardContentState extends State<CardContent> {
             onTap: () {
               setState(() {
                 int valor = 0;
-                int lastRemovedPos;
-                dynamic lastRemoved;
-                Map<String, dynamic> toDo = Map();
-                Map<String, dynamic> toDoAntigo = Map();
-                Map<String, dynamic> toNovo = Map();
-                List toDoNovo = [];
 
-                lastRemoved = toDoList[widget.valor]["details"]["$index"];
-                lastRemovedPos = index;
-
-                toDo = Map.from(toDoList[widget.valor]["details"]);
-                toDoAntigo = Map.from(toDoList[widget.valor]["details"]);
-
-                toDo.remove("$lastRemovedPos");
-
-                for (int i = 0; i <= toDo.length; i++) {
-                  if (toDo["$i"] != null) {
-                    toDoNovo.add(toDo["$i"]);
-
-                    if (toDoList[widget.valor]["details"]["$i"]["bool"]) {
-                      valor++;
-                    }
-                  }
-                }
-
-                if (valor == toDoNovo.length) {
-                  toDoList[widget.valor]["bool"] = true;
-                }
-
-                for (int i = 0; i < toDoNovo.length; i++) {
-                  toNovo["$i"] = toDoNovo[i];
-                }
-
-                toDoList[widget.valor]["details"] = toNovo;
+                toDoList[widget.valor]["details"]["$index"]["dt_inativacao"] = 111;
+                    
 
                 saveData();
 
@@ -566,7 +543,8 @@ class _CardContentState extends State<CardContent> {
                     ),
                     onPressed: () {
                       setState(() {
-                        toDoList[widget.valor]["details"] = toDoAntigo;
+                        toDoList[widget.valor]["details"]["$index"]
+                            ["dt_inativacao"] = null;
                         saveData();
                         flushbar.dismiss(true);
                       });
@@ -824,86 +802,92 @@ class _CardContentState extends State<CardContent> {
   }
 
   modal(context, index, size_screen) {
-    TextEditingController controller_text = TextEditingController(text: toDoList[widget.valor]["details"]["$index"]["title"]);
+    TextEditingController controller_text = TextEditingController(
+        text: toDoList[widget.valor]["details"]["$index"]["title"]);
 
     showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(size_screen * 0.04),
-      ),
-      context: context,
-      builder: (BuildContext context) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Divider(
-                height: size_screen * 0.05,
-                color: Colors.transparent,
-              ),
-              Text(
-                "Editor de Subtarefas",
-                style: TextStyle(fontSize: size_screen * 0.04,),
-              ),
-              Divider(
-                height: size_screen * 0.1,
-                color: Colors.transparent,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius:
-                    BorderRadius.all(Radius.circular(size_screen * 0.02))),
-                width: size_screen * 0.8,
-                child: Padding(
-                  padding: EdgeInsets.only(left: size_screen * 0.015,right: size_screen * 0.015),
-                  child: TextField(
-                    controller: controller_text,
-                    decoration: InputDecoration(
-                      hintText: "título",
-                      border: InputBorder.none,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(size_screen * 0.04),
+        ),
+        context: context,
+        builder: (BuildContext context) {
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Divider(
+                  height: size_screen * 0.05,
+                  color: Colors.transparent,
+                ),
+                Text(
+                  "Editor de Subtarefas",
+                  style: TextStyle(
+                    fontSize: size_screen * 0.04,
+                  ),
+                ),
+                Divider(
+                  height: size_screen * 0.1,
+                  color: Colors.transparent,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(size_screen * 0.02))),
+                  width: size_screen * 0.8,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: size_screen * 0.015, right: size_screen * 0.015),
+                    child: TextField(
+                      controller: controller_text,
+                      decoration: InputDecoration(
+                        hintText: "título",
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Divider(
-                height: size_screen * 0.05,
-                color: Colors.transparent,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  RaisedButton(
-                    elevation: 1,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(size_screen * 0.02),
+                Divider(
+                  height: size_screen * 0.05,
+                  color: Colors.transparent,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    RaisedButton(
+                      elevation: 1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(size_screen * 0.02),
+                      ),
+                      child: Text(
+                        "Salvar",
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (controller_text.text.trim().isNotEmpty) {
+                            toDoList[widget.valor]["details"]["$index"]
+                                ["title"] = controller_text.text;
+                            saveData();
+                            Navigator.pop(context);
+                          }
+                        });
+                      },
                     ),
-                    child: Text(
-                      "Salvar",
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        if(controller_text.text.trim().isNotEmpty){
-                          toDoList[widget.valor]["details"]["$index"]["title"] = controller_text.text;
-                          saveData();
-                          Navigator.pop(context);
-                        }
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    width: size_screen * 0.05,
-                  )
-                ],
-              ),
-              Divider(
-                height: size_screen * 0.05,
-                color: Colors.transparent,
-              ),
-            ],
-          ),
-        );
-      });
+                    SizedBox(
+                      width: size_screen * 0.05,
+                    )
+                  ],
+                ),
+                Divider(
+                  height: size_screen * 0.05,
+                  color: Colors.transparent,
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   Future<File> saveData() async {
