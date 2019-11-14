@@ -80,6 +80,7 @@ class Informacoes {
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
       toDoList[index]["conclusao"] = 0;
+      print(toDoList[index]["details"]["$index_sub"]["conclusao"]);
     } else {
       toDoList[index]["details"]["$index_sub"]["bool"] = false;
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
@@ -95,6 +96,7 @@ class Informacoes {
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 1;
       toDoList[index]["bool"] = true;
       toDoList[index]["conclusao"] = 1;
+      print(toDoList[index]["details"]["$index_sub"]["conclusao"]);
     } else {
       toDoList[index]["details"]["$index_sub"]["bool"] = true;
     }

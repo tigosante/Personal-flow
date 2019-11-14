@@ -54,13 +54,13 @@ class _NewTaskState extends State<NewTask> {
           setState(() {
             if (tipo_tarefa) {
               List retorno = addToDo();
-              print(retorno[1]);
+
               if (retorno[0]) {
                 if (retorno[2]) {
                   dialog_composta(size_screen, context, retorno);
                 } else {
                   widget.toDoList.insert(0, retorno[3]);
-                  Navigator.pop(context, toDoList);
+                  Navigator.pop(context, widget.toDoList);
                 }
               } else {
                 Navigator.pop(context, null);
@@ -72,7 +72,7 @@ class _NewTaskState extends State<NewTask> {
                   dialog_func(size_screen, context, retorno);
                 } else {
                   widget.toDoList.insert(0, retorno[3]);
-                  Navigator.pop(context, toDoList);
+                  Navigator.pop(context, widget.toDoList);
                 }
               } else if (!retorno[0]) {
                 Navigator.pop(context, null);
@@ -769,6 +769,7 @@ class _NewTaskState extends State<NewTask> {
   }
 
   dialog_composta(size_screen, context, lista_retorno) {
+    
     showDialog(
         context: context,
         builder: (BuildContext cont) {
@@ -784,7 +785,7 @@ class _NewTaskState extends State<NewTask> {
       int qnt_tarefas = 0;
 
       Composta trefa = Composta(tarefa: controller_titulo.text.trim());
-
+      
       newToDo["title"] = controller_titulo.text.trim();
       newToDo["bool"] = false;
 
@@ -810,7 +811,8 @@ class _NewTaskState extends State<NewTask> {
           content["repeticao"] = 1;
           content["conclusao"] = 0;
           content["tipo"] = "subtarefa";
-          content["title_formatado"] = trefa.formatar_sub_titulo(content["title"]);
+          content["title_formatado"] =
+              trefa.formatar_sub_titulo(content["title"]);
 
           details["$i"] = content;
 
@@ -828,7 +830,6 @@ class _NewTaskState extends State<NewTask> {
 
       int repeticao = 0;
       List porcentagem_repete = [];
-
       repeticao = repete.repeticao_titulo_tarefa();
       porcentagem_repete = repete.repeticao_sub_tarefa();
 
@@ -836,7 +837,6 @@ class _NewTaskState extends State<NewTask> {
       newToDo["porcentagem"] = porcentagem_repete[0];
 
       Composta concluir = Composta(toDoList: widget.toDoList, newToDo: newToDo);
-
       newToDo["conclusao_grupo"] = concluir.conclsuao();
 
       newToDo["repeticao"] = repeticao;
@@ -848,6 +848,7 @@ class _NewTaskState extends State<NewTask> {
 
       retorno.insert(0, true);
       retorno.add(newToDo);
+
 
       return retorno;
     } else {
@@ -878,12 +879,16 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
     dynamic toDoList = lista_retorno[3];
     dynamic backup = toDoList;
 
+    Map<String, dynamic> data_unica = Map();
+
     TextEditingController controller =
         TextEditingController(text: toDoList["title"]);
 
     if (valor.length < toDoList["details"].length) {
       setState(() {
-        valor.add(false);
+        for(int i = 0; i < toDoList["details"].length; i++){
+          valor.add(false);
+        }
       });
     }
 
@@ -918,16 +923,16 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                   ),
                   Checkbox(
                     value: check_titulo,
-                    onChanged: (bool value){
+                    onChanged: (bool value) {
                       setState(() {
                         check_titulo = !check_titulo;
 
-                        if(check_titulo){
-                          for(int i=0; i<valor.length; i++){
+                        if (check_titulo) {
+                          for (int i = 0; i < valor.length; i++) {
                             valor[i] = true;
                           }
-                        }else{
-                          for(int i=0; i<valor.length; i++){
+                        } else {
+                          for (int i = 0; i < valor.length; i++) {
                             valor[i] = false;
                           }
                         }
@@ -948,6 +953,11 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                 TextEditingController controller = TextEditingController(
                     text: toDoList["details"]["$index"]["title"]);
 
+                setState(() {
+                  data_unica["hora"] = toDoList["details"]["$index"]["hora"];
+                  data_unica["data_form"] =
+                      toDoList["details"]["$index"]["data_form"];
+                });
                 return Column(
                   children: <Widget>[
                     ListTile(
@@ -985,11 +995,86 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                                         null
                                     ? Text("Data e hora")
                                     : Text(toDoList["details"]["$index"]
-                                            ["data_form"]
-                                        .toString()),
+                                            ["data_form"] +
+                                        ","),
                               ),
-                              onTap: () {},
+                              onTap: () async {
+                                final DateTime picked = await showDatePicker(
+                                  context: context,
+                                  firstDate: new DateTime(2000),
+                                  lastDate: new DateTime(2030),
+                                  initialDate: new DateTime.now(),
+                                );
+                                setState(() {
+                                  DataHora dataHora = DataHora(picked: picked);
+                                  data_unica = dataHora.calendario();
+                                  toDoList["details"]["$index"]["data_form"] =
+                                      data_unica["data_form"];
+
+                                  toDoList["details"]["$index"]["hora"] = null;
+                                });
+                              },
                             ),
+                            InkWell(
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                  top: size_screen * 0.015,
+                                  right: size_screen * 0.015,
+                                  bottom: size_screen * 0.015,
+                                ),
+                                child: toDoList["details"]["$index"]
+                                            ["data_form"] !=
+                                        null
+                                    ? toDoList["details"]["$index"]["hora"] ==
+                                            null
+                                        ? Text("hora")
+                                        : Text(toDoList["details"]["$index"]
+                                            ["hora"])
+                                    : Container(
+                                        color: Colors.transparent,
+                                      ),
+                              ),
+                              onTap: () async {
+                                final TimeOfDay picked = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                );
+                                setState(() {
+                                  DataHora dataHora = DataHora(picked: picked);
+                                  String retorno = dataHora.hora();
+                                  if (retorno != null) {
+                                    toDoList["details"]["$index"]["hora"] =
+                                        retorno;
+                                  } else {
+                                    toDoList["details"]["$index"]["hora"] =
+                                        null;
+                                  }
+                                });
+                              },
+                            ),
+                            toDoList["details"]["$index"]["data_form"] != null
+                                ? InkWell(
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                        top: size_screen * 0.015,
+                                        right: size_screen * 0.015,
+                                        bottom: size_screen * 0.015,
+                                      ),
+                                      child: Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                    onTap: (){
+                                      setState(() {
+                                        toDoList["details"]["$index"]["hora"] = null;
+                                        toDoList["details"]["$index"]["data_form"] = null;
+                                      });
+                                    },
+                                  )
+                                : Container(
+                                    color: Colors.transparent,
+                                  )
                           ],
                         ),
                         trailing: Checkbox(
@@ -997,7 +1082,19 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                           onChanged: (bool press) {
                             setState(() {
                               valor[index] = !valor[index];
-                              print(valor.length);
+                              check_titulo = false;
+                              if (valor.length == 1 && valor[index]) {
+                                check_titulo = true;
+                              } else {
+                                int todos = 0;
+                                for (int i = 0; i < valor.length; i++) {
+                                  todos += valor[i] ? 1 : 0;
+                                }
+
+                                if (todos == valor.length) {
+                                  check_titulo = true;
+                                }
+                              }
                             });
                           },
                         )),
@@ -1180,8 +1277,6 @@ class _Corpo_simplesState extends State<Corpo_simples> {
           ),
           onPressed: () {
             setState(() {
-
-
               acao_dialog = true;
               tarefa_dialog = tarefa;
               toDoList_dialog.insert(0, tarefa);

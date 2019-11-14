@@ -71,8 +71,8 @@ class _CardStructState extends State<CardStruct> {
     });
 
     _IsSearching = false;
-    for (int index; index<toDoList.length; index++){
-      arquivo += toDoList[index]["dt_inativacao"] == null ? 1 : 0;
+    for (int index=0; index<toDoList.length; index++){
+      arquivo += toDoList[index]["dt_inativacao"] != null ? 1 : 0;
     }
   }
 
@@ -89,7 +89,7 @@ class _CardStructState extends State<CardStruct> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: arquivo < 1
+            child: toDoList.length < 0
                 ? Center(
                     child: Image.asset(
                     "assets/no_tasks.png",
