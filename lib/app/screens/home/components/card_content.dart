@@ -7,6 +7,7 @@ import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.da
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
+import 'package:personal_flow/app/shared/tree.dart';
 
 class CardContent extends StatefulWidget {
   CardContent(
@@ -58,18 +59,11 @@ class _CardContentState extends State<CardContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(left: size_screen * 0.025),
-          child: Text(
+        ListTile(
+          title: Text(
             "Tarefas concluídas:",
-            style:
-                TextStyle(fontFamily: font_button, fontWeight: FontWeight.bold),
           ),
-        ),
-        categoryProgress(context),
-        Divider(
-          color: Colors.transparent,
-          height: size_screen * 0.02,
+          subtitle: categoryProgress(context),
         ),
         Column(
           children: <Widget>[
@@ -77,20 +71,10 @@ class _CardContentState extends State<CardContent> {
               width: size_screen * 0.83,
               child: Column(
                 children: <Widget>[
-                  toDoList[widget.valor]["details"].length > 0
-                      ? Column(
-                          children: List<Widget>.generate(
-                              toDoList[widget.valor]["details"].length,
-                              (int index) => toDoList[widget.valor]["details"]
-                                          ["$index"]["dt_inativacao"] ==
-                                      null
-                                  ? buildBody(context, index)
-                                  : Container(
-                                      color: Colors.transparent,
-                                    )))
-                      : Container(
-                          color: Colors.transparent,
-                        ),
+                  Column(
+                      children: List<Widget>.generate(
+                          toDoList[widget.valor]["details"].length,
+                          (int index) => buildBody(context, index))),
                   Padding(
                     padding: EdgeInsets.only(
                       top: size_screen * 0.03,
@@ -100,25 +84,118 @@ class _CardContentState extends State<CardContent> {
                         left: size_screen * 0.02,
                       ),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(size_screen * 0.02),
-                            topRight: Radius.circular(size_screen * 0.02),
-                            bottomLeft: Radius.circular(size_screen * 0.02),
-                          )),
-                      child: Row(children: <Widget>[
-                        Expanded(
-                          child: TextField(
-                            controller: controller,
-                            maxLines: 8,
-                            minLines: 1,
-                            decoration: InputDecoration(
-                              hintText: "Nova tarefa",
-                              border: InputBorder.none,
-                            ),
+                        border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                        borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                      ),
+                      child: ListTile(
+                        title: TextField(
+                          controller: controller,
+                          maxLines: 8,
+                          minLines: 1,
+                          decoration: InputDecoration(
+                            hintText: "Nova tarefa",
+                            border: InputBorder.none,
                           ),
                         ),
-                        IconButton(
+                        subtitle: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            InkWell(
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                  top: size_screen * 0.015,
+                                  right: size_screen * 0.015,
+                                  bottom: size_screen * 0.015,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                                ),
+                                child: list_data != null
+                                ? list_data["data_form"] != null
+                                    ? Text(list_data["data_form"].toString() + ",")
+                                    : Text("Data e hora")
+                                    : Text("Data e hora")
+                              ),
+                              onTap: () async {
+                                    final DateTime picked =
+                                        await showDatePicker(
+                                      context: context,
+                                      firstDate: new DateTime(2000),
+                                      lastDate: new DateTime(2030),
+                                      initialDate: new DateTime.now(),
+                                    );
+                                    setState(() {
+                                      DataHora dataHora = DataHora(
+                                        picked: picked,
+                                      );
+                                      list_data = dataHora.calendario();
+                                      print(list_data);
+                                    });
+                                  },
+                            ),
+                            InkWell(
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                  top: size_screen * 0.015,
+                                  right: size_screen * 0.015,
+                                  bottom: size_screen * 0.015,
+                                ),
+                                child: list_data != null
+                                    ? list_data["data_form"] != null
+                                        ? list_data["hora"] != null
+                                            ? Text(list_data["hora"].toString())
+                                            : Text("hora")
+                                        : Container(
+                                            color: Colors.transparent,
+                                          )
+                                    : Container(
+                                        color: Colors.transparent,
+                                      ),
+                              ),
+                              onTap: () async {
+                                final TimeOfDay picked = await showTimePicker(
+                                  context: context,
+                                  initialTime: TimeOfDay.now(),
+                                );
+                                setState(() {
+                                  DataHora dataHora = DataHora(picked: picked);
+                                  String retorno = dataHora.hora().toString();
+                                  if (retorno != "null") {
+                                    list_data["hora"] = retorno;
+                                  } else {
+                                    list_data["hora"] = null;
+                                  }
+                                });
+                              },
+                            ),
+                            list_data["data_form"] != null
+                                ? InkWell(
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                        top: size_screen * 0.015,
+                                        right: size_screen * 0.015,
+                                        bottom: size_screen * 0.015,
+                                      ),
+                                      child: Icon(
+                                        Icons.close,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        list_data["hora"] = null;
+                                        list_data["data_form"] = null;
+                                      });
+                                    },
+                                  )
+                                : Container(
+                                    color: Colors.transparent,
+                                  )
+                          ],
+                        ),
+
+                        trailing: IconButton(
                           icon: Icon(
                             Icons.add_circle,
                             color: Colors.blue[600],
@@ -127,11 +204,20 @@ class _CardContentState extends State<CardContent> {
                             setState(() {
                               if (controller.text.trim() != "") {
                                 Map<String, dynamic> content = Map();
+                                Composta trefa =
+                                    Composta(tarefa: controller.text.trim());
 
                                 content["title"] = controller.text.trim();
                                 content["bool"] = false;
                                 content["hora"] = null;
                                 content["data_form"] = null;
+
+                                content["dt_inativacao"] = null;
+                                content["repeticao"] = 1;
+                                content["conclusao"] = 0;
+                                content["tipo"] = "subtarefa";
+                                content["title_formatado"] =
+                                    trefa.formatar_sub_titulo(content["title"]);
 
                                 if (list_data.length > 0) {
                                   content["hora"] = list_data["hora"];
@@ -151,92 +237,9 @@ class _CardContentState extends State<CardContent> {
                             });
                           },
                         ),
-                      ]),
+                      ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(size_screen * 0.02),
-                                bottomLeft: Radius.circular(size_screen * 0.02),
-                                bottomRight:
-                                    Radius.circular(size_screen * 0.02),
-                              )),
-                          child: list_data["data_form"] == null
-                              ? InkWell(
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                      top: size_screen * 0.02,
-                                      left: size_screen * 0.02,
-                                      right: size_screen * 0.02,
-                                      bottom: size_screen * 0.02,
-                                    ),
-                                    child: Text(
-                                      "Adicionar data e hora",
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: size_screen * 0.025,
-                                          fontFamily: 'Orkney-bold'),
-                                    ),
-                                  ),
-                                  onTap: () async {
-                                    final DateTime picked =
-                                        await showDatePicker(
-                                      context: context,
-                                      firstDate: new DateTime(2000),
-                                      lastDate: new DateTime(2030),
-                                      initialDate: new DateTime.now(),
-                                    );
-                                    setState(() {
-                                      DataHora dataHora = DataHora(
-                                        picked: picked,
-                                      );
-                                      list_data = dataHora.calendario();
-                                    });
-                                  },
-                                )
-                              : dtHrNovo(context)),
-                      list_data["data_form"] == null
-                          ? IconButton(
-                              color: Colors.blue[600],
-                              icon: Icon(
-                                Icons.calendar_today,
-                              ),
-                              onPressed: () async {
-                                final DateTime picked = await showDatePicker(
-                                  context: context,
-                                  firstDate: new DateTime(2000),
-                                  lastDate: new DateTime(2030),
-                                  initialDate: new DateTime.now(),
-                                );
-                                setState(() {
-                                  DataHora dataHora = DataHora(
-                                    picked: picked,
-                                  );
-                                  list_data = dataHora.calendario();
-                                });
-                              },
-                            )
-                          : IconButton(
-                              color: Colors.red[600],
-                              icon: Icon(
-                                Icons.close,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  list_data["data_form"] = null;
-                                  list_data["hora"] = null;
-                                });
-                              },
-                            )
-                    ],
-                  )
                 ],
               ),
             ),
@@ -255,7 +258,6 @@ class _CardContentState extends State<CardContent> {
                     ),
                     child: Text(
                       "Concluir",
-                      style: TextStyle(fontFamily: font_button),
                     ),
                     onPressed: () {
                       setState(() {
@@ -371,291 +373,189 @@ class _CardContentState extends State<CardContent> {
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(size_screen * 0.03),
-      ),
-      child: Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: size_screen * 0.01),
-              child: Container(
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(size_screen * 0.02),
-                      topRight: Radius.circular(size_screen * 0.02),
-                      bottomLeft: Radius.circular(size_screen * 0.02),
-                    )),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: size_screen * 0.02,
-                        ),
-                        child: InkWell(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                                top: size_screen * 0.025,
-                                bottom: size_screen * 0.025),
-                            child: Text(toDoList[widget.valor]["details"]
-                                ["$index"]["title"]),
-                          ),
-                          onTap: () {
-                            modal(context, index, size_screen);
-                          },
-                        ),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+          borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+        ),
+        child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          child: ListTile(
+            title: Text(toDoList[widget.valor]["details"]["$index"]["title"]),
+            subtitle: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  InkWell(
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        top: size_screen * 0.015,
+                        right: size_screen * 0.015,
+                        bottom: size_screen * 0.015,
                       ),
-                    ),
-                    boolSub
-                        ? IconButton(
-                            icon: okIconSub,
-                            onPressed: () {
-                              setState(() {
-                                toDoList = informacoes.stateIconLead();
-                                saveData();
-                              });
-                            },
-                          )
-                        : IconButton(
-                            icon: noOkIconSub,
-                            onPressed: () {
-                              setState(() {
-                                toDoList = informacoes.stateIconTrai();
-                                saveData();
-                              });
-                            },
-                          )
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(size_screen * 0.02)),
                       ),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(size_screen * 0.02),
-                        bottomLeft: Radius.circular(size_screen * 0.02),
-                        bottomRight: Radius.circular(size_screen * 0.02),
-                      )),
-                  child: toDoList[widget.valor]["details"]["$index"]
-                              ["data_form"] ==
-                          null
-                      ? InkWell(
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              top: size_screen * 0.02,
-                              left: size_screen * 0.02,
-                              right: size_screen * 0.02,
-                              bottom: size_screen * 0.02,
-                            ),
-                            child: Text(
-                              "Adicionar data e hora",
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: size_screen * 0.025,
-                                  fontFamily: 'Orkney-bold'),
-                            ),
-                          ),
-                          onTap: () async {
-                            final DateTime picked = await showDatePicker(
-                              context: context,
-                              firstDate: new DateTime(2000),
-                              lastDate: new DateTime(2030),
-                              initialDate: new DateTime.now(),
-                            );
-                            setState(() {
-                              DataHora dataHora = DataHora(
-                                  picked: picked,
-                                  title: toDoList[widget.valor]["details"]
-                                      ["$index"]["title"],
-                                  boolen: toDoList[widget.valor]["details"]
-                                      ["$index"]["bool"]);
-                              toDoList[widget.valor]["details"]["$index"] =
-                                  dataHora.calendario();
-                            });
-                          },
-                        )
-                      : dtHr(context, index),
-                ),
-                toDoList[widget.valor]["details"]["$index"]["data_form"] == null
-                    ? bt_calendar
-                    : IconButton(
-                        color: Colors.red[600],
-                        icon: Icon(
-                          Icons.close,
-                        ),
-                        onPressed: () {
+                      child: toDoList[widget.valor]["details"]["$index"]["data_form"] == null
+                          ? Text("Data e hora")
+                          : Text(toDoList[widget.valor]["details"]["$index"]["data_form"] + ","),
+                    ),
+                    onTap: () async {
+                          final DateTime picked = await showDatePicker(
+                            context: context,
+                            firstDate: new DateTime(2000),
+                            lastDate: new DateTime(2030),
+                            initialDate: new DateTime.now(),
+                          );
                           setState(() {
-                            toDoList[widget.valor]["details"]["$index"]
-                                ["data_form"] = null;
-                            toDoList[widget.valor]["details"]["$index"]
-                                ["hora"] = null;
+                            DataHora dataHora = DataHora(
+                                picked: picked,
+                                title: toDoList[widget.valor]["details"]
+                                    ["$index"]["title"],
+                                boolen: toDoList[widget.valor]["details"]
+                                    ["$index"]["bool"]);
+                            toDoList[widget.valor]["details"]["$index"] =
+                                dataHora.calendario();
                           });
                         },
-                      )
-              ],
-            )
-          ],
-        ),
-        secondaryActions: <Widget>[
-          IconSlideAction(
-            caption: "Excluir",
-            color: Colors.red,
-            icon: Icons.delete,
-            onTap: () {
-              setState(() {
-                int valor = 0;
-
-                toDoList[widget.valor]["details"]["$index"]["dt_inativacao"] = 111;
-                    
-
-                saveData();
-
-                Flushbar flushbar;
-                bool _wasButtonClicked;
-
-                flushbar = Flushbar<bool>(
-                  animationDuration: Duration(milliseconds: 650),
-                  message: "Subtarefa removida",
-                  borderRadius: size_screen * 0.05,
-                  margin: EdgeInsets.only(
-                    bottom: size_screen * 0.15,
-                    left: size_screen * 0.1,
-                    right: size_screen * 0.1,
                   ),
-                  duration: Duration(seconds: 2),
-                  mainButton: FlatButton(
-                    child: Text(
-                      "Desfazer",
-                      style: TextStyle(color: Colors.amber),
+                  InkWell(
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        top: size_screen * 0.015,
+                        right: size_screen * 0.015,
+                        bottom: size_screen * 0.015,
+                      ),
+                      child: toDoList[widget.valor]["details"]["$index"] != null
+                          ? toDoList[widget.valor]["details"]["$index"]["data_form"] != null
+                          ? toDoList[widget.valor]["details"]["$index"]["hora"] == null
+                                  ? Text("hora")
+                                  : Text(toDoList[widget.valor]["details"]["$index"]["hora"].toString())
+                              : Container(
+                                  color: Colors.transparent,
+                                )
+                                : Container(
+                                  color: Colors.transparent,
+                                ),
                     ),
-                    onPressed: () {
+                    onTap: () async {
+                      final DateTime picked = await showDatePicker(
+                        context: context,
+                        firstDate: new DateTime(2000),
+                        lastDate: new DateTime(2030),
+                        initialDate: new DateTime.now(),
+                      );
                       setState(() {
-                        toDoList[widget.valor]["details"]["$index"]
-                            ["dt_inativacao"] = null;
-                        saveData();
-                        flushbar.dismiss(true);
+                        DataHora dataHora = DataHora(
+                            picked: picked,
+                            title: toDoList[widget.valor]["details"]["$index"]["title"],
+                            boolen: toDoList[widget.valor]["details"]["$index"]["bool"]);
+                        toDoList[widget.valor]["details"]["$index"] =
+                            dataHora.calendario();
                       });
                     },
                   ),
-                )..show(context).then((result) {
-                    setState(() {
-                      _wasButtonClicked = result;
-                    });
-                  });
-              });
+                  toDoList[widget.valor]["details"]["$index"]["data_form"] != null
+                      ? InkWell(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: size_screen * 0.015,
+                              right: size_screen * 0.015,
+                              bottom: size_screen * 0.015,
+                            ),
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.red,
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              toDoList[widget.valor]["details"]["$index"]["hora"] = null;
+                              toDoList[widget.valor]["details"]["$index"]["data_form"] = null;
+                            });
+                          },
+                        )
+                      : Container(
+                          color: Colors.transparent,
+                        )
+                ],
+              ),
+            trailing: boolSub
+                ? IconButton(
+                    icon: Icon(Icons.check, color: Colors.teal,),
+                    onPressed: () {
+                      setState(() {
+                        toDoList = informacoes.stateIconLead();
+                        saveData();
+                      });
+                    },
+                  )
+                : IconButton(
+                    icon: Icon(Icons.panorama_fish_eye, color: Colors.blue,),
+                    onPressed: () {
+                      setState(() {
+                        toDoList = informacoes.stateIconTrai();
+                        saveData();
+                      });
+                    },
+                  ),
+            onTap: () {
+              modal(context, index, size_screen);
             },
           ),
-        ],
-      ),
-    );
-  }
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              caption: "Excluir",
+              color: Colors.transparent,
+              icon: Icons.delete,
+              foregroundColor: Colors.red,
+              onTap: () {
+                setState(() {
+                  int valor = 0;
 
-  Widget dtHr(context, index) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        InkWell(
-          child: Container(
-            margin: EdgeInsets.only(
-              top: size_screen * 0.02,
-              left: size_screen * 0.02,
-              right: size_screen * 0.02,
-              bottom: size_screen * 0.02,
+                  toDoList[widget.valor]["details"]["$index"]["dt_inativacao"] =
+                      111;
+
+                  saveData();
+
+                  Flushbar flushbar;
+                  bool _wasButtonClicked;
+
+                  flushbar = Flushbar<bool>(
+                    animationDuration: Duration(milliseconds: 650),
+                    message: "Subtarefa removida",
+                    borderRadius: size_screen * 0.05,
+                    margin: EdgeInsets.only(
+                      bottom: size_screen * 0.15,
+                      left: size_screen * 0.1,
+                      right: size_screen * 0.1,
+                    ),
+                    duration: Duration(seconds: 2),
+                    mainButton: FlatButton(
+                      child: Text(
+                        "Desfazer",
+                        style: TextStyle(color: Colors.amber),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          toDoList[widget.valor]["details"]["$index"]
+                              ["dt_inativacao"] = null;
+                          saveData();
+                          flushbar.dismiss(true);
+                        });
+                      },
+                    ),
+                  )..show(context).then((result) {
+                      setState(() {
+                        _wasButtonClicked = result;
+                      });
+                    });
+                });
+              },
             ),
-            child: Text(
-              toDoList[widget.valor]["details"]["$index"]["data_form"] == null
-                  ? "Data"
-                  : toDoList[widget.valor]["details"]["$index"]["data_form"],
-              style: TextStyle(
-                  color: Colors.blue[600],
-                  fontSize: size_screen * 0.025,
-                  fontFamily: 'Orkney-bold'),
-            ),
-          ),
-          onTap: () async {
-            final DateTime picked = await showDatePicker(
-              context: context,
-              firstDate: new DateTime(2000),
-              lastDate: new DateTime(2030),
-              initialDate: new DateTime.now(),
-            );
-            setState(() {
-              DataHora dataHora = DataHora(
-                  picked: picked,
-                  title: toDoList[widget.valor]["details"]["$index"]["title"],
-                  boolen: toDoList[widget.valor]["details"]["$index"]["bool"]);
-              toDoList[widget.valor]["details"]["$index"] =
-                  dataHora.calendario();
-            });
-          },
+          ],
         ),
-        Text(
-          "-",
-          style: TextStyle(
-              color: Colors.blue[600],
-              fontSize: size_screen * 0.025,
-              fontFamily: 'Orkney-bold'),
-        ),
-        toDoList[widget.valor]["details"]["$index"]["data_form"] == null
-            ? Text(
-                "   Hora   ",
-                style: TextStyle(
-                    color: Colors.blue[600],
-                    fontSize: size_screen * 0.025,
-                    fontFamily: 'Orkney-bold'),
-              )
-            : InkWell(
-                child: Container(
-                  margin: EdgeInsets.only(
-                    top: size_screen * 0.02,
-                    left: size_screen * 0.02,
-                    right: size_screen * 0.02,
-                    bottom: size_screen * 0.02,
-                  ),
-                  child: Text(
-                    toDoList[widget.valor]["details"]["$index"]["hora"] == null
-                        ? "Hora"
-                        : toDoList[widget.valor]["details"]["$index"]["hora"]
-                            .toString(),
-                    style: TextStyle(
-                        color: Colors.blue[600],
-                        fontSize: size_screen * 0.025,
-                        fontFamily: 'Orkney-bold'),
-                  ),
-                ),
-                onTap: () async {
-                  final TimeOfDay picked = await showTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.now(),
-                  );
-                  setState(() {
-                    DataHora dataHora = DataHora(picked: picked);
-                    String retorno = dataHora.hora().toString();
-                    if (retorno != "null") {
-                      toDoList[widget.valor]["details"]["$index"]["hora"] =
-                          retorno;
-                    } else {
-                      toDoList[widget.valor]["details"]["$index"]["hora"] =
-                          null;
-                    }
-                    saveData();
-                  });
-                },
-              )
-      ],
+      ),
     );
   }
 
@@ -748,20 +648,22 @@ class _CardContentState extends State<CardContent> {
   }
 
   categoryProgress(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Container(
-          height: size_screen * 0.035,
-          width: size_screen * 0.85,
-          child: FAProgressBar(
-            displayText: "  ",
-            maxValue: done_title(),
-            currentValue: done(),
-            progressColor: Colors.teal,
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            height: size_screen * 0.025,
+            width: size_screen * 0.80,
+            child: FAProgressBar(
+              maxValue: done_title(),
+              currentValue: done(),
+              progressColor: Colors.teal,
+              backgroundColor: Colors.transparent,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

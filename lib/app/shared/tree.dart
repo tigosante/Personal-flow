@@ -222,33 +222,41 @@ class Composta {
   List repeticao_sub_tarefa() {
     int todo = toDoList.length;
     int newtodo = newToDo["details"].length;
+    List outras = [];
 
     if (todo > 0) {
       for (int i = 0; i < todo; i++) {
         if (toDoList[i]["tipo"] == "composta") {
-
           for (int j = 0; j < todo; j++) {
             if (toDoList[j]["tipo"] != "simples") {
-              
               int todo_details = toDoList[j]["details"].length;
 
               for (int k = 0; k < todo_details; k++) {
+                for (int a = 0; a < newtodo; a++) {
+                  newToDo["details"]["$a"]
+                      ["title_formatado"] = newToDo["details"]["$a"]["title"] !=
+                          null
+                      ? formatar_sub_titulo(newToDo["details"]["$a"]["title"])
+                      : "";
 
-                for(int a = 0; a < newtodo; a++){
-                  newToDo["details"]["$a"]["title_formatado"] =
-                    newToDo["details"]["$a"]["title"] != null
-                        ? formatar_sub_titulo(newToDo["details"]["$a"]["title"])
-                        : "";
-
-                  newToDo["details"]["$a"]["repeticao"] += toDoList[j]["tipo"] ==
-                          "composta"
-                      ? toDoList[j]["details"]["$k"]["title_formatado"] != null
-                          ? toDoList[j]["details"]["$k"]["title_formatado"] ==
-                                  newToDo["details"]["$a"]["title_formatado"]
-                              ? 1
-                              : 0
-                          : 0
-                      : 0;
+                  if (toDoList[j]["tipo"] == "composta") {
+                    if (toDoList[j]["title"] == newToDo["title"]) {
+                      if (toDoList[j]["details"]["$k"]["title_formatado"] !=
+                          null) {
+                        if (toDoList[j]["details"]["$k"]["title_formatado"] ==
+                            newToDo["details"]["$a"]["title_formatado"]) {
+                          newToDo["details"]["$a"]["repeticao"] += 1;
+                        } else {
+                          newToDo["details"]["$a"]["repeticao"] += 0;
+                          if (outras.contains(toDoList[j]["details"]["$k"])) {
+                            continue;
+                          } else {
+                            outras.add(toDoList[j]["details"]["$k"]);
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -260,6 +268,7 @@ class Composta {
     List retorno = [];
     retorno.add(porcentagem(newToDo));
     retorno.add(newToDo);
+    retorno.add(outras);
 
     return retorno;
   }

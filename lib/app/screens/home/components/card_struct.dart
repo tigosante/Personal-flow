@@ -71,8 +71,10 @@ class _CardStructState extends State<CardStruct> {
     });
 
     _IsSearching = false;
-    for (int index=0; index<toDoList.length; index++){
-      arquivo += toDoList[index]["dt_inativacao"] != null ? 1 : 0;
+    if (toDoList.length > 0) {
+      for (int index = 0; index < toDoList.length; index++) {
+        arquivo += toDoList[index]["dt_inativacao"] != null ? 1 : 0;
+      }
     }
   }
 
@@ -105,29 +107,34 @@ class _CardStructState extends State<CardStruct> {
                         itemCount: toDoList.length,
                         itemBuilder: (BuildContext context, int index) =>
                             toDoList[index]["tipo"] == "simples"
-                                ? toDoList[index]["dt_inativacao"] == null ? buildCardUnica(
-                                    context, font_button, toDoList, index) : Container(color: Colors.transparent,)
-                                : toDoList[index]["dt_inativacao"] == null ? buildCardGrupo(
-                                    context, index, font_button, toDoList) : Container(color: Colors.transparent,),
+                                ? toDoList[index]["dt_inativacao"] == null
+                                    ? buildCardUnica(
+                                        context, font_button, toDoList, index)
+                                    : Container(
+                                        color: Colors.transparent,
+                                      )
+                                : toDoList[index]["dt_inativacao"] == null
+                                    ? buildCardGrupo(
+                                        context, index, font_button, toDoList)
+                                    : Container(
+                                        color: Colors.transparent,
+                                      ),
                       ),
           ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
-        elevation: 5,
+        elevation: 0,
         clipBehavior: Clip.antiAlias,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.blue,
         label: Text(
-          "adicionar",
-          style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'orkey-bold'),
+          "Adicionar",
+          style: TextStyle(color: Colors.white, fontFamily: 'Orkney-bold'),
         ),
         icon: Icon(
           Icons.add,
-          color: Colors.black,
+          color: Colors.white,
         ),
         onPressed: () async {
           var retorno = await Navigator.push(
@@ -155,7 +162,8 @@ class _CardStructState extends State<CardStruct> {
         child: Container(
           width: size_screen * 0.9,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
+              border:
+                  Border.all(color: Colors.grey, width: size_screen * 0.0005),
               borderRadius:
                   BorderRadius.all(Radius.circular(size_screen * 0.04))),
           child: Slidable(
@@ -172,8 +180,9 @@ class _CardStructState extends State<CardStruct> {
             secondaryActions: <Widget>[
               IconSlideAction(
                 caption: "Excluir",
-                color: Colors.red,
+                color: Colors.transparent,
                 icon: Icons.delete,
+                foregroundColor: Colors.red,
                 onTap: () {
                   setState(() {
                     int lastRemovedPos;
@@ -239,7 +248,8 @@ class _CardStructState extends State<CardStruct> {
         child: Container(
           width: size_screen * 0.9,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
+              border:
+                  Border.all(color: Colors.grey, width: size_screen * 0.0005),
               borderRadius:
                   BorderRadius.all(Radius.circular(size_screen * 0.04))),
           child: Slidable(
@@ -276,8 +286,9 @@ class _CardStructState extends State<CardStruct> {
             secondaryActions: <Widget>[
               IconSlideAction(
                 caption: "Excluir",
-                color: Colors.red,
+                color: Colors.transparent,
                 icon: Icons.delete,
+                foregroundColor: Colors.red,
                 onTap: () {
                   setState(() {
                     int lastRemovedPos;
@@ -494,7 +505,7 @@ class _CardStructState extends State<CardStruct> {
           toDo.add(toDoList[index]);
           break;
         }
-        if(toDoList[index]["tipo"] == "composta"){
+        if (toDoList[index]["tipo"] == "composta") {
           for (int j = 0; j < toDoList[index]["details"].length; j++) {
             print(toDoList[index]["details"]["$j"].toString());
             if (toDoList[index]["details"]["$j"]["title"]

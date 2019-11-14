@@ -1,3 +1,4 @@
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/shared/tree.dart';
@@ -37,7 +38,12 @@ class _NewTaskState extends State<NewTask> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text("Nova Tarefa"),
+        centerTitle: true,
+        title: Text("Nova Tarefa", style: TextStyle(color: Colors.grey),),
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(
+          color: Colors.grey
+        ),
       ),
       body: Column(
         children: <Widget>[
@@ -47,8 +53,9 @@ class _NewTaskState extends State<NewTask> {
               : Expanded(child: buildTarefaUnica(context, size_screen)),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
+        elevation: 0,
         backgroundColor: Colors.blue,
         onPressed: () {
           setState(() {
@@ -104,9 +111,22 @@ class _NewTaskState extends State<NewTask> {
             Container(
               width: size_screen * 0.5,
               child: Center(
+                child: Padding(
+                  padding: EdgeInsets.only(left: size_screen * 0.07),
+                  child: Text(
+                    info_tipo_tarefa,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              width: size_screen * 0.5,
+              child: Center(
                 child: DropdownButton<String>(
-                  value: tipo_tarefa_drop,
                   elevation: 1,
+                  value: tipo_tarefa_drop,
+                  iconEnabledColor: Colors.grey,
+                  iconDisabledColor: Colors.grey,
                   underline: Container(
                     height: 0,
                   ),
@@ -143,19 +163,8 @@ class _NewTaskState extends State<NewTask> {
                 ),
               ),
             ),
-            Container(
-              width: size_screen * 0.5,
-              child: Center(
-                child: Text(
-                  info_tipo_tarefa,
-                ),
-              ),
-            )
           ],
         ),
-        Divider(
-          color: Colors.grey,
-        )
       ],
     );
   }
@@ -163,45 +172,33 @@ class _NewTaskState extends State<NewTask> {
   Widget buildTarefaUnica(context, size_screen) {
     return Padding(
       padding:
-          EdgeInsets.only(left: size_screen * 0.07, right: size_screen * 0.07),
+          EdgeInsets.only(left: size_screen * 0.06, right: size_screen * 0.06, top: size_screen * 0.05),
       child: Column(
         children: <Widget>[
           Divider(
             color: Colors.transparent,
             height: size_screen * 0.05,
           ),
-          Expanded(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                      ),
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(size_screen * 0.02),
-                        topRight: Radius.circular(size_screen * 0.02),
-                        bottomLeft: Radius.circular(size_screen * 0.02),
-                      )),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: size_screen * 0.02),
-                    child: TextField(
-                      controller: controller_unica,
-                      decoration: InputDecoration(
-                        hintText: "Tarefa",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 8,
-                      minLines: 1,
-                    ),
-                  ),
+          Container(
+            padding: EdgeInsets.all(size_screen * 0.01),
+            decoration: BoxDecoration(
+              border:
+                  Border.all(color: Colors.grey, width: size_screen * 0.0005),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(size_screen * 0.02)),
+            ),
+            child: ListTile(
+              title: TextField(
+                controller: controller_unica,
+                decoration: InputDecoration(
+                  hintText: "Tarefa",
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: InputBorder.none,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[dataHoraUnica(context, size_screen)],
-                ),
-              ],
+                maxLines: 8,
+                minLines: 1,
+              ),
+              subtitle: dataHoraUnica(context, size_screen),
             ),
           ),
         ],
@@ -214,20 +211,19 @@ class _NewTaskState extends State<NewTask> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(
-            top: size_screen * 0.05,
-            left: size_screen * 0.07,
-            right: size_screen * 0.07,
-          ),
+              top: size_screen * 0.08,
+              left: size_screen * 0.06,
+              right: size_screen * 0.06,
+              bottom: size_screen * 0.02),
           child: Container(
             decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.grey,
-                ),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(size_screen * 0.02))),
-            child: Padding(
-              padding: EdgeInsets.only(left: size_screen * 0.02),
-              child: TextField(
+              border:
+                  Border.all(color: Colors.grey, width: size_screen * 0.0005),
+              borderRadius:
+                  BorderRadius.all(Radius.circular(size_screen * 0.02)),
+            ),
+            child: ListTile(
+              title: TextField(
                 controller: controller_titulo,
                 decoration: InputDecoration(
                   labelText: "Título",
@@ -240,18 +236,15 @@ class _NewTaskState extends State<NewTask> {
             ),
           ),
         ),
-        Divider(
-          color: Colors.transparent,
-          height: size_screen * 0.05,
-        ),
         Expanded(
           child: Column(
             children: <Widget>[
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.only(
-                    left: size_screen * 0.07,
-                    right: size_screen * 0.07,
+                    left: size_screen * 0.06,
+                    right: size_screen * 0.06,
+                    bottom: size_screen * 0.3,
                   ),
                   itemCount: controller_sub.length,
                   itemBuilder: (BuildContext context, int index) =>
@@ -266,285 +259,91 @@ class _NewTaskState extends State<NewTask> {
   }
 
   Widget buildDetailsBody(context, index, size_screen) {
-    return Column(
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(size_screen * 0.02),
-                topRight: Radius.circular(size_screen * 0.02),
-                bottomLeft: Radius.circular(size_screen * 0.02),
-              )),
-          child: Padding(
-            padding: EdgeInsets.only(left: size_screen * 0.02),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    controller: controller_sub[index],
-                    decoration: InputDecoration(
-                      hintText: "Tarefa",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                    ),
-                    maxLines: 8,
-                    minLines: 1,
-                  ),
-                ),
-                controller_sub[index] ==
-                        controller_sub[controller_sub.length - 1]
-                    ? IconButton(
-                        color: Colors.blue[600],
-                        icon: Icon(
-                          Icons.add_circle,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            controller_sub.add(TextEditingController());
-                          });
-                        },
-                      )
-                    : IconButton(
-                        color: Colors.red[600],
-                        icon: Icon(
-                          Icons.remove_circle_outline,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            List toDoNovo = [];
-                            Map<String, dynamic> toDo = Map();
-                            Map<String, dynamic> toNovo = Map();
-
-                            controller_sub.removeAt(index);
-                            data_list["$index"] = null;
-
-                            toDo = Map.from(data_list);
-
-                            for (int i = 0; i <= toDo.length; i++) {
-                              if (toDo["$i"] != null) {
-                                toDoNovo.add(toDo["$i"]);
-                              }
-                            }
-
-                            for (int i = 0; i < toDoNovo.length; i++) {
-                              toNovo["$i"] = toDoNovo[i];
-                            }
-
-                            data_list = toNovo;
-                          });
-                        },
-                      ),
-              ],
+    return Padding(
+      padding: EdgeInsets.only(bottom: size_screen * 0.02),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+          borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+        ),
+        child: ListTile(
+          title: TextField(
+            controller: controller_sub[index],
+            decoration: InputDecoration(
+              hintText: "Tarefa",
+              hintStyle: TextStyle(color: Colors.grey),
+              border: InputBorder.none,
             ),
+            maxLines: 8,
+            minLines: 1,
           ),
+          subtitle: dataHora(context, size_screen, index),
+          trailing:
+              controller_sub[index] == controller_sub[controller_sub.length - 1]
+                  ? IconButton(
+                      color: Colors.blue[600],
+                      icon: Icon(
+                        Icons.add_circle_outline,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          controller_sub.add(TextEditingController());
+                        });
+                      },
+                    )
+                  : IconButton(
+                      color: Colors.red[600],
+                      icon: Icon(
+                        Icons.remove_circle,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          List toDoNovo = [];
+                          Map<String, dynamic> toDo = Map();
+                          Map<String, dynamic> toNovo = Map();
+
+                          controller_sub.removeAt(index);
+                          data_list["$index"] = null;
+
+                          toDo = Map.from(data_list);
+
+                          for (int i = 0; i <= toDo.length; i++) {
+                            if (toDo["$i"] != null) {
+                              toDoNovo.add(toDo["$i"]);
+                            }
+                          }
+
+                          for (int i = 0; i < toDoNovo.length; i++) {
+                            toNovo["$i"] = toDoNovo[i];
+                          }
+
+                          data_list = toNovo;
+                        });
+                      },
+                    ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[dataHora(context, size_screen, index)],
-        ),
-        Divider(
-          color: Colors.transparent,
-          height: size_screen * 0.02,
-        ),
-      ],
+      ),
     );
   }
 
   Widget dataHoraUnica(context, size_screen) {
-    IconButton bt_calendar = IconButton(
-      color: Colors.blue[600],
-      icon: Icon(
-        Icons.calendar_today,
-      ),
-      onPressed: () async {
-        final DateTime picked = await showDatePicker(
-          context: context,
-          firstDate: new DateTime(2000),
-          lastDate: new DateTime(2030),
-          initialDate: new DateTime.now(),
-        );
-        setState(() {
-          DataHora dataHora = DataHora(picked: picked);
-          data_unica = dataHora.calendario();
-        });
-      },
-    );
-
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(size_screen * 0.02),
-                bottomLeft: Radius.circular(size_screen * 0.02),
-                bottomRight: Radius.circular(size_screen * 0.02),
-              )),
-          child: data_unica == null || data_unica["data_form"] == null
-              ? InkWell(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      top: size_screen * 0.02,
-                      left: size_screen * 0.02,
-                      right: size_screen * 0.02,
-                      bottom: size_screen * 0.02,
-                    ),
-                    child: Text(
-                      "Adicionar data e hora",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: size_screen * 0.025,
-                          fontFamily: 'Orkney-bold'),
-                    ),
-                  ),
-                  onTap: () async {
-                    final DateTime picked = await showDatePicker(
-                      context: context,
-                      firstDate: new DateTime(2000),
-                      lastDate: new DateTime(2030),
-                      initialDate: new DateTime.now(),
-                    );
-                    setState(() {
-                      DataHora dataHora = DataHora(picked: picked);
-                      data_unica = dataHora.calendario();
-                    });
-                  },
-                )
-              : dtHrUnica(context, size_screen),
-        ),
-        data_unica == null
-            ? bt_calendar
-            : data_unica["data_form"] == null
-                ? bt_calendar
-                : IconButton(
-                    color: Colors.red[600],
-                    icon: Icon(
-                      Icons.close,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        data_unica["data_form"] = null;
-                        data_unica["hora"] = null;
-                      });
-                    },
-                  ),
-      ],
-    );
-  }
-
-  Widget dataHora(context, size_screen, index) {
-    IconButton bt_calendar = IconButton(
-      color: Colors.blue[600],
-      icon: Icon(
-        Icons.calendar_today,
-      ),
-      onPressed: () async {
-        final DateTime picked = await showDatePicker(
-          context: context,
-          firstDate: new DateTime(2000),
-          lastDate: new DateTime(2030),
-          initialDate: new DateTime.now(),
-        );
-        setState(() {
-          DataHora dataHora = DataHora(picked: picked);
-          data_list["$index"] = dataHora.calendario();
-        });
-      },
-    );
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-              ),
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(size_screen * 0.02),
-                bottomLeft: Radius.circular(size_screen * 0.02),
-                bottomRight: Radius.circular(size_screen * 0.02),
-              )),
-          child: data_list["$index"] == null ||
-                  data_list["$index"]["data_form"] == null
-              ? InkWell(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      top: size_screen * 0.02,
-                      left: size_screen * 0.02,
-                      right: size_screen * 0.02,
-                      bottom: size_screen * 0.02,
-                    ),
-                    child: Text(
-                      "Adicionar data e hora",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: size_screen * 0.025,
-                          fontFamily: 'Orkney-bold'),
-                    ),
-                  ),
-                  onTap: () async {
-                    final DateTime picked = await showDatePicker(
-                      context: context,
-                      firstDate: new DateTime(2000),
-                      lastDate: new DateTime(2030),
-                      initialDate: new DateTime.now(),
-                    );
-                    setState(() {
-                      DataHora dataHora = DataHora(picked: picked);
-                      data_list["$index"] = dataHora.calendario();
-                    });
-                  },
-                )
-              : dtHr(context, index, size_screen),
-        ),
-        data_list["$index"] == null
-            ? bt_calendar
-            : data_list["$index"]["data_form"] == null
-                ? bt_calendar
-                : IconButton(
-                    color: Colors.red[600],
-                    icon: Icon(
-                      Icons.close,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        data_list["$index"]["data_form"] = null;
-                        data_list["$index"]["hora"] = null;
-                      });
-                    },
-                  ),
-      ],
-    );
-  }
-
-  Widget dtHrUnica(context, size_screen) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         InkWell(
           child: Container(
-            margin: EdgeInsets.only(
-              top: size_screen * 0.02,
-              left: size_screen * 0.02,
-              right: size_screen * 0.02,
-              bottom: size_screen * 0.02,
+            padding: EdgeInsets.only(
+              top: size_screen * 0.015,
+              right: size_screen * 0.015,
+              bottom: size_screen * 0.015,
             ),
-            child: Text(
-              data_unica["data_form"],
-              style: TextStyle(
-                  color: Colors.blue[600],
-                  fontSize: size_screen * 0.025,
-                  fontFamily: 'Orkney-bold'),
+            decoration: BoxDecoration(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(size_screen * 0.02)),
             ),
+            child: data_unica == null || data_unica["data_form"] == null
+                ? Text("Data e hora")
+                : Text(data_unica["data_form"] + ","),
           ),
           onTap: () async {
             final DateTime picked = await showDatePicker(
@@ -556,89 +355,88 @@ class _NewTaskState extends State<NewTask> {
             setState(() {
               DataHora dataHora = DataHora(picked: picked);
               data_unica = dataHora.calendario();
+              data_unica["hora"] =
+                  data_unica["data_form"] == null ? null : data_unica["hora"];
             });
           },
         ),
-        Text(
-          "-",
-          style: TextStyle(
-              color: Colors.blue[600],
-              fontSize: size_screen * 0.025,
-              fontFamily: 'Orkney-bold'),
+        InkWell(
+          child: Container(
+            padding: EdgeInsets.only(
+              top: size_screen * 0.015,
+              right: size_screen * 0.015,
+              bottom: size_screen * 0.015,
+            ),
+            child: data_unica["data_form"] != null
+                ? data_unica["hora"] == null
+                    ? Text("hora")
+                    : Text(data_unica["hora"])
+                : Container(
+                    color: Colors.transparent,
+                  ),
+          ),
+          onTap: () async {
+            final TimeOfDay picked = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.now(),
+            );
+            setState(() {
+              DataHora dataHora = DataHora(picked: picked);
+              String retorno = dataHora.hora();
+              if (retorno != null) {
+                data_unica["hora"] = retorno;
+              } else {
+                data_unica["hora"] = null;
+              }
+            });
+          },
         ),
-        data_unica == null
-            ? Text(
-                "   Hora   ",
-                style: TextStyle(
-                    color: Colors.blue[600],
-                    fontSize: size_screen * 0.025,
-                    fontFamily: 'Orkney-bold'),
+        data_unica["data_form"] != null
+            ? InkWell(
+                child: Container(
+                  padding: EdgeInsets.only(
+                    top: size_screen * 0.015,
+                    right: size_screen * 0.015,
+                    bottom: size_screen * 0.015,
+                  ),
+                  child: Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  ),
+                ),
+                onTap: () {
+                  setState(() {
+                    data_unica["hora"] = null;
+                    data_unica["data_form"] = null;
+                  });
+                },
               )
-            : data_unica["data_form"] == null
-                ? Text(
-                    "   Hora   ",
-                    style: TextStyle(
-                        color: Colors.blue[600],
-                        fontSize: size_screen * 0.025,
-                        fontFamily: 'Orkney-bold'),
-                  )
-                : InkWell(
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        top: size_screen * 0.02,
-                        left: size_screen * 0.02,
-                        right: size_screen * 0.02,
-                        bottom: size_screen * 0.02,
-                      ),
-                      child: Text(
-                        data_unica["hora"] == null || data_unica["hora"] == ""
-                            ? "Hora"
-                            : data_unica["hora"],
-                        style: TextStyle(
-                            color: Colors.blue[600],
-                            fontSize: size_screen * 0.025,
-                            fontFamily: 'Orkney-bold'),
-                      ),
-                    ),
-                    onTap: () async {
-                      final TimeOfDay picked = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      );
-                      setState(() {
-                        DataHora dataHora = DataHora(picked: picked);
-                        String retorno = dataHora.hora().toString();
-                        if (retorno != "null") {
-                          data_unica["hora"] = retorno;
-                        } else {
-                          data_unica["hora"] = null;
-                        }
-                      });
-                    },
-                  )
+            : Container(
+                color: Colors.transparent,
+              )
       ],
     );
   }
 
-  Widget dtHr(context, index, size_screen) {
+  Widget dataHora(context, size_screen, index) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         InkWell(
           child: Container(
-            margin: EdgeInsets.only(
-              top: size_screen * 0.02,
-              left: size_screen * 0.02,
-              right: size_screen * 0.02,
-              bottom: size_screen * 0.02,
+            padding: EdgeInsets.only(
+              top: size_screen * 0.015,
+              right: size_screen * 0.015,
+              bottom: size_screen * 0.015,
             ),
-            child: Text(
-              data_list["$index"]["data_form"],
-              style: TextStyle(
-                  color: Colors.blue[600],
-                  fontSize: size_screen * 0.025,
-                  fontFamily: 'Orkney-bold'),
+            decoration: BoxDecoration(
+              borderRadius:
+                  BorderRadius.all(Radius.circular(size_screen * 0.02)),
             ),
+            child: data_list["$index"] == null ||
+                    data_list["$index"]["data_form"] == null
+                ? Text("Data e hora")
+                : Text(data_list["$index"]["data_form"].toString() + ","),
           ),
           onTap: () async {
             final DateTime picked = await showDatePicker(
@@ -653,64 +451,67 @@ class _NewTaskState extends State<NewTask> {
             });
           },
         ),
-        Text(
-          "-",
-          style: TextStyle(
-              color: Colors.blue[600],
-              fontSize: size_screen * 0.025,
-              fontFamily: 'Orkney-bold'),
+        InkWell(
+          child: Container(
+              padding: EdgeInsets.only(
+                top: size_screen * 0.015,
+                right: size_screen * 0.015,
+                bottom: size_screen * 0.015,
+              ),
+              child: data_list["$index"] != null
+                  ? data_list["$index"]["data_form"] != null
+                      ? data_list["$index"]["hora"] == null
+                          ? Text("hora")
+                          : Text(data_list["$index"]["hora"])
+                      : Container(
+                          color: Colors.transparent,
+                        )
+                  : Container(
+                      color: Colors.transparent,
+                    )),
+          onTap: () async {
+            final TimeOfDay picked = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.now(),
+            );
+            setState(() {
+              DataHora dataHora = DataHora(picked: picked);
+              String retorno = dataHora.hora().toString();
+              if (retorno != "null") {
+                data_list["$index"]["hora"] = retorno;
+              } else {
+                data_list["$index"]["hora"] = null;
+              }
+            });
+          },
         ),
-        data_list["$index"] == null
-            ? Text(
-                "   Hora   ",
-                style: TextStyle(
-                    color: Colors.blue[600],
-                    fontSize: size_screen * 0.025,
-                    fontFamily: 'Orkney-bold'),
-              )
-            : data_list["$index"]["data_form"] == null
-                ? Text(
-                    "   Hora   ",
-                    style: TextStyle(
-                        color: Colors.blue[600],
-                        fontSize: size_screen * 0.025,
-                        fontFamily: 'Orkney-bold'),
-                  )
-                : InkWell(
+        data_list["$index"] != null
+            ? data_list["$index"]["data_form"] != null
+                ? InkWell(
                     child: Container(
-                      margin: EdgeInsets.only(
-                        top: size_screen * 0.02,
-                        left: size_screen * 0.02,
-                        right: size_screen * 0.02,
-                        bottom: size_screen * 0.02,
+                      padding: EdgeInsets.only(
+                        top: size_screen * 0.015,
+                        right: size_screen * 0.015,
+                        bottom: size_screen * 0.015,
                       ),
-                      child: Text(
-                        data_list["$index"]["hora"] == null ||
-                                data_list["$index"]["hora"] == ""
-                            ? "Hora"
-                            : data_list["$index"]["hora"],
-                        style: TextStyle(
-                            color: Colors.blue[600],
-                            fontSize: size_screen * 0.025,
-                            fontFamily: 'Orkney-bold'),
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.red,
                       ),
                     ),
-                    onTap: () async {
-                      final TimeOfDay picked = await showTimePicker(
-                        context: context,
-                        initialTime: TimeOfDay.now(),
-                      );
+                    onTap: () {
                       setState(() {
-                        DataHora dataHora = DataHora(picked: picked);
-                        String retorno = dataHora.hora().toString();
-                        if (retorno != "null") {
-                          data_list["$index"]["hora"] = retorno;
-                        } else {
-                          data_list["$index"]["hora"] = null;
-                        }
+                        data_list["$index"]["hora"] = null;
+                        data_list["$index"]["data_form"] = null;
                       });
                     },
                   )
+                : Container(
+                    color: Colors.transparent,
+                  )
+            : Container(
+                color: Colors.transparent,
+              )
       ],
     );
   }
@@ -769,7 +570,6 @@ class _NewTaskState extends State<NewTask> {
   }
 
   dialog_composta(size_screen, context, lista_retorno) {
-    
     showDialog(
         context: context,
         builder: (BuildContext cont) {
@@ -785,7 +585,7 @@ class _NewTaskState extends State<NewTask> {
       int qnt_tarefas = 0;
 
       Composta trefa = Composta(tarefa: controller_titulo.text.trim());
-      
+
       newToDo["title"] = controller_titulo.text.trim();
       newToDo["bool"] = false;
 
@@ -841,14 +641,15 @@ class _NewTaskState extends State<NewTask> {
 
       newToDo["repeticao"] = repeticao;
       newToDo["data_grupo"] = concluir.data_grupo();
-      newToDo["data_repetica"] = newToDo["data_grupo"] ? concluir.data_repetica() : false;
+      newToDo["data_repetica"] =
+          newToDo["data_grupo"] ? concluir.data_repetica() : false;
 
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();
 
       retorno.insert(0, true);
       retorno.add(newToDo);
-
+      retorno.add(porcentagem_repete[2]);
 
       return retorno;
     } else {
@@ -877,6 +678,7 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
     double size_screen = widget.size_screen;
 
     dynamic toDoList = lista_retorno[3];
+    dynamic outras = lista_retorno[4];
     dynamic backup = toDoList;
 
     Map<String, dynamic> data_unica = Map();
@@ -886,7 +688,7 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
 
     if (valor.length < toDoList["details"].length) {
       setState(() {
-        for(int i = 0; i < toDoList["details"].length; i++){
+        for (int i = 0; i < toDoList["details"].length; i++) {
           valor.add(false);
         }
       });
@@ -901,7 +703,7 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
         title: Text(
           "Parece que você já criou essa tarefa anteriormente!\n",
         ),
-        subtitle: Text("Que tal deixa-la progamada?"),
+        subtitle: Text("Que tal deixá-la programada?"),
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -958,6 +760,19 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                   data_unica["data_form"] =
                       toDoList["details"]["$index"]["data_form"];
                 });
+
+                List backup = [];
+
+                setState(() {
+                  for (int i = 0; i < outras.length; i++) {
+                    if (toDoList["details"]["$index"]["title_formatado"] !=
+                        outras[i]["title_formatado"]) {
+                      backup.add(outras[i]);
+                    }
+                  }
+                  outras = backup;
+                });
+
                 return Column(
                   children: <Widget>[
                     ListTile(
@@ -1065,10 +880,12 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                                         color: Colors.red,
                                       ),
                                     ),
-                                    onTap: (){
+                                    onTap: () {
                                       setState(() {
-                                        toDoList["details"]["$index"]["hora"] = null;
-                                        toDoList["details"]["$index"]["data_form"] = null;
+                                        toDoList["details"]["$index"]["hora"] =
+                                            null;
+                                        toDoList["details"]["$index"]
+                                            ["data_form"] = null;
                                       });
                                     },
                                   )
@@ -1102,6 +919,12 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                 );
               }).toList(),
             ),
+            outras.length > 0
+                ? Outras_tarefas(
+                    size_screen: size_screen,
+                    outras: outras,
+                  )
+                : Container(color: Colors.transparent)
           ],
         ),
       ),
@@ -1139,6 +962,160 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
   }
 }
 
+List<bool> outras_check = [];
+
+class Outras_tarefas extends StatefulWidget {
+  Outras_tarefas({Key key, this.outras, this.size_screen}) : super(key: key);
+
+  List outras;
+  double size_screen;
+  @override
+  _Outras_tarefasState createState() => _Outras_tarefasState();
+}
+
+class _Outras_tarefasState extends State<Outras_tarefas> {
+  @override
+  Widget build(BuildContext context) {
+    setState(() {
+      for (int i = 00; i < widget.outras.length; i++) {
+        outras_check.add(false);
+      }
+    });
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Divider(
+          color: Colors.grey,
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ExpandablePanel(
+              tapHeaderToExpand: true,
+              header: Container(
+                padding: EdgeInsets.only(
+                    top: widget.size_screen * 0.04,
+                    left: widget.size_screen * 0.02,
+                    bottom: widget.size_screen * 0.04),
+                child: Text("Outras tarefas deste grupo"),
+              ),
+              expanded: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: List<Widget>.generate(widget.outras.length, (item) {
+                  return ListTile(
+                    title: Text(widget.outras[item]["title"]),
+                    subtitle: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        InkWell(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: widget.size_screen * 0.015,
+                              right: widget.size_screen * 0.015,
+                              bottom: widget.size_screen * 0.015,
+                            ),
+                            child: widget.outras[item]["data_form"] == null
+                                ? Text("Data e hora")
+                                : Text(widget.outras[item]["data_form"] + ","),
+                          ),
+                          onTap: () async {
+                            dynamic data_unica;
+                            final DateTime picked = await showDatePicker(
+                              context: context,
+                              firstDate: new DateTime(2000),
+                              lastDate: new DateTime(2030),
+                              initialDate: new DateTime.now(),
+                            );
+                            setState(() {
+                              DataHora dataHora = DataHora(picked: picked);
+                              data_unica = dataHora.calendario();
+                              widget.outras[item]["data_form"] =
+                                  data_unica["data_form"];
+
+                              widget.outras[item]["hora"] = null;
+                            });
+                          },
+                        ),
+                        InkWell(
+                          child: Container(
+                            padding: EdgeInsets.only(
+                              top: widget.size_screen * 0.015,
+                              right: widget.size_screen * 0.015,
+                              bottom: widget.size_screen * 0.015,
+                            ),
+                            child: widget.outras[item]["data_form"] != null
+                                ? widget.outras[item]["hora"] == null
+                                    ? Text("hora")
+                                    : Text(widget.outras[item]["hora"])
+                                : Container(
+                                    color: Colors.transparent,
+                                  ),
+                          ),
+                          onTap: () async {
+                            final TimeOfDay picked = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            );
+                            setState(() {
+                              DataHora dataHora = DataHora(picked: picked);
+                              String retorno = dataHora.hora();
+                              if (retorno != null) {
+                                widget.outras[item]["hora"] = retorno;
+                              } else {
+                                widget.outras[item]["hora"] = null;
+                              }
+                            });
+                          },
+                        ),
+                        widget.outras[item]["data_form"] != null
+                            ? InkWell(
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                    top: widget.size_screen * 0.015,
+                                    right: widget.size_screen * 0.015,
+                                    bottom: widget.size_screen * 0.015,
+                                  ),
+                                  child: Icon(
+                                    Icons.close,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    widget.outras[item]["hora"] = null;
+                                    widget.outras[item]["data_form"] = null;
+                                  });
+                                },
+                              )
+                            : Container(
+                                color: Colors.transparent,
+                              )
+                      ],
+                    ),
+                    trailing: Checkbox(
+                      value: outras_check[item],
+                      onChanged: (bool press) {
+                        setState(() {
+                          outras_check[item] = !outras_check[item];
+                        });
+                      },
+                    ),
+                  );
+                }),
+              ),
+            )
+          ],
+        ),
+        Divider(
+          color: Colors.grey,
+        )
+      ],
+    );
+  }
+}
+
 class Corpo_simples extends StatefulWidget {
   Corpo_simples({Key key, this.size_screen, this.lista_retorno})
       : super(key: key);
@@ -1169,7 +1146,7 @@ class _Corpo_simplesState extends State<Corpo_simples> {
         title: Text(
           "Parece que você já criou essa tarefa algumas vezes!\n",
         ),
-        subtitle: Text("Que tal deixa-la progamada?"),
+        subtitle: Text("Que tal deixá-la programada?"),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -1250,7 +1227,7 @@ class _Corpo_simplesState extends State<Corpo_simples> {
                       }
                     });
                   },
-                )
+                ),
               ],
             ),
           ),
