@@ -89,133 +89,141 @@ class _CardContentUnicaState extends State<CardContentUnica> {
       },
     );
 
-    return ListTile(
-      title: Text(toDoList[widget.valor]["title"]),
-      subtitle: Row(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          InkWell(
-            child: Container(
-              padding: EdgeInsets.only(
-                top: size_screen * 0.015,
-                right: size_screen * 0.015,
-                bottom: size_screen * 0.015,
+    return Padding(
+      padding: EdgeInsets.only(
+          top: toDoList[widget.valor] != null
+              ? toDoList[widget.valor]["data_form"] != null
+                  ? size_screen * 0.01
+                  : 0
+              : 0),
+      child: ListTile(
+        title: Text(toDoList[widget.valor]["title"]),
+        subtitle: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            InkWell(
+              child: Container(
+                padding: EdgeInsets.only(
+                  top: size_screen * 0.015,
+                  right: size_screen * 0.015,
+                  bottom: size_screen * 0.015,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                ),
+                child: toDoList[widget.valor]["data_form"] == null
+                    ? Text("Data e hora")
+                    : Text(toDoList[widget.valor]["data_form"] + ","),
               ),
-              decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.all(Radius.circular(size_screen * 0.02)),
-              ),
-              child: toDoList[widget.valor]["data_form"] == null
-                  ? Text("Data e hora")
-                  : Text(toDoList[widget.valor]["data_form"] + ","),
+              onTap: () async {
+                final DateTime picked = await showDatePicker(
+                  context: context,
+                  firstDate: new DateTime(2000),
+                  lastDate: new DateTime(2030),
+                  initialDate: new DateTime.now(),
+                );
+                setState(() {
+                  DataHora dataHora = DataHora(
+                      picked: picked,
+                      title: toDoList[widget.valor]["title"],
+                      boolen: toDoList[widget.valor]["bool"]);
+                  toDoList[widget.valor] = dataHora.calendario();
+                });
+              },
             ),
-            onTap: () async {
-              final DateTime picked = await showDatePicker(
-                context: context,
-                firstDate: new DateTime(2000),
-                lastDate: new DateTime(2030),
-                initialDate: new DateTime.now(),
-              );
-              setState(() {
-                DataHora dataHora = DataHora(
-                    picked: picked,
-                    title: toDoList[widget.valor]["title"],
-                    boolen: toDoList[widget.valor]["bool"]);
-                toDoList[widget.valor] = dataHora.calendario();
-              });
-            },
-          ),
-          InkWell(
-            child: Container(
-              padding: EdgeInsets.only(
-                top: size_screen * 0.015,
-                right: size_screen * 0.015,
-                bottom: size_screen * 0.015,
+            InkWell(
+              child: Container(
+                padding: EdgeInsets.only(
+                  top: size_screen * 0.015,
+                  right: size_screen * 0.015,
+                  bottom: size_screen * 0.015,
+                ),
+                child: toDoList[widget.valor] != null
+                    ? toDoList[widget.valor]["data_form"] != null
+                        ? toDoList[widget.valor]["hora"] == null
+                            ? Text("hora")
+                            : Text(toDoList[widget.valor]["hora"].toString())
+                        : Container(
+                            color: Colors.transparent,
+                          )
+                    : Container(
+                        color: Colors.transparent,
+                      ),
               ),
-              child: toDoList[widget.valor] != null
-                  ? toDoList[widget.valor]["data_form"] != null
-                      ? toDoList[widget.valor]["hora"] == null
-                          ? Text("hora")
-                          : Text(toDoList[widget.valor]["hora"].toString())
-                      : Container(
-                          color: Colors.transparent,
-                        )
-                  : Container(
-                      color: Colors.transparent,
-                    ),
+              onTap: () async {
+                final TimeOfDay picked = await showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                );
+                setState(() {
+                  DataHora dataHora = DataHora(picked: picked);
+                  String retorno = dataHora.hora().toString();
+                  if (retorno != "null") {
+                    toDoList[widget.valor]["hora"] = retorno;
+                  } else {
+                    toDoList[widget.valor]["hora"] = null;
+                  }
+                  saveData();
+                });
+              },
             ),
-            onTap: () async {
-              final TimeOfDay picked = await showTimePicker(
-                context: context,
-                initialTime: TimeOfDay.now(),
-              );
-              setState(() {
-                DataHora dataHora = DataHora(picked: picked);
-                String retorno = dataHora.hora().toString();
-                if (retorno != "null") {
-                  toDoList[widget.valor]["hora"] = retorno;
-                } else {
-                  toDoList[widget.valor]["hora"] = null;
-                }
-                saveData();
-              });
-            },
-          ),
-          toDoList[widget.valor]["data_form"] != null
-              ? InkWell(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                      top: size_screen * 0.015,
-                      right: size_screen * 0.015,
-                      bottom: size_screen * 0.015,
+            toDoList[widget.valor]["data_form"] != null
+                ? InkWell(
+                    child: Container(
+                      padding: EdgeInsets.only(
+                        top: size_screen * 0.015,
+                        right: size_screen * 0.015,
+                        bottom: size_screen * 0.015,
+                      ),
+                      child: Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
                     ),
-                    child: Icon(
-                      Icons.close,
-                      color: Colors.red,
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      toDoList[widget.valor]["hora"] = null;
-                      toDoList[widget.valor]["data_form"] = null;
-                    });
-                  },
-                )
-              : Container(
-                  color: Colors.transparent,
-                )
-        ],
+                    onTap: () {
+                      setState(() {
+                        toDoList[widget.valor]["hora"] = null;
+                        toDoList[widget.valor]["data_form"] = null;
+                      });
+                    },
+                  )
+                : Container(
+                    color: Colors.transparent,
+                  )
+          ],
+        ),
+        trailing: toDoList[widget.valor]["bool"]
+            ? IconButton(
+                icon: Icon(
+                  Icons.check,
+                  color: Colors.teal,
+                ),
+                onPressed: () {
+                  setState(() {
+                    toDoList[widget.valor]["conclusao"] = 0;
+                    toDoList[widget.valor]["bool"] = false;
+                    saveData();
+                  });
+                },
+              )
+            : IconButton(
+                icon: Icon(
+                  Icons.panorama_fish_eye,
+                  color: Colors.blue[600],
+                ),
+                onPressed: () {
+                  setState(() {
+                    toDoList[widget.valor]["conclusao"] = 1;
+                    toDoList[widget.valor]["bool"] = true;
+                    saveData();
+                  });
+                },
+              ),
+        onTap: () {
+          modal(context, index, size_screen);
+        },
       ),
-      trailing: toDoList[widget.valor]["bool"]
-          ? IconButton(
-              icon: Icon(
-                Icons.check,
-                color: Colors.teal,
-              ),
-              onPressed: () {
-                setState(() {
-                  toDoList[widget.valor]["conclusao"] = 0;
-                  toDoList[widget.valor]["bool"] = false;
-                  saveData();
-                });
-              },
-            )
-          : IconButton(
-              icon: Icon(
-                Icons.panorama_fish_eye,
-                color: Colors.blue[600],
-              ),
-              onPressed: () {
-                setState(() {
-                  toDoList[widget.valor]["conclusao"] = 1;
-                  toDoList[widget.valor]["bool"] = true;
-                  saveData();
-                });
-              },
-            ),
-      onTap: () {
-        modal(context, index, size_screen);
-      },
     );
   }
 

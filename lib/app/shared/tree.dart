@@ -17,9 +17,12 @@ class Tree {
 
   dynamic decisao() {
     List lista_retorno = [];
-    // if (programada) {
-    //   print("programada".toUpperCase());
-    // } else {
+    if (tarefa["agendada"]) {
+      lista_retorno.add("TAREFA AGENDADA");
+      lista_retorno.add(false);
+
+      return lista_retorno;
+    } else {
     switch (tarefa["tipo"]) {
       // Início sub-árvore SIMPLES
       case "simples":
@@ -101,7 +104,7 @@ class Tree {
         }
       // Fim sub-árvore COMPOSTA
     }
-    // }
+    }
   }
 
   Tree({

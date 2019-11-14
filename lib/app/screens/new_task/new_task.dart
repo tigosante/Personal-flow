@@ -11,7 +11,7 @@ class NewTask extends StatefulWidget {
 }
 
 String tipo_tarefa_drop = "Tipo de tarefa";
-String info_tipo_tarefa = "Escolha um tipo de tarefa.";
+String info_tipo_tarefa = "Escolha um tipo de tarefa que deseja criar.";
 bool tipo_tarefa = true;
 bool acao_dialog = false;
 dynamic tarefa_dialog;
@@ -39,15 +39,17 @@ class _NewTaskState extends State<NewTask> {
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text("Nova Tarefa", style: TextStyle(color: Colors.grey),),
-        backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(
-          color: Colors.grey
+        title: Text(
+          "Nova Tarefa",
+          style: TextStyle(color: Colors.grey,),
         ),
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.grey),
       ),
       body: Column(
         children: <Widget>[
           buildDropDown(size_screen),
+          Agendar(size_screen: size_screen),
           tipo_tarefa
               ? Expanded(child: buildTarefaComposta(context, size_screen))
               : Expanded(child: buildTarefaUnica(context, size_screen)),
@@ -99,80 +101,95 @@ class _NewTaskState extends State<NewTask> {
   }
 
   Widget buildDropDown(size_screen) {
-    return Column(
-      children: <Widget>[
-        Divider(
-          height: size_screen * 0.03,
-          color: Colors.transparent,
+    return Padding(
+      padding: EdgeInsets.only(
+        top: size_screen * 0.03,
+        left: size_screen * 0.06,
+        right: size_screen * 0.06,
+      ),
+      child: Container(
+        padding: EdgeInsets.only(
+          top: size_screen * 0.02,
+          bottom: size_screen * 0.02,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+          borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+        ),
+        child: Column(
           children: <Widget>[
-            Container(
-              width: size_screen * 0.5,
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.only(left: size_screen * 0.07),
-                  child: Text(
-                    info_tipo_tarefa,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              width: size_screen * 0.5,
-              child: Center(
-                child: DropdownButton<String>(
-                  elevation: 1,
-                  value: tipo_tarefa_drop,
-                  iconEnabledColor: Colors.grey,
-                  iconDisabledColor: Colors.grey,
-                  underline: Container(
-                    height: 0,
-                  ),
-                  items: <String>[
-                    "Tipo de tarefa",
-                    "Simples",
-                    "Composta",
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Container(
+                  width: size_screen * 0.35,
+                  child: Center(
+                    child: DropdownButton<String>(
+                      elevation: 1,
+                      value: tipo_tarefa_drop,
+                      iconEnabledColor: Colors.grey,
+                      iconDisabledColor: Colors.grey,
+                      underline: Container(
+                        height: 0,
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (String newValue) {
-                    setState(() {
-                      tipo_tarefa_drop = newValue;
-                      tipo_tarefa = tipo_tarefa_drop == "Tipo de tarefa" ||
-                              tipo_tarefa_drop == "Composta"
-                          ? true
-                          : false;
-                      info_tipo_tarefa = tipo_tarefa_drop == "Tipo de tarefa"
-                          ? "Escolha um tipo de tarefa."
-                          : tipo_tarefa_drop == "Simples"
-                              ? "Você pode criar apenas uma terefa."
-                              : "Você pode criar um grupo com várias subtarefas.";
+                      items: <String>[
+                        "Tipo de tarefa",
+                        "Simples",
+                        "Composta",
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          tipo_tarefa_drop = newValue;
+                          tipo_tarefa = tipo_tarefa_drop == "Tipo de tarefa" ||
+                                  tipo_tarefa_drop == "Composta"
+                              ? true
+                              : false;
+                          info_tipo_tarefa = tipo_tarefa_drop == "Tipo de tarefa"
+                              ? "Escolha um tipo de tarefa que deseja criar."
+                              : tipo_tarefa_drop == "Simples"
+                                  ? "Você pode cria apenas uma tarefa."
+                                  : "Grupo com várias subtarefas.";
 
-                      controller_unica = TextEditingController();
-                      controller_titulo = TextEditingController();
-                      controller_sub = [TextEditingController()];
-                    });
-                  },
+                          controller_unica = TextEditingController();
+                          controller_titulo = TextEditingController();
+                          controller_sub = [TextEditingController()];
+                        });
+                      },
+                    ),
+                  ),
                 ),
-              ),
+                Text(
+                  "|  "
+                ),
+                Container(
+                  width: size_screen * 0.4,
+                  child: Center(
+                    child: Text(
+                      info_tipo_tarefa,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 
   Widget buildTarefaUnica(context, size_screen) {
     return Padding(
-      padding:
-          EdgeInsets.only(left: size_screen * 0.06, right: size_screen * 0.06, top: size_screen * 0.05),
+      padding: EdgeInsets.only(
+        left: size_screen * 0.06,
+        right: size_screen * 0.06,
+      ),
       child: Column(
         children: <Widget>[
           Divider(
@@ -211,7 +228,7 @@ class _NewTaskState extends State<NewTask> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(
-              top: size_screen * 0.08,
+              top: size_screen * 0.05,
               left: size_screen * 0.06,
               right: size_screen * 0.06,
               bottom: size_screen * 0.02),
@@ -546,6 +563,14 @@ class _NewTaskState extends State<NewTask> {
       newToDo["data_repeticao"] = tratamentos.data_repeticao();
       newToDo["title_formatado"] = tratamentos.formatar_titulo();
 
+      newToDo["agendada"] = false;
+
+      for (int i = 0; i < dias_agendados.length; i++) {
+        if (dias_agendados[i]) {
+          newToDo["agendada"] = true;
+        }
+      }
+
       Tree tree = Tree(tarefa: newToDo);
 
       List lista_retorno = tree.decisao();
@@ -643,6 +668,13 @@ class _NewTaskState extends State<NewTask> {
       newToDo["data_grupo"] = concluir.data_grupo();
       newToDo["data_repetica"] =
           newToDo["data_grupo"] ? concluir.data_repetica() : false;
+      newToDo["agendada"] = false;
+
+      for (int i = 0; i < dias_agendados.length; i++) {
+        if (dias_agendados[i]) {
+          newToDo["agendada"] = true;
+        }
+      }
 
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();
@@ -655,6 +687,141 @@ class _NewTaskState extends State<NewTask> {
     } else {
       return [false];
     }
+  }
+}
+
+List<bool> dias_agendados = [];
+bool agendar_unica = false;
+String agenda_unica = "Clique para definir a data final desta tarefa.";
+
+class Agendar extends StatefulWidget {
+  Agendar({Key key, this.size_screen}) : super(key: key);
+
+  double size_screen;
+  @override
+  _AgendarState createState() => _AgendarState();
+}
+
+class _AgendarState extends State<Agendar> {
+  @override
+  Widget build(BuildContext context) {
+    double size_screen = 0;
+    setState(() {
+      size_screen = widget.size_screen;
+    });
+
+    return Padding(
+      padding: EdgeInsets.only(
+          left: size_screen * 0.06,
+          right: size_screen * 0.06,
+          top: size_screen * 0.05),
+      child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+            borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+          ),
+          child: ExpandablePanel(
+            tapHeaderToExpand: true,
+            header: ListTile(
+              title: Text("Agendar"),
+              subtitle: Text(
+                "Escolha os dias que a tarefa repete-se.",
+              ),
+            ),
+            expanded: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Colors.grey, width: size_screen * 0.0003),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: size_screen * 0.015,
+                      bottom: size_screen * 0.015,
+                    ),
+                    child: ListTile(
+                      title: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: List<Widget>.generate(7, (dia) {
+                            List<String> dias = [
+                              "Seg",
+                              "Ter",
+                              "Qua",
+                              "Qui",
+                              "Sex",
+                              "Sáb",
+                              "Dom"
+                            ];
+                            setState(() {
+                              for (int i = 0; i < dias.length; i++) {
+                                dias_agendados.add(false);
+                              }
+                            });
+                            return InkWell(
+                              child: Container(
+                                padding: EdgeInsets.all(size_screen * 0.008),
+                                child: Text(
+                                  dias[dia],
+                                  style: TextStyle(
+                                      color: dias_agendados[dia]
+                                          ? Colors.blue
+                                          : Colors.grey),
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  dias_agendados[dia] = !dias_agendados[dia];
+
+                                  AgendarData agendamento = AgendarData();
+
+                                  agendamento.agendar(dias_agendados);
+                                });
+                              },
+                            );
+                          })),
+                      subtitle: Padding(
+                        padding: EdgeInsets.only(top: size_screen * 0.025),
+                        child: InkWell(
+                          child: Container(
+                              padding: EdgeInsets.all(size_screen * 0.008),
+                              child: Text(
+                                agenda_unica,
+                                style: TextStyle(
+                                    color: agendar_unica
+                                        ? Colors.grey
+                                        : Colors.blue),
+                              )),
+                          onTap: () async {
+                            final DateTime picked = await showDatePicker(
+                              context: context,
+                              firstDate: new DateTime(2000),
+                              lastDate: new DateTime(2030),
+                              initialDate: new DateTime.now(),
+                            );
+                            setState(() {
+                              AgendarData agendamento = AgendarData(
+                                picked: picked,
+                              );
+                              agendar_unica = picked == null;
+                              agenda_unica = agendamento.data_agendamento();
+
+                              agendamento.agendar(dias_agendados);
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )),
+    );
   }
 }
 
