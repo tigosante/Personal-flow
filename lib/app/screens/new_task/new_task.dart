@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/shared/tree.dart';
@@ -41,7 +42,9 @@ class _NewTaskState extends State<NewTask> {
         centerTitle: true,
         title: Text(
           "Nova Tarefa",
-          style: TextStyle(color: Colors.grey,),
+          style: TextStyle(
+            color: Colors.grey,
+          ),
         ),
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Colors.grey),
@@ -151,10 +154,11 @@ class _NewTaskState extends State<NewTask> {
                                   tipo_tarefa_drop == "Composta"
                               ? true
                               : false;
-                          info_tipo_tarefa = tipo_tarefa_drop == "Tipo de tarefa"
+                          info_tipo_tarefa = tipo_tarefa_drop ==
+                                  "Tipo de tarefa"
                               ? "Escolha um tipo de tarefa que deseja criar."
                               : tipo_tarefa_drop == "Simples"
-                                  ? "Você pode cria apenas uma tarefa."
+                                  ? "Você pode criar apenas uma tarefa."
                                   : "Grupo com várias subtarefas.";
 
                           controller_unica = TextEditingController();
@@ -165,9 +169,7 @@ class _NewTaskState extends State<NewTask> {
                     ),
                   ),
                 ),
-                Text(
-                  "|  "
-                ),
+                Text("|  "),
                 Container(
                   width: size_screen * 0.4,
                   child: Center(
@@ -670,11 +672,16 @@ class _NewTaskState extends State<NewTask> {
           newToDo["data_grupo"] ? concluir.data_repetica() : false;
       newToDo["agendada"] = false;
 
-      for (int i = 0; i < dias_agendados.length; i++) {
-        if (dias_agendados[i]) {
-          newToDo["agendada"] = true;
+      if (dias_agendados != null) {
+        for (int i = 0; i < dias_agendados.length; i++) {
+          if (dias_agendados[i]) {
+            newToDo["agendada"] = true;
+          }
         }
       }
+      newToDo["dias_agendados"] = newToDo["agendada"] ? dias_agendados : false;
+
+      newToDo["data_agenda"] = newToDo["agendada"] ? agenda_unica : null;
 
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();
@@ -693,6 +700,7 @@ class _NewTaskState extends State<NewTask> {
 List<bool> dias_agendados = [];
 bool agendar_unica = false;
 String agenda_unica = "Clique para definir a data final desta tarefa.";
+Color cor_tarefa = Colors.grey;
 
 class Agendar extends StatefulWidget {
   Agendar({Key key, this.size_screen}) : super(key: key);
@@ -760,6 +768,7 @@ class _AgendarState extends State<Agendar> {
                             setState(() {
                               for (int i = 0; i < dias.length; i++) {
                                 dias_agendados.add(false);
+                                agendar_unica = false;
                               }
                             });
                             return InkWell(
@@ -777,6 +786,13 @@ class _AgendarState extends State<Agendar> {
                                 setState(() {
                                   dias_agendados[dia] = !dias_agendados[dia];
 
+                                  if (!dias_agendados[dia]) {
+                                    agenda_unica =
+                                        "Clique para definir a data final desta tarefa.";
+                                    agendar_unica = false;
+                                    cor_tarefa = Colors.grey;
+                                  }
+
                                   AgendarData agendamento = AgendarData();
 
                                   agendamento.agendar(dias_agendados);
@@ -791,27 +807,54 @@ class _AgendarState extends State<Agendar> {
                               padding: EdgeInsets.all(size_screen * 0.008),
                               child: Text(
                                 agenda_unica,
-                                style: TextStyle(
-                                    color: agendar_unica
-                                        ? Colors.grey
-                                        : Colors.blue),
+                                style: TextStyle(color: cor_tarefa),
                               )),
                           onTap: () async {
-                            final DateTime picked = await showDatePicker(
-                              context: context,
-                              firstDate: new DateTime(2000),
-                              lastDate: new DateTime(2030),
-                              initialDate: new DateTime.now(),
-                            );
-                            setState(() {
-                              AgendarData agendamento = AgendarData(
-                                picked: picked,
+                            bool verificar = false;
+                            for (int i = 0; i < dias_agendados.length; i++) {
+                              if (dias_agendados[i]) {
+                                verificar = true;
+                              }
+                            }
+                            if (verificar) {
+                              final DateTime picked = await showDatePicker(
+                                context: context,
+                                firstDate: new DateTime(2000),
+                                lastDate: new DateTime(2030),
+                                initialDate: new DateTime.now(),
                               );
-                              agendar_unica = picked == null;
-                              agenda_unica = agendamento.data_agendamento();
+                              setState(() {
+                                AgendarData agendamento = AgendarData(
+                                  picked: picked,
+                                );
+                                agendar_unica = picked == null;
+                                agenda_unica = agendamento.data_agendamento();
 
-                              agendamento.agendar(dias_agendados);
-                            });
+                                cor_tarefa =
+                                    agendar_unica ? Colors.grey : Colors.blue;
+
+                                agendamento.agendar(dias_agendados);
+                              });
+                            } else {
+                              Flushbar flushbar;
+                              bool _wasButtonClicked;
+
+                              flushbar = Flushbar<bool>(
+                                animationDuration: Duration(milliseconds: 450),
+                                message: "Escolha algum dia para agendar.",
+                                borderRadius: size_screen * 0.05,
+                                margin: EdgeInsets.only(
+                                  bottom: size_screen * 0.15,
+                                  left: size_screen * 0.1,
+                                  right: size_screen * 0.1,
+                                ),
+                                duration: Duration(seconds: 2),
+                              )..show(context).then((result) {
+                                  setState(() {
+                                    _wasButtonClicked = result;
+                                  });
+                                });
+                            }
                           },
                         ),
                       ),
@@ -935,8 +978,28 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                     if (toDoList["details"]["$index"]["title_formatado"] !=
                         outras[i]["title_formatado"]) {
                       backup.add(outras[i]);
+                      // for (int j = 0; j < backup.length; j++) {
+                      //   for (int k = 0; k < toDoList["details"].length; k++) {
+                      //     if (backup[j]["title_formatado"] ==
+                      //         toDoList["details"]["$k"]["title_formatado"]) {
+                      //       print(backup[j]["title_formatado"]);
+                      //       print(toDoList["details"]["$k"]["title_formatado"]);
+                      //       print(backup[j]["title_formatado"] !=
+                      //           toDoList["details"]["$k"]["title_formatado"]);
+                      //       backup.removeAt(j);
+                      //     }
+                      //   }
+                      // }
                     }
                   }
+                  // for (int i = 0; i < backup.length; i++) {
+                  //   for (int j = 0; j < backup.length; j++) {
+                  //       if(backup[i]["title_formatado"] == backup[j]["title_formatado"]){
+                  //         backup.removeAt(i);
+                  //     }
+                      
+                  //   }
+                  // }
                   outras = backup;
                 });
 

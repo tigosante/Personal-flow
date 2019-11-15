@@ -85,18 +85,21 @@ class Tree {
                 return lista_retorno;
               }
             } else {
+              print("conclusao grupo");
               lista_retorno.add("conclusao grupo");
               lista_retorno.add(false);
 
               return lista_retorno;
             }
           } else {
+            print("tarefa grupo");
             lista_retorno.add("tarefa grupo");
             lista_retorno.add(false);
 
             return lista_retorno;
           }
         } else {
+          print("repetição grupo");
           lista_retorno.add("repetição grupo");
           lista_retorno.add(false);
 
