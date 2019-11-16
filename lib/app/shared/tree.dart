@@ -23,90 +23,87 @@ class Tree {
 
       return lista_retorno;
     } else {
-    switch (tarefa["tipo"]) {
-      // Início sub-árvore SIMPLES
-      case "simples":
-        if (tarefa["repeticao"] >= 3) {
-          if (tarefa["conclusao"] >= 2) {
-            if (tarefa["data_form"] != null) {
-              if (tarefa["data_repeticao"] > 1) {
-                lista_retorno.add("data repete");
-                lista_retorno.add(true);
-
-                return lista_retorno;
-              } else {
-                lista_retorno.add("ultima data");
-                lista_retorno.add(true);
-
-                return lista_retorno;
-              }
-            } else {
-              lista_retorno.add("sem data");
-              lista_retorno.add(true);
-
-              return lista_retorno;
-            }
-          } else {
-            lista_retorno.add("conclusao");
-            lista_retorno.add(false);
-
-            return lista_retorno;
-          }
-        } else {
-          lista_retorno.add("repeticao");
-          lista_retorno.add(false);
-
-          return lista_retorno;
-        }
-        break;
-      // Fim sub-árvore SIMPLES
-
-      // Início sub-árvore COMPOSTA
-      case "composta":
-        if (tarefa["repeticao"] > 0) {
-          if (tarefa["porcentagem"]) {
-            if (tarefa["conclusao_grupo"]) {
-              if (tarefa["data_grupo"]) {
-                if (tarefa["data_repetica"]) {
-                  lista_retorno.add("SUGERIR COM A DATA QUE SE REPETE");
+      switch (tarefa["tipo"]) {
+        // Início sub-árvore SIMPLES
+        case "simples":
+          if (tarefa["repeticao"] >= 3) {
+            if (tarefa["conclusao"] >= 2) {
+              if (tarefa["data_form"] != null) {
+                if (tarefa["data_repeticao"] > 1) {
+                  lista_retorno.add("data repete");
                   lista_retorno.add(true);
 
                   return lista_retorno;
                 } else {
-                  lista_retorno.add("SUGERIR COM A ÚLTIMA DATA");
+                  lista_retorno.add("ultima data");
                   lista_retorno.add(true);
 
                   return lista_retorno;
                 }
               } else {
-                lista_retorno.add("SUGERIR SEM DATA");
+                lista_retorno.add("sem data");
                 lista_retorno.add(true);
 
                 return lista_retorno;
               }
             } else {
-              print("conclusao grupo");
-              lista_retorno.add("conclusao grupo");
+              lista_retorno.add("conclusao");
               lista_retorno.add(false);
 
               return lista_retorno;
             }
           } else {
-            print("tarefa grupo");
-            lista_retorno.add("tarefa grupo");
+            lista_retorno.add("repeticao");
             lista_retorno.add(false);
 
             return lista_retorno;
           }
-        } else {
-          print("repetição grupo");
-          lista_retorno.add("repetição grupo");
-          lista_retorno.add(false);
+          break;
+        // Fim sub-árvore SIMPLES
 
-          return lista_retorno;
-        }
-      // Fim sub-árvore COMPOSTA
-    }
+        // Início sub-árvore COMPOSTA
+        case "composta":
+          if (tarefa["repeticao"] > 0) {
+            if (tarefa["porcentagem"]) {
+              if (tarefa["conclusao_grupo"]) {
+                if (tarefa["data_grupo"]) {
+                  if (tarefa["data_repetica"]) {
+                    lista_retorno.add("SUGERIR COM A DATA QUE SE REPETE");
+                    lista_retorno.add(true);
+
+                    return lista_retorno;
+                  } else {
+                    lista_retorno.add("SUGERIR COM A ÚLTIMA DATA");
+                    lista_retorno.add(true);
+
+                    return lista_retorno;
+                  }
+                } else {
+                  lista_retorno.add("SUGERIR SEM DATA");
+                  lista_retorno.add(true);
+
+                  return lista_retorno;
+                }
+              } else {
+                lista_retorno.add("conclusao grupo");
+                lista_retorno.add(false);
+
+                return lista_retorno;
+              }
+            } else {
+              lista_retorno.add("tarefa grupo");
+              lista_retorno.add(false);
+
+              return lista_retorno;
+            }
+          } else {
+            lista_retorno.add("repetição grupo");
+            lista_retorno.add(false);
+
+            return lista_retorno;
+          }
+        // Fim sub-árvore COMPOSTA
+      }
     }
   }
 
@@ -227,7 +224,7 @@ class Composta {
 
   List repeticao_sub_tarefa() {
     int todo = toDoList.length;
-    int newtodo = newToDo["details"].length;
+    int size_todo = newToDo["details"].length;
     List outras = [];
 
     if (todo > 0) {
@@ -235,29 +232,32 @@ class Composta {
         if (toDoList[i]["tipo"] == "composta") {
           for (int j = 0; j < todo; j++) {
             if (toDoList[j]["tipo"] != "simples") {
-              int todo_details = toDoList[j]["details"].length;
+              if (toDoList[j]["details"] != null) {
+                int todo_details = toDoList[j]["details"].length;
 
-              for (int k = 0; k < todo_details; k++) {
-                for (int a = 0; a < newtodo; a++) {
-                  newToDo["details"]["$a"]
-                      ["title_formatado"] = newToDo["details"]["$a"]["title"] !=
-                          null
-                      ? formatar_sub_titulo(newToDo["details"]["$a"]["title"])
-                      : "";
+                for (int k = 0; k < todo_details; k++) {
+                  for (int a = 0; a < size_todo; a++) {
+                    newToDo["details"]["$a"]
+                        ["title_formatado"] = newToDo["details"]["$a"]
+                                ["title"] !=
+                            null
+                        ? formatar_sub_titulo(newToDo["details"]["$a"]["title"])
+                        : "";
 
-                  if (toDoList[j]["tipo"] == "composta") {
-                    if (toDoList[j]["title"] == newToDo["title"]) {
-                      if (toDoList[j]["details"]["$k"]["title_formatado"] !=
-                          null) {
-                        if (toDoList[j]["details"]["$k"]["title_formatado"] ==
-                            newToDo["details"]["$a"]["title_formatado"]) {
-                          newToDo["details"]["$a"]["repeticao"] += 1;
-                        } else {
-                          newToDo["details"]["$a"]["repeticao"] += 0;
-                          if (outras.contains(toDoList[j]["details"]["$k"])) {
-                            continue;
+                    if (toDoList[j]["tipo"] == "composta") {
+                      if (toDoList[j]["title"] == newToDo["title"]) {
+                        if (toDoList[j]["details"]["$k"]["title_formatado"] !=
+                            null) {
+                          if (toDoList[j]["details"]["$k"]["title_formatado"] ==
+                              newToDo["details"]["$a"]["title_formatado"]) {
+                            newToDo["details"]["$a"]["repeticao"] += 1;
                           } else {
-                            outras.add(toDoList[j]["details"]["$k"]);
+                            newToDo["details"]["$a"]["repeticao"] += 0;
+                            if (outras.contains(toDoList[j]["details"]["$k"])) {
+                              continue;
+                            } else {
+                              outras.add(toDoList[j]["details"]["$k"]);
+                            }
                           }
                         }
                       }

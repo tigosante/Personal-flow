@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:personal_flow/app/screens/home/components/card_content.dart';
 import 'package:personal_flow/app/screens/home/components/card_content_unica.dart';
 import 'package:personal_flow/app/screens/new_task/new_task.dart';
+import 'package:personal_flow/app/shared/notification_widget.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 
 class CardStruct extends StatefulWidget {
@@ -71,11 +72,6 @@ class _CardStructState extends State<CardStruct> {
     });
 
     _IsSearching = false;
-    if (toDoList.length > 0) {
-      for (int index = 0; index < toDoList.length; index++) {
-        arquivo += toDoList[index]["dt_inativacao"] != null ? 1 : 0;
-      }
-    }
   }
 
   @override
@@ -86,12 +82,22 @@ class _CardStructState extends State<CardStruct> {
       font_button = genaratioCards.outFontButton;
     });
 
+    bool validar(){
+      for(int i =0; i<toDoList.length; i++){
+        if(toDoList[i]["dt_inativacao"] != null){
+          return false;
+        }
+      }
+      return true;
+    }
+    
     return Scaffold(
       appBar: buildBar(context),
       body: Column(
         children: <Widget>[
+          // NotificationWidget(title: toDoList[0]["title"],body: toDoList[0]["title"],data: "sáb, 16 Nov",),
           Expanded(
-            child: toDoList.length < 0
+            child: validar()
                 ? Center(
                     child: Image.asset(
                     "assets/no_tasks.png",
@@ -366,55 +372,65 @@ class _CardStructState extends State<CardStruct> {
                   ),
                 ),
                 Divider(
-                  height: size_screen * 0.1,
-                  color: Colors.transparent,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(size_screen * 0.02))),
-                  width: size_screen * 0.8,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: size_screen * 0.015, right: size_screen * 0.015),
-                    child: TextField(
-                      controller: controller_text,
-                      decoration: InputDecoration(
-                        hintText: "Título",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(
                   height: size_screen * 0.05,
                   color: Colors.transparent,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    RaisedButton(
-                      elevation: 1,
+                    Container(
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                      ),
+                      width: size_screen * 0.65,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: size_screen * 0.015, right: size_screen * 0.015),
+                        child: TextField(
+                          controller: controller_text,
+                          decoration: InputDecoration(
+                            hintText: "Título",
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Card(
+                      color: Colors.blue,
+                      elevation: 0,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(size_screen * 0.02),
                       ),
-                      child: Text(
-                        "Salvar",
+                      child: InkWell(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                          ),
+                          padding: EdgeInsets.all(size_screen * 0.03),
+                          child: Text(
+                            "Salvar",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onTap: () {
+                            setState(() {
+                              if (controller_text.text.trim().isNotEmpty) {
+                                toDoList[index]["title"] = controller_text.text;
+                                saveData();
+                                Navigator.pop(context);
+                              }
+                            });
+                          },
                       ),
-                      onPressed: () {
-                        setState(() {
-                          if (controller_text.text.trim().isNotEmpty) {
-                            toDoList[index]["title"] = controller_text.text;
-                            saveData();
-                            Navigator.pop(context);
-                          }
-                        });
-                      },
                     ),
-                    SizedBox(
-                      width: size_screen * 0.05,
-                    )
                   ],
                 ),
                 Divider(
@@ -494,8 +510,18 @@ class _CardStructState extends State<CardStruct> {
         itemCount: toDoLi.length,
         itemBuilder: (BuildContext context, int index) =>
             toDoList[index]["tipo"] == "simples"
-                ? buildCardUnica(context, font_button, toDoList, index)
-                : buildCardGrupo(context, index, font_button, toDoList),
+              ? toDoList[index]["dt_inativacao"] == null
+                  ? buildCardUnica(
+                      context, font_button, toDoList, index)
+                  : Container(
+                      color: Colors.transparent,
+                    )
+              : toDoList[index]["dt_inativacao"] == null
+                  ? buildCardGrupo(
+                      context, index, font_button, toDoList)
+                  : Container(
+                      color: Colors.transparent,
+                    ),
       );
     } else {
       List<Map<String, dynamic>> toDo = List();

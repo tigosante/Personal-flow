@@ -567,9 +567,11 @@ class _NewTaskState extends State<NewTask> {
 
       newToDo["agendada"] = false;
 
-      for (int i = 0; i < dias_agendados.length; i++) {
-        if (dias_agendados[i]) {
-          newToDo["agendada"] = true;
+      if (dias_agendados.length != null) {
+        for (int i = 0; i < dias_agendados.length; i++) {
+          if (dias_agendados[i]) {
+            newToDo["agendada"] = true;
+          }
         }
       }
 
@@ -658,16 +660,20 @@ class _NewTaskState extends State<NewTask> {
       int repeticao = 0;
       List porcentagem_repete = [];
       repeticao = repete.repeticao_titulo_tarefa();
+      print("repeticao_titulo_tarefa");
       porcentagem_repete = repete.repeticao_sub_tarefa();
+      print("repeticao_sub_tarefa");
 
       newToDo = porcentagem_repete[1];
       newToDo["porcentagem"] = porcentagem_repete[0];
 
       Composta concluir = Composta(toDoList: widget.toDoList, newToDo: newToDo);
       newToDo["conclusao_grupo"] = concluir.conclsuao();
+      print("conclsuao");
 
       newToDo["repeticao"] = repeticao;
       newToDo["data_grupo"] = concluir.data_grupo();
+      print("data_grupo");
       newToDo["data_repetica"] =
           newToDo["data_grupo"] ? concluir.data_repetica() : false;
       newToDo["agendada"] = false;
@@ -757,18 +763,20 @@ class _AgendarState extends State<Agendar> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: List<Widget>.generate(7, (dia) {
                             List<String> dias = [
+                              "Dom",
                               "Seg",
                               "Ter",
                               "Qua",
                               "Qui",
                               "Sex",
                               "Sáb",
-                              "Dom"
                             ];
                             setState(() {
-                              for (int i = 0; i < dias.length; i++) {
-                                dias_agendados.add(false);
-                                agendar_unica = false;
+                              if (!(dias_agendados == 7)) {
+                                for (int i = 0; i < dias.length; i++) {
+                                  dias_agendados.add(false);
+                                  agendar_unica = false;
+                                }
                               }
                             });
                             return InkWell(
@@ -840,6 +848,10 @@ class _AgendarState extends State<Agendar> {
                               bool _wasButtonClicked;
 
                               flushbar = Flushbar<bool>(
+                                icon: Icon(
+                                  Icons.error_outline,
+                                  color: Colors.amber,
+                                ),
                                 animationDuration: Duration(milliseconds: 450),
                                 message: "Escolha algum dia para agendar.",
                                 borderRadius: size_screen * 0.05,
@@ -858,6 +870,184 @@ class _AgendarState extends State<Agendar> {
                           },
                         ),
                       ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )),
+    );
+  }
+}
+
+List<bool> dias_agendados_dialog = [];
+bool agendar_unica_dialog = false;
+Color cor_tarefa_dialog = Colors.grey;
+
+class AgendarDialog extends StatefulWidget {
+  AgendarDialog({Key key, this.size_screen}) : super(key: key);
+
+  double size_screen;
+  @override
+  _AgendarDialogState createState() => _AgendarDialogState();
+}
+
+class _AgendarDialogState extends State<AgendarDialog> {
+  @override
+  Widget build(BuildContext context) {
+    double size_screen = 0;
+    setState(() {
+      size_screen = widget.size_screen;
+    });
+
+    return Padding(
+      padding: EdgeInsets.only(top: size_screen * 0.05),
+      child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+            borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+          ),
+          child: ExpandablePanel(
+            tapHeaderToExpand: true,
+            header: ListTile(
+              title: Text("Agendar"),
+            ),
+            expanded: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Colors.grey, width: size_screen * 0.0003),
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: size_screen * 0.015,
+                      bottom: size_screen * 0.015,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: List<Widget>.generate(7, (dia) {
+                              List<String> dias = [
+                                "Dom",
+                                "Seg",
+                                "Ter",
+                                "Qua",
+                                "Qui",
+                                "Sex",
+                                "Sáb",
+                              ];
+                              setState(() {
+                                if (!(dias_agendados_dialog == 7)) {
+                                  for (int i = 0; i < dias.length; i++) {
+                                    dias_agendados_dialog.add(false);
+                                    agendar_unica_dialog = false;
+                                  }
+                                }
+                              });
+                              return InkWell(
+                                child: Container(
+                                  padding: EdgeInsets.all(size_screen * 0.008),
+                                  child: Text(
+                                    dias[dia],
+                                    style: TextStyle(
+                                        color: dias_agendados_dialog[dia]
+                                            ? Colors.blue
+                                            : Colors.grey),
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    dias_agendados_dialog[dia] =
+                                        !dias_agendados_dialog[dia];
+
+                                    if (!dias_agendados_dialog[dia]) {
+                                      agenda_unica =
+                                          "Clique para definir a data final desta tarefa.";
+                                      agendar_unica_dialog = false;
+                                      cor_tarefa_dialog = Colors.grey;
+                                    }
+
+                                    AgendarData agendamento = AgendarData();
+
+                                    agendamento.agendar(dias_agendados_dialog);
+                                  });
+                                },
+                              );
+                            })),
+                        Padding(
+                          padding: EdgeInsets.only(top: size_screen * 0.025),
+                          child: InkWell(
+                            child: Container(
+                                padding: EdgeInsets.all(size_screen * 0.008),
+                                child: Text(
+                                  agenda_unica,
+                                  style: TextStyle(color: cor_tarefa_dialog),
+                                )),
+                            onTap: () async {
+                              bool verificar = false;
+                              for (int i = 0;
+                                  i < dias_agendados_dialog.length;
+                                  i++) {
+                                if (dias_agendados_dialog[i]) {
+                                  verificar = true;
+                                }
+                              }
+                              if (verificar) {
+                                final DateTime picked = await showDatePicker(
+                                  context: context,
+                                  firstDate: new DateTime(2000),
+                                  lastDate: new DateTime(2030),
+                                  initialDate: new DateTime.now(),
+                                );
+                                setState(() {
+                                  AgendarData agendamento = AgendarData(
+                                    picked: picked,
+                                  );
+                                  agendar_unica_dialog = picked == null;
+                                  agenda_unica = agendamento.data_agendamento();
+
+                                  cor_tarefa_dialog = agendar_unica_dialog
+                                      ? Colors.grey
+                                      : Colors.blue;
+
+                                  agendamento.agendar(dias_agendados_dialog);
+                                });
+                              } else {
+                                Flushbar flushbar;
+                                bool _wasButtonClicked;
+
+                                flushbar = Flushbar<bool>(
+                                  icon: Icon(
+                                    Icons.error_outline,
+                                    color: Colors.amber,
+                                  ),
+                                  animationDuration:
+                                      Duration(milliseconds: 450),
+                                  message: "Escolha algum dia para agendar.",
+                                  borderRadius: size_screen * 0.05,
+                                  margin: EdgeInsets.only(
+                                    bottom: size_screen * 0.15,
+                                    left: size_screen * 0.1,
+                                    right: size_screen * 0.1,
+                                  ),
+                                  duration: Duration(seconds: 2),
+                                )..show(context).then((result) {
+                                    setState(() {
+                                      _wasButtonClicked = result;
+                                    });
+                                  });
+                              }
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 )
@@ -974,22 +1164,24 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                 List backup = [];
 
                 setState(() {
-                  for (int i = 0; i < outras.length; i++) {
-                    if (toDoList["details"]["$index"]["title_formatado"] !=
-                        outras[i]["title_formatado"]) {
-                      backup.add(outras[i]);
-                      // for (int j = 0; j < backup.length; j++) {
-                      //   for (int k = 0; k < toDoList["details"].length; k++) {
-                      //     if (backup[j]["title_formatado"] ==
-                      //         toDoList["details"]["$k"]["title_formatado"]) {
-                      //       print(backup[j]["title_formatado"]);
-                      //       print(toDoList["details"]["$k"]["title_formatado"]);
-                      //       print(backup[j]["title_formatado"] !=
-                      //           toDoList["details"]["$k"]["title_formatado"]);
-                      //       backup.removeAt(j);
-                      //     }
-                      //   }
-                      // }
+                  if (outras.length != null) {
+                    for (int i = 0; i < outras.length; i++) {
+                      if (toDoList["details"]["$index"]["title_formatado"] !=
+                          outras[i]["title_formatado"]) {
+                        backup.add(outras[i]);
+                        // for (int j = 0; j < backup.length; j++) {
+                        //   for (int k = 0; k < toDoList["details"].length; k++) {
+                        //     if (backup[j]["title_formatado"] ==
+                        //         toDoList["details"]["$k"]["title_formatado"]) {
+                        //       print(backup[j]["title_formatado"]);
+                        //       print(toDoList["details"]["$k"]["title_formatado"]);
+                        //       print(backup[j]["title_formatado"] !=
+                        //           toDoList["details"]["$k"]["title_formatado"]);
+                        //       backup.removeAt(j);
+                        //     }
+                        //   }
+                        // }
+                      }
                     }
                   }
                   // for (int i = 0; i < backup.length; i++) {
@@ -997,7 +1189,7 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                   //       if(backup[i]["title_formatado"] == backup[j]["title_formatado"]){
                   //         backup.removeAt(i);
                   //     }
-                      
+
                   //   }
                   // }
                   outras = backup;
@@ -1149,6 +1341,7 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                 );
               }).toList(),
             ),
+            AgendarDialog(size_screen: size_screen,),
             outras.length > 0
                 ? Outras_tarefas(
                     size_screen: size_screen,
@@ -1461,6 +1654,9 @@ class _Corpo_simplesState extends State<Corpo_simples> {
               ],
             ),
           ),
+          AgendarDialog(
+            size_screen: size_screen,
+          )
         ],
       ),
       actions: <Widget>[

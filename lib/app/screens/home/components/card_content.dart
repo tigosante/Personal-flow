@@ -730,56 +730,66 @@ class _CardContentState extends State<CardContent> {
                   ),
                 ),
                 Divider(
-                  height: size_screen * 0.1,
-                  color: Colors.transparent,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.all(
-                          Radius.circular(size_screen * 0.02))),
-                  width: size_screen * 0.8,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        left: size_screen * 0.015, right: size_screen * 0.015),
-                    child: TextField(
-                      controller: controller_text,
-                      decoration: InputDecoration(
-                        hintText: "título",
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ),
-                Divider(
                   height: size_screen * 0.05,
                   color: Colors.transparent,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    RaisedButton(
-                      elevation: 1,
+                    Container(
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                      ),
+                      width: size_screen * 0.65,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: size_screen * 0.015, right: size_screen * 0.015),
+                        child: TextField(
+                          controller: controller_text,
+                          decoration: InputDecoration(
+                            hintText: "Título",
+                            border: InputBorder.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Card(
+                      color: Colors.blue,
+                      elevation: 0,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(size_screen * 0.02),
                       ),
-                      child: Text(
-                        "Salvar",
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          if (controller_text.text.trim().isNotEmpty) {
+                      child: InkWell(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                          ),
+                          padding: EdgeInsets.all(size_screen * 0.03),
+                          child: Text(
+                            "Salvar",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        onTap: () {
+                            setState(() {
+                              if (controller_text.text.trim().isNotEmpty) {
                             toDoList[widget.valor]["details"]["$index"]
                                 ["title"] = controller_text.text;
                             saveData();
                             Navigator.pop(context);
                           }
-                        });
-                      },
+                            });
+                          },
+                      ),
                     ),
-                    SizedBox(
-                      width: size_screen * 0.05,
-                    )
                   ],
                 ),
                 Divider(
