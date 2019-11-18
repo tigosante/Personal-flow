@@ -5,9 +5,9 @@ String chenal = "";
 String chenal_type = "";
 int chenal_id = 0;
 
-NotificationDetails get _ongoing{
+NotificationDetails get _ongoing {
   final androidChannelSpecifics = AndroidNotificationDetails(
-    chenal, 
+    chenal,
     "chanel $chenal$chenal_id}",
     "notificações de tarefas da categoria $chenal_type",
     importance: Importance.Max,
@@ -21,60 +21,91 @@ NotificationDetails get _ongoing{
   return NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
 }
 
-Future showOngoingNotification(
-  FlutterLocalNotificationsPlugin notifications,{
-    @required String title,
-    @required String body,
-    @required int id = 0,
-    @required Time notificationTime,
-    @required Day dayNotification
-  }
-)=> _showNotifications(notifications, title: title, body: body, id: id, type: _ongoing, time: notificationTime, day: dayNotification);
+Future dia_unico(FlutterLocalNotificationsPlugin notifications,
+        {@required String title,
+        @required String body,
+        @required int id = 0,
+        @required Time notificationTime,
+        @required Day dayNotification}) =>
+    dia_unico_notificacao(notifications,
+        title: title,
+        body: body,
+        id: id,
+        type: _ongoing,
+        time: notificationTime,
+        day: dayNotification);
 
-Future _showNotifications(
+Future dia_unico_notificacao(
   FlutterLocalNotificationsPlugin notifications, {
-    @required String title,
-    @required String body,
-    @required NotificationDetails type,
-    @required int id,
-    @required Day day,
-    Time time,
-  }) => 
-  // notifications.show(id, title, body, type,);
-  notifications.showDailyAtTime(id, title, body, time,type);
-  // notifications.showWeeklyAtDayAndTime(id, title, body, day,time,type);
-  // notifications.periodicallyShow(0, title, body, RepeatInterval.EveryMinute,type);
+  @required String title,
+  @required String body,
+  @required NotificationDetails type,
+  @required int id,
+  @required Day day,
+  Time time,
+}) =>
+    notifications.showDailyAtTime(id, title, body, time, type);
+// notifications.showWeeklyAtDayAndTime(id, title, body, day,time,type);
+// notifications.periodicallyShow(0, title, body, RepeatInterval.Weekly,type);
 
-class Notificacao{
+Future dia_agendado(FlutterLocalNotificationsPlugin notifications,
+        {@required String title,
+        @required String body,
+        @required int id = 0,
+        @required Time notificationTime,
+        @required Day dayNotification}) =>
+    dia_agendado_notificacao(notifications,
+        title: title,
+        body: body,
+        id: id,
+        type: _ongoing,
+        time: notificationTime,
+        day: dayNotification);
+
+Future dia_agendado_notificacao(
+  FlutterLocalNotificationsPlugin notifications, {
+  @required String title,
+  @required String body,
+  @required NotificationDetails type,
+  @required int id,
+  @required Day day,
+  Time time,
+}) =>
+    notifications.showWeeklyAtDayAndTime(id, title, body, day, time, type);
+// notifications.periodicallyShow(0, title, body, RepeatInterval.EveryMinute,type);
+
+class Notificacao {
   dynamic tarefa;
   dynamic notifications;
   int id_chanel;
   List agendadas;
 
-  dynamic filtro(){
-    if(tarefa["details"] == null){
+  dynamic filtro() {
+    if (tarefa["details"] == null) {
       chenal = tarefa["title"];
       chenal_id = id_chanel;
       chenal_type = "simples";
 
-      if(tarefa["data_form"] != null){
-        if(tarefa["hora"] != null){
-          if(tarefa["agendada"]){
-            print("Agenada: ${tarefa["agendada"]}");
-          }else{
-            showOngoingNotification(notifications,
-              title: tarefa["title"],
-              body: "Sua tarefa está chegando ao fim!\nConfere se você não esqueceu nada.",
-              id: id_chanel,
-              notificationTime: Time(int.parse(tarefa["hora"].split(":")[0].trim()), int.parse(tarefa["hora"].split(":")[1].trim())),
-              dayNotification: Day(int.parse(tarefa["data_form"].split(" ")[1].trim()))
-            );
+      if (tarefa["data_form"] != null) {
+        if (tarefa["hora"] != null) {
+          if (tarefa["agendada"]) {
+          } else {
+            dia_unico(notifications,
+                title: tarefa["title"],
+                body:
+                    "Sua tarefa está chegando ao fim!\nConfere se você não esqueceu nada.",
+                id: id_chanel,
+                notificationTime: Time(
+                    int.parse(tarefa["hora"].split(":")[0].trim()),
+                    int.parse(tarefa["hora"].split(":")[1].trim())),
+                dayNotification:
+                    Day(int.parse(tarefa["data_form"].split(" ")[1].trim())));
           }
-        }else{
+        } else {
           print("simples: data");
         }
       }
-    }else{
+    } else {
       print("Composta");
     }
   }
@@ -83,7 +114,8 @@ class Notificacao{
 
   // }
 
-  // dynamic 
+  // dynamic
 
-  Notificacao({this.tarefa, this.notifications, this.id_chanel, this.agendadas});
+  Notificacao(
+      {this.tarefa, this.notifications, this.id_chanel, this.agendadas});
 }
