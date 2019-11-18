@@ -268,11 +268,7 @@ class AgendarData {
 
       return "Repetir até: " + data_form + ".";
     }
-    return "Clique para definir a data final desta tarefa.";
-  }
-
-  dynamic agendar(dias_agendados){
-    
+    return "Definir data final desta tarefa.";
   }
 
   AgendarData({

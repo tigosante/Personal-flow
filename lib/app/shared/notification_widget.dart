@@ -28,11 +28,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
 
     var initSettings = new InitializationSettings(android, ios);
 
-    notifications.initialize(initSettings, onSelectNotification: printnoti());
-  }
-
-  dynamic printnoti(){
-    print("foi");
+    notifications.initialize(initSettings, onSelectNotification: null);
   }
 
   @override

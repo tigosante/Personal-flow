@@ -5,12 +5,12 @@ import 'package:expandable/expandable.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:personal_flow/app/screens/home/components/card_content.dart';
 import 'package:personal_flow/app/screens/home/components/card_content_unica.dart';
 import 'package:personal_flow/app/screens/new_task/new_task.dart';
-import 'package:personal_flow/app/shared/notification_widget.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 
 class CardStruct extends StatefulWidget {
@@ -62,6 +62,8 @@ class _CardStructState extends State<CardStruct> {
     });
   }
 
+  FlutterLocalNotificationsPlugin notifications = new FlutterLocalNotificationsPlugin();
+
   @override
   initState() {
     super.initState();
@@ -70,6 +72,14 @@ class _CardStructState extends State<CardStruct> {
         toDoList = jsonDecode(data);
       });
     });
+
+    var android = new AndroidInitializationSettings('ic_launcher');
+
+    var ios = new IOSInitializationSettings();
+
+    var initSettings = new InitializationSettings(android, ios);
+
+    notifications.initialize(initSettings, onSelectNotification: null);
 
     _IsSearching = false;
   }
@@ -146,7 +156,7 @@ class _CardStructState extends State<CardStruct> {
           var retorno = await Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) => NewTask(toDoList: toDoList),
+                builder: (context) => NewTask(toDoList: toDoList, notifications: notifications),
               ));
           if (retorno != null) {
             toDoList = retorno;
