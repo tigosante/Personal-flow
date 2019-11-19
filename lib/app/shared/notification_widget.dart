@@ -36,7 +36,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     
     return RaisedButton(
       child: Text("Mostrar notificações"),
-      onPressed: () => showOngoingNotification(notifications,
+      onPressed: () => dia_unico(notifications,
           title: widget.title + " - " + widget.data,
           body: "Sua tarefa está chegando ao fim!\nConfere se você não esqueceu de nada.",
           id: 0,

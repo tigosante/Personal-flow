@@ -568,12 +568,12 @@ class _NewTaskState extends State<NewTask> {
       newToDo["data_repeticao"] = tratamentos.data_repeticao();
       newToDo["title_formatado"] = tratamentos.formatar_titulo();
 
-      newToDo["agendada"] = false;
+      newToDo["programada"] = false;
 
       if (dias_agendados.length != null) {
         for (int i = 0; i < dias_agendados.length; i++) {
           if (dias_agendados[i]) {
-            newToDo["agendada"] = true;
+            newToDo["programada"] = true;
           }
         }
       }
@@ -582,14 +582,14 @@ class _NewTaskState extends State<NewTask> {
 
       List lista_retorno = tree.decisao();
 
-      Notificacao notificacao = Notificacao(
-        tarefa: newToDo,
-        notifications: widget.notifications,
-        id_chanel: 0,
-        agendadas: newToDo["agendada"] ? dias_agendados : [false]
-      );
+      // Notificacao notificacao = Notificacao(
+      //   tarefa: newToDo,
+      //   notifications: widget.notifications,
+      //   id_chanel: 0,
+      //   agendadas: newToDo["programada"] ? dias_agendados : [false]
+      // );
 
-      notificacao.filtro();
+      // notificacao.filtro();
 
       lista_retorno.insert(0, true);
       lista_retorno.add(newToDo);
@@ -684,18 +684,19 @@ class _NewTaskState extends State<NewTask> {
       newToDo["data_grupo"] = concluir.data_grupo();
       newToDo["data_repetica"] =
           newToDo["data_grupo"] ? concluir.data_repetica() : false;
-      newToDo["agendada"] = false;
+      newToDo["programada"] = false;
 
       if (dias_agendados != null) {
         for (int i = 0; i < dias_agendados.length; i++) {
           if (dias_agendados[i]) {
-            newToDo["agendada"] = true;
+            newToDo["programada"] = true;
           }
         }
       }
-      newToDo["dias_agendados"] = newToDo["agendada"] ? dias_agendados : false;
+      newToDo["dias_agendados"] =
+          newToDo["programada"] ? dias_agendados : false;
 
-      newToDo["data_agenda"] = newToDo["agendada"] ? agenda_unica : null;
+      newToDo["data_agenda"] = newToDo["programada"] ? agenda_unica : null;
 
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();
@@ -936,7 +937,7 @@ class _AgendarDialogState extends State<AgendarDialog> {
                 children: <Widget>[
                   Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: List<Widget>.generate(7, (dia) {
                         List<String> dias = [
                           "Dom",
@@ -997,7 +998,12 @@ class _AgendarDialogState extends State<AgendarDialog> {
             ),
             InkWell(
               child: Container(
-                  padding: EdgeInsets.all(size_screen * 0.008),
+                  padding: EdgeInsets.only(
+                    top: size_screen * 0.008,
+                    left: size_screen * 0.01,
+                    right: size_screen * 0.008,
+                    bottom: size_screen * 0.008,
+                  ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,

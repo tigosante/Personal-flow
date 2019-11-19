@@ -74,30 +74,42 @@ class Informacoes {
   }
 
   stateIconLead() {
-    if (toDoList[index]["details"].length <= 1) {
+    int dt_invativacao = 0;
+    for (int i = 0; i < toDoList[index]["details"].length; i++) {
+      dt_invativacao +=
+          toDoList[index]["details"]["$i"]["dt_inativacao"] == null ? 0 : 1;
+    }
+    if (dt_invativacao == 0 || dt_invativacao == 1) {
       toDoList[index]["details"]["$index_sub"]["bool"] = false;
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
       toDoList[index]["conclusao"] = 0;
-      print(toDoList[index]["details"]["$index_sub"]["conclusao"]);
+      print("entrou lead");
     } else {
       toDoList[index]["details"]["$index_sub"]["bool"] = false;
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
       toDoList[index]["conclusao"] = 0;
+      print("entrou else lead");
     }
     return toDoList;
   }
 
   stateIconTrai() {
-    if (toDoList[index]["details"].length <= 1) {
+    int dt_invativacao = 0;
+    for (int i = 0; i < toDoList[index]["details"].length; i++) {
+      dt_invativacao +=
+          toDoList[index]["details"]["$i"]["dt_inativacao"] == null ? 0 : 1;
+    }
+    if (dt_invativacao == 0 || dt_invativacao == 1) {
       toDoList[index]["details"]["$index_sub"]["bool"] = true;
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 1;
       toDoList[index]["bool"] = true;
       toDoList[index]["conclusao"] = 1;
-      print(toDoList[index]["details"]["$index_sub"]["conclusao"]);
+      print("entrou trai");
     } else {
       toDoList[index]["details"]["$index_sub"]["bool"] = true;
+      print("entrou else trai");
     }
     return toDoList;
   }
@@ -113,11 +125,11 @@ class DataHora {
   int index;
 
   String tipo;
-  String programada;
+  bool programada;
   String dt_inativacao;
-  String conclusao;
-  String repeticao;
-  String data_repeticao;
+  int conclusao;
+  int repeticao;
+  int data_repeticao;
   String title_formatado;
 
   calendario() {
@@ -263,8 +275,6 @@ class AgendarData {
         data_form = data_form.replaceAll("Fri", "Sex");
         data_form = data_form.replaceAll("Sat", "Sáb");
       }
-
-
 
       return "Repetir até: " + data_form + ".";
     }

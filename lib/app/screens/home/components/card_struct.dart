@@ -5,6 +5,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
@@ -67,6 +68,7 @@ class _CardStructState extends State<CardStruct> {
   @override
   initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     readyData().then((data) {
       setState(() {
         toDoList = jsonDecode(data);
@@ -94,7 +96,7 @@ class _CardStructState extends State<CardStruct> {
 
     bool validar(){
       for(int i =0; i<toDoList.length; i++){
-        if(toDoList[i]["dt_inativacao"] != null){
+        if(toDoList[i]["dt_inativacao"] == null){
           return false;
         }
       }
@@ -274,7 +276,6 @@ class _CardStructState extends State<CardStruct> {
               child: Column(
                 children: <Widget>[
                   ExpandablePanel(
-                    tapHeaderToExpand: true,
                     header: Container(
                         padding: EdgeInsets.only(
                           top: size_screen * 0.005,
@@ -543,7 +544,6 @@ class _CardStructState extends State<CardStruct> {
         }
         if (toDoList[index]["tipo"] == "composta") {
           for (int j = 0; j < toDoList[index]["details"].length; j++) {
-            print(toDoList[index]["details"]["$j"].toString());
             if (toDoList[index]["details"]["$j"]["title"]
                 .toLowerCase()
                 .contains(_searchText.toLowerCase())) {

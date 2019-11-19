@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:personal_flow/app/screens/home/components/card_struct.dart';
-// import 'package:personal_flow/app/screens/home/home.dart';
 
 void main() => runApp(new MyApp());
 

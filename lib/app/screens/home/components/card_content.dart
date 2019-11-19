@@ -6,6 +6,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:personal_flow/app/screens/home/components/agendar_cards.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/shared/tree.dart';
 
@@ -59,11 +60,32 @@ class _CardContentState extends State<CardContent> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        ListTile(
-          title: Text(
-            "Tarefas concluídas:",
+        Padding(
+          padding: EdgeInsets.only(
+              top: size_screen * 0.015,
+              left: size_screen * 0.05,
+              right: size_screen * 0.05,
+              bottom: size_screen * 0.015),
+          child: AgendarCards(
+            size_screen: size_screen,
           ),
-          subtitle: categoryProgress(context),
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            left: size_screen * 0.01,
+            right: size_screen * 0.01,
+          ),
+          child: ListTile(
+            title: Text(
+              "Progresso:",
+            ),
+          ),
+        ),
+        Center(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: size_screen * 0.03),
+            child: categoryProgress(context),
+          ),
         ),
         Column(
           children: <Widget>[
@@ -84,8 +106,10 @@ class _CardContentState extends State<CardContent> {
                         left: size_screen * 0.02,
                       ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
-                        borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                        border: Border.all(
+                            color: Colors.grey, width: size_screen * 0.0005),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(size_screen * 0.02)),
                       ),
                       child: ListTile(
                         title: TextField(
@@ -102,37 +126,36 @@ class _CardContentState extends State<CardContent> {
                           children: <Widget>[
                             InkWell(
                               child: Container(
-                                padding: EdgeInsets.only(
-                                  top: size_screen * 0.015,
-                                  right: size_screen * 0.015,
-                                  bottom: size_screen * 0.015,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(size_screen * 0.02)),
-                                ),
-                                child: list_data != null
-                                ? list_data["data_form"] != null
-                                    ? Text(list_data["data_form"].toString() + ",")
-                                    : Text("Data e hora")
-                                    : Text("Data e hora")
-                              ),
+                                  padding: EdgeInsets.only(
+                                    top: size_screen * 0.015,
+                                    right: size_screen * 0.015,
+                                    bottom: size_screen * 0.015,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(size_screen * 0.02)),
+                                  ),
+                                  child: list_data != null
+                                      ? list_data["data_form"] != null
+                                          ? Text(list_data["data_form"]
+                                                  .toString() +
+                                              ",")
+                                          : Text("Data e hora")
+                                      : Text("Data e hora")),
                               onTap: () async {
-                                    final DateTime picked =
-                                        await showDatePicker(
-                                      context: context,
-                                      firstDate: new DateTime(2000),
-                                      lastDate: new DateTime(2030),
-                                      initialDate: new DateTime.now(),
-                                    );
-                                    setState(() {
-                                      DataHora dataHora = DataHora(
-                                        picked: picked,
-                                      );
-                                      list_data = dataHora.calendario();
-                                      print(list_data);
-                                    });
-                                  },
+                                final DateTime picked = await showDatePicker(
+                                  context: context,
+                                  firstDate: new DateTime(2000),
+                                  lastDate: new DateTime(2030),
+                                  initialDate: new DateTime.now(),
+                                );
+                                setState(() {
+                                  DataHora dataHora = DataHora(
+                                    picked: picked,
+                                  );
+                                  list_data = dataHora.calendario();
+                                });
+                              },
                             ),
                             InkWell(
                               child: Container(
@@ -194,7 +217,6 @@ class _CardContentState extends State<CardContent> {
                                   )
                           ],
                         ),
-
                         trailing: IconButton(
                           icon: Icon(
                             Icons.add_circle,
@@ -342,8 +364,6 @@ class _CardContentState extends State<CardContent> {
         Informacoes(toDoList: toDoList, index: widget.valor, index_sub: index);
     String title_sub = informacoes.titleSub();
     bool boolSub = informacoes.boolSub();
-    Icon okIconSub = informacoes.okIconSub();
-    Icon noOkIconSub = informacoes.noOkIconSub();
 
     TextEditingController controllerText = TextEditingController(
         text: toDoList[widget.valor]["details"]["$index"]["title"]);
@@ -383,106 +403,123 @@ class _CardContentState extends State<CardContent> {
           child: ListTile(
             title: Text(toDoList[widget.valor]["details"]["$index"]["title"]),
             subtitle: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  InkWell(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        top: size_screen * 0.015,
-                        right: size_screen * 0.015,
-                        bottom: size_screen * 0.015,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(size_screen * 0.02)),
-                      ),
-                      child: toDoList[widget.valor]["details"]["$index"]["data_form"] == null
-                          ? Text("Data e hora")
-                          : Text(toDoList[widget.valor]["details"]["$index"]["data_form"] + ","),
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: size_screen * 0.015,
+                      right: size_screen * 0.015,
+                      bottom: size_screen * 0.015,
                     ),
-                    onTap: () async {
-                          final DateTime picked = await showDatePicker(
-                            context: context,
-                            firstDate: new DateTime(2000),
-                            lastDate: new DateTime(2030),
-                            initialDate: new DateTime.now(),
-                          );
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                    ),
+                    child: toDoList[widget.valor]["details"]["$index"]
+                                ["data_form"] ==
+                            null
+                        ? Text("Data e hora")
+                        : Text(toDoList[widget.valor]["details"]["$index"]
+                                ["data_form"] +
+                            ","),
+                  ),
+                  onTap: () async {
+                    final DateTime picked = await showDatePicker(
+                      context: context,
+                      firstDate: new DateTime(2000),
+                      lastDate: new DateTime(2030),
+                      initialDate: new DateTime.now(),
+                    );
+                    setState(() {
+                      DataHora dataHora = DataHora(
+                          picked: picked,
+                          title: toDoList[widget.valor]["details"]["$index"]
+                              ["title"],
+                          boolen: toDoList[widget.valor]["details"]["$index"]
+                              ["bool"]);
+                      toDoList[widget.valor]["details"]["$index"] =
+                          dataHora.calendario();
+                    });
+                  },
+                ),
+                InkWell(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: size_screen * 0.015,
+                      right: size_screen * 0.015,
+                      bottom: size_screen * 0.015,
+                    ),
+                    child: toDoList[widget.valor]["details"]["$index"] != null
+                        ? toDoList[widget.valor]["details"]["$index"]
+                                    ["data_form"] !=
+                                null
+                            ? toDoList[widget.valor]["details"]["$index"]
+                                        ["hora"] ==
+                                    null
+                                ? Text("hora")
+                                : Text(toDoList[widget.valor]["details"]
+                                        ["$index"]["hora"]
+                                    .toString())
+                            : Container(
+                                color: Colors.transparent,
+                              )
+                        : Container(
+                            color: Colors.transparent,
+                          ),
+                  ),
+                  onTap: () async {
+                    final DateTime picked = await showDatePicker(
+                      context: context,
+                      firstDate: new DateTime(2000),
+                      lastDate: new DateTime(2030),
+                      initialDate: new DateTime.now(),
+                    );
+                    setState(() {
+                      DataHora dataHora = DataHora(
+                          picked: picked,
+                          title: toDoList[widget.valor]["details"]["$index"]
+                              ["title"],
+                          boolen: toDoList[widget.valor]["details"]["$index"]
+                              ["bool"]);
+                      toDoList[widget.valor]["details"]["$index"] =
+                          dataHora.calendario();
+                    });
+                  },
+                ),
+                toDoList[widget.valor]["details"]["$index"]["data_form"] != null
+                    ? InkWell(
+                        child: Container(
+                          padding: EdgeInsets.only(
+                            top: size_screen * 0.015,
+                            right: size_screen * 0.015,
+                            bottom: size_screen * 0.015,
+                          ),
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.red,
+                          ),
+                        ),
+                        onTap: () {
                           setState(() {
-                            DataHora dataHora = DataHora(
-                                picked: picked,
-                                title: toDoList[widget.valor]["details"]
-                                    ["$index"]["title"],
-                                boolen: toDoList[widget.valor]["details"]
-                                    ["$index"]["bool"]);
-                            toDoList[widget.valor]["details"]["$index"] =
-                                dataHora.calendario();
+                            toDoList[widget.valor]["details"]["$index"]
+                                ["hora"] = null;
+                            toDoList[widget.valor]["details"]["$index"]
+                                ["data_form"] = null;
                           });
                         },
-                  ),
-                  InkWell(
-                    child: Container(
-                      padding: EdgeInsets.only(
-                        top: size_screen * 0.015,
-                        right: size_screen * 0.015,
-                        bottom: size_screen * 0.015,
-                      ),
-                      child: toDoList[widget.valor]["details"]["$index"] != null
-                          ? toDoList[widget.valor]["details"]["$index"]["data_form"] != null
-                          ? toDoList[widget.valor]["details"]["$index"]["hora"] == null
-                                  ? Text("hora")
-                                  : Text(toDoList[widget.valor]["details"]["$index"]["hora"].toString())
-                              : Container(
-                                  color: Colors.transparent,
-                                )
-                                : Container(
-                                  color: Colors.transparent,
-                                ),
-                    ),
-                    onTap: () async {
-                      final DateTime picked = await showDatePicker(
-                        context: context,
-                        firstDate: new DateTime(2000),
-                        lastDate: new DateTime(2030),
-                        initialDate: new DateTime.now(),
-                      );
-                      setState(() {
-                        DataHora dataHora = DataHora(
-                            picked: picked,
-                            title: toDoList[widget.valor]["details"]["$index"]["title"],
-                            boolen: toDoList[widget.valor]["details"]["$index"]["bool"]);
-                        toDoList[widget.valor]["details"]["$index"] =
-                            dataHora.calendario();
-                      });
-                    },
-                  ),
-                  toDoList[widget.valor]["details"]["$index"]["data_form"] != null
-                      ? InkWell(
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              top: size_screen * 0.015,
-                              right: size_screen * 0.015,
-                              bottom: size_screen * 0.015,
-                            ),
-                            child: Icon(
-                              Icons.close,
-                              color: Colors.red,
-                            ),
-                          ),
-                          onTap: () {
-                            setState(() {
-                              toDoList[widget.valor]["details"]["$index"]["hora"] = null;
-                              toDoList[widget.valor]["details"]["$index"]["data_form"] = null;
-                            });
-                          },
-                        )
-                      : Container(
-                          color: Colors.transparent,
-                        )
-                ],
-              ),
+                      )
+                    : Container(
+                        color: Colors.transparent,
+                      )
+              ],
+            ),
             trailing: boolSub
                 ? IconButton(
-                    icon: Icon(Icons.check, color: Colors.teal,),
+                    icon: Icon(
+                      Icons.check,
+                      color: Colors.teal,
+                    ),
                     onPressed: () {
                       setState(() {
                         toDoList = informacoes.stateIconLead();
@@ -491,7 +528,10 @@ class _CardContentState extends State<CardContent> {
                     },
                   )
                 : IconButton(
-                    icon: Icon(Icons.panorama_fish_eye, color: Colors.blue,),
+                    icon: Icon(
+                      Icons.panorama_fish_eye,
+                      color: Colors.blue,
+                    ),
                     onPressed: () {
                       setState(() {
                         toDoList = informacoes.stateIconTrai();
@@ -649,20 +689,13 @@ class _CardContentState extends State<CardContent> {
 
   categoryProgress(BuildContext context) {
     return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            height: size_screen * 0.025,
-            width: size_screen * 0.80,
-            child: FAProgressBar(
-              maxValue: done_title(),
-              currentValue: done(),
-              progressColor: Colors.teal,
-              backgroundColor: Colors.transparent,
-            ),
-          ),
-        ],
+      height: size_screen * 0.025,
+      width: size_screen * 0.8,
+      child: FAProgressBar(
+        maxValue: done_title(),
+        currentValue: done(),
+        progressColor: Colors.teal,
+        backgroundColor: Colors.transparent,
       ),
     );
   }
@@ -739,15 +772,16 @@ class _CardContentState extends State<CardContent> {
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Colors.grey, width: size_screen * 0.0005),
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                        border: Border.all(
+                            color: Colors.grey, width: size_screen * 0.0005),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(size_screen * 0.02)),
                       ),
                       width: size_screen * 0.65,
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: size_screen * 0.015, right: size_screen * 0.015),
+                            left: size_screen * 0.015,
+                            right: size_screen * 0.015),
                         child: TextField(
                           controller: controller_text,
                           decoration: InputDecoration(
@@ -767,10 +801,11 @@ class _CardContentState extends State<CardContent> {
                       child: InkWell(
                         child: Container(
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.grey, width: size_screen * 0.0005),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                            border: Border.all(
+                                color: Colors.grey,
+                                width: size_screen * 0.0005),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(size_screen * 0.02)),
                           ),
                           padding: EdgeInsets.all(size_screen * 0.03),
                           child: Text(
@@ -779,15 +814,15 @@ class _CardContentState extends State<CardContent> {
                           ),
                         ),
                         onTap: () {
-                            setState(() {
-                              if (controller_text.text.trim().isNotEmpty) {
-                            toDoList[widget.valor]["details"]["$index"]
-                                ["title"] = controller_text.text;
-                            saveData();
-                            Navigator.pop(context);
-                          }
-                            });
-                          },
+                          setState(() {
+                            if (controller_text.text.trim().isNotEmpty) {
+                              toDoList[widget.valor]["details"]["$index"]
+                                  ["title"] = controller_text.text;
+                              saveData();
+                              Navigator.pop(context);
+                            }
+                          });
+                        },
                       ),
                     ),
                   ],
