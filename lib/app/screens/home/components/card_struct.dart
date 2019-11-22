@@ -195,7 +195,7 @@ class _CardStructState extends State<CardStruct> {
           width: size_screen * 0.9,
           decoration: BoxDecoration(
               border:
-                  Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                  Border.all(color: Colors.blue, width: size_screen * 0.0008),
               borderRadius:
                   BorderRadius.all(Radius.circular(size_screen * 0.04))),
           child: Slidable(
@@ -281,7 +281,7 @@ class _CardStructState extends State<CardStruct> {
           width: size_screen * 0.9,
           decoration: BoxDecoration(
               border:
-                  Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                  Border.all(color: Colors.blue, width: size_screen * 0.0008),
               borderRadius:
                   BorderRadius.all(Radius.circular(size_screen * 0.04))),
           child: Slidable(
@@ -407,7 +407,7 @@ class _CardStructState extends State<CardStruct> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.grey, width: size_screen * 0.0005),
+                            color: Colors.blue, width: size_screen * 0.0008),
                         borderRadius: BorderRadius.all(
                             Radius.circular(size_screen * 0.02)),
                       ),
@@ -436,8 +436,8 @@ class _CardStructState extends State<CardStruct> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Colors.grey,
-                                width: size_screen * 0.0005),
+                                color: Colors.blue,
+                                width: size_screen * 0.0008),
                             borderRadius: BorderRadius.all(
                                 Radius.circular(size_screen * 0.02)),
                           ),
@@ -658,7 +658,7 @@ class _AgendarCardsState extends State<AgendarCards> {
 
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+        border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
         borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.04)),
       ),
       child: Card(

@@ -107,7 +107,7 @@ class _CardContentState extends State<CardContent> {
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.grey, width: size_screen * 0.0005),
+                            color: Colors.blue, width: size_screen * 0.0008),
                         borderRadius: BorderRadius.all(
                             Radius.circular(size_screen * 0.02)),
                       ),
@@ -395,7 +395,7 @@ class _CardContentState extends State<CardContent> {
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+          border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
           borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
         ),
         child: Slidable(
@@ -773,7 +773,7 @@ class _CardContentState extends State<CardContent> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.grey, width: size_screen * 0.0005),
+                            color: Colors.blue, width: size_screen * 0.0008),
                         borderRadius: BorderRadius.all(
                             Radius.circular(size_screen * 0.02)),
                       ),
@@ -802,8 +802,8 @@ class _CardContentState extends State<CardContent> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Colors.grey,
-                                width: size_screen * 0.0005),
+                                color: Colors.blue,
+                                width: size_screen * 0.0008),
                             borderRadius: BorderRadius.all(
                                 Radius.circular(size_screen * 0.02)),
                           ),

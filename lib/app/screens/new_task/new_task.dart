@@ -147,7 +147,7 @@ class _NewTaskState extends State<NewTask> {
           bottom: size_screen * 0.02,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+          border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
           borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
         ),
         child: Column(
@@ -161,7 +161,7 @@ class _NewTaskState extends State<NewTask> {
                     child: DropdownButton<String>(
                       elevation: 1,
                       value: tipo_tarefa_drop,
-                      iconEnabledColor: Colors.grey,
+                      iconEnabledColor: Colors.blue,
                       iconDisabledColor: Colors.grey,
                       underline: Container(
                         height: 0,
@@ -212,7 +212,7 @@ class _NewTaskState extends State<NewTask> {
                     ),
                   ),
                 ),
-                Text("|  "),
+                Text("|  ", style: TextStyle(color: Colors.blue),),
                 Container(
                   width: size_screen * 0.4,
                   child: Center(
@@ -245,7 +245,7 @@ class _NewTaskState extends State<NewTask> {
             padding: EdgeInsets.all(size_screen * 0.01),
             decoration: BoxDecoration(
               border:
-                  Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                  Border.all(color: Colors.blue, width: size_screen * 0.0008),
               borderRadius:
                   BorderRadius.all(Radius.circular(size_screen * 0.02)),
             ),
@@ -280,7 +280,7 @@ class _NewTaskState extends State<NewTask> {
           child: Container(
             decoration: BoxDecoration(
               border:
-                  Border.all(color: Colors.grey, width: size_screen * 0.0005),
+                  Border.all(color: Colors.blue, width: size_screen * 0.0008),
               borderRadius:
                   BorderRadius.all(Radius.circular(size_screen * 0.02)),
             ),
@@ -325,7 +325,7 @@ class _NewTaskState extends State<NewTask> {
       padding: EdgeInsets.only(bottom: size_screen * 0.02),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+          border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
           borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
         ),
         child: ListTile(
@@ -780,7 +780,7 @@ class _AgendarState extends State<Agendar> {
           top: size_screen * 0.05),
       child: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+            border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
             borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
           ),
           child: ExpandablePanel(
@@ -797,7 +797,7 @@ class _AgendarState extends State<Agendar> {
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(
-                        color: Colors.grey, width: size_screen * 0.0003),
+                        color: Colors.blue, width: size_screen * 0.0008),
                     borderRadius:
                         BorderRadius.all(Radius.circular(size_screen * 0.02)),
                   ),
@@ -949,7 +949,7 @@ class _AgendarDialogState extends State<AgendarDialog> {
 
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+        border: Border.all(color: Colors.grey, width: size_screen * 0.0008),
         borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
       ),
       child: Card(

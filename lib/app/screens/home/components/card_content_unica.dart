@@ -291,7 +291,7 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.grey, width: size_screen * 0.0005),
+                            color: Colors.blue, width: size_screen * 0.0008),
                         borderRadius: BorderRadius.all(
                             Radius.circular(size_screen * 0.02)),
                       ),
@@ -320,8 +320,8 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Colors.grey,
-                                width: size_screen * 0.0005),
+                                color: Colors.blue,
+                                width: size_screen * 0.0008),
                             borderRadius: BorderRadius.all(
                                 Radius.circular(size_screen * 0.02)),
                           ),
