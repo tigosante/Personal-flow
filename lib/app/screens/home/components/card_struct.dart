@@ -5,7 +5,6 @@ import 'package:expandable/expandable.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
@@ -36,11 +35,9 @@ Icon actionIcon = Icon(
 
 double size_screen = 0;
 String font_button;
-
-int arquivo = 0;
+List toDoList = [];
 
 class _CardStructState extends State<CardStruct> {
-  List toDoList = [];
   final TextEditingController _searchQuery = new TextEditingController();
   List<String> _list = List<String>();
   bool _IsSearching;
@@ -63,12 +60,12 @@ class _CardStructState extends State<CardStruct> {
     });
   }
 
-  FlutterLocalNotificationsPlugin notifications = new FlutterLocalNotificationsPlugin();
+  FlutterLocalNotificationsPlugin notifications =
+      new FlutterLocalNotificationsPlugin();
 
   @override
   initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     readyData().then((data) {
       setState(() {
         toDoList = jsonDecode(data);
@@ -94,60 +91,59 @@ class _CardStructState extends State<CardStruct> {
       font_button = genaratioCards.outFontButton;
     });
 
-    bool validar(){
-      for(int i =0; i<toDoList.length; i++){
-        if(toDoList[i]["dt_inativacao"] == null){
+    bool validar() {
+      for (int i = 0; i < toDoList.length; i++) {
+        if (toDoList[i]["dt_inativacao"] == null) {
           return false;
         }
       }
       return true;
     }
-    
+
     return Scaffold(
       appBar: buildBar(context),
       body: Column(
         children: <Widget>[
           // NotificationWidget(title: toDoList[0]["title"],body: toDoList[0]["title"],data: "sáb, 16 Nov",),
           Expanded(
-            child: validar()
-                ? Center(
-                    child: Image.asset(
-                    "assets/no_tasks.png",
-                    height: size_screen * 0.5,
-                    width: size_screen * 0.5,
-                  ))
-                : _IsSearching
-                    ? buildpesquisa()
-                    : ListView.builder(
-                        padding: EdgeInsets.only(
-                          top: size_screen * 0.04,
-                        ),
-                        itemCount: toDoList.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            toDoList[index]["tipo"] == "simples"
-                                ? toDoList[index]["dt_inativacao"] == null
-                                    ? buildCardUnica(
-                                        context, font_button, toDoList, index)
-                                    : Container(
-                                        color: Colors.transparent,
-                                      )
-                                : toDoList[index]["dt_inativacao"] == null
-                                    ? buildCardGrupo(
-                                        context, index, font_button, toDoList)
-                                    : Container(
-                                        color: Colors.transparent,
-                                      ),
+              child: validar()
+                  ? Center(
+                      child: Icon(
+                        Icons.check,
+                        size: size_screen * 0.4,
+                        color: Colors.grey[300],
                       ),
-          ),
+                    )
+                  : _IsSearching
+                      ? buildpesquisa()
+                      : ListView.builder(
+                          padding: EdgeInsets.only(
+                            top: size_screen * 0.04,
+                          ),
+                          itemCount: toDoList.length,
+                          itemBuilder: (BuildContext context, int index) =>
+                              toDoList[index]["tipo"] == "simples"
+                                  ? toDoList[index]["dt_inativacao"] == null
+                                      ? buildCardUnica(
+                                          context, font_button, toDoList, index)
+                                      : Container(
+                                          color: Colors.transparent,
+                                        )
+                                  : toDoList[index]["dt_inativacao"] == null
+                                      ? buildCardGrupo(
+                                          context, index, font_button, toDoList)
+                                      : Container(
+                                          color: Colors.transparent,
+                                        ),
+                        )),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.extended(
-        elevation: 0,
         clipBehavior: Clip.antiAlias,
         backgroundColor: Colors.blue,
         label: Text(
-          "Adicionar",
+          "Nova tarefa",
           style: TextStyle(color: Colors.white, fontFamily: 'Orkney-bold'),
         ),
         icon: Icon(
@@ -158,7 +154,10 @@ class _CardStructState extends State<CardStruct> {
           var retorno = await Navigator.push(
               context,
               CupertinoPageRoute(
-                builder: (context) => NewTask(toDoList: toDoList, notifications: notifications),
+                builder: (context) => NewTask(
+                  toDoList: toDoList,
+                  notifications: notifications,
+                ),
               ));
           if (retorno != null) {
             toDoList = retorno;
@@ -392,15 +391,16 @@ class _CardStructState extends State<CardStruct> {
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        border:
-                            Border.all(color: Colors.grey, width: size_screen * 0.0005),
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                        border: Border.all(
+                            color: Colors.grey, width: size_screen * 0.0005),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(size_screen * 0.02)),
                       ),
                       width: size_screen * 0.65,
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: size_screen * 0.015, right: size_screen * 0.015),
+                            left: size_screen * 0.015,
+                            right: size_screen * 0.015),
                         child: TextField(
                           controller: controller_text,
                           decoration: InputDecoration(
@@ -420,10 +420,11 @@ class _CardStructState extends State<CardStruct> {
                       child: InkWell(
                         child: Container(
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(color: Colors.grey, width: size_screen * 0.0005),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                            border: Border.all(
+                                color: Colors.grey,
+                                width: size_screen * 0.0005),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(size_screen * 0.02)),
                           ),
                           padding: EdgeInsets.all(size_screen * 0.03),
                           child: Text(
@@ -432,14 +433,14 @@ class _CardStructState extends State<CardStruct> {
                           ),
                         ),
                         onTap: () {
-                            setState(() {
-                              if (controller_text.text.trim().isNotEmpty) {
-                                toDoList[index]["title"] = controller_text.text;
-                                saveData();
-                                Navigator.pop(context);
-                              }
-                            });
-                          },
+                          setState(() {
+                            if (controller_text.text.trim().isNotEmpty) {
+                              toDoList[index]["title"] = controller_text.text;
+                              saveData();
+                              Navigator.pop(context);
+                            }
+                          });
+                        },
                       ),
                     ),
                   ],
@@ -521,18 +522,16 @@ class _CardStructState extends State<CardStruct> {
         itemCount: toDoLi.length,
         itemBuilder: (BuildContext context, int index) =>
             toDoList[index]["tipo"] == "simples"
-              ? toDoList[index]["dt_inativacao"] == null
-                  ? buildCardUnica(
-                      context, font_button, toDoList, index)
-                  : Container(
-                      color: Colors.transparent,
-                    )
-              : toDoList[index]["dt_inativacao"] == null
-                  ? buildCardGrupo(
-                      context, index, font_button, toDoList)
-                  : Container(
-                      color: Colors.transparent,
-                    ),
+                ? toDoList[index]["dt_inativacao"] == null
+                    ? buildCardUnica(context, font_button, toDoList, index)
+                    : Container(
+                        color: Colors.transparent,
+                      )
+                : toDoList[index]["dt_inativacao"] == null
+                    ? buildCardGrupo(context, index, font_button, toDoList)
+                    : Container(
+                        color: Colors.transparent,
+                      ),
       );
     } else {
       List<Map<String, dynamic>> toDo = List();
@@ -605,5 +604,206 @@ class _CardStructState extends State<CardStruct> {
       _IsSearching = false;
       _searchQuery.clear();
     });
+  }
+}
+
+class AgendarCards extends StatefulWidget {
+  AgendarCards({Key key, this.posicao, t}) : super(key: key);
+
+  int posicao;
+
+  @override
+  _AgendarCardsState createState() => _AgendarCardsState();
+}
+
+Color cor_tarefa = Colors.grey;
+List<String> dias = [
+  "Dom",
+  "Seg",
+  "Ter",
+  "Qua",
+  "Qui",
+  "Sex",
+  "Sáb",
+];
+
+class _AgendarCardsState extends State<AgendarCards> {
+  @override
+  Widget build(BuildContext context) {
+    for (int i = 0;
+        i < toDoList[widget.posicao]["dias_agendados"].length;
+        i++) {
+      if (toDoList[widget.posicao]["dias_agendados"][i]) {
+        toDoList[widget.posicao]["agendada"] = true;
+
+        if (toDoList[widget.posicao]["data_agenda"] != null ||
+            toDoList[widget.posicao]["data_agenda"] != "") {
+          cor_tarefa = Colors.blue;
+        }
+        break;
+      } else {
+        toDoList[widget.posicao]["agendada"] = false;
+        cor_tarefa = Colors.grey;
+        if (1 == toDoList[widget.posicao]["dias_agendados"].length - 1) {
+          toDoList[widget.posicao]["data_agenda"] =
+              "Definir data final desta tarefa.";
+        }
+      }
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, width: size_screen * 0.0005),
+        borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.04)),
+      ),
+      child: Card(
+        elevation: 0,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                top: size_screen * 0.015,
+                bottom: size_screen * 0.015,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: List<Widget>.generate(7, (dia) {
+                        return InkWell(
+                          child: Container(
+                            padding: EdgeInsets.all(size_screen * 0.008),
+                            child: Text(
+                              dias[dia],
+                              style: TextStyle(
+                                  color: toDoList[widget.posicao]
+                                          ["dias_agendados"][dia]
+                                      ? Colors.blue
+                                      : Colors.grey),
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              toDoList[widget.posicao]["dias_agendados"][dia] =
+                                  !toDoList[widget.posicao]["dias_agendados"]
+                                      [dia];
+
+                              if (toDoList[widget.posicao]["dias_agendados"]
+                                  [dia]) {
+                                toDoList[widget.posicao]["agendada"] = true;
+                              }
+
+                              int contador = 0;
+
+                              for (int i = 0;
+                                  i <
+                                      toDoList[widget.posicao]["dias_agendados"]
+                                          .length;
+                                  i++) {
+                                if (!toDoList[widget.posicao]["dias_agendados"]
+                                    [i]) {
+                                  contador++;
+                                }
+                              }
+
+                              if (contador ==
+                                  toDoList[widget.posicao]["dias_agendados"]
+                                      .length) {
+                                toDoList[widget.posicao]["agendada"] = false;
+                                toDoList[widget.posicao]["data_agenda"] =
+                                    "Definir data final desta tarefa.";
+                                cor_tarefa = Colors.grey;
+                              }
+                            });
+                          },
+                        );
+                      })),
+                ],
+              ),
+            ),
+            InkWell(
+              child: Container(
+                  padding: EdgeInsets.all(size_screen * 0.008),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(left: size_screen * 0.03),
+                        child: Text(
+                          toDoList[widget.posicao]["agendada"]
+                              ? toDoList[widget.posicao]["data_agenda"] !=
+                                          null &&
+                                      toDoList[widget.posicao]["data_agenda"] !=
+                                          ""
+                                  ? toDoList[widget.posicao]["data_agenda"]
+                                  : "Definir data final desta tarefa."
+                              : "Definir data final desta tarefa.",
+                          style: TextStyle(color: cor_tarefa),
+                        ),
+                      ),
+                    ],
+                  )),
+              onTap: () async {
+                bool verificar = false;
+                for (int i = 0;
+                    i < toDoList[widget.posicao]["dias_agendados"].length;
+                    i++) {
+                  if (toDoList[widget.posicao]["dias_agendados"][i]) {
+                    verificar = true;
+                  }
+                }
+                if (verificar) {
+                  final DateTime picked = await showDatePicker(
+                    context: context,
+                    firstDate: new DateTime(2000),
+                    lastDate: new DateTime(2030),
+                    initialDate: new DateTime.now(),
+                  );
+                  setState(() {
+                    AgendarData agendamento = AgendarData(
+                      picked: picked,
+                    );
+                    toDoList[widget.posicao]["agendada"] = picked == null;
+                    toDoList[widget.posicao]["data_agenda"] =
+                        agendamento.data_agendamento();
+
+                    cor_tarefa = toDoList[widget.posicao]["agendada"]
+                        ? Colors.grey
+                        : Colors.blue;
+                  });
+                } else {
+                  Flushbar flushbar;
+                  bool _wasButtonClicked;
+
+                  flushbar = Flushbar<bool>(
+                    icon: Icon(
+                      Icons.error_outline,
+                      color: Colors.amber,
+                    ),
+                    animationDuration: Duration(milliseconds: 450),
+                    message: "Escolha algum dia para agendar.",
+                    borderRadius: size_screen * 0.05,
+                    margin: EdgeInsets.only(
+                      bottom: size_screen * 0.15,
+                      left: size_screen * 0.1,
+                      right: size_screen * 0.1,
+                    ),
+                    duration: Duration(seconds: 2),
+                  )..show(context).then((result) {
+                      setState(() {
+                        _wasButtonClicked = result;
+                      });
+                    });
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

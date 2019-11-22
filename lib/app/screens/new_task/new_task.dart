@@ -5,9 +5,19 @@ import 'package:personal_flow/app/shared/notifications_helper.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/shared/tree.dart';
 
+void montar(){
+  dias_agendados = [false, false, false, false, false, false, false];
+  agendar_unica = false;
+  agenda_unica = "Definir data final desta tarefa.";
+  cor_tarefa = Colors.grey;
+}
+
 class NewTask extends StatefulWidget {
-  NewTask({Key key, @required this.toDoList, this.notifications})
-      : super(key: key);
+  NewTask({
+    Key key,
+    @required this.toDoList,
+    this.notifications,
+  }) : super(key: key);
 
   List toDoList;
   dynamic notifications;
@@ -20,6 +30,7 @@ bool tipo_tarefa = true;
 bool acao_dialog = false;
 dynamic tarefa_dialog;
 dynamic toDoList_dialog;
+String data_agendada;
 
 class _NewTaskState extends State<NewTask> {
   Map<String, dynamic> data_list = Map();
@@ -34,6 +45,7 @@ class _NewTaskState extends State<NewTask> {
     List toDoList = widget.toDoList;
     TasksProp tasksProp = TasksProp(context_screen: context);
     double size_screen = tasksProp.outScreenSize;
+    montar();
 
     setState(() {
       toDoList_dialog = widget.toDoList;
@@ -46,11 +58,11 @@ class _NewTaskState extends State<NewTask> {
         title: Text(
           "Nova Tarefa",
           style: TextStyle(
-            color: Colors.grey,
+            color: Colors.blue,
           ),
         ),
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.grey),
+        iconTheme: IconThemeData(color: Colors.blue),
       ),
       body: Column(
         children: <Widget>[
@@ -61,10 +73,9 @@ class _NewTaskState extends State<NewTask> {
               : Expanded(child: buildTarefaUnica(context, size_screen)),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        elevation: 0,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         onPressed: () {
           setState(() {
             if (tipo_tarefa) {
@@ -97,10 +108,11 @@ class _NewTaskState extends State<NewTask> {
         },
         icon: Icon(
           Icons.add,
+          color: Colors.blue,
         ),
         label: Text(
           "Adicionar",
-          style: TextStyle(fontFamily: 'Orkney-bold'),
+          style: TextStyle(fontFamily: 'Orkney-bold', color: Colors.blue),
         ),
       ),
     );
@@ -167,6 +179,18 @@ class _NewTaskState extends State<NewTask> {
                           controller_unica = TextEditingController();
                           controller_titulo = TextEditingController();
                           controller_sub = [TextEditingController()];
+                          agenda_unica = "Definir data final desta tarefa.";
+                          dias_agendados = [
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false,
+                            false
+                          ];
+                          cor_tarefa = Colors.grey;
+                          agendar_unica = false;
                         });
                       },
                     ),
@@ -554,7 +578,7 @@ class _NewTaskState extends State<NewTask> {
       newToDo["hora"] = data_unica["hora"] != null ? data_unica["hora"] : null;
 
       newToDo["tipo"] = "simples";
-      newToDo["programada"] = false;
+      newToDo["agendada"] = false;
       newToDo["dt_inativacao"] = null;
 
       int coclusao = 0;
@@ -568,12 +592,13 @@ class _NewTaskState extends State<NewTask> {
       newToDo["data_repeticao"] = tratamentos.data_repeticao();
       newToDo["title_formatado"] = tratamentos.formatar_titulo();
 
-      newToDo["programada"] = false;
+      newToDo["data_agenda"] = data_agendada;
+      newToDo["dias_agendados"] = agendar_valor;
 
       if (dias_agendados.length != null) {
         for (int i = 0; i < dias_agendados.length; i++) {
           if (dias_agendados[i]) {
-            newToDo["programada"] = true;
+            newToDo["agendada"] = true;
           }
         }
       }
@@ -586,7 +611,7 @@ class _NewTaskState extends State<NewTask> {
       //   tarefa: newToDo,
       //   notifications: widget.notifications,
       //   id_chanel: 0,
-      //   agendadas: newToDo["programada"] ? dias_agendados : [false]
+      //   agendadas: newToDo["agendada"] ? dias_agendados : [false]
       // );
 
       // notificacao.filtro();
@@ -632,7 +657,7 @@ class _NewTaskState extends State<NewTask> {
 
       newToDo["tipo"] = "composta";
       newToDo["conclusao"] = 0;
-      newToDo["programada"] = false;
+      newToDo["agendada"] = false;
       newToDo["dt_inativacao"] = null;
       newToDo["title_formatado"] = trefa.formatar_titulo();
 
@@ -684,19 +709,18 @@ class _NewTaskState extends State<NewTask> {
       newToDo["data_grupo"] = concluir.data_grupo();
       newToDo["data_repetica"] =
           newToDo["data_grupo"] ? concluir.data_repetica() : false;
-      newToDo["programada"] = false;
 
       if (dias_agendados != null) {
         for (int i = 0; i < dias_agendados.length; i++) {
           if (dias_agendados[i]) {
-            newToDo["programada"] = true;
+            newToDo["agendada"] = true;
           }
         }
       }
-      newToDo["dias_agendados"] =
-          newToDo["programada"] ? dias_agendados : false;
 
-      newToDo["data_agenda"] = newToDo["programada"] ? agenda_unica : null;
+      newToDo["data_agenda"] = data_agendada;
+
+      newToDo["dias_agendados"] = agendar_valor;
 
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();
@@ -717,7 +741,7 @@ class _NewTaskState extends State<NewTask> {
   }
 }
 
-List<bool> dias_agendados = [];
+List<bool> dias_agendados = [false, false, false, false, false, false, false];
 bool agendar_unica = false;
 String agenda_unica = "Definir data final desta tarefa.";
 Color cor_tarefa = Colors.grey;
@@ -785,14 +809,6 @@ class _AgendarState extends State<Agendar> {
                               "Sex",
                               "Sáb",
                             ];
-                            setState(() {
-                              if (!(dias_agendados == 7)) {
-                                agendar_unica = false;
-                                for (int i = 0; i < dias.length; i++) {
-                                  dias_agendados.add(false);
-                                }
-                              }
-                            });
                             return InkWell(
                               child: Container(
                                 padding: EdgeInsets.all(size_screen * 0.008),
@@ -810,6 +826,7 @@ class _AgendarState extends State<Agendar> {
 
                                   if (dias_agendados[dia]) {
                                     agendar_unica = true;
+                                    agendar_valor = dias_agendados;
                                   }
                                   int contador = 0;
 
@@ -823,6 +840,7 @@ class _AgendarState extends State<Agendar> {
 
                                   if (contador == dias_agendados.length) {
                                     agendar_unica = false;
+                                    agendar_valor = dias_agendados;
                                     agenda_unica =
                                         "Definir data final desta tarefa.";
                                     cor_tarefa = Colors.grey;
@@ -860,6 +878,7 @@ class _AgendarState extends State<Agendar> {
                                 );
                                 agendar_unica = picked == null;
                                 agenda_unica = agendamento.data_agendamento();
+                                data_agendada = agenda_unica;
 
                                 cor_tarefa =
                                     agendar_unica ? Colors.grey : Colors.blue;
@@ -900,6 +919,9 @@ class _AgendarState extends State<Agendar> {
     );
   }
 }
+
+List<bool> agendar_valor = [false, false, false, false, false, false, false];
+String data_agenda_dialog = "";
 
 class AgendarDialog extends StatefulWidget {
   AgendarDialog({Key key, this.size_screen}) : super(key: key);
@@ -973,6 +995,7 @@ class _AgendarDialogState extends State<AgendarDialog> {
 
                               if (dias_agendados[dia]) {
                                 agendar_unica = true;
+                                agendar_valor = dias_agendados;
                               }
 
                               int contador = 0;
@@ -985,6 +1008,7 @@ class _AgendarDialogState extends State<AgendarDialog> {
 
                               if (contador == dias_agendados.length) {
                                 agendar_unica = false;
+                                agendar_valor = dias_agendados;
                                 agenda_unica =
                                     "Definir data final desta tarefa.";
                                 cor_tarefa = Colors.grey;
@@ -1034,6 +1058,7 @@ class _AgendarDialogState extends State<AgendarDialog> {
                     );
                     agendar_unica = picked == null;
                     agenda_unica = agendamento.data_agendamento();
+                    data_agenda_dialog = agenda_unica;
 
                     cor_tarefa = agendar_unica ? Colors.grey : Colors.blue;
                   });
@@ -1353,12 +1378,22 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
       actions: <Widget>[
         FlatButton(
           child: Text(
-            "Sair",
+            "não agendar",
             style: TextStyle(color: Colors.red),
           ),
           onPressed: () {
             setState(() {
-              acao_dialog = false;
+              backup["data_agenda"] = "";
+              backup["dias_agendados"] = [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ];
+              backup["agendada"] = false;
               toDoList_dialog.insert(0, backup);
             });
             Navigator.pop(context);
@@ -1367,12 +1402,21 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
         ),
         FlatButton(
           child: Text(
-            "Adiconar",
+            "Agendar",
           ),
           onPressed: () {
             setState(() {
-              acao_dialog = true;
-              tarefa_dialog = toDoList;
+              for (int i = 0; i < outras.length; i++) {
+                if (outras_check[i]) {
+                  outras[i]["bool"] = false;
+                  toDoList["details"]["${toDoList["details"].length}"] =
+                      outras[i];
+                }
+              }
+              toDoList["data_agenda"] = data_agenda_dialog;
+              toDoList["dias_agendados"] = agendar_valor;
+              toDoList["agendada"] = true;
+
               toDoList_dialog.insert(0, toDoList);
             });
             Navigator.pop(context);
@@ -1399,7 +1443,7 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      for (int i = 00; i < widget.outras.length; i++) {
+      for (int i = 0; i < widget.outras.length; i++) {
         outras_check.add(false);
       }
     });
@@ -1664,12 +1708,22 @@ class _Corpo_simplesState extends State<Corpo_simples> {
       actions: <Widget>[
         FlatButton(
           child: Text(
-            "Sair",
+            "não agendar",
             style: TextStyle(color: Colors.red),
           ),
           onPressed: () {
             setState(() {
-              acao_dialog = false;
+              backup["agendada"] = false;
+              backup["data_agenda"] = "";
+              backup["dias_agendados"] = [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false
+              ];
               toDoList_dialog.insert(0, backup);
             });
             Navigator.pop(context);
@@ -1678,12 +1732,18 @@ class _Corpo_simplesState extends State<Corpo_simples> {
         ),
         FlatButton(
           child: Text(
-            "Adiconar",
+            "Agendar",
           ),
           onPressed: () {
             setState(() {
-              acao_dialog = true;
-              tarefa_dialog = tarefa;
+              for (int i = 0; i < dias_agendados.length; i++) {
+                if (dias_agendados[i]) {
+                  tarefa["agendada"] = true;
+                  break;
+                }
+              }
+              tarefa["dias_agendados"] = dias_agendados;
+              tarefa["data_agenda"] = data_agenda_dialog;
               toDoList_dialog.insert(0, tarefa);
             });
             Navigator.pop(context);

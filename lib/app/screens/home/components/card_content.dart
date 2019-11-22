@@ -6,7 +6,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:personal_flow/app/screens/home/components/agendar_cards.dart';
+import 'package:personal_flow/app/screens/home/components/card_struct.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/shared/tree.dart';
 
@@ -67,7 +67,7 @@ class _CardContentState extends State<CardContent> {
               right: size_screen * 0.05,
               bottom: size_screen * 0.015),
           child: AgendarCards(
-            size_screen: size_screen,
+            posicao: widget.valor,
           ),
         ),
         Padding(

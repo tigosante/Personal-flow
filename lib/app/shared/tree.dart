@@ -17,7 +17,7 @@ class Tree {
 
   dynamic decisao() {
     List lista_retorno = [];
-    if (tarefa["programada"]) {
+    if (tarefa["agendada"]) {
       lista_retorno.add("TAREFA AGENDADA");
       lista_retorno.add(false);
 
