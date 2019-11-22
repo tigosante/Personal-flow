@@ -13,12 +13,27 @@ import 'package:personal_flow/app/screens/home/components/card_content_unica.dar
 import 'package:personal_flow/app/screens/new_task/new_task.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 
-class CardStruct extends StatefulWidget {
-  CardStruct({Key key}) : super(key: key);
+// Variáveis gerais.
 
-  @override
-  _CardStructState createState() => new _CardStructState();
-}
+Color cor_tarefa = Colors.grey;
+double size_screen = 0;
+String font_button;
+
+List toDoList = [];
+List<String> dias = [
+  "Dom",
+  "Seg",
+  "Ter",
+  "Qua",
+  "Qui",
+  "Sex",
+  "Sáb",
+];
+
+Icon actionIcon = Icon(
+  Icons.search,
+  color: Colors.blue,
+);
 
 Widget appBarTitle = Text(
   "Personal Flow",
@@ -28,14 +43,14 @@ Widget appBarTitle = Text(
     fontSize: size_screen * 0.05,
   ),
 );
-Icon actionIcon = Icon(
-  Icons.search,
-  color: Colors.blue,
-);
 
-double size_screen = 0;
-String font_button;
-List toDoList = [];
+
+class CardStruct extends StatefulWidget {
+  CardStruct({Key key}) : super(key: key);
+
+  @override
+  _CardStructState createState() => new _CardStructState();
+}
 
 class _CardStructState extends State<CardStruct> {
   final TextEditingController _searchQuery = new TextEditingController();
@@ -616,16 +631,6 @@ class AgendarCards extends StatefulWidget {
   _AgendarCardsState createState() => _AgendarCardsState();
 }
 
-Color cor_tarefa = Colors.grey;
-List<String> dias = [
-  "Dom",
-  "Seg",
-  "Ter",
-  "Qua",
-  "Qui",
-  "Sex",
-  "Sáb",
-];
 
 class _AgendarCardsState extends State<AgendarCards> {
   @override

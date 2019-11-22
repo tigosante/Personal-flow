@@ -5,11 +5,35 @@ import 'package:personal_flow/app/shared/notifications_helper.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/shared/tree.dart';
 
-void montar(){
-  dias_agendados = [false, false, false, false, false, false, false];
-  agendar_unica = false;
-  agenda_unica = "Definir data final desta tarefa.";
+// Variáveis gerais.
+Color cor_tarefa = Colors.grey;
+
+bool tipo_tarefa = true;
+bool acao_dialog = false;
+bool check_titulo = false;
+bool agendar_unica = false;
+
+String agenda_unica = "Definir data final desta tarefa.";
+String data_agendada;
+String tipo_tarefa_drop = "Tipo de tarefa";
+String info_tipo_tarefa = "Escolha um tipo de tarefa que deseja criar.";
+String data_agenda_dialog = "";
+
+dynamic tarefa_dialog;
+dynamic toDoList_dialog;
+
+List<bool> valor = [];
+List<bool> outras_check = [];
+List<bool> agendar_valor = [false, false, false, false, false, false, false];
+List<bool> dias_agendados = [false, false, false, false, false, false, false];
+
+void montar() {
   cor_tarefa = Colors.grey;
+
+  agendar_unica = false;
+  dias_agendados = [false, false, false, false, false, false, false];
+
+  agenda_unica = "Definir data final desta tarefa.";
 }
 
 class NewTask extends StatefulWidget {
@@ -23,14 +47,6 @@ class NewTask extends StatefulWidget {
   dynamic notifications;
   _NewTaskState createState() => _NewTaskState();
 }
-
-String tipo_tarefa_drop = "Tipo de tarefa";
-String info_tipo_tarefa = "Escolha um tipo de tarefa que deseja criar.";
-bool tipo_tarefa = true;
-bool acao_dialog = false;
-dynamic tarefa_dialog;
-dynamic toDoList_dialog;
-String data_agendada;
 
 class _NewTaskState extends State<NewTask> {
   Map<String, dynamic> data_list = Map();
@@ -741,11 +757,6 @@ class _NewTaskState extends State<NewTask> {
   }
 }
 
-List<bool> dias_agendados = [false, false, false, false, false, false, false];
-bool agendar_unica = false;
-String agenda_unica = "Definir data final desta tarefa.";
-Color cor_tarefa = Colors.grey;
-
 class Agendar extends StatefulWidget {
   Agendar({Key key, this.size_screen}) : super(key: key);
 
@@ -920,9 +931,6 @@ class _AgendarState extends State<Agendar> {
   }
 }
 
-List<bool> agendar_valor = [false, false, false, false, false, false, false];
-String data_agenda_dialog = "";
-
 class AgendarDialog extends StatefulWidget {
   AgendarDialog({Key key, this.size_screen}) : super(key: key);
 
@@ -1094,9 +1102,6 @@ class _AgendarDialogState extends State<AgendarDialog> {
     );
   }
 }
-
-List<bool> valor = [];
-bool check_titulo = false;
 
 class Corpo_Composta extends StatefulWidget {
   Corpo_Composta({Key key, this.size_screen, this.lista_retorno})
@@ -1427,8 +1432,6 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
     );
   }
 }
-
-List<bool> outras_check = [];
 
 class Outras_tarefas extends StatefulWidget {
   Outras_tarefas({Key key, this.outras, this.size_screen}) : super(key: key);

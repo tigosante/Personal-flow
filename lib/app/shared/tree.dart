@@ -1,20 +1,6 @@
 class Tree {
   dynamic tarefa;
 
-  String tipo;
-  bool programada;
-
-  String data_unica;
-  int repeticao_unica;
-  int conclusao_unica;
-  int data_repeticao_unica;
-
-  double conclusao_grupo;
-  double tarefa_grupo;
-  bool data_grupo;
-  bool repeticao_grupo;
-  bool data_repeticao_grupo;
-
   dynamic decisao() {
     List lista_retorno = [];
     if (tarefa["agendada"]) {
