@@ -275,7 +275,7 @@ class Composta {
     return newToDo["details"].length * 0.7 <= repete;
   }
 
-  bool conclsuao() {
+  bool conclusao() {
     int repete_conclusao = 0;
     if (toDoList.length > 0) {
       for (int i = 0; i < newToDo["details"].length; i++) {

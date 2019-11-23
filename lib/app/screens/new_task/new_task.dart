@@ -719,7 +719,7 @@ class _NewTaskState extends State<NewTask> {
       newToDo["porcentagem"] = porcentagem_repete[0];
 
       Composta concluir = Composta(toDoList: widget.toDoList, newToDo: newToDo);
-      newToDo["conclusao_grupo"] = concluir.conclsuao();
+      newToDo["conclusao_grupo"] = concluir.conclusao();
 
       newToDo["repeticao"] = repeticao;
       newToDo["data_grupo"] = concluir.data_grupo();
