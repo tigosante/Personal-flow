@@ -12,7 +12,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="Personal Flow"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/logo_app">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -33,9 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- <service
-            android:name="com.mythichelm.localnotifications.services.LocalNotificationsService"
-            android:exported="false" /> -->
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>

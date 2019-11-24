@@ -1,9 +1,11 @@
-import 'package:expandable/expandable.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_flow/app/shared/notifications_helper.dart';
-import 'package:personal_flow/app/shared/tasks_functions.dart';
+
+import 'package:flushbar/flushbar.dart';
+import 'package:expandable/expandable.dart';
+
 import 'package:personal_flow/app/shared/tree.dart';
+import 'package:personal_flow/app/shared/tasks_functions.dart';
+import 'package:personal_flow/app/shared/notifications_helper.dart';
 
 // Variáveis gerais.
 Color cor_tarefa = Colors.grey;
@@ -19,6 +21,8 @@ String tipo_tarefa_drop = "Tipo de tarefa";
 String info_tipo_tarefa = "Escolha um tipo de tarefa que deseja criar.";
 String data_agenda_dialog = "";
 
+dynamic toDoList;
+dynamic notifications;
 dynamic tarefa_dialog;
 dynamic toDoList_dialog;
 
@@ -64,6 +68,8 @@ class _NewTaskState extends State<NewTask> {
     montar();
 
     setState(() {
+      toDoList = widget.toDoList;
+      notifications = widget.notifications;
       toDoList_dialog = widget.toDoList;
     });
 
@@ -212,7 +218,10 @@ class _NewTaskState extends State<NewTask> {
                     ),
                   ),
                 ),
-                Text("|  ", style: TextStyle(color: Colors.blue),),
+                Text(
+                  "|  ",
+                  style: TextStyle(color: Colors.blue),
+                ),
                 Container(
                   width: size_screen * 0.4,
                   child: Center(
@@ -618,19 +627,21 @@ class _NewTaskState extends State<NewTask> {
           }
         }
       }
+      newToDo["id_chanel"] = widget.toDoList.length + 1;
 
       Tree tree = Tree(tarefa: newToDo);
 
       List lista_retorno = tree.decisao();
 
-      // Notificacao notificacao = Notificacao(
-      //   tarefa: newToDo,
-      //   notifications: widget.notifications,
-      //   id_chanel: 0,
-      //   agendadas: newToDo["agendada"] ? dias_agendados : [false]
-      // );
+      if (newToDo["data_form"] != null) {
+        Notificacao notificacao = Notificacao(
+            tarefa: newToDo,
+            notifications: widget.notifications,
+            id_chanel: newToDo["id_chanel"],
+            agendadas: newToDo["agendada"] ? dias_agendados : [false]);
 
-      // notificacao.filtro();
+        notificacao.filtro();
+      }
 
       lista_retorno.insert(0, true);
       lista_retorno.add(newToDo);
@@ -1729,6 +1740,15 @@ class _Corpo_simplesState extends State<Corpo_simples> {
               ];
               toDoList_dialog.insert(0, backup);
             });
+
+            Notificacao notificacao = Notificacao(
+                tarefa: backup,
+                notifications: notifications,
+                id_chanel: backup["id_chanel"],
+                agendadas: [false]);
+
+            notificacao.filtro();
+
             Navigator.pop(context);
             Navigator.pop(context, toDoList_dialog);
           },
@@ -1749,6 +1769,15 @@ class _Corpo_simplesState extends State<Corpo_simples> {
               tarefa["data_agenda"] = data_agenda_dialog;
               toDoList_dialog.insert(0, tarefa);
             });
+            
+            Notificacao notificacao = Notificacao(
+                tarefa: tarefa,
+                notifications: notifications,
+                id_chanel: tarefa["id_chanel"],
+                agendadas: tarefa["dias_agendados"]);
+
+            notificacao.filtro();
+
             Navigator.pop(context);
             Navigator.pop(context, toDoList_dialog);
           },

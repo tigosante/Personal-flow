@@ -1,5 +1,6 @@
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+
+import 'package:date_format/date_format.dart';
 
 class GeneratioCards {
   dynamic context_screen;
@@ -131,6 +132,9 @@ class DataHora {
   int repeticao;
   int data_repeticao;
   String title_formatado;
+  String data_agenda;
+  List dias_agendados;
+  int id_chanel;
 
   calendario() {
     if (picked != null) {
@@ -184,6 +188,9 @@ class DataHora {
         content["repeticao"] = repeticao;
         content["data_repeticao"] = data_repeticao;
         content["title_formatado"] = title_formatado;
+        content["data_agenda"] = data_agenda;
+        content["dias_agendados"] = dias_agendados;
+        content["id_chanel"] = id_chanel;
       }
 
       return content;
@@ -205,6 +212,9 @@ class DataHora {
         content["repeticao"] = repeticao;
         content["data_repeticao"] = data_repeticao;
         content["title_formatado"] = title_formatado;
+        content["data_agenda"] = data_agenda;
+        content["dias_agendados"] = dias_agendados;
+        content["id_chanel"] = id_chanel;
       }
 
       return content;
@@ -231,7 +241,10 @@ class DataHora {
       this.programada,
       this.repeticao,
       this.tipo,
-      this.title_formatado});
+      this.title_formatado,
+      this.data_agenda,
+      this.dias_agendados,
+      this.id_chanel});
 }
 
 class AgendarData {

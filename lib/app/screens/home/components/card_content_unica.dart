@@ -1,11 +1,18 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 
 import 'package:expandable/expandable.dart';
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:personal_flow/app/screens/home/components/card_struct.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:personal_flow/app/shared/tasks_functions.dart';
+import 'package:personal_flow/app/shared/notifications_helper.dart';
+import 'package:personal_flow/app/screens/home/components/card_struct.dart';
+
+FlutterLocalNotificationsPlugin notifications =
+    new FlutterLocalNotificationsPlugin();
 
 class CardContentUnica extends StatefulWidget {
   CardContentUnica(
@@ -61,36 +68,6 @@ class _CardContentUnicaState extends State<CardContentUnica> {
     TextEditingController controllerText =
         TextEditingController(text: toDoList[widget.valor]["title"]);
 
-    IconButton bt_calendar = IconButton(
-      color: Colors.blue[600],
-      icon: Icon(
-        Icons.calendar_today,
-      ),
-      onPressed: () async {
-        final DateTime picked = await showDatePicker(
-          context: context,
-          firstDate: new DateTime(2000),
-          lastDate: new DateTime(2030),
-          initialDate: new DateTime.now(),
-        );
-        setState(() {
-          DataHora dataHora = DataHora(
-            picked: picked,
-            title: toDoList[widget.valor]["title"],
-            boolen: toDoList[widget.valor]["bool"],
-            tipo: toDoList[widget.valor]["tipo"],
-            programada: toDoList[widget.valor]["agendada"],
-            dt_inativacao: toDoList[widget.valor]["dt_inativacao"],
-            repeticao: toDoList[widget.valor]["repeticao"],
-            conclusao: toDoList[widget.valor]["conclusao"],
-            title_formatado: toDoList[widget.valor]["title_formatado"],
-            data_repeticao: toDoList[widget.valor]["data_repeticao"],
-          );
-          toDoList[widget.valor] = dataHora.calendario();
-        });
-      },
-    );
-
     return Padding(
       padding: EdgeInsets.only(
           top: toDoList[widget.valor] != null
@@ -125,12 +102,18 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                             : Text(toDoList[widget.valor]["data_form"] + ","),
                       ),
                       onTap: () async {
+                        List<String> backup = [];
+
                         final DateTime picked = await showDatePicker(
                           context: context,
                           firstDate: new DateTime(2000),
                           lastDate: new DateTime(2030),
                           initialDate: new DateTime.now(),
                         );
+
+                        backup.add(toDoList[widget.valor]["data_form"]);
+                        backup.add(toDoList[widget.valor]["hora"]);
+
                         setState(() {
                           DataHora dataHora = DataHora(
                             picked: picked,
@@ -146,8 +129,28 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                                 ["title_formatado"],
                             data_repeticao: toDoList[widget.valor]
                                 ["data_repeticao"],
+                            data_agenda: toDoList[widget.valor]["data_agenda"],
+                            dias_agendados: toDoList[widget.valor]
+                                ["dias_agendados"],
+                            id_chanel: toDoList[widget.valor]["id_chanel"],
                           );
                           toDoList[widget.valor] = dataHora.calendario();
+
+                          if (backup[0] != null) {
+                            if (backup[0] !=
+                                toDoList[widget.valor]["data_form"]) {
+                              Notificacao notificacao = Notificacao(
+                                  tarefa: toDoList[widget.valor],
+                                  notifications: notifications,
+                                  id_chanel: toDoList[widget.valor]
+                                      ["id_chanel"],
+                                  agendadas: toDoList[widget.valor]["agendada"]
+                                      ? toDoList[widget.valor]["dias_agendados"]
+                                      : [false]);
+
+                              notificacao.filtro();
+                            }
+                          }
                         });
                       },
                     ),
@@ -184,6 +187,16 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                           } else {
                             toDoList[widget.valor]["hora"] = null;
                           }
+                          Notificacao notificacao = Notificacao(
+                              tarefa: toDoList[widget.valor],
+                              notifications: notifications,
+                              id_chanel: toDoList[widget.valor]["id_chanel"],
+                              agendadas: toDoList[widget.valor]["agendada"]
+                                  ? toDoList[widget.valor]["dias_agendados"]
+                                  : [false]);
+
+                          notificacao.filtro();
+
                           saveData();
                         });
                       },
@@ -205,6 +218,19 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                               setState(() {
                                 toDoList[widget.valor]["hora"] = null;
                                 toDoList[widget.valor]["data_form"] = null;
+
+                                Notificacao notificacao = Notificacao(
+                                    tarefa: toDoList[widget.valor],
+                                    notifications: notifications,
+                                    id_chanel: toDoList[widget.valor]
+                                        ["id_chanel"],
+                                    agendadas: toDoList[widget.valor]
+                                            ["agendada"]
+                                        ? toDoList[widget.valor]
+                                            ["dias_agendados"]
+                                        : [false]);
+
+                                notificacao.filtro();
                               });
                             },
                           )

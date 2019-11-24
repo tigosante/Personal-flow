@@ -1,14 +1,16 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
 import 'package:flushbar/flushbar.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:personal_flow/app/screens/home/components/card_struct.dart';
-import 'package:personal_flow/app/shared/tasks_functions.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+
 import 'package:personal_flow/app/shared/tree.dart';
+import 'package:personal_flow/app/shared/tasks_functions.dart';
+import 'package:personal_flow/app/screens/home/components/card_struct.dart';
 
 class CardContent extends StatefulWidget {
   CardContent(

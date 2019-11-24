@@ -1,17 +1,19 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
 
-import 'package:expandable/expandable.dart';
-import 'package:flushbar/flushbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:flushbar/flushbar.dart';
+import 'package:expandable/expandable.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+import 'package:personal_flow/app/shared/tasks_functions.dart';
+import 'package:personal_flow/app/screens/new_task/new_task.dart';
 import 'package:personal_flow/app/screens/home/components/card_content.dart';
 import 'package:personal_flow/app/screens/home/components/card_content_unica.dart';
-import 'package:personal_flow/app/screens/new_task/new_task.dart';
-import 'package:personal_flow/app/shared/tasks_functions.dart';
 
 // Variáveis gerais.
 
@@ -43,7 +45,6 @@ Widget appBarTitle = Text(
     fontSize: size_screen * 0.05,
   ),
 );
-
 
 class CardStruct extends StatefulWidget {
   CardStruct({Key key}) : super(key: key);
@@ -87,7 +88,7 @@ class _CardStructState extends State<CardStruct> {
       });
     });
 
-    var android = new AndroidInitializationSettings('ic_launcher');
+    var android = new AndroidInitializationSettings('logo_app');
 
     var ios = new IOSInitializationSettings();
 
@@ -119,7 +120,6 @@ class _CardStructState extends State<CardStruct> {
       appBar: buildBar(context),
       body: Column(
         children: <Widget>[
-          // NotificationWidget(title: toDoList[0]["title"],body: toDoList[0]["title"],data: "sáb, 16 Nov",),
           Expanded(
               child: validar()
                   ? Center(
@@ -630,7 +630,6 @@ class AgendarCards extends StatefulWidget {
   @override
   _AgendarCardsState createState() => _AgendarCardsState();
 }
-
 
 class _AgendarCardsState extends State<AgendarCards> {
   @override
