@@ -9,6 +9,7 @@ import 'package:expandable/expandable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:personal_flow/app/shared/notifications_helper.dart';
 
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/screens/new_task/new_task.dart';

@@ -176,6 +176,10 @@ class DataHora {
       content["hora"] = null;
       content["data_form"] = data_form;
 
+      content["dia"] = day;
+      content["mes"] = mot;
+      content["ano"] = yea;
+
       if (title != null && boolen != null) {
         content["title"] = title;
         content["bool"] = boolen;

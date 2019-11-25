@@ -627,7 +627,7 @@ class _NewTaskState extends State<NewTask> {
           }
         }
       }
-      newToDo["id_chanel"] = widget.toDoList.length + 1;
+      newToDo["id_chanel"] = (widget.toDoList.length + 1) * 10;
 
       Tree tree = Tree(tarefa: newToDo);
 
@@ -673,9 +673,11 @@ class _NewTaskState extends State<NewTask> {
 
   addToDo() {
     if (controller_titulo.text.trim() != "") {
+      int qnt_tarefas = 0;
+      int data = 0;
+
       Map<String, dynamic> newToDo = Map();
       Map<String, dynamic> details = Map();
-      int qnt_tarefas = 0;
 
       Composta trefa = Composta(tarefa: controller_titulo.text.trim());
 
@@ -691,6 +693,7 @@ class _NewTaskState extends State<NewTask> {
       for (int i = 0; i < controller_sub.length; i++) {
         if (controller_sub[i].text.trim() != "") {
           Map<String, dynamic> content = Map();
+          data = data_list["$i"] != null ? 1 : 0;
 
           content["hora"] =
               data_list["$i"] != null ? data_list["$i"]["hora"] : null;
@@ -749,13 +752,20 @@ class _NewTaskState extends State<NewTask> {
 
       newToDo["dias_agendados"] = agendar_valor;
 
+      newToDo["id_chanel"] = (widget.toDoList.length + 1) * 10;
+
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();
 
-      Notificacao notificacao =
-          Notificacao(tarefa: newToDo, notifications: widget.notifications);
+      if (data > 0) {
+        Notificacao notificacao = Notificacao(
+            tarefa: newToDo,
+            notifications: widget.notifications,
+            id_chanel: newToDo["id_chanel"],
+            agendadas: newToDo["agendada"] ? dias_agendados : [false]);
 
-      notificacao.filtro();
+        notificacao.filtro();
+      }
 
       retorno.insert(0, true);
       retorno.add(newToDo);
@@ -1769,7 +1779,7 @@ class _Corpo_simplesState extends State<Corpo_simples> {
               tarefa["data_agenda"] = data_agenda_dialog;
               toDoList_dialog.insert(0, tarefa);
             });
-            
+
             Notificacao notificacao = Notificacao(
                 tarefa: tarefa,
                 notifications: notifications,

@@ -4,13 +4,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flushbar/flushbar.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
+import 'package:personal_flow/app/shared/notifications_helper.dart';
 
 import 'package:personal_flow/app/shared/tree.dart';
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/screens/home/components/card_struct.dart';
+
+FlutterLocalNotificationsPlugin notifications =
+    new FlutterLocalNotificationsPlugin();
 
 class CardContent extends StatefulWidget {
   CardContent(
@@ -370,28 +375,6 @@ class _CardContentState extends State<CardContent> {
     TextEditingController controllerText = TextEditingController(
         text: toDoList[widget.valor]["details"]["$index"]["title"]);
 
-    IconButton bt_calendar = IconButton(
-      color: Colors.blue[600],
-      icon: Icon(
-        Icons.calendar_today,
-      ),
-      onPressed: () async {
-        final DateTime picked = await showDatePicker(
-          context: context,
-          firstDate: new DateTime(2000),
-          lastDate: new DateTime(2030),
-          initialDate: new DateTime.now(),
-        );
-        setState(() {
-          DataHora dataHora = DataHora(
-              picked: picked,
-              title: toDoList[widget.valor]["details"]["$index"]["title"],
-              boolen: toDoList[widget.valor]["details"]["$index"]["bool"]);
-          toDoList[widget.valor]["details"]["$index"] = dataHora.calendario();
-        });
-      },
-    );
-
     return Card(
       elevation: 0,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -471,21 +454,40 @@ class _CardContentState extends State<CardContent> {
                           ),
                   ),
                   onTap: () async {
-                    final DateTime picked = await showDatePicker(
+                    List<String> backup = [];
+
+                    final TimeOfDay picked = await showTimePicker(
                       context: context,
-                      firstDate: new DateTime(2000),
-                      lastDate: new DateTime(2030),
-                      initialDate: new DateTime.now(),
+                      initialTime: TimeOfDay.now(),
                     );
+
+                    backup.add(toDoList[widget.valor]["details"]["$index"]
+                        ["data_form"]);
+                    backup.add(
+                        toDoList[widget.valor]["details"]["$index"]["hora"]);
+
                     setState(() {
-                      DataHora dataHora = DataHora(
-                          picked: picked,
-                          title: toDoList[widget.valor]["details"]["$index"]
-                              ["title"],
-                          boolen: toDoList[widget.valor]["details"]["$index"]
-                              ["bool"]);
-                      toDoList[widget.valor]["details"]["$index"] =
-                          dataHora.calendario();
+                      DataHora dataHora = DataHora(picked: picked);
+                      String retorno = dataHora.hora();
+                      if (retorno != null) {
+                        toDoList[widget.valor]["details"]["$index"]["hora"] =
+                            retorno;
+                      } else {
+                        toDoList[widget.valor]["details"]["$index"]["hora"] =
+                            null;
+                      }
+
+                      if (backup[0] != toDoList[widget.valor]["data_form"]) {
+                        Notificacao notificacao = Notificacao(
+                            tarefa: toDoList[widget.valor],
+                            notifications: notifications,
+                            id_chanel: toDoList[widget.valor]["id_chanel"],
+                            agendadas: toDoList[widget.valor]["agendada"]
+                                ? toDoList[widget.valor]["dias_agendados"]
+                                : [false]);
+
+                        notificacao.filtro();
+                      }
                     });
                   },
                 ),

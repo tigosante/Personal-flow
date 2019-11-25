@@ -136,7 +136,6 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                           );
                           toDoList[widget.valor] = dataHora.calendario();
 
-                          if (backup[0] != null) {
                             if (backup[0] !=
                                 toDoList[widget.valor]["data_form"]) {
                               Notificacao notificacao = Notificacao(
@@ -149,7 +148,6 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                                       : [false]);
 
                               notificacao.filtro();
-                            }
                           }
                         });
                       },
