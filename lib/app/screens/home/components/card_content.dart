@@ -375,7 +375,7 @@ class _CardContentState extends State<CardContent> {
     TextEditingController controllerText = TextEditingController(
         text: toDoList[widget.valor]["details"]["$index"]["title"]);
 
-    return Card(
+    return toDoList[widget.valor]["details"]["$index"]["dt_inativacao"] == null ? Card(
       elevation: 0,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Container(
@@ -600,7 +600,7 @@ class _CardContentState extends State<CardContent> {
           ],
         ),
       ),
-    );
+    ) : Container(color: Colors.transparent,);
   }
 
   Widget dtHrNovo(context) {

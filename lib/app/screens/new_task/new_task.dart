@@ -752,7 +752,7 @@ class _NewTaskState extends State<NewTask> {
 
       newToDo["dias_agendados"] = agendar_valor;
 
-      newToDo["id_chanel"] = (widget.toDoList.length + 1) * 10;
+      newToDo["id_chanel"] = (widget.toDoList.length + 1) * 100;
 
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();

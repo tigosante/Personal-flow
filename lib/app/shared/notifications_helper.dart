@@ -14,7 +14,10 @@ dynamic style = AndroidNotificationStyle.BigText;
 
 List<String> tarefas = [];
 
-InboxStyleInformation inboxStyleInformation = InboxStyleInformation(tarefas);
+InboxStyleInformation inboxStyleInformationComposta =
+    InboxStyleInformation(tarefas);
+InboxStyleInformation inboxStyleInformationSubtarefa =
+    InboxStyleInformation(tarefas);
 
 // Simples
 
@@ -134,11 +137,27 @@ NotificationDetails get _ongoingComposta {
       priority: Priority.High,
       ongoing: false,
       autoCancel: true,
-      styleInformation: inboxStyleInformation,
+      styleInformation: inboxStyleInformationComposta,
       style: style,
       progress: progress,
       maxProgress: maxProgress,
       showProgress: true);
+
+  final iosChannelSpecifics = IOSNotificationDetails();
+  return NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
+}
+
+NotificationDetails get _ongoingSubtarefa {
+  final androidChannelSpecifics = AndroidNotificationDetails(
+      chenal,
+      "chanel $chenal$chenal_id}",
+      "notificações de tarefas da categoria $chenal_type",
+      importance: Importance.Max,
+      priority: Priority.High,
+      ongoing: false,
+      autoCancel: true,
+      styleInformation: inboxStyleInformationSubtarefa,
+      style: AndroidNotificationStyle.BigText);
 
   final iosChannelSpecifics = IOSNotificationDetails();
   return NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
@@ -153,7 +172,7 @@ Future subtarefa(FlutterLocalNotificationsPlugin notifications,
         title: title,
         body: body,
         id: id,
-        type: _ongoingComposta,
+        type: _ongoingSubtarefa,
         dateTime: dateTimeNotification);
 
 Future subtarefa_notificacao(
@@ -166,15 +185,21 @@ Future subtarefa_notificacao(
 }) =>
     notifications.schedule(id, title, body, dateTime, type);
 
-Future composta(FlutterLocalNotificationsPlugin notifications,
-        {@required String title,
-        @required String body,
-        @required int id,}) =>
+Future composta(
+  FlutterLocalNotificationsPlugin notifications, {
+  @required String title,
+  @required String body,
+  @required int id,
+  @required Day day,
+  @required Time time,
+}) =>
     composta_notificacao(notifications,
         title: title,
         body: body,
         id: id,
-        type: _ongoingComposta,);
+        type: _ongoingComposta,
+        day: day,
+        time: time);
 
 Future composta_notificacao(
   FlutterLocalNotificationsPlugin notifications, {
@@ -182,8 +207,10 @@ Future composta_notificacao(
   @required String body,
   @required NotificationDetails type,
   @required int id,
+  @required Day day,
+  @required Time time,
 }) =>
-    notifications.periodicallyShow(id, title, body, RepeatInterval.Daily, type);
+    notifications.showWeeklyAtDayAndTime(id, title, body, day, time, type);
 
 class Notificacao {
   int id_chanel;
@@ -194,8 +221,6 @@ class Notificacao {
   dynamic notifications;
 
   filtro() {
-    bool agendada = tarefa["agendada"].length > 1;
-
     if (tarefa["details"] == null) {
       chenal = tarefa["title"];
       chenal_id = id_chanel;
@@ -203,59 +228,61 @@ class Notificacao {
 
       cancelar(notifications, id: id_chanel);
 
-      if (tarefa["data_form"] != null) {
-        if (agendada) {
-          int contador = 0;
+      if (tarefa["agendada"]) {
+        int contador = 0;
 
-          for (int i = 0; i < agendadas.length; i++) {
-            contador += agendadas[i] ? 1 : 0;
-          }
+        for (int i = 0; i < agendadas.length; i++) {
+          contador += agendadas[i] ? 1 : 0;
+        }
 
-          if (contador == 7) {
-            cancelar(notifications, id: id_chanel + contador);
+        if (contador == 7) {
+          cancelar(notifications, id: id_chanel + contador);
 
-            dia_agendado_todos(notifications,
-                title: tarefa["title"],
-                body:
-                    "Olá, dá uma olhada nessEssa tarefa diária para ver se está tudo ok!",
-                id: id_chanel + contador);
-          } else {
-            for (int i = 0; i < agendadas.length; i++) {
-              cancelar(notifications, id: id_chanel + i);
-
-              if (agendadas[i]) {
-                dia_agendado(notifications,
-                    title: tarefa["title"],
-                    body:
-                        "Olá, dá uma olhada nessEssa tarefa diária para ver se está tudo ok!",
-                    id: id_chanel + i + 1,
-                    notificationTime: Time(6, 30),
-                    dayNotification: Day(i + 1));
-              }
-            }
-          }
-        } else {
-          int ano = int.parse(tarefa["ano"]);
-          int mes = int.parse(tarefa["mes"]);
-          int dia = int.parse(tarefa["dia"]);
-
-          int hora = tarefa["hora"] != null
-              ? int.parse(tarefa["hora"].split(":")[0].trim())
-              : 6;
-          int minu = tarefa["hora"] != null
-              ? int.parse(tarefa["hora"].split(":")[1].trim())
-              : 30;
-
-          dia_unico(notifications,
+          dia_agendado_todos(notifications,
               title: tarefa["title"],
               body:
-                  "Essa tarefa termina hoje!\nConfere se você não esqueceu nada.",
-              id: id_chanel,
-              dateTimeNotification: DateTime(ano, mes, dia, hora, minu));
+                  "Olá, dá uma olhada nessEssa tarefa diária para ver se está tudo ok!",
+              id: id_chanel + contador);
+        } else {
+          for (int i = 0; i < agendadas.length; i++) {
+            cancelar(notifications, id: id_chanel + i);
+
+            if (agendadas[i]) {
+              dia_agendado(notifications,
+                  title: tarefa["title"],
+                  body:
+                      "Olá, dá uma olhada nessEssa tarefa diária para ver se está tudo ok!",
+                  id: id_chanel + i + 1,
+                  notificationTime: Time(6, 30),
+                  dayNotification: Day(i + 1));
+            }
+          }
         }
+      }
+      if (tarefa["data_form"] != null) {
+        int ano = tarefa["ano"];
+        int mes = tarefa["mes"];
+        int dia = tarefa["dia"];
+
+        int hora = tarefa["hora"] != null
+            ? int.parse(tarefa["hora"].split(":")[0].trim())
+            : 6;
+        int minu = tarefa["hora"] != null
+            ? int.parse(tarefa["hora"].split(":")[1].trim())
+            : 30;
+
+        dia_unico(notifications,
+            title: tarefa["title"],
+            body:
+                "Essa tarefa termina hoje!\nConfere se você não esqueceu nada.",
+            id: id_chanel,
+            dateTimeNotification: DateTime(ano, mes, dia, hora, minu));
       }
     } else {
       bool data_subtarefa = false;
+
+      tarefas.clear();
+
       for (int i = 0; i < tarefa["details"].length; i++) {
         data_subtarefa = tarefa["details"]["$i"]["dt_inativacao"] == null &&
                 tarefa["details"]["$i"]["data_form"] != null
@@ -263,47 +290,16 @@ class Notificacao {
             : data_subtarefa;
       }
 
-      if (agendada && data_subtarefa) {
-        // Notificação de tarefa composta.
-        for (int i = 0; i < tarefa["details"].length; i++) {
-          if (tarefa["details"].length > 7) {
-            if (i == 6) {
-              tarefas.add("...");
-              break;
-            } else {
-              tarefas.add(tarefa["details"]["$i"]["title"]);
-            }
-          } else {
-            tarefas.add(tarefa["details"]["$i"]["title"]);
-          }
-          progress += tarefa["details"]["$i"]["bool"] ? 1 : 0;
-        }
-
-        inboxStyleInformation = InboxStyleInformation(tarefas,
-            htmlFormatLines: true,
-            contentTitle: tarefa["details"],
-            summaryText: tarefa["details"]);
-        style = AndroidNotificationStyle.Inbox;
-
-        maxProgress = tarefa["details"].length;
-
-        composta(notifications,
-            title: "Confere se você não esqueceu nada.",
-            body: "Progresso",
-            id: id_chanel,);
-
-        // Notificação de subtarefa.
-        inboxStyleInformation =
+      if (data_subtarefa) {
+        inboxStyleInformationSubtarefa =
             InboxStyleInformation(tarefas, summaryText: tarefa["title"]);
 
         for (int i = 0; i < tarefa["details"].length; i++) {
           if (tarefa["details"]["$i"]["dt_inativacao"] == null &&
               tarefa["details"]["$i"]["data_form"] != null) {
-            cancelar(notifications, id: id_chanel + i);
-
-            int ano = int.parse(tarefa["details"]["$i"]["ano"]);
-            int mes = int.parse(tarefa["details"]["$i"]["mes"]);
-            int dia = int.parse(tarefa["details"]["$i"]["dia"]);
+            int ano = tarefa["details"]["$i"]["ano"];
+            int mes = tarefa["details"]["$i"]["mes"];
+            int dia = tarefa["details"]["$i"]["dia"];
 
             int hora = tarefa["details"]["$i"]["hora"] != null
                 ? int.parse(
@@ -314,70 +310,49 @@ class Notificacao {
                     tarefa["details"]["$i"]["hora"].split(":")[1].trim())
                 : 30;
 
+            cancelar(notifications, id: id_chanel + i + 8);
+
             subtarefa(notifications,
                 title: tarefa["details"]["$i"]["title"],
                 body:
                     "Essa subtarefa termina hoje!\nConfere se você não esqueceu nada.",
-                id: id_chanel + i + 1,
+                id: id_chanel + i + 8,
                 dateTimeNotification: DateTime(ano, mes, dia, hora, minu));
           }
         }
       }
-      if (agendada) {
-        for (int i = 0; i < tarefa["details"].length; i++) {
-          if (tarefa["details"].length > 7) {
-            if (i == 6) {
-              tarefas.add("...");
-              break;
-            } else {
-              tarefas.add(tarefa["details"]["$i"]["title"]);
+      if (tarefa["agendada"]) {
+        for (int i = 0; i < 7; i++) {
+          if (agendadas[i]) {
+            cancelar(notifications, id: id_chanel + i + 1);
+            for (int j = 0; j < tarefa["details"].length; j++) {
+              if (tarefa["details"].length > 7) {
+                if (i == 6) {
+                  tarefas.add("...");
+                  break;
+                } else {
+                  tarefas.add(tarefa["details"]["$j"]["title"]);
+                }
+              } else {
+                tarefas.add(tarefa["details"]["$j"]["title"]);
+              }
+              progress += tarefa["details"]["$j"]["bool"] ? 1 : 0;
             }
-          } else {
-            tarefas.add(tarefa["details"]["$i"]["title"]);
-          }
-          progress += tarefa["details"]["$i"]["bool"] ? 1 : 0;
-        }
 
-        inboxStyleInformation = InboxStyleInformation(tarefas,
-            htmlFormatLines: true,
-            contentTitle: tarefa["details"],
-            summaryText: tarefa["details"]);
-        style = AndroidNotificationStyle.Inbox;
+            inboxStyleInformationComposta = InboxStyleInformation(tarefas,
+                htmlFormatLines: true,
+                contentTitle: tarefa["title"],
+                summaryText: tarefa["title"]);
+            style = AndroidNotificationStyle.Inbox;
 
-        maxProgress = tarefa["details"].length;
+            maxProgress = tarefa["details"].length;
 
-        composta(notifications,
-            title: "Confere se você não esqueceu nada.",
-            body: "Progresso",
-            id: id_chanel,);
-      } else {
-        inboxStyleInformation =
-            InboxStyleInformation(tarefas, summaryText: tarefa["title"]);
-
-        for (int i = 0; i < tarefa["details"].length; i++) {
-          if (tarefa["details"]["$i"]["dt_inativacao"] == null &&
-              tarefa["details"]["$i"]["data_form"] != null) {
-            cancelar(notifications, id: id_chanel + i);
-
-            int ano = int.parse(tarefa["details"]["$i"]["ano"]);
-            int mes = int.parse(tarefa["details"]["$i"]["mes"]);
-            int dia = int.parse(tarefa["details"]["$i"]["dia"]);
-
-            int hora = tarefa["details"]["$i"]["hora"] != null
-                ? int.parse(
-                    tarefa["details"]["$i"]["hora"].split(":")[0].trim())
-                : 6;
-            int minu = tarefa["details"]["$i"]["hora"] != null
-                ? int.parse(
-                    tarefa["details"]["$i"]["hora"].split(":")[1].trim())
-                : 30;
-
-            subtarefa(notifications,
-                title: tarefa["details"]["$i"]["title"],
-                body:
-                    "Essa subtarefa termina hoje!\nConfere se você não esqueceu nada.",
+            composta(notifications,
+                title: "Confere se você não esqueceu nada.",
+                body: "Progresso",
                 id: id_chanel + i + 1,
-                dateTimeNotification: DateTime(ano, mes, dia, hora, minu));
+                day: Day(i),
+                time: Time(6, 30));
           }
         }
       }
