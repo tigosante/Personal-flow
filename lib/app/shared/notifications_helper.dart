@@ -40,25 +40,21 @@ NotificationDetails get _ongoingUnico {
 
 // Notificação e tarefas com dia único
 Future dia_unico(FlutterLocalNotificationsPlugin notifications,
-        {@required String title,
-        @required String body,
-        @required int id,
-        @required DateTime dateTimeNotification}) =>
+        {String title, String body, int id, DateTime dateTimeNotification}) =>
     dia_unico_notificacao(notifications,
+        id: id,
         title: title,
         body: body,
-        id: id,
         type: _ongoingUnico,
         dateTime: dateTimeNotification);
 
 Future dia_unico_notificacao(
   FlutterLocalNotificationsPlugin notifications, {
-  @required String title,
-  @required String body,
-  @required NotificationDetails type,
-  @required int id,
+  int id,
+  String title,
+  String body,
   DateTime dateTime,
-  Time time,
+  NotificationDetails type,
 }) =>
     notifications.schedule(id, title, body, dateTime, type);
 
@@ -276,7 +272,7 @@ class Notificacao {
             body:
                 "Essa tarefa termina hoje!\nConfere se você não esqueceu nada.",
             id: id_chanel,
-            dateTimeNotification: DateTime(ano, mes, dia, hora, minu));
+            dateTimeNotification: DateTime(ano, mes, dia, hora, minu, 0, 0, 0));
       }
     } else {
       bool data_subtarefa = false;
@@ -297,6 +293,7 @@ class Notificacao {
         for (int i = 0; i < tarefa["details"].length; i++) {
           if (tarefa["details"]["$i"]["dt_inativacao"] == null &&
               tarefa["details"]["$i"]["data_form"] != null) {
+
             int ano = tarefa["details"]["$i"]["ano"];
             int mes = tarefa["details"]["$i"]["mes"];
             int dia = tarefa["details"]["$i"]["dia"];

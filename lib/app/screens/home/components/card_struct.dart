@@ -9,7 +9,6 @@ import 'package:expandable/expandable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:personal_flow/app/shared/notifications_helper.dart';
 
 import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/screens/new_task/new_task.dart';
@@ -33,19 +32,6 @@ List<String> dias = [
   "Sáb",
 ];
 
-Icon actionIcon = Icon(
-  Icons.search,
-  color: Colors.blue,
-);
-
-Widget appBarTitle = Text(
-  "Personal Flow",
-  style: TextStyle(
-    color: Colors.blue,
-    fontFamily: 'orkey-bold',
-    fontSize: size_screen * 0.05,
-  ),
-);
 
 class CardStruct extends StatefulWidget {
   CardStruct({Key key}) : super(key: key);
@@ -57,25 +43,8 @@ class CardStruct extends StatefulWidget {
 class _CardStructState extends State<CardStruct> {
   final TextEditingController _searchQuery = new TextEditingController();
   List<String> _list = List<String>();
-  bool _IsSearching;
   String _searchText = "";
   int valor_pesquisa = 0;
-
-  _CardStructState() {
-    _searchQuery.addListener(() {
-      if (_searchQuery.text.isEmpty) {
-        setState(() {
-          _IsSearching = false;
-          _searchText = "";
-        });
-      } else {
-        setState(() {
-          _IsSearching = true;
-          _searchText = _searchQuery.text;
-        });
-      }
-    });
-  }
 
   FlutterLocalNotificationsPlugin notifications =
       new FlutterLocalNotificationsPlugin();
@@ -96,8 +65,6 @@ class _CardStructState extends State<CardStruct> {
     var initSettings = new InitializationSettings(android, ios);
 
     notifications.initialize(initSettings, onSelectNotification: null);
-
-    _IsSearching = false;
   }
 
   @override
@@ -118,7 +85,19 @@ class _CardStructState extends State<CardStruct> {
     }
 
     return Scaffold(
-      appBar: buildBar(context),
+      appBar: AppBar(
+        title: Text(
+          "Personal Flow",
+          style: TextStyle(
+            color: Colors.blue,
+            fontFamily: 'orkey-bold',
+            fontSize: size_screen * 0.05,
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+      ),
       body: Column(
         children: <Widget>[
           Expanded(
@@ -130,28 +109,26 @@ class _CardStructState extends State<CardStruct> {
                         color: Colors.grey[300],
                       ),
                     )
-                  : _IsSearching
-                      ? buildpesquisa()
-                      : ListView.builder(
-                          padding: EdgeInsets.only(
-                            top: size_screen * 0.04,
-                          ),
-                          itemCount: toDoList.length,
-                          itemBuilder: (BuildContext context, int index) =>
-                              toDoList[index]["tipo"] == "simples"
-                                  ? toDoList[index]["dt_inativacao"] == null
-                                      ? buildCardUnica(
-                                          context, font_button, toDoList, index)
-                                      : Container(
-                                          color: Colors.transparent,
-                                        )
-                                  : toDoList[index]["dt_inativacao"] == null
-                                      ? buildCardGrupo(
-                                          context, index, font_button, toDoList)
-                                      : Container(
-                                          color: Colors.transparent,
-                                        ),
-                        )),
+                  : ListView.builder(
+                      padding: EdgeInsets.only(
+                        top: size_screen * 0.04,
+                      ),
+                      itemCount: toDoList.length,
+                      itemBuilder: (BuildContext context, int index) =>
+                          toDoList[index]["tipo"] == "simples"
+                              ? toDoList[index]["dt_inativacao"] == null
+                                  ? buildCardUnica(
+                                      context, font_button, toDoList, index)
+                                  : Container(
+                                      color: Colors.transparent,
+                                    )
+                              : toDoList[index]["dt_inativacao"] == null
+                                  ? buildCardGrupo(
+                                      context, index, font_button, toDoList)
+                                  : Container(
+                                      color: Colors.transparent,
+                                    ),
+                    )),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -491,135 +468,6 @@ class _CardStructState extends State<CardStruct> {
   Future<File> getFile() async {
     final directory = await getApplicationDocumentsDirectory();
     return File("${directory.path}/data.json");
-  }
-
-  Widget buildBar(BuildContext context) {
-    return new AppBar(
-        title: appBarTitle,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        actions: <Widget>[
-          new IconButton(
-            icon: actionIcon,
-            onPressed: () {
-              setState(() {
-                if (actionIcon.icon == Icons.search) {
-                  actionIcon = Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  );
-                  appBarTitle = TextField(
-                    controller: _searchQuery,
-                    decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                          color: Colors.blue,
-                        ),
-                        hintText: "Digite algo",
-                        border: InputBorder.none),
-                  );
-                  _handleSearchStart();
-                } else {
-                  _handleSearchEnd();
-                }
-              });
-            },
-          ),
-        ]);
-  }
-
-  dynamic buildpesquisa() {
-    List<dynamic> toDoLi = toDoList;
-    if (_searchText.isEmpty) {
-      return ListView.builder(
-        padding: EdgeInsets.only(
-          top: size_screen * 0.04,
-        ),
-        itemCount: toDoLi.length,
-        itemBuilder: (BuildContext context, int index) =>
-            toDoList[index]["tipo"] == "simples"
-                ? toDoList[index]["dt_inativacao"] == null
-                    ? buildCardUnica(context, font_button, toDoList, index)
-                    : Container(
-                        color: Colors.transparent,
-                      )
-                : toDoList[index]["dt_inativacao"] == null
-                    ? buildCardGrupo(context, index, font_button, toDoList)
-                    : Container(
-                        color: Colors.transparent,
-                      ),
-      );
-    } else {
-      List<Map<String, dynamic>> toDo = List();
-      for (int index = 0; index < toDoList.length; index++) {
-        String titulo = toDoList[index]["title"];
-        if (titulo.toLowerCase().contains(_searchText.toLowerCase())) {
-          toDo.add(toDoList[index]);
-          break;
-        }
-        if (toDoList[index]["tipo"] == "composta") {
-          for (int j = 0; j < toDoList[index]["details"].length; j++) {
-            if (toDoList[index]["details"]["$j"]["title"]
-                .toLowerCase()
-                .contains(_searchText.toLowerCase())) {
-              toDo.add(toDoList[index]);
-              break;
-            }
-            if (toDoList[index]["details"]["$j"]["data_form"] != null) {
-              if (toDoList[index]["details"]["$j"]["data_form"]
-                  .toLowerCase()
-                  .contains(_searchText.toLowerCase())) {
-                toDo.add(toDoList[index]);
-                break;
-              }
-            }
-            if (toDoList[index]["details"]["$j"]["hora"] != null) {
-              if (toDoList[index]["details"]["$j"]["hora"]
-                  .toLowerCase()
-                  .contains(_searchText.toLowerCase())) {
-                toDo.add(toDoList[index]);
-                break;
-              }
-            }
-          }
-        }
-      }
-      return ListView.builder(
-        padding: EdgeInsets.only(
-          top: size_screen * 0.04,
-        ),
-        itemCount: toDo.length,
-        itemBuilder: (BuildContext context, int index) =>
-            toDoList[index]["tipo"] == "simples"
-                ? buildCardUnica(context, font_button, toDoList, index)
-                : buildCardGrupo(context, index, font_button, toDoList),
-      );
-    }
-  }
-
-  void _handleSearchStart() {
-    setState(() {
-      _IsSearching = true;
-    });
-  }
-
-  void _handleSearchEnd() {
-    setState(() {
-      actionIcon = new Icon(
-        Icons.search,
-        color: Colors.blue,
-      );
-      appBarTitle = new Text(
-        "Personal Flow",
-        style: TextStyle(
-          color: Colors.blue,
-          fontFamily: 'orkey-bold',
-          fontSize: size_screen * 0.05,
-        ),
-      );
-      _IsSearching = false;
-      _searchQuery.clear();
-    });
   }
 }
 

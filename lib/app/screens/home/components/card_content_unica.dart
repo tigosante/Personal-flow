@@ -113,6 +113,9 @@ class _CardContentUnicaState extends State<CardContentUnica> {
 
                         backup.add(toDoList[widget.valor]["data_form"]);
                         backup.add(toDoList[widget.valor]["hora"]);
+                        backup.add(toDoList[widget.valor]["dia"]);
+                        backup.add(toDoList[widget.valor]["mes"]);
+                        backup.add(toDoList[widget.valor]["ano"]);
 
                         setState(() {
                           DataHora dataHora = DataHora(
@@ -120,7 +123,7 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                             title: toDoList[widget.valor]["title"],
                             boolen: toDoList[widget.valor]["bool"],
                             tipo: toDoList[widget.valor]["tipo"],
-                            programada: toDoList[widget.valor]["agendada"],
+                            agendada: toDoList[widget.valor]["agendada"],
                             dt_inativacao: toDoList[widget.valor]
                                 ["dt_inativacao"],
                             repeticao: toDoList[widget.valor]["repeticao"],

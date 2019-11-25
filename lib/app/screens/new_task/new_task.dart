@@ -31,15 +31,6 @@ List<bool> outras_check = [];
 List<bool> agendar_valor = [false, false, false, false, false, false, false];
 List<bool> dias_agendados = [false, false, false, false, false, false, false];
 
-void montar() {
-  cor_tarefa = Colors.grey;
-
-  agendar_unica = false;
-  dias_agendados = [false, false, false, false, false, false, false];
-
-  agenda_unica = "Definir data final desta tarefa.";
-}
-
 class NewTask extends StatefulWidget {
   NewTask({
     Key key,
@@ -65,7 +56,6 @@ class _NewTaskState extends State<NewTask> {
     List toDoList = widget.toDoList;
     TasksProp tasksProp = TasksProp(context_screen: context);
     double size_screen = tasksProp.outScreenSize;
-    montar();
 
     setState(() {
       toDoList = widget.toDoList;
@@ -143,7 +133,7 @@ class _NewTaskState extends State<NewTask> {
   Widget buildDropDown(size_screen) {
     return Padding(
       padding: EdgeInsets.only(
-        top: size_screen * 0.03,
+        top: size_screen * 0.01,
         left: size_screen * 0.06,
         right: size_screen * 0.06,
       ),
@@ -282,7 +272,7 @@ class _NewTaskState extends State<NewTask> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(
-              top: size_screen * 0.05,
+              top: size_screen * 0.02,
               left: size_screen * 0.06,
               right: size_screen * 0.06,
               bottom: size_screen * 0.02),
@@ -602,6 +592,10 @@ class _NewTaskState extends State<NewTask> {
           data_unica["data_form"] != null ? data_unica["data_form"] : null;
       newToDo["hora"] = data_unica["hora"] != null ? data_unica["hora"] : null;
 
+      newToDo["dia"] = data_unica["dia"] != null ? data_unica["dia"] : null;
+      newToDo["mes"] = data_unica["mes"] != null ? data_unica["mes"] : null;
+      newToDo["ano"] = data_unica["ano"] != null ? data_unica["ano"] : null;
+
       newToDo["tipo"] = "simples";
       newToDo["agendada"] = false;
       newToDo["dt_inativacao"] = null;
@@ -695,8 +689,18 @@ class _NewTaskState extends State<NewTask> {
           Map<String, dynamic> content = Map();
           data = data_list["$i"] != null ? 1 : 0;
 
+          content["dia"] =
+              data_list["$i"] != null ? data_list["$i"]["dia"] : null;
+
+          content["mes"] =
+              data_list["$i"] != null ? data_list["$i"]["mes"] : null;
+
+          content["ano"] =
+              data_list["$i"] != null ? data_list["$i"]["ano"] : null;
+
           content["hora"] =
               data_list["$i"] != null ? data_list["$i"]["hora"] : null;
+
           content["data_form"] =
               data_list["$i"] != null ? data_list["$i"]["data_form"] : null;
 
@@ -798,155 +802,144 @@ class _AgendarState extends State<Agendar> {
       padding: EdgeInsets.only(
           left: size_screen * 0.06,
           right: size_screen * 0.06,
-          top: size_screen * 0.05),
+          top: size_screen * 0.02),
       child: Container(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
             borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
           ),
-          child: ExpandablePanel(
-            tapHeaderToExpand: true,
-            header: ListTile(
-              title: Text("Agendar"),
-              subtitle: Text(
-                "Escolha os dias que a tarefa repete-se.",
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: Text("Agendar"),
+                subtitle: Text(
+                  "Escolha os dias que a tarefa repete-se.",
+                ),
               ),
-            ),
-            expanded: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.blue, width: size_screen * 0.0008),
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(size_screen * 0.02)),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: size_screen * 0.015,
-                      bottom: size_screen * 0.015,
-                    ),
-                    child: ListTile(
-                      title: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: List<Widget>.generate(7, (dia) {
-                            List<String> dias = [
-                              "Dom",
-                              "Seg",
-                              "Ter",
-                              "Qua",
-                              "Qui",
-                              "Sex",
-                              "Sáb",
-                            ];
-                            return InkWell(
-                              child: Container(
-                                padding: EdgeInsets.all(size_screen * 0.008),
-                                child: Text(
-                                  dias[dia],
-                                  style: TextStyle(
-                                      color: dias_agendados[dia]
-                                          ? Colors.blue
-                                          : Colors.grey),
-                                ),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  dias_agendados[dia] = !dias_agendados[dia];
-
-                                  if (dias_agendados[dia]) {
-                                    agendar_unica = true;
-                                    agendar_valor = dias_agendados;
-                                  }
-                                  int contador = 0;
-
-                                  for (int i = 0;
-                                      i < dias_agendados.length;
-                                      i++) {
-                                    if (!dias_agendados[i]) {
-                                      contador++;
-                                    }
-                                  }
-
-                                  if (contador == dias_agendados.length) {
-                                    agendar_unica = false;
-                                    agendar_valor = dias_agendados;
-                                    agenda_unica =
-                                        "Definir data final desta tarefa.";
-                                    cor_tarefa = Colors.grey;
-                                  }
-                                });
-                              },
-                            );
-                          })),
-                      subtitle: Padding(
-                        padding: EdgeInsets.only(top: size_screen * 0.025),
-                        child: InkWell(
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Colors.blue, width: size_screen * 0.0008),
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                ),
+                child: ListTile(
+                  title: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List<Widget>.generate(7, (dia) {
+                        List<String> dias = [
+                          "Dom",
+                          "Seg",
+                          "Ter",
+                          "Qua",
+                          "Qui",
+                          "Sex",
+                          "Sáb",
+                        ];
+                        return InkWell(
                           child: Container(
-                              padding: EdgeInsets.all(size_screen * 0.008),
-                              child: Text(
-                                agenda_unica,
-                                style: TextStyle(color: cor_tarefa),
-                              )),
-                          onTap: () async {
-                            bool verificar = false;
-                            for (int i = 0; i < dias_agendados.length; i++) {
-                              if (dias_agendados[i]) {
-                                verificar = true;
+                            padding: EdgeInsets.all(size_screen * 0.008),
+                            child: Text(
+                              dias[dia],
+                              style: TextStyle(
+                                  color: dias_agendados[dia]
+                                      ? Colors.blue
+                                      : Colors.grey),
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              dias_agendados[dia] = !dias_agendados[dia];
+
+                              if (dias_agendados[dia]) {
+                                agendar_unica = true;
+                                agendar_valor = dias_agendados;
                               }
-                            }
-                            if (verificar) {
-                              final DateTime picked = await showDatePicker(
-                                context: context,
-                                firstDate: new DateTime(2000),
-                                lastDate: new DateTime(2030),
-                                initialDate: new DateTime.now(),
-                              );
-                              setState(() {
-                                AgendarData agendamento = AgendarData(
-                                  picked: picked,
-                                );
-                                agendar_unica = picked == null;
-                                agenda_unica = agendamento.data_agendamento();
-                                data_agendada = agenda_unica;
+                              int contador = 0;
 
-                                cor_tarefa =
-                                    agendar_unica ? Colors.grey : Colors.blue;
-                              });
-                            } else {
-                              Flushbar flushbar;
-                              bool _wasButtonClicked;
+                              for (int i = 0; i < dias_agendados.length; i++) {
+                                if (!dias_agendados[i]) {
+                                  contador++;
+                                }
+                              }
 
-                              flushbar = Flushbar<bool>(
-                                icon: Icon(
-                                  Icons.error_outline,
-                                  color: Colors.amber,
-                                ),
-                                animationDuration: Duration(milliseconds: 450),
-                                message: "Escolha algum dia para agendar.",
-                                borderRadius: size_screen * 0.05,
-                                margin: EdgeInsets.only(
-                                  bottom: size_screen * 0.15,
-                                  left: size_screen * 0.1,
-                                  right: size_screen * 0.1,
-                                ),
-                                duration: Duration(seconds: 2),
-                              )..show(context).then((result) {
-                                  setState(() {
-                                    _wasButtonClicked = result;
-                                  });
-                                });
-                            }
+                              if (contador == dias_agendados.length) {
+                                agendar_unica = false;
+                                agendar_valor = dias_agendados;
+                                agenda_unica =
+                                    "Definir data final desta tarefa.";
+                                cor_tarefa = Colors.grey;
+                              }
+                            });
                           },
-                        ),
-                      ),
+                        );
+                      })),
+                  subtitle: Padding(
+                    padding: EdgeInsets.only(top: size_screen * 0.025),
+                    child: InkWell(
+                      child: Container(
+                          padding: EdgeInsets.all(size_screen * 0.008),
+                          child: Text(
+                            agenda_unica,
+                            style: TextStyle(color: cor_tarefa),
+                          )),
+                      onTap: () async {
+                        bool verificar = false;
+                        for (int i = 0; i < dias_agendados.length; i++) {
+                          if (dias_agendados[i]) {
+                            verificar = true;
+                          }
+                        }
+                        if (verificar) {
+                          final DateTime picked = await showDatePicker(
+                            context: context,
+                            firstDate: new DateTime(2000),
+                            lastDate: new DateTime(2030),
+                            initialDate: new DateTime.now(),
+                          );
+                          setState(() {
+                            AgendarData agendamento = AgendarData(
+                              picked: picked,
+                            );
+                            agendar_unica = picked == null;
+                            agenda_unica = agendamento.data_agendamento();
+                            data_agendada = agenda_unica;
+
+                            cor_tarefa =
+                                agendar_unica ? Colors.grey : Colors.blue;
+                          });
+                        } else {
+                          Flushbar flushbar;
+                          bool _wasButtonClicked;
+
+                          flushbar = Flushbar<bool>(
+                            icon: Icon(
+                              Icons.error_outline,
+                              color: Colors.amber,
+                            ),
+                            animationDuration: Duration(milliseconds: 450),
+                            message: "Escolha algum dia para agendar.",
+                            borderRadius: size_screen * 0.05,
+                            margin: EdgeInsets.only(
+                              bottom: size_screen * 0.15,
+                              left: size_screen * 0.1,
+                              right: size_screen * 0.1,
+                            ),
+                            duration: Duration(seconds: 2),
+                          )..show(context).then((result) {
+                              setState(() {
+                                _wasButtonClicked = result;
+                              });
+                            });
+                        }
+                      },
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           )),
     );
   }
@@ -1179,38 +1172,13 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
               color: Colors.transparent,
             ),
             ListTile(
-              title: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: controller,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                      maxLines: 8,
-                      minLines: 1,
-                    ),
-                  ),
-                  Checkbox(
-                    value: check_titulo,
-                    onChanged: (bool value) {
-                      setState(() {
-                        check_titulo = !check_titulo;
-
-                        if (check_titulo) {
-                          for (int i = 0; i < valor.length; i++) {
-                            valor[i] = true;
-                          }
-                        } else {
-                          for (int i = 0; i < valor.length; i++) {
-                            valor[i] = false;
-                          }
-                        }
-                      });
-                    },
-                  )
-                ],
+              title: TextField(
+                controller: controller,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+                maxLines: 8,
+                minLines: 1,
               ),
             ),
             Divider(
@@ -1249,145 +1217,131 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                 return Column(
                   children: <Widget>[
                     ListTile(
-                        title: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            Expanded(
-                              child: TextField(
-                                controller: controller,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                ),
-                                maxLines: 8,
-                                minLines: 1,
+                      title: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Expanded(
+                            child: TextField(
+                              controller: controller,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
                               ),
+                              maxLines: 8,
+                              minLines: 1,
                             ),
-                          ],
-                        ),
-                        subtitle: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            InkWell(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                  top: size_screen * 0.015,
-                                  right: size_screen * 0.015,
-                                  bottom: size_screen * 0.015,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(size_screen * 0.02)),
-                                ),
-                                child: toDoList["details"]["$index"]
-                                            ["data_form"] ==
-                                        null
-                                    ? Text("Data e hora")
-                                    : Text(toDoList["details"]["$index"]
-                                            ["data_form"] +
-                                        ","),
+                          ),
+                        ],
+                      ),
+                      subtitle: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          InkWell(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                top: size_screen * 0.015,
+                                right: size_screen * 0.015,
+                                bottom: size_screen * 0.015,
                               ),
-                              onTap: () async {
-                                final DateTime picked = await showDatePicker(
-                                  context: context,
-                                  firstDate: new DateTime(2000),
-                                  lastDate: new DateTime(2030),
-                                  initialDate: new DateTime.now(),
-                                );
-                                setState(() {
-                                  DataHora dataHora = DataHora(picked: picked);
-                                  data_unica = dataHora.calendario();
-                                  toDoList["details"]["$index"]["data_form"] =
-                                      data_unica["data_form"];
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(size_screen * 0.02)),
+                              ),
+                              child: toDoList["details"]["$index"]
+                                          ["data_form"] ==
+                                      null
+                                  ? Text("Data e hora")
+                                  : Text(toDoList["details"]["$index"]
+                                          ["data_form"] +
+                                      ","),
+                            ),
+                            onTap: () async {
+                              final DateTime picked = await showDatePicker(
+                                context: context,
+                                firstDate: new DateTime(2000),
+                                lastDate: new DateTime(2030),
+                                initialDate: new DateTime.now(),
+                              );
+                              setState(() {
+                                DataHora dataHora = DataHora(picked: picked);
+                                data_unica = dataHora.calendario();
+                                toDoList["details"]["$index"]["data_form"] =
+                                    data_unica["data_form"];
 
-                                  toDoList["details"]["$index"]["hora"] = null;
-                                });
-                              },
-                            ),
-                            InkWell(
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                  top: size_screen * 0.015,
-                                  right: size_screen * 0.015,
-                                  bottom: size_screen * 0.015,
-                                ),
-                                child: toDoList["details"]["$index"]
-                                            ["data_form"] !=
-                                        null
-                                    ? toDoList["details"]["$index"]["hora"] ==
-                                            null
-                                        ? Text("hora")
-                                        : Text(toDoList["details"]["$index"]
-                                            ["hora"])
-                                    : Container(
-                                        color: Colors.transparent,
-                                      ),
+                                toDoList["details"]["$index"]["dia"] =
+                                    data_unica["dia"];
+                                toDoList["details"]["$index"]["mes"] =
+                                    data_unica["mes"];
+                                toDoList["details"]["$index"]["ano"] =
+                                    data_unica["ano"];
+
+                                toDoList["details"]["$index"]["hora"] = null;
+                              });
+                            },
+                          ),
+                          InkWell(
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                top: size_screen * 0.015,
+                                right: size_screen * 0.015,
+                                bottom: size_screen * 0.015,
                               ),
-                              onTap: () async {
-                                final TimeOfDay picked = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.now(),
-                                );
-                                setState(() {
-                                  DataHora dataHora = DataHora(picked: picked);
-                                  String retorno = dataHora.hora();
-                                  if (retorno != null) {
-                                    toDoList["details"]["$index"]["hora"] =
-                                        retorno;
-                                  } else {
-                                    toDoList["details"]["$index"]["hora"] =
-                                        null;
-                                  }
-                                });
-                              },
-                            ),
-                            toDoList["details"]["$index"]["data_form"] != null
-                                ? InkWell(
-                                    child: Container(
-                                      padding: EdgeInsets.only(
-                                        top: size_screen * 0.015,
-                                        right: size_screen * 0.015,
-                                        bottom: size_screen * 0.015,
-                                      ),
-                                      child: Icon(
-                                        Icons.close,
-                                        color: Colors.red,
-                                      ),
+                              child: toDoList["details"]["$index"]
+                                          ["data_form"] !=
+                                      null
+                                  ? toDoList["details"]["$index"]["hora"] ==
+                                          null
+                                      ? Text("hora")
+                                      : Text(
+                                          toDoList["details"]["$index"]["hora"])
+                                  : Container(
+                                      color: Colors.transparent,
                                     ),
-                                    onTap: () {
-                                      setState(() {
-                                        toDoList["details"]["$index"]["hora"] =
-                                            null;
-                                        toDoList["details"]["$index"]
-                                            ["data_form"] = null;
-                                      });
-                                    },
-                                  )
-                                : Container(
-                                    color: Colors.transparent,
-                                  )
-                          ],
-                        ),
-                        trailing: Checkbox(
-                          value: valor[index],
-                          onChanged: (bool press) {
-                            setState(() {
-                              valor[index] = !valor[index];
-                              check_titulo = false;
-                              if (valor.length == 1 && valor[index]) {
-                                check_titulo = true;
-                              } else {
-                                int todos = 0;
-                                for (int i = 0; i < valor.length; i++) {
-                                  todos += valor[i] ? 1 : 0;
+                            ),
+                            onTap: () async {
+                              final TimeOfDay picked = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now(),
+                              );
+                              setState(() {
+                                DataHora dataHora = DataHora(picked: picked);
+                                String retorno = dataHora.hora();
+                                if (retorno != null) {
+                                  toDoList["details"]["$index"]["hora"] =
+                                      retorno;
+                                } else {
+                                  toDoList["details"]["$index"]["hora"] = null;
                                 }
-
-                                if (todos == valor.length) {
-                                  check_titulo = true;
-                                }
-                              }
-                            });
-                          },
-                        )),
+                              });
+                            },
+                          ),
+                          toDoList["details"]["$index"]["data_form"] != null
+                              ? InkWell(
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      top: size_screen * 0.015,
+                                      right: size_screen * 0.015,
+                                      bottom: size_screen * 0.015,
+                                    ),
+                                    child: Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      toDoList["details"]["$index"]["hora"] =
+                                          null;
+                                      toDoList["details"]["$index"]
+                                          ["data_form"] = null;
+                                    });
+                                  },
+                                )
+                              : Container(
+                                  color: Colors.transparent,
+                                )
+                        ],
+                      ),
+                    ),
                   ],
                 );
               }).toList(),
@@ -1422,6 +1376,15 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
               backup["agendada"] = false;
               toDoList_dialog.insert(0, backup);
             });
+
+            Notificacao notificacao = Notificacao(
+                tarefa: backup,
+                notifications: notifications,
+                id_chanel: backup["id_chanel"],
+                agendadas: [false]);
+
+            notificacao.filtro();
+
             Navigator.pop(context);
             Navigator.pop(context, toDoList_dialog);
           },
@@ -1442,6 +1405,14 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
               toDoList["data_agenda"] = data_agenda_dialog;
               toDoList["dias_agendados"] = agendar_valor;
               toDoList["agendada"] = true;
+
+              Notificacao notificacao = Notificacao(
+                  tarefa: toDoList,
+                  notifications: notifications,
+                  id_chanel: toDoList["id_chanel"],
+                  agendadas: toDoList["dias_agendados"]);
+
+              notificacao.filtro();
 
               toDoList_dialog.insert(0, toDoList);
             });
@@ -1526,6 +1497,10 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
                               data_unica = dataHora.calendario();
                               widget.outras[item]["data_form"] =
                                   data_unica["data_form"];
+
+                              widget.outras[item]["dia"] = data_unica["dia"];
+                              widget.outras[item]["mes"] = data_unica["mes"];
+                              widget.outras[item]["ano"] = data_unica["ano"];
 
                               widget.outras[item]["hora"] = null;
                             });
@@ -1689,6 +1664,10 @@ class _Corpo_simplesState extends State<Corpo_simples> {
                       data_unica = dataHora.calendario();
                       tarefa["data_form"] = data_unica["data_form"];
 
+                      tarefa["dia"] = data_unica["dia"];
+                      tarefa["mes"] = data_unica["mes"];
+                      tarefa["ano"] = data_unica["ano"];
+
                       tarefa["hora"] = null;
                     });
                   },
@@ -1751,13 +1730,15 @@ class _Corpo_simplesState extends State<Corpo_simples> {
               toDoList_dialog.insert(0, backup);
             });
 
-            Notificacao notificacao = Notificacao(
-                tarefa: backup,
-                notifications: notifications,
-                id_chanel: backup["id_chanel"],
-                agendadas: [false]);
+            if (backup["data_form"] != null) {
+              Notificacao notificacao = Notificacao(
+                  tarefa: backup,
+                  notifications: notifications,
+                  id_chanel: backup["id_chanel"],
+                  agendadas: [false]);
 
-            notificacao.filtro();
+              notificacao.filtro();
+            }
 
             Navigator.pop(context);
             Navigator.pop(context, toDoList_dialog);

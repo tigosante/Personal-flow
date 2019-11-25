@@ -85,13 +85,11 @@ class Informacoes {
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
       toDoList[index]["conclusao"] = 0;
-      print("entrou lead");
     } else {
       toDoList[index]["details"]["$index_sub"]["bool"] = false;
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
       toDoList[index]["conclusao"] = 0;
-      print("entrou else lead");
     }
     return toDoList;
   }
@@ -107,10 +105,8 @@ class Informacoes {
       toDoList[index]["details"]["$index_sub"]["conclusao"] = 1;
       toDoList[index]["bool"] = true;
       toDoList[index]["conclusao"] = 1;
-      print("entrou trai");
     } else {
       toDoList[index]["details"]["$index_sub"]["bool"] = true;
-      print("entrou else trai");
     }
     return toDoList;
   }
@@ -126,7 +122,7 @@ class DataHora {
   int index;
 
   String tipo;
-  bool programada;
+  bool agendada;
   String dt_inativacao;
   int conclusao;
   int repeticao;
@@ -185,7 +181,7 @@ class DataHora {
         content["bool"] = boolen;
 
         content["tipo"] = tipo;
-        content["programada"] = programada;
+        content["agendada"] = agendada;
         content["dt_inativacao"] = dt_inativacao;
 
         content["conclusao"] = conclusao;
@@ -209,7 +205,7 @@ class DataHora {
         content["bool"] = boolen;
 
         content["tipo"] = tipo;
-        content["programada"] = programada;
+        content["agendada"] = agendada;
         content["dt_inativacao"] = dt_inativacao;
 
         content["conclusao"] = conclusao;
@@ -242,7 +238,7 @@ class DataHora {
       this.conclusao,
       this.data_repeticao,
       this.dt_inativacao,
-      this.programada,
+      this.agendada,
       this.repeticao,
       this.tipo,
       this.title_formatado,
