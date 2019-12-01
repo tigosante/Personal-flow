@@ -2,47 +2,47 @@ class Tree {
   dynamic tarefa;
 
   dynamic decisao() {
-    List lista_retorno = [];
+    List listaRetorno = [];
     if (tarefa["agendada"]) {
-      lista_retorno.add("TAREFA AGENDADA");
-      lista_retorno.add(false);
+      listaRetorno.add("TAREFA AGENDADA");
+      listaRetorno.add(false);
 
-      return lista_retorno;
+      return listaRetorno;
     } else {
       switch (tarefa["tipo"]) {
         // Início sub-árvore SIMPLES
         case "simples":
           if (tarefa["repeticao"] >= 3) {
             if (tarefa["conclusao"] >= 2) {
-              if (tarefa["data_form"] != null) {
-                if (tarefa["data_repeticao"] > 1) {
-                  lista_retorno.add("data repete");
-                  lista_retorno.add(true);
+              if (tarefa["dataForm"] != null) {
+                if (tarefa["dataRepetidao"] > 1) {
+                  listaRetorno.add("data repete");
+                  listaRetorno.add(true);
 
-                  return lista_retorno;
+                  return listaRetorno;
                 } else {
-                  lista_retorno.add("ultima data");
-                  lista_retorno.add(true);
+                  listaRetorno.add("ultima data");
+                  listaRetorno.add(true);
 
-                  return lista_retorno;
+                  return listaRetorno;
                 }
               } else {
-                lista_retorno.add("sem data");
-                lista_retorno.add(true);
+                listaRetorno.add("sem data");
+                listaRetorno.add(true);
 
-                return lista_retorno;
+                return listaRetorno;
               }
             } else {
-              lista_retorno.add("conclusao");
-              lista_retorno.add(false);
+              listaRetorno.add("conclusao");
+              listaRetorno.add(false);
 
-              return lista_retorno;
+              return listaRetorno;
             }
           } else {
-            lista_retorno.add("repeticao");
-            lista_retorno.add(false);
+            listaRetorno.add("repeticao");
+            listaRetorno.add(false);
 
-            return lista_retorno;
+            return listaRetorno;
           }
           break;
         // Fim sub-árvore SIMPLES
@@ -51,42 +51,42 @@ class Tree {
         case "composta":
           if (tarefa["repeticao"] > 0) {
             if (tarefa["porcentagem"]) {
-              if (tarefa["conclusao_grupo"]) {
-                if (tarefa["data_grupo"]) {
-                  if (tarefa["data_repetica"]) {
-                    lista_retorno.add("SUGERIR COM A DATA QUE SE REPETE");
-                    lista_retorno.add(true);
+              if (tarefa["conclusaoGrupo"]) {
+                if (tarefa["dataGrupo"]) {
+                  if (tarefa["dataRepetida"]) {
+                    listaRetorno.add("SUGERIR COM A DATA QUE SE REPETE");
+                    listaRetorno.add(true);
 
-                    return lista_retorno;
+                    return listaRetorno;
                   } else {
-                    lista_retorno.add("SUGERIR COM A ÚLTIMA DATA");
-                    lista_retorno.add(true);
+                    listaRetorno.add("SUGERIR COM A ÚLTIMA DATA");
+                    listaRetorno.add(true);
 
-                    return lista_retorno;
+                    return listaRetorno;
                   }
                 } else {
-                  lista_retorno.add("SUGERIR SEM DATA");
-                  lista_retorno.add(true);
+                  listaRetorno.add("SUGERIR SEM DATA");
+                  listaRetorno.add(true);
 
-                  return lista_retorno;
+                  return listaRetorno;
                 }
               } else {
-                lista_retorno.add("conclusao grupo");
-                lista_retorno.add(false);
+                listaRetorno.add("conclusao grupo");
+                listaRetorno.add(false);
 
-                return lista_retorno;
+                return listaRetorno;
               }
             } else {
-              lista_retorno.add("tarefa grupo");
-              lista_retorno.add(false);
+              listaRetorno.add("tarefa grupo");
+              listaRetorno.add(false);
 
-              return lista_retorno;
+              return listaRetorno;
             }
           } else {
-            lista_retorno.add("repetição grupo");
-            lista_retorno.add(false);
+            listaRetorno.add("repetição grupo");
+            listaRetorno.add(false);
 
-            return lista_retorno;
+            return listaRetorno;
           }
         // Fim sub-árvore COMPOSTA
       }
@@ -103,25 +103,25 @@ class Tratamentos {
   String data;
   dynamic toDoList;
 
-  String formatar_titulo() {
-    String tarefa_tratada = tarefa.toUpperCase().trim();
-    List<String> aux = tarefa_tratada.split("");
+  String formatarTitulo() {
+    String tarefaTratada = tarefa.toUpperCase().trim();
+    List<String> aux = tarefaTratada.split("");
 
-    tarefa_tratada = "";
+    tarefaTratada = "";
     for (int i = 0; i < aux.length; i++) {
-      tarefa_tratada += aux[i].contains(RegExp(r'[A-Z]')) ? aux[i] : "";
+      tarefaTratada += aux[i].contains(RegExp(r'[A-Z]')) ? aux[i] : "";
     }
 
-    return tarefa_tratada;
+    return tarefaTratada;
   }
 
-  int repeticao_tarefa() {
+  int repeticaoTarefa() {
     int repeticoes = 0;
-    String title = formatar_titulo();
+    String title = formatarTitulo();
 
     for (int i = 0; i < toDoList.length; i++) {
       repeticoes += toDoList[i]["tipo"] == "simples" &&
-              toDoList[i]["title_formatado"] == title
+              toDoList[i]["titleFormatado"] == title
           ? 1
           : 0;
     }
@@ -131,10 +131,10 @@ class Tratamentos {
 
   int conclusao() {
     int conclusoes = 0;
-    String title = formatar_titulo();
+    String title = formatarTitulo();
 
     for (int i = 0; i < toDoList.length; i++) {
-      conclusoes += toDoList[i]["title_formatado"] == title
+      conclusoes += toDoList[i]["titleFormatado"] == title
           ? toDoList[i]["conclusao"]
           : 0;
     }
@@ -142,13 +142,13 @@ class Tratamentos {
     return conclusoes;
   }
 
-  int data_repeticao() {
+  int dataRepetidao() {
     int datas = 0;
-    String title = formatar_titulo();
+    String title = formatarTitulo();
 
     for (int i = 0; i < toDoList.length; i++) {
-      datas += toDoList[i]["title_formatado"] == title
-          ? toDoList[i]["data_form"] != null && toDoList[i]["data_form"] == data
+      datas += toDoList[i]["titleFormatado"] == title
+          ? toDoList[i]["dataForm"] != null && toDoList[i]["dataForm"] == data
               ? 1
               : 0
           : 0;
@@ -165,40 +165,40 @@ class Composta {
   dynamic toDoList;
   String tarefa;
 
-  String formatar_titulo() {
-    String tarefa_tratada = tarefa.toUpperCase().trim();
-    List<String> aux = tarefa_tratada.split("");
+  String formatarTitulo() {
+    String tarefaTratada = tarefa.toUpperCase().trim();
+    List<String> aux = tarefaTratada.split("");
 
-    tarefa_tratada = "";
+    tarefaTratada = "";
     for (int i = 0; i < aux.length; i++) {
-      tarefa_tratada += aux[i].contains(RegExp(r'[A-Z]')) ? aux[i] : "";
+      tarefaTratada += aux[i].contains(RegExp(r'[A-Z]')) ? aux[i] : "";
     }
 
-    return tarefa_tratada;
+    return tarefaTratada;
   }
 
-  String formatar_sub_titulo(sub_tituro) {
-    String sub_tituro_tartado = sub_tituro.toUpperCase().trim();
-    List<String> aux = sub_tituro_tartado.split("");
+  String formatarSubTitulo(subTituro) {
+    String subTituroTartado = subTituro.toUpperCase().trim();
+    List<String> aux = subTituroTartado.split("");
 
     for (int i = 0; i < aux.length; i++) {
-      sub_tituro_tartado = "";
+      subTituroTartado = "";
       for (int i = 0; i < aux.length; i++) {
-        sub_tituro_tartado += aux[i].contains(RegExp(r'[A-Z]')) ? aux[i] : "";
+        subTituroTartado += aux[i].contains(RegExp(r'[A-Z]')) ? aux[i] : "";
       }
     }
 
-    return sub_tituro_tartado;
+    return subTituroTartado;
   }
 
-  int repeticao_titulo_tarefa() {
+  int repeticaoTituloTarefa() {
     int repete = 0;
     if (toDoList.length > 0) {
       for (int i = 0; i < toDoList.length; i++) {
-        if (toDoList[i]["title_formatado"] == "") {
+        if (toDoList[i]["titleFormatado"] == "") {
           continue;
         } else {
-          repete += toDoList[i]["title_formatado"] == newToDo["title_formatado"]
+          repete += toDoList[i]["titleFormatado"] == newToDo["titleFormatado"]
               ? toDoList[i]["tipo"] == "composta" ? 1 : 0
               : 0;
         }
@@ -208,9 +208,9 @@ class Composta {
     return repete;
   }
 
-  List repeticao_sub_tarefa() {
+  List repeticaoSubTarefa() {
     int todo = toDoList.length;
-    int size_todo = newToDo["details"].length;
+    int sizeTodo = newToDo["details"].length;
     List outras = [];
 
     if (todo > 0) {
@@ -219,23 +219,23 @@ class Composta {
           for (int j = 0; j < todo; j++) {
             if (toDoList[j]["tipo"] != "simples") {
               if (toDoList[j]["details"] != null) {
-                int todo_details = toDoList[j]["details"].length;
+                int todoDetails = toDoList[j]["details"].length;
 
-                for (int k = 0; k < todo_details; k++) {
-                  for (int a = 0; a < size_todo; a++) {
+                for (int k = 0; k < todoDetails; k++) {
+                  for (int a = 0; a < sizeTodo; a++) {
                     newToDo["details"]["$a"]
-                        ["title_formatado"] = newToDo["details"]["$a"]
+                        ["titleFormatado"] = newToDo["details"]["$a"]
                                 ["title"] !=
                             null
-                        ? formatar_sub_titulo(newToDo["details"]["$a"]["title"])
+                        ? formatarSubTitulo(newToDo["details"]["$a"]["title"])
                         : "";
 
                     if (toDoList[j]["tipo"] == "composta") {
                       if (toDoList[j]["title"] == newToDo["title"]) {
-                        if (toDoList[j]["details"]["$k"]["title_formatado"] !=
+                        if (toDoList[j]["details"]["$k"]["titleFormatado"] !=
                             null) {
-                          if (toDoList[j]["details"]["$k"]["title_formatado"] ==
-                              newToDo["details"]["$a"]["title_formatado"]) {
+                          if (toDoList[j]["details"]["$k"]["titleFormatado"] ==
+                              newToDo["details"]["$a"]["titleFormatado"]) {
                             newToDo["details"]["$a"]["repeticao"] += 1;
                           } else {
                             newToDo["details"]["$a"]["repeticao"] += 0;
@@ -276,15 +276,15 @@ class Composta {
   }
 
   bool conclusao() {
-    int repete_conclusao = 0;
+    int repeteConclusao = 0;
     if (toDoList.length > 0) {
       for (int i = 0; i < newToDo["details"].length; i++) {
         for (int j = 0; j < toDoList.length; j++) {
           if (toDoList[j]["tipo"] == "composta") {
             for (int k = 0; k < toDoList[j]["details"].length; k++) {
-              if (toDoList[j]["details"]["$k"]["title_formatado"] ==
-                  newToDo["details"]["$i"]["title_formatado"]) {
-                repete_conclusao +=
+              if (toDoList[j]["details"]["$k"]["titleFormatado"] ==
+                  newToDo["details"]["$i"]["titleFormatado"]) {
+                repeteConclusao +=
                     toDoList[j]["details"]["$k"]["conclusao"] != 0 ? 1 : 0;
               }
             }
@@ -293,12 +293,12 @@ class Composta {
       }
     }
 
-    return newToDo["details"].length * 0.7 <= repete_conclusao;
+    return newToDo["details"].length * 0.7 <= repeteConclusao;
   }
 
-  bool data_grupo() {
+  bool dataGrupo() {
     for (int i = 0; i < newToDo["details"].length; i++) {
-      if (newToDo["details"]["$i"]["data_form"] != null) {
+      if (newToDo["details"]["$i"]["dataForm"] != null) {
         return true;
       }
     }
@@ -306,16 +306,16 @@ class Composta {
     return false;
   }
 
-  dynamic data_repetica() {
+  dynamic dataRepetida() {
     if (toDoList.length > 0) {
       for (int i = 0; i < newToDo["details"].length; i++) {
         for (int j = 0; j < toDoList.length; j++) {
           if (toDoList[j]["tipo"] == "composta") {
             for (int k = 0; k < toDoList[j]["details"].length; k++) {
               if (toDoList[j]["details"]["$k"]["title"] ==
-                  newToDo["details"]["$i"]["title_formatado"]) {
-                if (toDoList[j]["details"]["$k"]["data_form"] ==
-                    newToDo["details"]["$i"]["data_form"]) {
+                  newToDo["details"]["$i"]["titleFormatado"]) {
+                if (toDoList[j]["details"]["$k"]["dataForm"] ==
+                    newToDo["details"]["$i"]["dataForm"]) {
                   return true;
                 }
               }

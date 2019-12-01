@@ -3,37 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
 
 class GeneratioCards {
-  dynamic context_screen;
-  double screen_size;
-  String font_button;
+  dynamic contextScreen;
+  double screenSize;
+  String fontButton;
 
-  double screenSize() => screen_size = MediaQuery.of(context_screen).size.width;
-  String fontButtun() => font_button = 'orkney-bold';
+  double screen_Size() => screenSize = MediaQuery.of(contextScreen).size.width;
+  String font_Buttun() => fontButton = 'orkney-bold';
 
-  double get outScreenSize => screenSize();
-  String get outFontButton => fontButtun();
+  double get outScreen_Size => screen_Size();
+  String get outFontButton => font_Buttun();
 
-  GeneratioCards({@required this.context_screen});
+  GeneratioCards({@required this.contextScreen});
 }
 
 class TasksProp {
-  double screen_size;
-  dynamic context_screen;
+  double screenSize;
+  dynamic contextScreen;
 
-  double screenSize() => screen_size = MediaQuery.of(context_screen).size.width;
-  double get outScreenSize => screenSize();
-  TasksProp({@required this.context_screen});
+  double screen_Size() => screenSize = MediaQuery.of(contextScreen).size.width;
+  double get outScreen_Size => screen_Size();
+  TasksProp({@required this.contextScreen});
 }
 
 class Buttons {
-  List<Color> cor_button_concl = [Colors.blue[400], Colors.orange[400]];
-
   dynamic context;
   List toDoList = [];
   int index;
 
-  Color cor_concluir() =>
-      index % 2 != 0 ? cor_button_concl[0] : cor_button_concl[1];
+  Color corConcluir() =>
+      index % 2 != 0 ? Colors.blue[400] : Colors.orange[400];
 
   Buttons(
       {@required this.toDoList, @required this.index, @required this.context});
@@ -43,14 +41,14 @@ class Informacoes {
   dynamic saveDate;
   List toDoList = [];
   int index;
-  int index_sub;
+  int indexSub;
 
   // Títuto da tarefa.
   String get outTitle => toDoList[index]["title"];
 
   // Títuto da subtarefa.
   String titleSub() {
-    return toDoList[index]["details"]["$index_sub"]["title"].toString();
+    return toDoList[index]["details"]["$indexSub"]["title"].toString();
   }
 
   // Ícone esquerdo da subtarefa.
@@ -71,23 +69,23 @@ class Informacoes {
 
   // Valor (booleano) da subtarefa.
   bool boolSub() {
-    return toDoList[index]["details"]["$index_sub"]["bool"];
+    return toDoList[index]["details"]["$indexSub"]["bool"];
   }
 
   stateIconLead() {
-    int dt_invativacao = 0;
+    int dtInvativacao = 0;
     for (int i = 0; i < toDoList[index]["details"].length; i++) {
-      dt_invativacao +=
-          toDoList[index]["details"]["$i"]["dt_inativacao"] == null ? 0 : 1;
+      dtInvativacao +=
+          toDoList[index]["details"]["$i"]["dtInativacao"] == null ? 0 : 1;
     }
-    if (dt_invativacao == 0 || dt_invativacao == 1) {
-      toDoList[index]["details"]["$index_sub"]["bool"] = false;
-      toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
+    if (dtInvativacao == 0 || dtInvativacao == 1) {
+      toDoList[index]["details"]["$indexSub"]["bool"] = false;
+      toDoList[index]["details"]["$indexSub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
       toDoList[index]["conclusao"] = 0;
     } else {
-      toDoList[index]["details"]["$index_sub"]["bool"] = false;
-      toDoList[index]["details"]["$index_sub"]["conclusao"] = 0;
+      toDoList[index]["details"]["$indexSub"]["bool"] = false;
+      toDoList[index]["details"]["$indexSub"]["conclusao"] = 0;
       toDoList[index]["bool"] = false;
       toDoList[index]["conclusao"] = 0;
     }
@@ -95,82 +93,86 @@ class Informacoes {
   }
 
   stateIconTrai() {
-    int dt_invativacao = 0;
+    int dtInvativacao = 0;
     for (int i = 0; i < toDoList[index]["details"].length; i++) {
-      dt_invativacao +=
-          toDoList[index]["details"]["$i"]["dt_inativacao"] == null ? 0 : 1;
+      dtInvativacao +=
+          toDoList[index]["details"]["$i"]["dtInativacao"] == null ? 0 : 1;
     }
-    if (dt_invativacao == 0 || dt_invativacao == 1) {
-      toDoList[index]["details"]["$index_sub"]["bool"] = true;
-      toDoList[index]["details"]["$index_sub"]["conclusao"] = 1;
+    if (dtInvativacao == 0 || dtInvativacao == 1) {
+      toDoList[index]["details"]["$indexSub"]["bool"] = true;
+      toDoList[index]["details"]["$indexSub"]["conclusao"] = 1;
       toDoList[index]["bool"] = true;
       toDoList[index]["conclusao"] = 1;
     } else {
-      toDoList[index]["details"]["$index_sub"]["bool"] = true;
+      toDoList[index]["details"]["$indexSub"]["bool"] = true;
     }
     return toDoList;
   }
 
-  Informacoes({@required this.toDoList, @required this.index, this.index_sub});
+  Informacoes({@required this.toDoList, @required this.index, this.indexSub});
 }
 
 class DataHora {
-  dynamic context;
-  dynamic picked;
-  String title;
-  bool boolen;
   int index;
-
-  String tipo;
-  bool agendada;
-  String dt_inativacao;
+  int idChanel;
   int conclusao;
   int repeticao;
-  int data_repeticao;
-  String title_formatado;
-  String data_agenda;
-  List dias_agendados;
-  int id_chanel;
+  int dataRepetidao;
+  
+  bool boolen;
+  bool agendada;
+  
+  List diasAgendados;
+  
+  String tipo;
+  String title;
+  String dataAgenda;
+  String dtInativacao;
+  String titleFormatado;
+  
+  dynamic picked;
+  dynamic context;
+
 
   calendario() {
     if (picked != null) {
       Map<String, dynamic> content = Map();
 
-      String data_no_form;
-      String data_form;
+      String dataNoForm;
+      String dataForm;
 
       int day;
       int mot;
       int yea;
 
-      data_no_form =
+      dataNoForm =
           picked.toString().split(" ").removeAt(0).replaceAll("-", "/");
-      yea = int.parse(data_no_form.split("/").toList()[0].toString());
-      mot = int.parse(data_no_form.split("/").toList()[1].toString());
-      day = int.parse(data_no_form.split("/").toList()[2].toString());
+      yea = int.parse(dataNoForm.split("/").toList()[0].toString());
+      mot = int.parse(dataNoForm.split("/").toList()[1].toString());
+      day = int.parse(dataNoForm.split("/").toList()[2].toString());
 
-      data_form = formatDate(DateTime(yea, mot, day), [D, ', ', d, ' ', M]);
+      dataForm = formatDate(DateTime(yea, mot, day), [D, ', ', d, ' ', M]);
 
       for (int i = 0; i < 12; i++) {
-        data_form = data_form.replaceAll("Feb", "Fev");
-        data_form = data_form.replaceAll("Apr", "Abr");
-        data_form = data_form.replaceAll("May", "Mai");
-        data_form = data_form.replaceAll("Aug", "Ago");
-        data_form = data_form.replaceAll("Sep", "Set");
-        data_form = data_form.replaceAll("Oct", "Out");
-        data_form = data_form.replaceAll("Dec", "Dez");
+        dataForm = dataForm.replaceAll("Feb", "Fev");
+        dataForm = dataForm.replaceAll("Apr", "Abr");
+        dataForm = dataForm.replaceAll("May", "Mai");
+        dataForm = dataForm.replaceAll("Aug", "Ago");
+        dataForm = dataForm.replaceAll("Sep", "Set");
+        dataForm = dataForm.replaceAll("Oct", "Out");
+        dataForm = dataForm.replaceAll("Dec", "Dez");
 
-        data_form = data_form.replaceAll("Sun", "Dom");
-        data_form = data_form.replaceAll("Mon", "Seg");
-        data_form = data_form.replaceAll("Tue", "Ter");
-        data_form = data_form.replaceAll("Wed", "Qua");
-        data_form = data_form.replaceAll("Thur", "Qui");
-        data_form = data_form.replaceAll("Fri", "Sex");
-        data_form = data_form.replaceAll("Sat", "Sáb");
+        dataForm = dataForm.replaceAll("Sun", "Dom");
+        dataForm = dataForm.replaceAll("Mon", "Seg");
+        dataForm = dataForm.replaceAll("Tue", "Ter");
+        dataForm = dataForm.replaceAll("Wed", "Qua");
+        dataForm = dataForm.replaceAll("Thur", "Qui");
+        dataForm = dataForm.replaceAll("Fri", "Sex");
+        dataForm = dataForm.replaceAll("Sat", "Sáb");
       }
 
       content["hora"] = null;
-      content["data_form"] = data_form;
+      content["dataForm"] = dataForm;
 
       content["dia"] = day;
       content["mes"] = mot;
@@ -182,15 +184,15 @@ class DataHora {
 
         content["tipo"] = tipo;
         content["agendada"] = agendada;
-        content["dt_inativacao"] = dt_inativacao;
+        content["dtInativacao"] = dtInativacao;
 
         content["conclusao"] = conclusao;
         content["repeticao"] = repeticao;
-        content["data_repeticao"] = data_repeticao;
-        content["title_formatado"] = title_formatado;
-        content["data_agenda"] = data_agenda;
-        content["dias_agendados"] = dias_agendados;
-        content["id_chanel"] = id_chanel;
+        content["dataRepetidao"] = dataRepetidao;
+        content["titleFormatado"] = titleFormatado;
+        content["dataAgenda"] = dataAgenda;
+        content["diasAgendados"] = diasAgendados;
+        content["idChanel"] = idChanel;
       }
 
       return content;
@@ -198,7 +200,7 @@ class DataHora {
       Map<String, dynamic> content = Map();
 
       content["hora"] = null;
-      content["data_form"] = null;
+      content["dataForm"] = null;
 
       if (title != null && boolen != null) {
         content["title"] = title;
@@ -206,15 +208,15 @@ class DataHora {
 
         content["tipo"] = tipo;
         content["agendada"] = agendada;
-        content["dt_inativacao"] = dt_inativacao;
+        content["dtInativacao"] = dtInativacao;
 
         content["conclusao"] = conclusao;
         content["repeticao"] = repeticao;
-        content["data_repeticao"] = data_repeticao;
-        content["title_formatado"] = title_formatado;
-        content["data_agenda"] = data_agenda;
-        content["dias_agendados"] = dias_agendados;
-        content["id_chanel"] = id_chanel;
+        content["dataRepetidao"] = dataRepetidao;
+        content["titleFormatado"] = titleFormatado;
+        content["dataAgenda"] = dataAgenda;
+        content["diasAgendados"] = diasAgendados;
+        content["idChanel"] = idChanel;
       }
 
       return content;
@@ -236,15 +238,15 @@ class DataHora {
       this.boolen,
       this.title,
       this.conclusao,
-      this.data_repeticao,
-      this.dt_inativacao,
+      this.dataRepetidao,
+      this.dtInativacao,
       this.agendada,
       this.repeticao,
       this.tipo,
-      this.title_formatado,
-      this.data_agenda,
-      this.dias_agendados,
-      this.id_chanel});
+      this.titleFormatado,
+      this.dataAgenda,
+      this.diasAgendados,
+      this.idChanel});
 }
 
 class AgendarData {
@@ -252,44 +254,44 @@ class AgendarData {
   dynamic context;
   bool tipo;
 
-  String data_agendamento() {
+  String dataAgendamento() {
     if (picked != null) {
       Map<String, dynamic> content = Map();
 
-      String data_no_form;
-      String data_form;
+      String dataNoForm;
+      String dataForm;
 
       int day;
       int mot;
       int yea;
 
-      data_no_form =
+      dataNoForm =
           picked.toString().split(" ").removeAt(0).replaceAll("-", "/");
-      yea = int.parse(data_no_form.split("/").toList()[0].toString());
-      mot = int.parse(data_no_form.split("/").toList()[1].toString());
-      day = int.parse(data_no_form.split("/").toList()[2].toString());
+      yea = int.parse(dataNoForm.split("/").toList()[0].toString());
+      mot = int.parse(dataNoForm.split("/").toList()[1].toString());
+      day = int.parse(dataNoForm.split("/").toList()[2].toString());
 
-      data_form = formatDate(DateTime(yea, mot, day), [D, ', ', d, ' ', M]);
+      dataForm = formatDate(DateTime(yea, mot, day), [D, ', ', d, ' ', M]);
 
       for (int i = 0; i < 12; i++) {
-        data_form = data_form.replaceAll("Feb", "Fev");
-        data_form = data_form.replaceAll("Apr", "Abr");
-        data_form = data_form.replaceAll("May", "Mai");
-        data_form = data_form.replaceAll("Aug", "Ago");
-        data_form = data_form.replaceAll("Sep", "Set");
-        data_form = data_form.replaceAll("Oct", "Out");
-        data_form = data_form.replaceAll("Dec", "Dez");
+        dataForm = dataForm.replaceAll("Feb", "Fev");
+        dataForm = dataForm.replaceAll("Apr", "Abr");
+        dataForm = dataForm.replaceAll("May", "Mai");
+        dataForm = dataForm.replaceAll("Aug", "Ago");
+        dataForm = dataForm.replaceAll("Sep", "Set");
+        dataForm = dataForm.replaceAll("Oct", "Out");
+        dataForm = dataForm.replaceAll("Dec", "Dez");
 
-        data_form = data_form.replaceAll("Sun", "Dom");
-        data_form = data_form.replaceAll("Mon", "Seg");
-        data_form = data_form.replaceAll("Tue", "Ter");
-        data_form = data_form.replaceAll("Wed", "Qua");
-        data_form = data_form.replaceAll("Thur", "Qui");
-        data_form = data_form.replaceAll("Fri", "Sex");
-        data_form = data_form.replaceAll("Sat", "Sáb");
+        dataForm = dataForm.replaceAll("Sun", "Dom");
+        dataForm = dataForm.replaceAll("Mon", "Seg");
+        dataForm = dataForm.replaceAll("Tue", "Ter");
+        dataForm = dataForm.replaceAll("Wed", "Qua");
+        dataForm = dataForm.replaceAll("Thur", "Qui");
+        dataForm = dataForm.replaceAll("Fri", "Sex");
+        dataForm = dataForm.replaceAll("Sat", "Sáb");
       }
 
-      return "Repetir até: " + data_form + ".";
+      return "Repetir até: " + dataForm + ".";
     }
     return "Definir data final desta tarefa.";
   }

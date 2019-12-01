@@ -19,8 +19,8 @@ class CardContentUnica extends StatefulWidget {
       {Key key,
       this.valor,
       this.texto,
-      this.size_screen,
-      this.font_button,
+      this.sizeScreen,
+      this.fontButton,
       this.corConcluir,
       this.index})
       : super(key: key);
@@ -28,8 +28,8 @@ class CardContentUnica extends StatefulWidget {
   int index;
   final int valor;
   final List texto;
-  final double size_screen;
-  dynamic font_button;
+  final double sizeScreen;
+  dynamic fontButton;
   Color corConcluir;
 
   _CardContentUnicaState createState() => _CardContentUnicaState();
@@ -38,10 +38,10 @@ class CardContentUnica extends StatefulWidget {
 class _CardContentUnicaState extends State<CardContentUnica> {
   int index;
   List toDoList;
-  double size_screen;
-  dynamic font_button;
+  double sizeScreen;
+  dynamic fontButton;
   Color corConcluir;
-  Map<String, dynamic> list_data = Map();
+  Map<String, dynamic> listData = Map();
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +56,8 @@ class _CardContentUnicaState extends State<CardContentUnica> {
     setState(() {
       index = widget.index;
       corConcluir = widget.corConcluir;
-      font_button = widget.font_button;
-      size_screen = widget.size_screen;
+      fontButton = widget.fontButton;
+      sizeScreen = widget.sizeScreen;
       toDoList = toDoList = widget.texto;
     });
 
@@ -71,8 +71,8 @@ class _CardContentUnicaState extends State<CardContentUnica> {
     return Padding(
       padding: EdgeInsets.only(
           top: toDoList[widget.valor] != null
-              ? toDoList[widget.valor]["data_form"] != null
-                  ? size_screen * 0.01
+              ? toDoList[widget.valor]["dataForm"] != null
+                  ? sizeScreen * 0.01
                   : 0
               : 0),
       child: ExpandablePanel(
@@ -89,17 +89,17 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                     InkWell(
                       child: Container(
                         padding: EdgeInsets.only(
-                          top: size_screen * 0.015,
-                          right: size_screen * 0.015,
-                          bottom: size_screen * 0.015,
+                          top: sizeScreen * 0.015,
+                          right: sizeScreen * 0.015,
+                          bottom: sizeScreen * 0.015,
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
-                              Radius.circular(size_screen * 0.02)),
+                              Radius.circular(sizeScreen * 0.02)),
                         ),
-                        child: toDoList[widget.valor]["data_form"] == null
+                        child: toDoList[widget.valor]["dataForm"] == null
                             ? Text("Data e hora")
-                            : Text(toDoList[widget.valor]["data_form"] + ","),
+                            : Text(toDoList[widget.valor]["dataForm"] + ","),
                       ),
                       onTap: () async {
                         List<String> backup = [];
@@ -111,7 +111,7 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                           initialDate: new DateTime.now(),
                         );
 
-                        backup.add(toDoList[widget.valor]["data_form"]);
+                        backup.add(toDoList[widget.valor]["dataForm"]);
                         backup.add(toDoList[widget.valor]["hora"]);
                         backup.add(toDoList[widget.valor]["dia"]);
                         backup.add(toDoList[widget.valor]["mes"]);
@@ -124,30 +124,30 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                             boolen: toDoList[widget.valor]["bool"],
                             tipo: toDoList[widget.valor]["tipo"],
                             agendada: toDoList[widget.valor]["agendada"],
-                            dt_inativacao: toDoList[widget.valor]
-                                ["dt_inativacao"],
+                            dtInativacao: toDoList[widget.valor]
+                                ["dtInativacao"],
                             repeticao: toDoList[widget.valor]["repeticao"],
                             conclusao: toDoList[widget.valor]["conclusao"],
-                            title_formatado: toDoList[widget.valor]
-                                ["title_formatado"],
-                            data_repeticao: toDoList[widget.valor]
-                                ["data_repeticao"],
-                            data_agenda: toDoList[widget.valor]["data_agenda"],
-                            dias_agendados: toDoList[widget.valor]
-                                ["dias_agendados"],
-                            id_chanel: toDoList[widget.valor]["id_chanel"],
+                            titleFormatado: toDoList[widget.valor]
+                                ["titleFormatado"],
+                            dataRepetidao: toDoList[widget.valor]
+                                ["dataRepetidao"],
+                            dataAgenda: toDoList[widget.valor]["dataAgenda"],
+                            diasAgendados: toDoList[widget.valor]
+                                ["diasAgendados"],
+                            idChanel: toDoList[widget.valor]["idChanel"],
                           );
                           toDoList[widget.valor] = dataHora.calendario();
 
                             if (backup[0] !=
-                                toDoList[widget.valor]["data_form"]) {
+                                toDoList[widget.valor]["dataForm"]) {
                               Notificacao notificacao = Notificacao(
                                   tarefa: toDoList[widget.valor],
                                   notifications: notifications,
-                                  id_chanel: toDoList[widget.valor]
-                                      ["id_chanel"],
+                                  idChanel: toDoList[widget.valor]
+                                      ["idChanel"],
                                   agendadas: toDoList[widget.valor]["agendada"]
-                                      ? toDoList[widget.valor]["dias_agendados"]
+                                      ? toDoList[widget.valor]["diasAgendados"]
                                       : [false]);
 
                               notificacao.filtro();
@@ -158,12 +158,12 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                     InkWell(
                       child: Container(
                         padding: EdgeInsets.only(
-                          top: size_screen * 0.015,
-                          right: size_screen * 0.015,
-                          bottom: size_screen * 0.015,
+                          top: sizeScreen * 0.015,
+                          right: sizeScreen * 0.015,
+                          bottom: sizeScreen * 0.015,
                         ),
                         child: toDoList[widget.valor] != null
-                            ? toDoList[widget.valor]["data_form"] != null
+                            ? toDoList[widget.valor]["dataForm"] != null
                                 ? toDoList[widget.valor]["hora"] == null
                                     ? Text("hora")
                                     : Text(toDoList[widget.valor]["hora"]
@@ -191,9 +191,9 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                           Notificacao notificacao = Notificacao(
                               tarefa: toDoList[widget.valor],
                               notifications: notifications,
-                              id_chanel: toDoList[widget.valor]["id_chanel"],
+                              idChanel: toDoList[widget.valor]["idChanel"],
                               agendadas: toDoList[widget.valor]["agendada"]
-                                  ? toDoList[widget.valor]["dias_agendados"]
+                                  ? toDoList[widget.valor]["diasAgendados"]
                                   : [false]);
 
                           notificacao.filtro();
@@ -202,13 +202,13 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                         });
                       },
                     ),
-                    toDoList[widget.valor]["data_form"] != null
+                    toDoList[widget.valor]["dataForm"] != null
                         ? InkWell(
                             child: Container(
                               padding: EdgeInsets.only(
-                                top: size_screen * 0.015,
-                                right: size_screen * 0.015,
-                                bottom: size_screen * 0.015,
+                                top: sizeScreen * 0.015,
+                                right: sizeScreen * 0.015,
+                                bottom: sizeScreen * 0.015,
                               ),
                               child: Icon(
                                 Icons.close,
@@ -218,17 +218,17 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                             onTap: () {
                               setState(() {
                                 toDoList[widget.valor]["hora"] = null;
-                                toDoList[widget.valor]["data_form"] = null;
+                                toDoList[widget.valor]["dataForm"] = null;
 
                                 Notificacao notificacao = Notificacao(
                                     tarefa: toDoList[widget.valor],
                                     notifications: notifications,
-                                    id_chanel: toDoList[widget.valor]
-                                        ["id_chanel"],
+                                    idChanel: toDoList[widget.valor]
+                                        ["idChanel"],
                                     agendadas: toDoList[widget.valor]
                                             ["agendada"]
                                         ? toDoList[widget.valor]
-                                            ["dias_agendados"]
+                                            ["diasAgendados"]
                                         : [false]);
 
                                 notificacao.filtro();
@@ -241,7 +241,7 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                   ],
                 ),
                 onTap: () {
-                  modal(context, index, size_screen);
+                  modal(context, index, sizeScreen);
                 },
               ),
             ),
@@ -281,13 +281,13 @@ class _CardContentUnicaState extends State<CardContentUnica> {
     );
   }
 
-  modal(context, index, size_screen) {
-    TextEditingController controller_text =
+  modal(context, index, sizeScreen) {
+    TextEditingController controllerText =
         TextEditingController(text: toDoList[index]["title"]);
 
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(size_screen * 0.04),
+          borderRadius: BorderRadius.circular(sizeScreen * 0.04),
         ),
         context: context,
         builder: (BuildContext context) {
@@ -298,17 +298,17 @@ class _CardContentUnicaState extends State<CardContentUnica> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Divider(
-                  height: size_screen * 0.05,
+                  height: sizeScreen * 0.05,
                   color: Colors.transparent,
                 ),
                 Text(
                   "Editor de Título",
                   style: TextStyle(
-                    fontSize: size_screen * 0.04,
+                    fontSize: sizeScreen * 0.04,
                   ),
                 ),
                 Divider(
-                  height: size_screen * 0.05,
+                  height: sizeScreen * 0.05,
                   color: Colors.transparent,
                 ),
                 Row(
@@ -318,17 +318,17 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.blue, width: size_screen * 0.0008),
+                            color: Colors.blue, width: sizeScreen * 0.0008),
                         borderRadius: BorderRadius.all(
-                            Radius.circular(size_screen * 0.02)),
+                            Radius.circular(sizeScreen * 0.02)),
                       ),
-                      width: size_screen * 0.65,
+                      width: sizeScreen * 0.65,
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: size_screen * 0.015,
-                            right: size_screen * 0.015),
+                            left: sizeScreen * 0.015,
+                            right: sizeScreen * 0.015),
                         child: TextField(
-                          controller: controller_text,
+                          controller: controllerText,
                           decoration: InputDecoration(
                             hintText: "Título",
                             border: InputBorder.none,
@@ -341,18 +341,18 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                       elevation: 0,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(size_screen * 0.02),
+                        borderRadius: BorderRadius.circular(sizeScreen * 0.02),
                       ),
                       child: InkWell(
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: Colors.blue,
-                                width: size_screen * 0.0008),
+                                width: sizeScreen * 0.0008),
                             borderRadius: BorderRadius.all(
-                                Radius.circular(size_screen * 0.02)),
+                                Radius.circular(sizeScreen * 0.02)),
                           ),
-                          padding: EdgeInsets.all(size_screen * 0.03),
+                          padding: EdgeInsets.all(sizeScreen * 0.03),
                           child: Text(
                             "Salvar",
                             style: TextStyle(color: Colors.white),
@@ -360,8 +360,8 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                         ),
                         onTap: () {
                           setState(() {
-                            if (controller_text.text.trim().isNotEmpty) {
-                              toDoList[index]["title"] = controller_text.text;
+                            if (controllerText.text.trim().isNotEmpty) {
+                              toDoList[index]["title"] = controllerText.text;
                               saveData();
                               Navigator.pop(context);
                             }
@@ -372,7 +372,7 @@ class _CardContentUnicaState extends State<CardContentUnica> {
                   ],
                 ),
                 Divider(
-                  height: size_screen * 0.05,
+                  height: sizeScreen * 0.05,
                   color: Colors.transparent,
                 ),
               ],

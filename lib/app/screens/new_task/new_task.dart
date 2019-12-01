@@ -8,28 +8,26 @@ import 'package:personal_flow/app/shared/tasks_functions.dart';
 import 'package:personal_flow/app/shared/notifications_helper.dart';
 
 // Variáveis gerais.
-Color cor_tarefa = Colors.grey;
+Color corTarefa = Colors.grey;
 
-bool tipo_tarefa = true;
-bool acao_dialog = false;
-bool check_titulo = false;
-bool agendar_unica = false;
+bool tipoTarefa = true;
+bool acaoDialog = false;
+bool agendarUnica = false;
 
-String agenda_unica = "Definir data final desta tarefa.";
-String data_agendada;
-String tipo_tarefa_drop = "Tipo de tarefa";
-String info_tipo_tarefa = "Escolha um tipo de tarefa que deseja criar.";
-String data_agenda_dialog = "";
+String agendaUnica = "Definir data final desta tarefa.";
+String dataAgendada;
+String tipoTarefaDrop = "Tipo de tarefa";
+String infoTipoTarefa = "Escolha um tipo de tarefa que deseja criar.";
+String dataAgendaDialog = "";
 
 dynamic toDoList;
 dynamic notifications;
-dynamic tarefa_dialog;
-dynamic toDoList_dialog;
+dynamic toDoListDialog;
 
 List<bool> valor = [];
-List<bool> outras_check = [];
-List<bool> agendar_valor = [false, false, false, false, false, false, false];
-List<bool> dias_agendados = [false, false, false, false, false, false, false];
+List<bool> outrasCheck = [];
+List<bool> agendarValor = [false, false, false, false, false, false, false];
+List<bool> diasAgendados = [false, false, false, false, false, false, false];
 
 class NewTask extends StatefulWidget {
   NewTask({
@@ -44,23 +42,23 @@ class NewTask extends StatefulWidget {
 }
 
 class _NewTaskState extends State<NewTask> {
-  Map<String, dynamic> data_list = Map();
-  Map<String, dynamic> data_unica = Map();
+  Map<String, dynamic> dataList = Map();
+  Map<String, dynamic> dataUnica = Map();
 
-  TextEditingController controller_titulo = TextEditingController();
-  List<TextEditingController> controller_sub = [TextEditingController()];
-  TextEditingController controller_unica = TextEditingController();
+  TextEditingController controllerTitulo = TextEditingController();
+  List<TextEditingController> controllerSub = [TextEditingController()];
+  TextEditingController controllerUnica = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     List toDoList = widget.toDoList;
-    TasksProp tasksProp = TasksProp(context_screen: context);
-    double size_screen = tasksProp.outScreenSize;
+    TasksProp tasksProp = TasksProp(contextScreen: context);
+    double sizeScreen = tasksProp.outScreen_Size;
 
     setState(() {
       toDoList = widget.toDoList;
       notifications = widget.notifications;
-      toDoList_dialog = widget.toDoList;
+      toDoListDialog = widget.toDoList;
     });
 
     return Scaffold(
@@ -78,11 +76,11 @@ class _NewTaskState extends State<NewTask> {
       ),
       body: Column(
         children: <Widget>[
-          buildDropDown(size_screen),
-          Agendar(size_screen: size_screen),
-          tipo_tarefa
-              ? Expanded(child: buildTarefaComposta(context, size_screen))
-              : Expanded(child: buildTarefaUnica(context, size_screen)),
+          buildDropDown(sizeScreen),
+          Agendar(sizeScreen: sizeScreen),
+          tipoTarefa
+              ? Expanded(child: buildTarefaComposta(context, sizeScreen))
+              : Expanded(child: buildTarefaUnica(context, sizeScreen)),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -90,12 +88,12 @@ class _NewTaskState extends State<NewTask> {
         backgroundColor: Colors.white,
         onPressed: () {
           setState(() {
-            if (tipo_tarefa) {
+            if (tipoTarefa) {
               List retorno = addToDo();
 
               if (retorno[0]) {
                 if (retorno[2]) {
-                  dialog_composta(size_screen, context, retorno);
+                  dialogComposta(sizeScreen, context, retorno);
                 } else {
                   widget.toDoList.insert(0, retorno[3]);
                   Navigator.pop(context, widget.toDoList);
@@ -104,10 +102,10 @@ class _NewTaskState extends State<NewTask> {
                 Navigator.pop(context, null);
               }
             } else {
-              List retorno = addToDoUnica(context, size_screen);
+              List retorno = addToDoUnica(context, sizeScreen);
               if (retorno[0]) {
                 if (retorno[2]) {
-                  dialog_func(size_screen, context, retorno);
+                  dialogFunc(sizeScreen, context, retorno);
                 } else {
                   widget.toDoList.insert(0, retorno[3]);
                   Navigator.pop(context, widget.toDoList);
@@ -130,21 +128,21 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  Widget buildDropDown(size_screen) {
+  Widget buildDropDown(sizeScreen) {
     return Padding(
       padding: EdgeInsets.only(
-        top: size_screen * 0.01,
-        left: size_screen * 0.06,
-        right: size_screen * 0.06,
+        top: sizeScreen * 0.01,
+        left: sizeScreen * 0.06,
+        right: sizeScreen * 0.06,
       ),
       child: Container(
         padding: EdgeInsets.only(
-          top: size_screen * 0.02,
-          bottom: size_screen * 0.02,
+          top: sizeScreen * 0.02,
+          bottom: sizeScreen * 0.02,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
-          borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+          border: Border.all(color: Colors.blue, width: sizeScreen * 0.0008),
+          borderRadius: BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
         ),
         child: Column(
           children: <Widget>[
@@ -152,11 +150,11 @@ class _NewTaskState extends State<NewTask> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Container(
-                  width: size_screen * 0.35,
+                  width: sizeScreen * 0.35,
                   child: Center(
                     child: DropdownButton<String>(
                       elevation: 1,
-                      value: tipo_tarefa_drop,
+                      value: tipoTarefaDrop,
                       iconEnabledColor: Colors.blue,
                       iconDisabledColor: Colors.grey,
                       underline: Container(
@@ -176,23 +174,23 @@ class _NewTaskState extends State<NewTask> {
                       }).toList(),
                       onChanged: (String newValue) {
                         setState(() {
-                          tipo_tarefa_drop = newValue;
-                          tipo_tarefa = tipo_tarefa_drop == "Tipo de tarefa" ||
-                                  tipo_tarefa_drop == "Composta"
+                          tipoTarefaDrop = newValue;
+                          tipoTarefa = tipoTarefaDrop == "Tipo de tarefa" ||
+                                  tipoTarefaDrop == "Composta"
                               ? true
                               : false;
-                          info_tipo_tarefa = tipo_tarefa_drop ==
+                          infoTipoTarefa = tipoTarefaDrop ==
                                   "Tipo de tarefa"
                               ? "Escolha um tipo de tarefa que deseja criar."
-                              : tipo_tarefa_drop == "Simples"
+                              : tipoTarefaDrop == "Simples"
                                   ? "Você pode criar apenas uma tarefa."
                                   : "Grupo com várias subtarefas.";
 
-                          controller_unica = TextEditingController();
-                          controller_titulo = TextEditingController();
-                          controller_sub = [TextEditingController()];
-                          agenda_unica = "Definir data final desta tarefa.";
-                          dias_agendados = [
+                          controllerUnica = TextEditingController();
+                          controllerTitulo = TextEditingController();
+                          controllerSub = [TextEditingController()];
+                          agendaUnica = "Definir data final desta tarefa.";
+                          diasAgendados = [
                             false,
                             false,
                             false,
@@ -201,8 +199,8 @@ class _NewTaskState extends State<NewTask> {
                             false,
                             false
                           ];
-                          cor_tarefa = Colors.grey;
-                          agendar_unica = false;
+                          corTarefa = Colors.grey;
+                          agendarUnica = false;
                         });
                       },
                     ),
@@ -213,10 +211,10 @@ class _NewTaskState extends State<NewTask> {
                   style: TextStyle(color: Colors.blue),
                 ),
                 Container(
-                  width: size_screen * 0.4,
+                  width: sizeScreen * 0.4,
                   child: Center(
                     child: Text(
-                      info_tipo_tarefa,
+                      infoTipoTarefa,
                     ),
                   ),
                 ),
@@ -228,29 +226,29 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  Widget buildTarefaUnica(context, size_screen) {
+  Widget buildTarefaUnica(context, sizeScreen) {
     return Padding(
       padding: EdgeInsets.only(
-        left: size_screen * 0.06,
-        right: size_screen * 0.06,
+        left: sizeScreen * 0.06,
+        right: sizeScreen * 0.06,
       ),
       child: Column(
         children: <Widget>[
           Divider(
             color: Colors.transparent,
-            height: size_screen * 0.05,
+            height: sizeScreen * 0.05,
           ),
           Container(
-            padding: EdgeInsets.all(size_screen * 0.01),
+            padding: EdgeInsets.all(sizeScreen * 0.01),
             decoration: BoxDecoration(
               border:
-                  Border.all(color: Colors.blue, width: size_screen * 0.0008),
+                  Border.all(color: Colors.blue, width: sizeScreen * 0.0008),
               borderRadius:
-                  BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                  BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
             ),
             child: ListTile(
               title: TextField(
-                controller: controller_unica,
+                controller: controllerUnica,
                 decoration: InputDecoration(
                   hintText: "Tarefa",
                   hintStyle: TextStyle(color: Colors.grey),
@@ -259,7 +257,7 @@ class _NewTaskState extends State<NewTask> {
                 maxLines: 8,
                 minLines: 1,
               ),
-              subtitle: dataHoraUnica(context, size_screen),
+              subtitle: dataHoraUnica(context, sizeScreen),
             ),
           ),
         ],
@@ -267,25 +265,25 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  Widget buildTarefaComposta(context, size_screen) {
+  Widget buildTarefaComposta(context, sizeScreen) {
     return Column(
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(
-              top: size_screen * 0.02,
-              left: size_screen * 0.06,
-              right: size_screen * 0.06,
-              bottom: size_screen * 0.02),
+              top: sizeScreen * 0.02,
+              left: sizeScreen * 0.06,
+              right: sizeScreen * 0.06,
+              bottom: sizeScreen * 0.02),
           child: Container(
             decoration: BoxDecoration(
               border:
-                  Border.all(color: Colors.blue, width: size_screen * 0.0008),
+                  Border.all(color: Colors.blue, width: sizeScreen * 0.0008),
               borderRadius:
-                  BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                  BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
             ),
             child: ListTile(
               title: TextField(
-                controller: controller_titulo,
+                controller: controllerTitulo,
                 decoration: InputDecoration(
                   labelText: "Título",
                   border: InputBorder.none,
@@ -303,13 +301,13 @@ class _NewTaskState extends State<NewTask> {
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.only(
-                    left: size_screen * 0.06,
-                    right: size_screen * 0.06,
-                    bottom: size_screen * 0.3,
+                    left: sizeScreen * 0.06,
+                    right: sizeScreen * 0.06,
+                    bottom: sizeScreen * 0.3,
                   ),
-                  itemCount: controller_sub.length,
+                  itemCount: controllerSub.length,
                   itemBuilder: (BuildContext context, int index) =>
-                      buildDetailsBody(context, index, size_screen),
+                      buildDetailsBody(context, index, sizeScreen),
                 ),
               )
             ],
@@ -319,17 +317,17 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  Widget buildDetailsBody(context, index, size_screen) {
+  Widget buildDetailsBody(context, index, sizeScreen) {
     return Padding(
-      padding: EdgeInsets.only(bottom: size_screen * 0.02),
+      padding: EdgeInsets.only(bottom: sizeScreen * 0.02),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
-          borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+          border: Border.all(color: Colors.blue, width: sizeScreen * 0.0008),
+          borderRadius: BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
         ),
         child: ListTile(
           title: TextField(
-            controller: controller_sub[index],
+            controller: controllerSub[index],
             decoration: InputDecoration(
               hintText: "Tarefa",
               hintStyle: TextStyle(color: Colors.grey),
@@ -338,9 +336,9 @@ class _NewTaskState extends State<NewTask> {
             maxLines: 8,
             minLines: 1,
           ),
-          subtitle: dataHora(context, size_screen, index),
+          subtitle: dataHora(context, sizeScreen, index),
           trailing:
-              controller_sub[index] == controller_sub[controller_sub.length - 1]
+              controllerSub[index] == controllerSub[controllerSub.length - 1]
                   ? IconButton(
                       color: Colors.blue[600],
                       icon: Icon(
@@ -348,7 +346,7 @@ class _NewTaskState extends State<NewTask> {
                       ),
                       onPressed: () {
                         setState(() {
-                          controller_sub.add(TextEditingController());
+                          controllerSub.add(TextEditingController());
                         });
                       },
                     )
@@ -363,10 +361,10 @@ class _NewTaskState extends State<NewTask> {
                           Map<String, dynamic> toDo = Map();
                           Map<String, dynamic> toNovo = Map();
 
-                          controller_sub.removeAt(index);
-                          data_list["$index"] = null;
+                          controllerSub.removeAt(index);
+                          dataList["$index"] = null;
 
-                          toDo = Map.from(data_list);
+                          toDo = Map.from(dataList);
 
                           for (int i = 0; i <= toDo.length; i++) {
                             if (toDo["$i"] != null) {
@@ -378,7 +376,7 @@ class _NewTaskState extends State<NewTask> {
                             toNovo["$i"] = toDoNovo[i];
                           }
 
-                          data_list = toNovo;
+                          dataList = toNovo;
                         });
                       },
                     ),
@@ -387,24 +385,24 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  Widget dataHoraUnica(context, size_screen) {
+  Widget dataHoraUnica(context, sizeScreen) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         InkWell(
           child: Container(
             padding: EdgeInsets.only(
-              top: size_screen * 0.015,
-              right: size_screen * 0.015,
-              bottom: size_screen * 0.015,
+              top: sizeScreen * 0.015,
+              right: sizeScreen * 0.015,
+              bottom: sizeScreen * 0.015,
             ),
             decoration: BoxDecoration(
               borderRadius:
-                  BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                  BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
             ),
-            child: data_unica == null || data_unica["data_form"] == null
+            child: dataUnica == null || dataUnica["dataForm"] == null
                 ? Text("Data e hora")
-                : Text(data_unica["data_form"] + ","),
+                : Text(dataUnica["dataForm"] + ","),
           ),
           onTap: () async {
             final DateTime picked = await showDatePicker(
@@ -415,23 +413,23 @@ class _NewTaskState extends State<NewTask> {
             );
             setState(() {
               DataHora dataHora = DataHora(picked: picked);
-              data_unica = dataHora.calendario();
-              data_unica["hora"] =
-                  data_unica["data_form"] == null ? null : data_unica["hora"];
+              dataUnica = dataHora.calendario();
+              dataUnica["hora"] =
+                  dataUnica["dataForm"] == null ? null : dataUnica["hora"];
             });
           },
         ),
         InkWell(
           child: Container(
             padding: EdgeInsets.only(
-              top: size_screen * 0.015,
-              right: size_screen * 0.015,
-              bottom: size_screen * 0.015,
+              top: sizeScreen * 0.015,
+              right: sizeScreen * 0.015,
+              bottom: sizeScreen * 0.015,
             ),
-            child: data_unica["data_form"] != null
-                ? data_unica["hora"] == null
+            child: dataUnica["dataForm"] != null
+                ? dataUnica["hora"] == null
                     ? Text("hora")
-                    : Text(data_unica["hora"])
+                    : Text(dataUnica["hora"])
                 : Container(
                     color: Colors.transparent,
                   ),
@@ -445,20 +443,20 @@ class _NewTaskState extends State<NewTask> {
               DataHora dataHora = DataHora(picked: picked);
               String retorno = dataHora.hora();
               if (retorno != null) {
-                data_unica["hora"] = retorno;
+                dataUnica["hora"] = retorno;
               } else {
-                data_unica["hora"] = null;
+                dataUnica["hora"] = null;
               }
             });
           },
         ),
-        data_unica["data_form"] != null
+        dataUnica["dataForm"] != null
             ? InkWell(
                 child: Container(
                   padding: EdgeInsets.only(
-                    top: size_screen * 0.015,
-                    right: size_screen * 0.015,
-                    bottom: size_screen * 0.015,
+                    top: sizeScreen * 0.015,
+                    right: sizeScreen * 0.015,
+                    bottom: sizeScreen * 0.015,
                   ),
                   child: Icon(
                     Icons.close,
@@ -467,8 +465,8 @@ class _NewTaskState extends State<NewTask> {
                 ),
                 onTap: () {
                   setState(() {
-                    data_unica["hora"] = null;
-                    data_unica["data_form"] = null;
+                    dataUnica["hora"] = null;
+                    dataUnica["dataForm"] = null;
                   });
                 },
               )
@@ -479,25 +477,25 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  Widget dataHora(context, size_screen, index) {
+  Widget dataHora(context, sizeScreen, index) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         InkWell(
           child: Container(
             padding: EdgeInsets.only(
-              top: size_screen * 0.015,
-              right: size_screen * 0.015,
-              bottom: size_screen * 0.015,
+              top: sizeScreen * 0.015,
+              right: sizeScreen * 0.015,
+              bottom: sizeScreen * 0.015,
             ),
             decoration: BoxDecoration(
               borderRadius:
-                  BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                  BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
             ),
-            child: data_list["$index"] == null ||
-                    data_list["$index"]["data_form"] == null
+            child: dataList["$index"] == null ||
+                    dataList["$index"]["dataForm"] == null
                 ? Text("Data e hora")
-                : Text(data_list["$index"]["data_form"].toString() + ","),
+                : Text(dataList["$index"]["dataForm"].toString() + ","),
           ),
           onTap: () async {
             final DateTime picked = await showDatePicker(
@@ -508,22 +506,22 @@ class _NewTaskState extends State<NewTask> {
             );
             setState(() {
               DataHora dataHora = DataHora(picked: picked);
-              data_list["$index"] = dataHora.calendario();
+              dataList["$index"] = dataHora.calendario();
             });
           },
         ),
         InkWell(
           child: Container(
               padding: EdgeInsets.only(
-                top: size_screen * 0.015,
-                right: size_screen * 0.015,
-                bottom: size_screen * 0.015,
+                top: sizeScreen * 0.015,
+                right: sizeScreen * 0.015,
+                bottom: sizeScreen * 0.015,
               ),
-              child: data_list["$index"] != null
-                  ? data_list["$index"]["data_form"] != null
-                      ? data_list["$index"]["hora"] == null
+              child: dataList["$index"] != null
+                  ? dataList["$index"]["dataForm"] != null
+                      ? dataList["$index"]["hora"] == null
                           ? Text("hora")
-                          : Text(data_list["$index"]["hora"])
+                          : Text(dataList["$index"]["hora"])
                       : Container(
                           color: Colors.transparent,
                         )
@@ -539,21 +537,21 @@ class _NewTaskState extends State<NewTask> {
               DataHora dataHora = DataHora(picked: picked);
               String retorno = dataHora.hora().toString();
               if (retorno != "null") {
-                data_list["$index"]["hora"] = retorno;
+                dataList["$index"]["hora"] = retorno;
               } else {
-                data_list["$index"]["hora"] = null;
+                dataList["$index"]["hora"] = null;
               }
             });
           },
         ),
-        data_list["$index"] != null
-            ? data_list["$index"]["data_form"] != null
+        dataList["$index"] != null
+            ? dataList["$index"]["dataForm"] != null
                 ? InkWell(
                     child: Container(
                       padding: EdgeInsets.only(
-                        top: size_screen * 0.015,
-                        right: size_screen * 0.015,
-                        bottom: size_screen * 0.015,
+                        top: sizeScreen * 0.015,
+                        right: sizeScreen * 0.015,
+                        bottom: sizeScreen * 0.015,
                       ),
                       child: Icon(
                         Icons.close,
@@ -562,8 +560,8 @@ class _NewTaskState extends State<NewTask> {
                     ),
                     onTap: () {
                       setState(() {
-                        data_list["$index"]["hora"] = null;
-                        data_list["$index"]["data_form"] = null;
+                        dataList["$index"]["hora"] = null;
+                        dataList["$index"]["dataForm"] = null;
                       });
                     },
                   )
@@ -577,150 +575,150 @@ class _NewTaskState extends State<NewTask> {
     );
   }
 
-  addToDoUnica(context, size_screen) {
-    if (controller_unica.text.trim() != "") {
+  addToDoUnica(context, sizeScreen) {
+    if (controllerUnica.text.trim() != "") {
       Map<String, dynamic> newToDo = Map();
       Tratamentos tratamentos = Tratamentos(
-          tarefa: controller_unica.text.trim(),
+          tarefa: controllerUnica.text.trim(),
           toDoList: widget.toDoList,
-          data: data_unica["data_form"]);
+          data: dataUnica["dataForm"]);
 
-      newToDo["title"] = controller_unica.text.trim();
+      newToDo["title"] = controllerUnica.text.trim();
       newToDo["bool"] = false;
 
-      newToDo["data_form"] =
-          data_unica["data_form"] != null ? data_unica["data_form"] : null;
-      newToDo["hora"] = data_unica["hora"] != null ? data_unica["hora"] : null;
+      newToDo["dataForm"] =
+          dataUnica["dataForm"] != null ? dataUnica["dataForm"] : null;
+      newToDo["hora"] = dataUnica["hora"] != null ? dataUnica["hora"] : null;
 
-      newToDo["dia"] = data_unica["dia"] != null ? data_unica["dia"] : null;
-      newToDo["mes"] = data_unica["mes"] != null ? data_unica["mes"] : null;
-      newToDo["ano"] = data_unica["ano"] != null ? data_unica["ano"] : null;
+      newToDo["dia"] = dataUnica["dia"] != null ? dataUnica["dia"] : null;
+      newToDo["mes"] = dataUnica["mes"] != null ? dataUnica["mes"] : null;
+      newToDo["ano"] = dataUnica["ano"] != null ? dataUnica["ano"] : null;
 
       newToDo["tipo"] = "simples";
       newToDo["agendada"] = false;
-      newToDo["dt_inativacao"] = null;
+      newToDo["dtInativacao"] = null;
 
       int coclusao = 0;
       int repeticao = 1;
 
       coclusao += tratamentos.conclusao();
-      repeticao += tratamentos.repeticao_tarefa();
+      repeticao += tratamentos.repeticaoTarefa();
 
       newToDo["conclusao"] = coclusao;
       newToDo["repeticao"] = repeticao;
-      newToDo["data_repeticao"] = tratamentos.data_repeticao();
-      newToDo["title_formatado"] = tratamentos.formatar_titulo();
+      newToDo["dataRepetidao"] = tratamentos.dataRepetidao();
+      newToDo["titleFormatado"] = tratamentos.formatarTitulo();
 
-      newToDo["data_agenda"] = data_agendada;
-      newToDo["dias_agendados"] = agendar_valor;
+      newToDo["dataAgenda"] = dataAgendada;
+      newToDo["diasAgendados"] = agendarValor;
 
-      if (dias_agendados.length != null) {
-        for (int i = 0; i < dias_agendados.length; i++) {
-          if (dias_agendados[i]) {
+      if (diasAgendados.length != null) {
+        for (int i = 0; i < diasAgendados.length; i++) {
+          if (diasAgendados[i]) {
             newToDo["agendada"] = true;
           }
         }
       }
-      newToDo["id_chanel"] = (widget.toDoList.length + 1) * 10;
+      newToDo["idChanel"] = (widget.toDoList.length + 1) * 10;
 
       Tree tree = Tree(tarefa: newToDo);
 
-      List lista_retorno = tree.decisao();
+      List listaRetorno = tree.decisao();
 
-      if (newToDo["data_form"] != null) {
+      if (newToDo["dataForm"] != null) {
         Notificacao notificacao = Notificacao(
             tarefa: newToDo,
             notifications: widget.notifications,
-            id_chanel: newToDo["id_chanel"],
-            agendadas: newToDo["agendada"] ? dias_agendados : [false]);
+            idChanel: newToDo["idChanel"],
+            agendadas: newToDo["agendada"] ? diasAgendados : [false]);
 
         notificacao.filtro();
       }
 
-      lista_retorno.insert(0, true);
-      lista_retorno.add(newToDo);
+      listaRetorno.insert(0, true);
+      listaRetorno.add(newToDo);
 
-      return lista_retorno;
+      return listaRetorno;
     } else {
-      List lista_retorno = [false];
-      return lista_retorno;
+      List listaRetorno = [false];
+      return listaRetorno;
     }
   }
 
-  dialog_func(size_screen, context, lista_retorno) {
+  dialogFunc(sizeScreen, context, listaRetorno) {
     showDialog(
         context: context,
         builder: (BuildContext cont) {
-          return Corpo_simples(
-              size_screen: size_screen, lista_retorno: lista_retorno);
+          return CorpoSimples(
+              sizeScreen: sizeScreen, listaRetorno: listaRetorno);
         });
   }
 
-  dialog_composta(size_screen, context, lista_retorno) {
+  dialogComposta(sizeScreen, context, listaRetorno) {
     showDialog(
         context: context,
         builder: (BuildContext cont) {
-          return Corpo_Composta(
-              size_screen: size_screen, lista_retorno: lista_retorno);
+          return CorpoComposta(
+              sizeScreen: sizeScreen, listaRetorno: listaRetorno);
         });
   }
 
   addToDo() {
-    if (controller_titulo.text.trim() != "") {
-      int qnt_tarefas = 0;
+    if (controllerTitulo.text.trim() != "") {
+      int qntTarefas = 0;
       int data = 0;
 
       Map<String, dynamic> newToDo = Map();
       Map<String, dynamic> details = Map();
 
-      Composta trefa = Composta(tarefa: controller_titulo.text.trim());
+      Composta trefa = Composta(tarefa: controllerTitulo.text.trim());
 
-      newToDo["title"] = controller_titulo.text.trim();
+      newToDo["title"] = controllerTitulo.text.trim();
       newToDo["bool"] = false;
 
       newToDo["tipo"] = "composta";
       newToDo["conclusao"] = 0;
       newToDo["agendada"] = false;
-      newToDo["dt_inativacao"] = null;
-      newToDo["title_formatado"] = trefa.formatar_titulo();
+      newToDo["dtInativacao"] = null;
+      newToDo["titleFormatado"] = trefa.formatarTitulo();
 
-      for (int i = 0; i < controller_sub.length; i++) {
-        if (controller_sub[i].text.trim() != "") {
+      for (int i = 0; i < controllerSub.length; i++) {
+        if (controllerSub[i].text.trim() != "") {
           Map<String, dynamic> content = Map();
-          data = data_list["$i"] != null ? 1 : 0;
+          data = dataList["$i"] != null ? 1 : 0;
 
           content["dia"] =
-              data_list["$i"] != null ? data_list["$i"]["dia"] : null;
+              dataList["$i"] != null ? dataList["$i"]["dia"] : null;
 
           content["mes"] =
-              data_list["$i"] != null ? data_list["$i"]["mes"] : null;
+              dataList["$i"] != null ? dataList["$i"]["mes"] : null;
 
           content["ano"] =
-              data_list["$i"] != null ? data_list["$i"]["ano"] : null;
+              dataList["$i"] != null ? dataList["$i"]["ano"] : null;
 
           content["hora"] =
-              data_list["$i"] != null ? data_list["$i"]["hora"] : null;
+              dataList["$i"] != null ? dataList["$i"]["hora"] : null;
 
-          content["data_form"] =
-              data_list["$i"] != null ? data_list["$i"]["data_form"] : null;
+          content["dataForm"] =
+              dataList["$i"] != null ? dataList["$i"]["dataForm"] : null;
 
-          content["title"] = controller_sub[i].text.trim();
+          content["title"] = controllerSub[i].text.trim();
           content["bool"] = false;
 
-          content["dt_inativacao"] = null;
+          content["dtInativacao"] = null;
           content["repeticao"] = 1;
           content["conclusao"] = 0;
           content["tipo"] = "subtarefa";
-          content["title_formatado"] =
-              trefa.formatar_sub_titulo(content["title"]);
+          content["titleFormatado"] =
+              trefa.formatarSubTitulo(content["title"]);
 
           details["$i"] = content;
 
-          qnt_tarefas++;
+          qntTarefas++;
         }
       }
 
-      if (qnt_tarefas == 0) {
+      if (qntTarefas == 0) {
         return [false];
       }
 
@@ -729,34 +727,34 @@ class _NewTaskState extends State<NewTask> {
       Composta repete = Composta(toDoList: widget.toDoList, newToDo: newToDo);
 
       int repeticao = 0;
-      List porcentagem_repete = [];
-      repeticao = repete.repeticao_titulo_tarefa();
-      porcentagem_repete = repete.repeticao_sub_tarefa();
+      List porcentagemRepete = [];
+      repeticao = repete.repeticaoTituloTarefa();
+      porcentagemRepete = repete.repeticaoSubTarefa();
 
-      newToDo = porcentagem_repete[1];
-      newToDo["porcentagem"] = porcentagem_repete[0];
+      newToDo = porcentagemRepete[1];
+      newToDo["porcentagem"] = porcentagemRepete[0];
 
       Composta concluir = Composta(toDoList: widget.toDoList, newToDo: newToDo);
-      newToDo["conclusao_grupo"] = concluir.conclusao();
+      newToDo["conclusaoGrupo"] = concluir.conclusao();
 
       newToDo["repeticao"] = repeticao;
-      newToDo["data_grupo"] = concluir.data_grupo();
-      newToDo["data_repetica"] =
-          newToDo["data_grupo"] ? concluir.data_repetica() : false;
+      newToDo["dataGrupo"] = concluir.dataGrupo();
+      newToDo["dataRepetida"] =
+          newToDo["dataGrupo"] ? concluir.dataRepetida() : false;
 
-      if (dias_agendados != null) {
-        for (int i = 0; i < dias_agendados.length; i++) {
-          if (dias_agendados[i]) {
+      if (diasAgendados != null) {
+        for (int i = 0; i < diasAgendados.length; i++) {
+          if (diasAgendados[i]) {
             newToDo["agendada"] = true;
           }
         }
       }
 
-      newToDo["data_agenda"] = data_agendada;
+      newToDo["dataAgenda"] = dataAgendada;
 
-      newToDo["dias_agendados"] = agendar_valor;
+      newToDo["diasAgendados"] = agendarValor;
 
-      newToDo["id_chanel"] = (widget.toDoList.length + 1) * 100;
+      newToDo["idChanel"] = (widget.toDoList.length + 1) * 100;
 
       Tree tree = Tree(tarefa: newToDo);
       List retorno = tree.decisao();
@@ -765,15 +763,15 @@ class _NewTaskState extends State<NewTask> {
         Notificacao notificacao = Notificacao(
             tarefa: newToDo,
             notifications: widget.notifications,
-            id_chanel: newToDo["id_chanel"],
-            agendadas: newToDo["agendada"] ? dias_agendados : [false]);
+            idChanel: newToDo["idChanel"],
+            agendadas: newToDo["agendada"] ? diasAgendados : [false]);
 
         notificacao.filtro();
       }
 
       retorno.insert(0, true);
       retorno.add(newToDo);
-      retorno.add(porcentagem_repete[2]);
+      retorno.add(porcentagemRepete[2]);
 
       return retorno;
     } else {
@@ -783,9 +781,9 @@ class _NewTaskState extends State<NewTask> {
 }
 
 class Agendar extends StatefulWidget {
-  Agendar({Key key, this.size_screen}) : super(key: key);
+  Agendar({Key key, this.sizeScreen}) : super(key: key);
 
-  double size_screen;
+  double sizeScreen;
   @override
   _AgendarState createState() => _AgendarState();
 }
@@ -793,20 +791,20 @@ class Agendar extends StatefulWidget {
 class _AgendarState extends State<Agendar> {
   @override
   Widget build(BuildContext context) {
-    double size_screen = 0;
+    double sizeScreen = 0;
     setState(() {
-      size_screen = widget.size_screen;
+      sizeScreen = widget.sizeScreen;
     });
 
     return Padding(
       padding: EdgeInsets.only(
-          left: size_screen * 0.06,
-          right: size_screen * 0.06,
-          top: size_screen * 0.02),
+          left: sizeScreen * 0.06,
+          right: sizeScreen * 0.06,
+          top: sizeScreen * 0.02),
       child: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
-            borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+            border: Border.all(color: Colors.blue, width: sizeScreen * 0.0008),
+            borderRadius: BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -820,9 +818,9 @@ class _AgendarState extends State<Agendar> {
               Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                      color: Colors.blue, width: size_screen * 0.0008),
+                      color: Colors.blue, width: sizeScreen * 0.0008),
                   borderRadius:
-                      BorderRadius.all(Radius.circular(size_screen * 0.02)),
+                      BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
                 ),
                 child: ListTile(
                   title: Row(
@@ -840,55 +838,55 @@ class _AgendarState extends State<Agendar> {
                         ];
                         return InkWell(
                           child: Container(
-                            padding: EdgeInsets.all(size_screen * 0.008),
+                            padding: EdgeInsets.all(sizeScreen * 0.008),
                             child: Text(
                               dias[dia],
                               style: TextStyle(
-                                  color: dias_agendados[dia]
+                                  color: diasAgendados[dia]
                                       ? Colors.blue
                                       : Colors.grey),
                             ),
                           ),
                           onTap: () {
                             setState(() {
-                              dias_agendados[dia] = !dias_agendados[dia];
+                              diasAgendados[dia] = !diasAgendados[dia];
 
-                              if (dias_agendados[dia]) {
-                                agendar_unica = true;
-                                agendar_valor = dias_agendados;
+                              if (diasAgendados[dia]) {
+                                agendarUnica = true;
+                                agendarValor = diasAgendados;
                               }
                               int contador = 0;
 
-                              for (int i = 0; i < dias_agendados.length; i++) {
-                                if (!dias_agendados[i]) {
+                              for (int i = 0; i < diasAgendados.length; i++) {
+                                if (!diasAgendados[i]) {
                                   contador++;
                                 }
                               }
 
-                              if (contador == dias_agendados.length) {
-                                agendar_unica = false;
-                                agendar_valor = dias_agendados;
-                                agenda_unica =
+                              if (contador == diasAgendados.length) {
+                                agendarUnica = false;
+                                agendarValor = diasAgendados;
+                                agendaUnica =
                                     "Definir data final desta tarefa.";
-                                cor_tarefa = Colors.grey;
+                                corTarefa = Colors.grey;
                               }
                             });
                           },
                         );
                       })),
                   subtitle: Padding(
-                    padding: EdgeInsets.only(top: size_screen * 0.025),
+                    padding: EdgeInsets.only(top: sizeScreen * 0.025),
                     child: InkWell(
                       child: Container(
-                          padding: EdgeInsets.all(size_screen * 0.008),
+                          padding: EdgeInsets.all(sizeScreen * 0.008),
                           child: Text(
-                            agenda_unica,
-                            style: TextStyle(color: cor_tarefa),
+                            agendaUnica,
+                            style: TextStyle(color: corTarefa),
                           )),
                       onTap: () async {
                         bool verificar = false;
-                        for (int i = 0; i < dias_agendados.length; i++) {
-                          if (dias_agendados[i]) {
+                        for (int i = 0; i < diasAgendados.length; i++) {
+                          if (diasAgendados[i]) {
                             verificar = true;
                           }
                         }
@@ -903,12 +901,12 @@ class _AgendarState extends State<Agendar> {
                             AgendarData agendamento = AgendarData(
                               picked: picked,
                             );
-                            agendar_unica = picked == null;
-                            agenda_unica = agendamento.data_agendamento();
-                            data_agendada = agenda_unica;
+                            agendarUnica = picked == null;
+                            agendaUnica = agendamento.dataAgendamento();
+                            dataAgendada = agendaUnica;
 
-                            cor_tarefa =
-                                agendar_unica ? Colors.grey : Colors.blue;
+                            corTarefa =
+                                agendarUnica ? Colors.grey : Colors.blue;
                           });
                         } else {
                           Flushbar flushbar;
@@ -921,11 +919,11 @@ class _AgendarState extends State<Agendar> {
                             ),
                             animationDuration: Duration(milliseconds: 450),
                             message: "Escolha algum dia para agendar.",
-                            borderRadius: size_screen * 0.05,
+                            borderRadius: sizeScreen * 0.05,
                             margin: EdgeInsets.only(
-                              bottom: size_screen * 0.15,
-                              left: size_screen * 0.1,
-                              right: size_screen * 0.1,
+                              bottom: sizeScreen * 0.15,
+                              left: sizeScreen * 0.1,
+                              right: sizeScreen * 0.1,
                             ),
                             duration: Duration(seconds: 2),
                           )..show(context).then((result) {
@@ -946,9 +944,9 @@ class _AgendarState extends State<Agendar> {
 }
 
 class AgendarDialog extends StatefulWidget {
-  AgendarDialog({Key key, this.size_screen}) : super(key: key);
+  AgendarDialog({Key key, this.sizeScreen}) : super(key: key);
 
-  double size_screen;
+  double sizeScreen;
   @override
   _AgendarDialogState createState() => _AgendarDialogState();
 }
@@ -956,15 +954,15 @@ class AgendarDialog extends StatefulWidget {
 class _AgendarDialogState extends State<AgendarDialog> {
   @override
   Widget build(BuildContext context) {
-    double size_screen = 0;
+    double sizeScreen = 0;
     setState(() {
-      size_screen = widget.size_screen;
+      sizeScreen = widget.sizeScreen;
     });
 
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey, width: size_screen * 0.0008),
-        borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.02)),
+        border: Border.all(color: Colors.grey, width: sizeScreen * 0.0008),
+        borderRadius: BorderRadius.all(Radius.circular(sizeScreen * 0.02)),
       ),
       child: Card(
         elevation: 0,
@@ -973,8 +971,8 @@ class _AgendarDialogState extends State<AgendarDialog> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(
-                top: size_screen * 0.015,
-                bottom: size_screen * 0.015,
+                top: sizeScreen * 0.015,
+                bottom: sizeScreen * 0.015,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -993,47 +991,47 @@ class _AgendarDialogState extends State<AgendarDialog> {
                           "Sáb",
                         ];
                         setState(() {
-                          if (!(dias_agendados == 7)) {
-                            agendar_unica = false;
+                          if (!(diasAgendados == 7)) {
+                            agendarUnica = false;
                             for (int i = 0; i < dias.length; i++) {
-                              dias_agendados.add(false);
+                              diasAgendados.add(false);
                             }
                           }
                         });
                         return InkWell(
                           child: Container(
-                            padding: EdgeInsets.all(size_screen * 0.008),
+                            padding: EdgeInsets.all(sizeScreen * 0.008),
                             child: Text(
                               dias[dia],
                               style: TextStyle(
-                                  color: dias_agendados[dia]
+                                  color: diasAgendados[dia]
                                       ? Colors.blue
                                       : Colors.grey),
                             ),
                           ),
                           onTap: () {
                             setState(() {
-                              dias_agendados[dia] = !dias_agendados[dia];
+                              diasAgendados[dia] = !diasAgendados[dia];
 
-                              if (dias_agendados[dia]) {
-                                agendar_unica = true;
-                                agendar_valor = dias_agendados;
+                              if (diasAgendados[dia]) {
+                                agendarUnica = true;
+                                agendarValor = diasAgendados;
                               }
 
                               int contador = 0;
 
-                              for (int i = 0; i < dias_agendados.length; i++) {
-                                if (!dias_agendados[i]) {
+                              for (int i = 0; i < diasAgendados.length; i++) {
+                                if (!diasAgendados[i]) {
                                   contador++;
                                 }
                               }
 
-                              if (contador == dias_agendados.length) {
-                                agendar_unica = false;
-                                agendar_valor = dias_agendados;
-                                agenda_unica =
+                              if (contador == diasAgendados.length) {
+                                agendarUnica = false;
+                                agendarValor = diasAgendados;
+                                agendaUnica =
                                     "Definir data final desta tarefa.";
-                                cor_tarefa = Colors.grey;
+                                corTarefa = Colors.grey;
                               }
                             });
                           },
@@ -1045,25 +1043,25 @@ class _AgendarDialogState extends State<AgendarDialog> {
             InkWell(
               child: Container(
                   padding: EdgeInsets.only(
-                    top: size_screen * 0.008,
-                    left: size_screen * 0.01,
-                    right: size_screen * 0.008,
-                    bottom: size_screen * 0.008,
+                    top: sizeScreen * 0.008,
+                    left: sizeScreen * 0.01,
+                    right: sizeScreen * 0.008,
+                    bottom: sizeScreen * 0.008,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        agenda_unica,
-                        style: TextStyle(color: cor_tarefa),
+                        agendaUnica,
+                        style: TextStyle(color: corTarefa),
                       ),
                     ],
                   )),
               onTap: () async {
                 bool verificar = false;
-                for (int i = 0; i < dias_agendados.length; i++) {
-                  if (dias_agendados[i]) {
+                for (int i = 0; i < diasAgendados.length; i++) {
+                  if (diasAgendados[i]) {
                     verificar = true;
                   }
                 }
@@ -1078,11 +1076,11 @@ class _AgendarDialogState extends State<AgendarDialog> {
                     AgendarData agendamento = AgendarData(
                       picked: picked,
                     );
-                    agendar_unica = picked == null;
-                    agenda_unica = agendamento.data_agendamento();
-                    data_agenda_dialog = agenda_unica;
+                    agendarUnica = picked == null;
+                    agendaUnica = agendamento.dataAgendamento();
+                    dataAgendaDialog = agendaUnica;
 
-                    cor_tarefa = agendar_unica ? Colors.grey : Colors.blue;
+                    corTarefa = agendarUnica ? Colors.grey : Colors.blue;
                   });
                 } else {
                   Flushbar flushbar;
@@ -1095,11 +1093,11 @@ class _AgendarDialogState extends State<AgendarDialog> {
                     ),
                     animationDuration: Duration(milliseconds: 450),
                     message: "Escolha algum dia para agendar.",
-                    borderRadius: size_screen * 0.05,
+                    borderRadius: sizeScreen * 0.05,
                     margin: EdgeInsets.only(
-                      bottom: size_screen * 0.15,
-                      left: size_screen * 0.1,
-                      right: size_screen * 0.1,
+                      bottom: sizeScreen * 0.15,
+                      left: sizeScreen * 0.1,
+                      right: sizeScreen * 0.1,
                     ),
                     duration: Duration(seconds: 2),
                   )..show(context).then((result) {
@@ -1117,27 +1115,27 @@ class _AgendarDialogState extends State<AgendarDialog> {
   }
 }
 
-class Corpo_Composta extends StatefulWidget {
-  Corpo_Composta({Key key, this.size_screen, this.lista_retorno})
+class CorpoComposta extends StatefulWidget {
+  CorpoComposta({Key key, this.sizeScreen, this.listaRetorno})
       : super(key: key);
 
-  double size_screen;
-  List lista_retorno;
+  double sizeScreen;
+  List listaRetorno;
 
-  _Corpo_CompostaState createState() => _Corpo_CompostaState();
+  _CorpoCompostaState createState() => _CorpoCompostaState();
 }
 
-class _Corpo_CompostaState extends State<Corpo_Composta> {
+class _CorpoCompostaState extends State<CorpoComposta> {
   @override
   Widget build(BuildContext context) {
-    List lista_retorno = widget.lista_retorno;
-    double size_screen = widget.size_screen;
+    List listaRetorno = widget.listaRetorno;
+    double sizeScreen = widget.sizeScreen;
 
-    dynamic toDoList = lista_retorno[3];
-    dynamic outras = lista_retorno[4];
+    dynamic toDoList = listaRetorno[3];
+    dynamic outras = listaRetorno[4];
     dynamic backup = toDoList;
 
-    Map<String, dynamic> data_unica = Map();
+    Map<String, dynamic> dataUnica = Map();
 
     TextEditingController controller =
         TextEditingController(text: toDoList["title"]);
@@ -1153,7 +1151,7 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
     return AlertDialog(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(size_screen * 0.04),
+        borderRadius: BorderRadius.circular(sizeScreen * 0.04),
       ),
       title: ListTile(
         title: Text(
@@ -1166,7 +1164,7 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             AgendarDialog(
-              size_screen: size_screen,
+              sizeScreen: sizeScreen,
             ),
             Divider(
               color: Colors.transparent,
@@ -1184,8 +1182,8 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
             Divider(
               color: Colors.grey,
               height: 0,
-              indent: size_screen * 0.04,
-              endIndent: size_screen * 0.08,
+              indent: sizeScreen * 0.04,
+              endIndent: sizeScreen * 0.08,
             ),
             Column(
               mainAxisSize: MainAxisSize.min,
@@ -1195,9 +1193,9 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                     text: toDoList["details"]["$index"]["title"]);
 
                 setState(() {
-                  data_unica["hora"] = toDoList["details"]["$index"]["hora"];
-                  data_unica["data_form"] =
-                      toDoList["details"]["$index"]["data_form"];
+                  dataUnica["hora"] = toDoList["details"]["$index"]["hora"];
+                  dataUnica["dataForm"] =
+                      toDoList["details"]["$index"]["dataForm"];
                 });
 
                 List backup = [];
@@ -1205,8 +1203,8 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                 setState(() {
                   if (outras.length != null) {
                     for (int i = 0; i < outras.length; i++) {
-                      if (toDoList["details"]["$index"]["title_formatado"] !=
-                          outras[i]["title_formatado"]) {
+                      if (toDoList["details"]["$index"]["titleFormatado"] !=
+                          outras[i]["titleFormatado"]) {
                         backup.add(outras[i]);
                         outras = backup;
                       }
@@ -1238,20 +1236,20 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                           InkWell(
                             child: Container(
                               padding: EdgeInsets.only(
-                                top: size_screen * 0.015,
-                                right: size_screen * 0.015,
-                                bottom: size_screen * 0.015,
+                                top: sizeScreen * 0.015,
+                                right: sizeScreen * 0.015,
+                                bottom: sizeScreen * 0.015,
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.all(
-                                    Radius.circular(size_screen * 0.02)),
+                                    Radius.circular(sizeScreen * 0.02)),
                               ),
                               child: toDoList["details"]["$index"]
-                                          ["data_form"] ==
+                                          ["dataForm"] ==
                                       null
                                   ? Text("Data e hora")
                                   : Text(toDoList["details"]["$index"]
-                                          ["data_form"] +
+                                          ["dataForm"] +
                                       ","),
                             ),
                             onTap: () async {
@@ -1263,16 +1261,16 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                               );
                               setState(() {
                                 DataHora dataHora = DataHora(picked: picked);
-                                data_unica = dataHora.calendario();
-                                toDoList["details"]["$index"]["data_form"] =
-                                    data_unica["data_form"];
+                                dataUnica = dataHora.calendario();
+                                toDoList["details"]["$index"]["dataForm"] =
+                                    dataUnica["dataForm"];
 
                                 toDoList["details"]["$index"]["dia"] =
-                                    data_unica["dia"];
+                                    dataUnica["dia"];
                                 toDoList["details"]["$index"]["mes"] =
-                                    data_unica["mes"];
+                                    dataUnica["mes"];
                                 toDoList["details"]["$index"]["ano"] =
-                                    data_unica["ano"];
+                                    dataUnica["ano"];
 
                                 toDoList["details"]["$index"]["hora"] = null;
                               });
@@ -1281,12 +1279,12 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                           InkWell(
                             child: Container(
                               padding: EdgeInsets.only(
-                                top: size_screen * 0.015,
-                                right: size_screen * 0.015,
-                                bottom: size_screen * 0.015,
+                                top: sizeScreen * 0.015,
+                                right: sizeScreen * 0.015,
+                                bottom: sizeScreen * 0.015,
                               ),
                               child: toDoList["details"]["$index"]
-                                          ["data_form"] !=
+                                          ["dataForm"] !=
                                       null
                                   ? toDoList["details"]["$index"]["hora"] ==
                                           null
@@ -1314,13 +1312,13 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                               });
                             },
                           ),
-                          toDoList["details"]["$index"]["data_form"] != null
+                          toDoList["details"]["$index"]["dataForm"] != null
                               ? InkWell(
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                      top: size_screen * 0.015,
-                                      right: size_screen * 0.015,
-                                      bottom: size_screen * 0.015,
+                                      top: sizeScreen * 0.015,
+                                      right: sizeScreen * 0.015,
+                                      bottom: sizeScreen * 0.015,
                                     ),
                                     child: Icon(
                                       Icons.close,
@@ -1332,7 +1330,7 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                                       toDoList["details"]["$index"]["hora"] =
                                           null;
                                       toDoList["details"]["$index"]
-                                          ["data_form"] = null;
+                                          ["dataForm"] = null;
                                     });
                                   },
                                 )
@@ -1347,8 +1345,8 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
               }).toList(),
             ),
             outras.length > 0
-                ? Outras_tarefas(
-                    size_screen: size_screen,
+                ? OutrasTarefas(
+                    sizeScreen: sizeScreen,
                     outras: outras,
                   )
                 : Container(color: Colors.transparent)
@@ -1363,8 +1361,8 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
           ),
           onPressed: () {
             setState(() {
-              backup["data_agenda"] = "";
-              backup["dias_agendados"] = [
+              backup["dataAgenda"] = "";
+              backup["diasAgendados"] = [
                 false,
                 false,
                 false,
@@ -1374,19 +1372,19 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
                 false
               ];
               backup["agendada"] = false;
-              toDoList_dialog.insert(0, backup);
+              toDoListDialog.insert(0, backup);
             });
 
             Notificacao notificacao = Notificacao(
                 tarefa: backup,
                 notifications: notifications,
-                id_chanel: backup["id_chanel"],
+                idChanel: backup["idChanel"],
                 agendadas: [false]);
 
             notificacao.filtro();
 
             Navigator.pop(context);
-            Navigator.pop(context, toDoList_dialog);
+            Navigator.pop(context, toDoListDialog);
           },
         ),
         FlatButton(
@@ -1396,28 +1394,28 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
           onPressed: () {
             setState(() {
               for (int i = 0; i < outras.length; i++) {
-                if (outras_check[i]) {
+                if (outrasCheck[i]) {
                   outras[i]["bool"] = false;
                   toDoList["details"]["${toDoList["details"].length}"] =
                       outras[i];
                 }
               }
-              toDoList["data_agenda"] = data_agenda_dialog;
-              toDoList["dias_agendados"] = agendar_valor;
+              toDoList["dataAgenda"] = dataAgendaDialog;
+              toDoList["diasAgendados"] = agendarValor;
               toDoList["agendada"] = true;
 
               Notificacao notificacao = Notificacao(
                   tarefa: toDoList,
                   notifications: notifications,
-                  id_chanel: toDoList["id_chanel"],
-                  agendadas: toDoList["dias_agendados"]);
+                  idChanel: toDoList["idChanel"],
+                  agendadas: toDoList["diasAgendados"]);
 
               notificacao.filtro();
 
-              toDoList_dialog.insert(0, toDoList);
+              toDoListDialog.insert(0, toDoList);
             });
             Navigator.pop(context);
-            Navigator.pop(context, toDoList_dialog);
+            Navigator.pop(context, toDoListDialog);
           },
         ),
       ],
@@ -1425,21 +1423,21 @@ class _Corpo_CompostaState extends State<Corpo_Composta> {
   }
 }
 
-class Outras_tarefas extends StatefulWidget {
-  Outras_tarefas({Key key, this.outras, this.size_screen}) : super(key: key);
+class OutrasTarefas extends StatefulWidget {
+  OutrasTarefas({Key key, this.outras, this.sizeScreen}) : super(key: key);
 
   List outras;
-  double size_screen;
+  double sizeScreen;
   @override
-  _Outras_tarefasState createState() => _Outras_tarefasState();
+  _OutrasTarefasState createState() => _OutrasTarefasState();
 }
 
-class _Outras_tarefasState extends State<Outras_tarefas> {
+class _OutrasTarefasState extends State<OutrasTarefas> {
   @override
   Widget build(BuildContext context) {
     setState(() {
       for (int i = 0; i < widget.outras.length; i++) {
-        outras_check.add(false);
+        outrasCheck.add(false);
       }
     });
 
@@ -1449,8 +1447,8 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
         Divider(
           color: Colors.grey,
           height: 0,
-          indent: widget.size_screen * 0.04,
-          endIndent: widget.size_screen * 0.08,
+          indent: widget.sizeScreen * 0.04,
+          endIndent: widget.sizeScreen * 0.08,
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -1460,9 +1458,9 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
               tapHeaderToExpand: true,
               header: Container(
                 padding: EdgeInsets.only(
-                    top: widget.size_screen * 0.04,
-                    left: widget.size_screen * 0.02,
-                    bottom: widget.size_screen * 0.04),
+                    top: widget.sizeScreen * 0.04,
+                    left: widget.sizeScreen * 0.02,
+                    bottom: widget.sizeScreen * 0.04),
                 child: Text("Outras tarefas deste grupo"),
               ),
               expanded: Column(
@@ -1476,16 +1474,16 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
                         InkWell(
                           child: Container(
                             padding: EdgeInsets.only(
-                              top: widget.size_screen * 0.015,
-                              right: widget.size_screen * 0.015,
-                              bottom: widget.size_screen * 0.015,
+                              top: widget.sizeScreen * 0.015,
+                              right: widget.sizeScreen * 0.015,
+                              bottom: widget.sizeScreen * 0.015,
                             ),
-                            child: widget.outras[item]["data_form"] == null
+                            child: widget.outras[item]["dataForm"] == null
                                 ? Text("Data e hora")
-                                : Text(widget.outras[item]["data_form"] + ","),
+                                : Text(widget.outras[item]["dataForm"] + ","),
                           ),
                           onTap: () async {
-                            dynamic data_unica;
+                            dynamic dataUnica;
                             final DateTime picked = await showDatePicker(
                               context: context,
                               firstDate: new DateTime(2000),
@@ -1494,13 +1492,13 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
                             );
                             setState(() {
                               DataHora dataHora = DataHora(picked: picked);
-                              data_unica = dataHora.calendario();
-                              widget.outras[item]["data_form"] =
-                                  data_unica["data_form"];
+                              dataUnica = dataHora.calendario();
+                              widget.outras[item]["dataForm"] =
+                                  dataUnica["dataForm"];
 
-                              widget.outras[item]["dia"] = data_unica["dia"];
-                              widget.outras[item]["mes"] = data_unica["mes"];
-                              widget.outras[item]["ano"] = data_unica["ano"];
+                              widget.outras[item]["dia"] = dataUnica["dia"];
+                              widget.outras[item]["mes"] = dataUnica["mes"];
+                              widget.outras[item]["ano"] = dataUnica["ano"];
 
                               widget.outras[item]["hora"] = null;
                             });
@@ -1509,11 +1507,11 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
                         InkWell(
                           child: Container(
                             padding: EdgeInsets.only(
-                              top: widget.size_screen * 0.015,
-                              right: widget.size_screen * 0.015,
-                              bottom: widget.size_screen * 0.015,
+                              top: widget.sizeScreen * 0.015,
+                              right: widget.sizeScreen * 0.015,
+                              bottom: widget.sizeScreen * 0.015,
                             ),
-                            child: widget.outras[item]["data_form"] != null
+                            child: widget.outras[item]["dataForm"] != null
                                 ? widget.outras[item]["hora"] == null
                                     ? Text("hora")
                                     : Text(widget.outras[item]["hora"])
@@ -1537,13 +1535,13 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
                             });
                           },
                         ),
-                        widget.outras[item]["data_form"] != null
+                        widget.outras[item]["dataForm"] != null
                             ? InkWell(
                                 child: Container(
                                   padding: EdgeInsets.only(
-                                    top: widget.size_screen * 0.015,
-                                    right: widget.size_screen * 0.015,
-                                    bottom: widget.size_screen * 0.015,
+                                    top: widget.sizeScreen * 0.015,
+                                    right: widget.sizeScreen * 0.015,
+                                    bottom: widget.sizeScreen * 0.015,
                                   ),
                                   child: Icon(
                                     Icons.close,
@@ -1553,7 +1551,7 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
                                 onTap: () {
                                   setState(() {
                                     widget.outras[item]["hora"] = null;
-                                    widget.outras[item]["data_form"] = null;
+                                    widget.outras[item]["dataForm"] = null;
                                   });
                                 },
                               )
@@ -1563,10 +1561,10 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
                       ],
                     ),
                     trailing: Checkbox(
-                      value: outras_check[item],
+                      value: outrasCheck[item],
                       onChanged: (bool press) {
                         setState(() {
-                          outras_check[item] = !outras_check[item];
+                          outrasCheck[item] = !outrasCheck[item];
                         });
                       },
                     ),
@@ -1581,30 +1579,30 @@ class _Outras_tarefasState extends State<Outras_tarefas> {
   }
 }
 
-class Corpo_simples extends StatefulWidget {
-  Corpo_simples({Key key, this.size_screen, this.lista_retorno})
+class CorpoSimples extends StatefulWidget {
+  CorpoSimples({Key key, this.sizeScreen, this.listaRetorno})
       : super(key: key);
 
-  double size_screen;
-  List lista_retorno;
+  double sizeScreen;
+  List listaRetorno;
 
-  _Corpo_simplesState createState() => _Corpo_simplesState();
+  _CorpoSimplesState createState() => _CorpoSimplesState();
 }
 
-class _Corpo_simplesState extends State<Corpo_simples> {
+class _CorpoSimplesState extends State<CorpoSimples> {
   @override
   Widget build(BuildContext context) {
-    List lista_retorno = widget.lista_retorno;
-    double size_screen = widget.size_screen;
-    Map<String, dynamic> data_unica = Map();
+    List listaRetorno = widget.listaRetorno;
+    double sizeScreen = widget.sizeScreen;
+    Map<String, dynamic> dataUnica = Map();
 
-    dynamic tarefa = lista_retorno[3];
+    dynamic tarefa = listaRetorno[3];
     dynamic backup = tarefa;
     TextEditingController controller =
         TextEditingController(text: tarefa["title"]);
     setState(() {
-      data_unica["hora"] = tarefa["hora"];
-      data_unica["data_form"] = tarefa["data_form"];
+      dataUnica["hora"] = tarefa["hora"];
+      dataUnica["dataForm"] = tarefa["dataForm"];
     });
     return AlertDialog(
       title: ListTile(
@@ -1617,7 +1615,7 @@ class _Corpo_simplesState extends State<Corpo_simples> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           AgendarDialog(
-            size_screen: size_screen,
+            sizeScreen: sizeScreen,
           ),
           Divider(
             color: Colors.transparent,
@@ -1644,13 +1642,13 @@ class _Corpo_simplesState extends State<Corpo_simples> {
                 InkWell(
                   child: Container(
                     padding: EdgeInsets.only(
-                      top: size_screen * 0.015,
-                      right: size_screen * 0.015,
-                      bottom: size_screen * 0.015,
+                      top: sizeScreen * 0.015,
+                      right: sizeScreen * 0.015,
+                      bottom: sizeScreen * 0.015,
                     ),
-                    child: tarefa["data_form"] == null
+                    child: tarefa["dataForm"] == null
                         ? Text("Data e hora")
-                        : Text(tarefa["data_form"] + ","),
+                        : Text(tarefa["dataForm"] + ","),
                   ),
                   onTap: () async {
                     final DateTime picked = await showDatePicker(
@@ -1661,12 +1659,12 @@ class _Corpo_simplesState extends State<Corpo_simples> {
                     );
                     setState(() {
                       DataHora dataHora = DataHora(picked: picked);
-                      data_unica = dataHora.calendario();
-                      tarefa["data_form"] = data_unica["data_form"];
+                      dataUnica = dataHora.calendario();
+                      tarefa["dataForm"] = dataUnica["dataForm"];
 
-                      tarefa["dia"] = data_unica["dia"];
-                      tarefa["mes"] = data_unica["mes"];
-                      tarefa["ano"] = data_unica["ano"];
+                      tarefa["dia"] = dataUnica["dia"];
+                      tarefa["mes"] = dataUnica["mes"];
+                      tarefa["ano"] = dataUnica["ano"];
 
                       tarefa["hora"] = null;
                     });
@@ -1675,11 +1673,11 @@ class _Corpo_simplesState extends State<Corpo_simples> {
                 InkWell(
                   child: Container(
                     padding: EdgeInsets.only(
-                      top: size_screen * 0.015,
-                      right: size_screen * 0.015,
-                      bottom: size_screen * 0.015,
+                      top: sizeScreen * 0.015,
+                      right: sizeScreen * 0.015,
+                      bottom: sizeScreen * 0.015,
                     ),
-                    child: tarefa["data_form"] != null
+                    child: tarefa["dataForm"] != null
                         ? tarefa["hora"] == null
                             ? Text("hora")
                             : Text(tarefa["hora"])
@@ -1717,8 +1715,8 @@ class _Corpo_simplesState extends State<Corpo_simples> {
           onPressed: () {
             setState(() {
               backup["agendada"] = false;
-              backup["data_agenda"] = "";
-              backup["dias_agendados"] = [
+              backup["dataAgenda"] = "";
+              backup["diasAgendados"] = [
                 false,
                 false,
                 false,
@@ -1727,21 +1725,21 @@ class _Corpo_simplesState extends State<Corpo_simples> {
                 false,
                 false
               ];
-              toDoList_dialog.insert(0, backup);
+              toDoListDialog.insert(0, backup);
             });
 
-            if (backup["data_form"] != null) {
+            if (backup["dataForm"] != null) {
               Notificacao notificacao = Notificacao(
                   tarefa: backup,
                   notifications: notifications,
-                  id_chanel: backup["id_chanel"],
+                  idChanel: backup["idChanel"],
                   agendadas: [false]);
 
               notificacao.filtro();
             }
 
             Navigator.pop(context);
-            Navigator.pop(context, toDoList_dialog);
+            Navigator.pop(context, toDoListDialog);
           },
         ),
         FlatButton(
@@ -1750,32 +1748,32 @@ class _Corpo_simplesState extends State<Corpo_simples> {
           ),
           onPressed: () {
             setState(() {
-              for (int i = 0; i < dias_agendados.length; i++) {
-                if (dias_agendados[i]) {
+              for (int i = 0; i < diasAgendados.length; i++) {
+                if (diasAgendados[i]) {
                   tarefa["agendada"] = true;
                   break;
                 }
               }
-              tarefa["dias_agendados"] = dias_agendados;
-              tarefa["data_agenda"] = data_agenda_dialog;
-              toDoList_dialog.insert(0, tarefa);
+              tarefa["diasAgendados"] = diasAgendados;
+              tarefa["dataAgenda"] = dataAgendaDialog;
+              toDoListDialog.insert(0, tarefa);
             });
 
             Notificacao notificacao = Notificacao(
                 tarefa: tarefa,
                 notifications: notifications,
-                id_chanel: tarefa["id_chanel"],
-                agendadas: tarefa["dias_agendados"]);
+                idChanel: tarefa["idChanel"],
+                agendadas: tarefa["diasAgendados"]);
 
             notificacao.filtro();
 
             Navigator.pop(context);
-            Navigator.pop(context, toDoList_dialog);
+            Navigator.pop(context, toDoListDialog);
           },
         ),
       ],
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(size_screen * 0.04),
+        borderRadius: BorderRadius.circular(sizeScreen * 0.04),
       ),
     );
   }

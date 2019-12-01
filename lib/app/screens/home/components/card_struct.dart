@@ -17,9 +17,9 @@ import 'package:personal_flow/app/screens/home/components/card_content_unica.dar
 
 // Variáveis gerais.
 
-Color cor_tarefa = Colors.grey;
-double size_screen = 0;
-String font_button;
+Color cortarefa = Colors.grey;
+double sizeScreen = 0;
+String fontButton;
 
 List toDoList = [];
 List<String> dias = [
@@ -41,10 +41,6 @@ class CardStruct extends StatefulWidget {
 }
 
 class _CardStructState extends State<CardStruct> {
-  final TextEditingController _searchQuery = new TextEditingController();
-  List<String> _list = List<String>();
-  String _searchText = "";
-  int valor_pesquisa = 0;
 
   FlutterLocalNotificationsPlugin notifications =
       new FlutterLocalNotificationsPlugin();
@@ -69,15 +65,15 @@ class _CardStructState extends State<CardStruct> {
 
   @override
   Widget build(context) {
-    GeneratioCards genaratioCards = GeneratioCards(context_screen: context);
+    GeneratioCards genaratioCards = GeneratioCards(contextScreen: context);
     setState(() {
-      size_screen = MediaQuery.of(context).size.width;
-      font_button = genaratioCards.outFontButton;
+      sizeScreen = MediaQuery.of(context).size.width;
+      fontButton = genaratioCards.outFontButton;
     });
 
     bool validar() {
       for (int i = 0; i < toDoList.length; i++) {
-        if (toDoList[i]["dt_inativacao"] == null) {
+        if (toDoList[i]["dtInativacao"] == null) {
           return false;
         }
       }
@@ -91,7 +87,7 @@ class _CardStructState extends State<CardStruct> {
           style: TextStyle(
             color: Colors.blue,
             fontFamily: 'orkey-bold',
-            fontSize: size_screen * 0.05,
+            fontSize: sizeScreen * 0.05,
           ),
         ),
         elevation: 0,
@@ -105,26 +101,26 @@ class _CardStructState extends State<CardStruct> {
                   ? Center(
                       child: Icon(
                         Icons.check,
-                        size: size_screen * 0.4,
+                        size: sizeScreen * 0.4,
                         color: Colors.grey[300],
                       ),
                     )
                   : ListView.builder(
                       padding: EdgeInsets.only(
-                        top: size_screen * 0.04,
+                        top: sizeScreen * 0.04,
                       ),
                       itemCount: toDoList.length,
                       itemBuilder: (BuildContext context, int index) =>
                           toDoList[index]["tipo"] == "simples"
-                              ? toDoList[index]["dt_inativacao"] == null
+                              ? toDoList[index]["dtInativacao"] == null
                                   ? buildCardUnica(
-                                      context, font_button, toDoList, index)
+                                      context, fontButton, toDoList, index)
                                   : Container(
                                       color: Colors.transparent,
                                     )
-                              : toDoList[index]["dt_inativacao"] == null
+                              : toDoList[index]["dtInativacao"] == null
                                   ? buildCardGrupo(
-                                      context, index, font_button, toDoList)
+                                      context, index, fontButton, toDoList)
                                   : Container(
                                       color: Colors.transparent,
                                     ),
@@ -161,29 +157,29 @@ class _CardStructState extends State<CardStruct> {
     );
   }
 
-  Widget buildCardUnica(BuildContext context, font_button, toDo, index) {
+  Widget buildCardUnica(BuildContext context, fontButton, toDo, index) {
     return Center(
       child: Card(
         elevation: 0,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(size_screen * 0.04),
+          borderRadius: BorderRadius.circular(sizeScreen * 0.04),
         ),
         child: Container(
-          width: size_screen * 0.9,
+          width: sizeScreen * 0.9,
           decoration: BoxDecoration(
               border:
-                  Border.all(color: Colors.blue, width: size_screen * 0.0008),
+                  Border.all(color: Colors.blue, width: sizeScreen * 0.0008),
               borderRadius:
-                  BorderRadius.all(Radius.circular(size_screen * 0.04))),
+                  BorderRadius.all(Radius.circular(sizeScreen * 0.04))),
           child: Slidable(
             actionPane: SlidableDrawerActionPane(),
             child: Container(
               child: CardContentUnica(
                 valor: index,
                 texto: toDo,
-                size_screen: size_screen,
-                font_button: font_button,
+                sizeScreen: sizeScreen,
+                fontButton: fontButton,
                 index: index,
               ),
             ),
@@ -198,7 +194,7 @@ class _CardStructState extends State<CardStruct> {
                     int lastRemovedPos;
                     Map<String, dynamic> lastRemoved;
 
-                    toDoList[index]["dt_inativacao"] = 111;
+                    toDoList[index]["dtInativacao"] = 111;
 
                     saveData();
 
@@ -208,11 +204,11 @@ class _CardStructState extends State<CardStruct> {
                     flushbar = Flushbar<bool>(
                       animationDuration: Duration(milliseconds: 650),
                       message: "Tarefa removida",
-                      borderRadius: size_screen * 0.05,
+                      borderRadius: sizeScreen * 0.05,
                       margin: EdgeInsets.only(
-                        bottom: size_screen * 0.15,
-                        left: size_screen * 0.1,
-                        right: size_screen * 0.1,
+                        bottom: sizeScreen * 0.15,
+                        left: sizeScreen * 0.1,
+                        right: sizeScreen * 0.1,
                       ),
                       duration: Duration(seconds: 2),
                       mainButton: FlatButton(
@@ -222,7 +218,7 @@ class _CardStructState extends State<CardStruct> {
                         ),
                         onPressed: () {
                           setState(() {
-                            toDoList[index]["dt_inativacao"] = null;
+                            toDoList[index]["dtInativacao"] = null;
                             saveData();
                             flushbar.dismiss(true);
                           });
@@ -243,25 +239,25 @@ class _CardStructState extends State<CardStruct> {
     );
   }
 
-  Widget buildCardGrupo(BuildContext context, index, font_button, toDo) {
+  Widget buildCardGrupo(BuildContext context, index, fontButton, toDo) {
     Buttons buttons =
         Buttons(toDoList: toDoList, index: index, context: context);
-    Color corConcluir = buttons.cor_concluir();
+    Color corConcluir = buttons.corConcluir();
 
     return Center(
       child: Card(
         elevation: 0,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(size_screen * 0.04),
+          borderRadius: BorderRadius.circular(sizeScreen * 0.04),
         ),
         child: Container(
-          width: size_screen * 0.9,
+          width: sizeScreen * 0.9,
           decoration: BoxDecoration(
               border:
-                  Border.all(color: Colors.blue, width: size_screen * 0.0008),
+                  Border.all(color: Colors.blue, width: sizeScreen * 0.0008),
               borderRadius:
-                  BorderRadius.all(Radius.circular(size_screen * 0.04))),
+                  BorderRadius.all(Radius.circular(sizeScreen * 0.04))),
           child: Slidable(
             actionPane: SlidableDrawerActionPane(),
             child: Container(
@@ -270,8 +266,8 @@ class _CardStructState extends State<CardStruct> {
                   ExpandablePanel(
                     header: Container(
                         padding: EdgeInsets.only(
-                          top: size_screen * 0.005,
-                          bottom: size_screen * 0.005,
+                          top: sizeScreen * 0.005,
+                          bottom: sizeScreen * 0.005,
                         ),
                         child: InkWell(
                             child: ListTile(
@@ -283,8 +279,8 @@ class _CardStructState extends State<CardStruct> {
                     expanded: CardContent(
                       valor: index,
                       texto: toDo,
-                      size_screen: size_screen,
-                      font_button: font_button,
+                      sizeScreen: sizeScreen,
+                      fontButton: fontButton,
                       corConcluir: corConcluir,
                       index: index,
                     ),
@@ -303,7 +299,7 @@ class _CardStructState extends State<CardStruct> {
                     int lastRemovedPos;
                     Map<String, dynamic> lastRemoved;
 
-                    toDoList[index]["dt_inativacao"] = 111;
+                    toDoList[index]["dtInativacao"] = 111;
 
                     saveData();
 
@@ -313,11 +309,11 @@ class _CardStructState extends State<CardStruct> {
                     flushbar = Flushbar<bool>(
                       animationDuration: Duration(milliseconds: 650),
                       message: "Tarefa removida",
-                      borderRadius: size_screen * 0.05,
+                      borderRadius: sizeScreen * 0.05,
                       margin: EdgeInsets.only(
-                        bottom: size_screen * 0.15,
-                        left: size_screen * 0.1,
-                        right: size_screen * 0.1,
+                        bottom: sizeScreen * 0.15,
+                        left: sizeScreen * 0.1,
+                        right: sizeScreen * 0.1,
                       ),
                       duration: Duration(seconds: 2),
                       mainButton: FlatButton(
@@ -327,7 +323,7 @@ class _CardStructState extends State<CardStruct> {
                         ),
                         onPressed: () {
                           setState(() {
-                            toDoList[index]["dt_inativacao"] = null;
+                            toDoList[index]["dtInativacao"] = null;
                             saveData();
                             flushbar.dismiss(true);
                           });
@@ -349,12 +345,12 @@ class _CardStructState extends State<CardStruct> {
   }
 
   modal(context, index) {
-    TextEditingController controller_text =
+    TextEditingController controllerText =
         TextEditingController(text: toDoList[index]["title"]);
 
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(size_screen * 0.04),
+          borderRadius: BorderRadius.circular(sizeScreen * 0.04),
         ),
         context: context,
         builder: (BuildContext context) {
@@ -365,17 +361,17 @@ class _CardStructState extends State<CardStruct> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Divider(
-                  height: size_screen * 0.05,
+                  height: sizeScreen * 0.05,
                   color: Colors.transparent,
                 ),
                 Text(
                   "Editor de Título",
                   style: TextStyle(
-                    fontSize: size_screen * 0.04,
+                    fontSize: sizeScreen * 0.04,
                   ),
                 ),
                 Divider(
-                  height: size_screen * 0.05,
+                  height: sizeScreen * 0.05,
                   color: Colors.transparent,
                 ),
                 Row(
@@ -385,17 +381,17 @@ class _CardStructState extends State<CardStruct> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.blue, width: size_screen * 0.0008),
+                            color: Colors.blue, width: sizeScreen * 0.0008),
                         borderRadius: BorderRadius.all(
-                            Radius.circular(size_screen * 0.02)),
+                            Radius.circular(sizeScreen * 0.02)),
                       ),
-                      width: size_screen * 0.65,
+                      width: sizeScreen * 0.65,
                       child: Padding(
                         padding: EdgeInsets.only(
-                            left: size_screen * 0.015,
-                            right: size_screen * 0.015),
+                            left: sizeScreen * 0.015,
+                            right: sizeScreen * 0.015),
                         child: TextField(
-                          controller: controller_text,
+                          controller: controllerText,
                           decoration: InputDecoration(
                             hintText: "Título",
                             border: InputBorder.none,
@@ -408,18 +404,18 @@ class _CardStructState extends State<CardStruct> {
                       elevation: 0,
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(size_screen * 0.02),
+                        borderRadius: BorderRadius.circular(sizeScreen * 0.02),
                       ),
                       child: InkWell(
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
                                 color: Colors.blue,
-                                width: size_screen * 0.0008),
+                                width: sizeScreen * 0.0008),
                             borderRadius: BorderRadius.all(
-                                Radius.circular(size_screen * 0.02)),
+                                Radius.circular(sizeScreen * 0.02)),
                           ),
-                          padding: EdgeInsets.all(size_screen * 0.03),
+                          padding: EdgeInsets.all(sizeScreen * 0.03),
                           child: Text(
                             "Salvar",
                             style: TextStyle(color: Colors.white),
@@ -427,8 +423,8 @@ class _CardStructState extends State<CardStruct> {
                         ),
                         onTap: () {
                           setState(() {
-                            if (controller_text.text.trim().isNotEmpty) {
-                              toDoList[index]["title"] = controller_text.text;
+                            if (controllerText.text.trim().isNotEmpty) {
+                              toDoList[index]["title"] = controllerText.text;
                               saveData();
                               Navigator.pop(context);
                             }
@@ -439,7 +435,7 @@ class _CardStructState extends State<CardStruct> {
                   ],
                 ),
                 Divider(
-                  height: size_screen * 0.05,
+                  height: sizeScreen * 0.05,
                   color: Colors.transparent,
                 ),
               ],
@@ -484,21 +480,21 @@ class _AgendarCardsState extends State<AgendarCards> {
   @override
   Widget build(BuildContext context) {
     for (int i = 0;
-        i < toDoList[widget.posicao]["dias_agendados"].length;
+        i < toDoList[widget.posicao]["diasAgendados"].length;
         i++) {
-      if (toDoList[widget.posicao]["dias_agendados"][i]) {
+      if (toDoList[widget.posicao]["diasAgendados"][i]) {
         toDoList[widget.posicao]["agendada"] = true;
 
-        if (toDoList[widget.posicao]["data_agenda"] != null ||
-            toDoList[widget.posicao]["data_agenda"] != "") {
-          cor_tarefa = Colors.blue;
+        if (toDoList[widget.posicao]["dataAgenda"] != null ||
+            toDoList[widget.posicao]["dataAgenda"] != "") {
+          cortarefa = Colors.blue;
         }
         break;
       } else {
         toDoList[widget.posicao]["agendada"] = false;
-        cor_tarefa = Colors.grey;
-        if (1 == toDoList[widget.posicao]["dias_agendados"].length - 1) {
-          toDoList[widget.posicao]["data_agenda"] =
+        cortarefa = Colors.grey;
+        if (1 == toDoList[widget.posicao]["diasAgendados"].length - 1) {
+          toDoList[widget.posicao]["dataAgenda"] =
               "Definir data final desta tarefa.";
         }
       }
@@ -506,8 +502,8 @@ class _AgendarCardsState extends State<AgendarCards> {
 
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue, width: size_screen * 0.0008),
-        borderRadius: BorderRadius.all(Radius.circular(size_screen * 0.04)),
+        border: Border.all(color: Colors.blue, width: sizeScreen * 0.0008),
+        borderRadius: BorderRadius.all(Radius.circular(sizeScreen * 0.04)),
       ),
       child: Card(
         elevation: 0,
@@ -516,8 +512,8 @@ class _AgendarCardsState extends State<AgendarCards> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(
-                top: size_screen * 0.015,
-                bottom: size_screen * 0.015,
+                top: sizeScreen * 0.015,
+                bottom: sizeScreen * 0.015,
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -528,23 +524,23 @@ class _AgendarCardsState extends State<AgendarCards> {
                       children: List<Widget>.generate(7, (dia) {
                         return InkWell(
                           child: Container(
-                            padding: EdgeInsets.all(size_screen * 0.008),
+                            padding: EdgeInsets.all(sizeScreen * 0.008),
                             child: Text(
                               dias[dia],
                               style: TextStyle(
                                   color: toDoList[widget.posicao]
-                                          ["dias_agendados"][dia]
+                                          ["diasAgendados"][dia]
                                       ? Colors.blue
                                       : Colors.grey),
                             ),
                           ),
                           onTap: () {
                             setState(() {
-                              toDoList[widget.posicao]["dias_agendados"][dia] =
-                                  !toDoList[widget.posicao]["dias_agendados"]
+                              toDoList[widget.posicao]["diasAgendados"][dia] =
+                                  !toDoList[widget.posicao]["diasAgendados"]
                                       [dia];
 
-                              if (toDoList[widget.posicao]["dias_agendados"]
+                              if (toDoList[widget.posicao]["diasAgendados"]
                                   [dia]) {
                                 toDoList[widget.posicao]["agendada"] = true;
                               }
@@ -553,22 +549,22 @@ class _AgendarCardsState extends State<AgendarCards> {
 
                               for (int i = 0;
                                   i <
-                                      toDoList[widget.posicao]["dias_agendados"]
+                                      toDoList[widget.posicao]["diasAgendados"]
                                           .length;
                                   i++) {
-                                if (!toDoList[widget.posicao]["dias_agendados"]
+                                if (!toDoList[widget.posicao]["diasAgendados"]
                                     [i]) {
                                   contador++;
                                 }
                               }
 
                               if (contador ==
-                                  toDoList[widget.posicao]["dias_agendados"]
+                                  toDoList[widget.posicao]["diasAgendados"]
                                       .length) {
                                 toDoList[widget.posicao]["agendada"] = false;
-                                toDoList[widget.posicao]["data_agenda"] =
+                                toDoList[widget.posicao]["dataAgenda"] =
                                     "Definir data final desta tarefa.";
-                                cor_tarefa = Colors.grey;
+                                cortarefa = Colors.grey;
                               }
                             });
                           },
@@ -579,23 +575,23 @@ class _AgendarCardsState extends State<AgendarCards> {
             ),
             InkWell(
               child: Container(
-                  padding: EdgeInsets.all(size_screen * 0.008),
+                  padding: EdgeInsets.all(sizeScreen * 0.008),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(left: size_screen * 0.03),
+                        padding: EdgeInsets.only(left: sizeScreen * 0.03),
                         child: Text(
                           toDoList[widget.posicao]["agendada"]
-                              ? toDoList[widget.posicao]["data_agenda"] !=
+                              ? toDoList[widget.posicao]["dataAgenda"] !=
                                           null &&
-                                      toDoList[widget.posicao]["data_agenda"] !=
+                                      toDoList[widget.posicao]["dataAgenda"] !=
                                           ""
-                                  ? toDoList[widget.posicao]["data_agenda"]
+                                  ? toDoList[widget.posicao]["dataAgenda"]
                                   : "Definir data final desta tarefa."
                               : "Definir data final desta tarefa.",
-                          style: TextStyle(color: cor_tarefa),
+                          style: TextStyle(color: cortarefa),
                         ),
                       ),
                     ],
@@ -603,9 +599,9 @@ class _AgendarCardsState extends State<AgendarCards> {
               onTap: () async {
                 bool verificar = false;
                 for (int i = 0;
-                    i < toDoList[widget.posicao]["dias_agendados"].length;
+                    i < toDoList[widget.posicao]["diasAgendados"].length;
                     i++) {
-                  if (toDoList[widget.posicao]["dias_agendados"][i]) {
+                  if (toDoList[widget.posicao]["diasAgendados"][i]) {
                     verificar = true;
                   }
                 }
@@ -621,10 +617,10 @@ class _AgendarCardsState extends State<AgendarCards> {
                       picked: picked,
                     );
                     toDoList[widget.posicao]["agendada"] = picked == null;
-                    toDoList[widget.posicao]["data_agenda"] =
-                        agendamento.data_agendamento();
+                    toDoList[widget.posicao]["dataAgenda"] =
+                        agendamento.dataAgendamento();
 
-                    cor_tarefa = toDoList[widget.posicao]["agendada"]
+                    cortarefa = toDoList[widget.posicao]["agendada"]
                         ? Colors.grey
                         : Colors.blue;
                   });
@@ -639,11 +635,11 @@ class _AgendarCardsState extends State<AgendarCards> {
                     ),
                     animationDuration: Duration(milliseconds: 450),
                     message: "Escolha algum dia para agendar.",
-                    borderRadius: size_screen * 0.05,
+                    borderRadius: sizeScreen * 0.05,
                     margin: EdgeInsets.only(
-                      bottom: size_screen * 0.15,
-                      left: size_screen * 0.1,
-                      right: size_screen * 0.1,
+                      bottom: sizeScreen * 0.15,
+                      left: sizeScreen * 0.1,
+                      right: sizeScreen * 0.1,
                     ),
                     duration: Duration(seconds: 2),
                   )..show(context).then((result) {
