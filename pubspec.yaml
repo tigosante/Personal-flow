@@ -1,5 +1,5 @@
 name: personal_flow
-description: A new Flutter project.
+description: Aplicativo de tarefas inteligentes.
 
 version: 1.0.0+1
 
@@ -9,17 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-
-  flushbar: ^1.9.1
+  
   expandable: ^3.0.1
-  date_format: ^1.0.8
-  path_provider: ^1.4.4
-  flutter_slidable: ^0.5.4
-  flutter_launcher_icons: ^0.7.4
-  flutter_local_notifications: ^0.8.4+3
-  flutter_animation_progress_bar: ^1.0.0
 
   cupertino_icons: ^0.1.2
 
@@ -27,29 +18,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+
 flutter:
-
   uses-material-design: true
-
-  assets:
-    - assets/logo_app.png
-    - assets/no_tasks.png
-  
-  fonts:
-    - family: Orkney-bold
-      fonts:
-        - asset: fonts/Orkney-bold.otf
-    - family: Orkney-light
-      fonts:
-        - asset: fonts/Orkney-light.otf
-    - family: Orkney-medium
-      fonts:
-        - asset: fonts/Orkney-medium.otf
-    - family: Orkney-regular
-      fonts:
-        - asset: fonts/Orkney-regular.otf
-
-flutter_icons:
-  android: true 
-  ios: true
-  image_path: "assets/logo_app.png"
