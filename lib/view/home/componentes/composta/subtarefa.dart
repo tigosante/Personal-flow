@@ -6,7 +6,7 @@ import 'package:personal_flow/view/home/componentes/composta/tituloSubtarefa.dar
 double _tamanhoTela = 0;
 
 class Subtarefa extends StatefulWidget {
-  Subtarefa({Key key}) : super(key: key);
+  Subtarefa({Key key}): super(key: key);
 
   @override
   _SubtarefaCompostaState createState() => _SubtarefaCompostaState();
@@ -18,7 +18,7 @@ class _SubtarefaCompostaState extends State<Subtarefa> {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
     return ListTile(
-      title: TituloSubtarefa(),
+      title   : TituloSubtarefa(),
       subtitle: DataHora(),
       trailing: IconeSubtarefa(),
     );

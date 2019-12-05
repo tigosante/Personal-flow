@@ -4,7 +4,7 @@ import 'package:personal_flow/controller/tarefas/composta/controllerComposta.dar
 CheckBoxComposta checkBoxComposta = CheckBoxComposta();
 
 class IconeSubtarefa extends StatefulWidget {
-  IconeSubtarefa({Key key}) : super(key: key);
+  IconeSubtarefa({Key key}): super(key: key);
 
   @override
   _IconeSubtarefaState createState() => _IconeSubtarefaState();
@@ -15,10 +15,10 @@ class _IconeSubtarefaState extends State<IconeSubtarefa> {
   Widget build(BuildContext context) {
     return Container(
       child: IconButton(
-        icon: checkBoxComposta.mudarEstado(),
-        onPressed: ()=>
-          setState(() {checkBoxComposta.estadoSet = checkBoxComposta.estadoGet;})
-      ),
+          icon     : checkBoxComposta.mudarEstado(),
+          onPressed: () => setState(() {
+                checkBoxComposta.estadoSet = checkBoxComposta.estadoGet;
+              })),
     );
   }
 }

@@ -4,19 +4,19 @@ import 'package:flutter/widgets.dart';
 class BarraProgresso extends StatefulWidget {
   BarraProgresso(
       {Key key,
-      this.currentValue = 0,
-      this.maxValue = 100,
-      this.size = 30,
-      this.animatedDuration = const Duration(milliseconds: 200),
-      this.direction = Axis.horizontal,
+      this.currentValue      = 0,
+      this.maxValue          = 100,
+      this.size              = 30,
+      this.animatedDuration  = const Duration(milliseconds: 200),
+      this.direction         = Axis.horizontal,
       this.verticalDirection = VerticalDirection.down,
-      this.borderRadius = 8,
-      this.backgroundColor = const Color(0x00FFFFFF),
-      this.progressColor = const Color(0xFFFA7268),
+      this.borderRadius      = 8,
+      this.backgroundColor   = const Color(0x00FFFFFF),
+      this.progressColor     = const Color(0xFFFA7268),
       this.changeColorValue,
       this.changeProgressColor = const Color(0xFF5F4B8B),
       this.displayText})
-      : super(key: key);
+      :  super(key: key);
   final int currentValue;
   final int maxValue;
   final double size;
@@ -39,11 +39,11 @@ class _BarraProgressoState extends State<BarraProgresso>
   Animation<double> _animation;
   AnimationController _controller;
   double _currentBegin = 0;
-  double _currentEnd = 0;
+  double _currentEnd   = 0;
 
   @override
   void initState() {
-    _controller =
+    _controller = 
         AnimationController(duration: widget.animatedDuration, vsync: this);
     _animation = Tween<double>(begin: _currentBegin, end: _currentEnd)
         .animate(_controller);
@@ -60,8 +60,8 @@ class _BarraProgressoState extends State<BarraProgresso>
   void triggerAnimation() {
     setState(() {
       _currentBegin = _animation.value;
-      _currentEnd = widget.currentValue / widget.maxValue;
-      _animation = Tween<double>(begin: _currentBegin, end: _currentEnd)
+      _currentEnd   = widget.currentValue / widget.maxValue;
+      _animation    = Tween<double>(begin: _currentBegin, end: _currentEnd)
           .animate(_controller);
     });
     _controller.reset();
@@ -71,7 +71,7 @@ class _BarraProgressoState extends State<BarraProgresso>
   @override
   Widget build(BuildContext context) => AnimatedProgressBar(
         animation: _animation,
-        widget: widget,
+        widget   : widget,
       );
 
   @override
@@ -91,12 +91,12 @@ class AnimatedProgressBar extends AnimatedWidget {
 
   double transformValue(x, begin, end, before) {
     double y = (end * x - (begin - before)) * (1 / before);
-    return y < 0 ? 0 : ((y > 1) ? 1 : y);
+    return y < 0 ? 0: ((y > 1) ? 1 : y);
   }
 
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
-    Color progressColor = widget.progressColor;
+    Color progressColor               = widget.progressColor;
 
     if (widget.changeColorValue != null) {
       final _colorTween = ColorTween(
@@ -106,9 +106,9 @@ class AnimatedProgressBar extends AnimatedWidget {
     }
 
     List<Widget> progressWidgets = [];
-    Widget progressWidget = new Container(
+    Widget       progressWidget  = new Container(
         decoration: BoxDecoration(
-      color: progressColor,
+      color       : progressColor,
       borderRadius: BorderRadius.circular(widget.borderRadius),
     ));
     progressWidgets.add(progressWidget);
@@ -124,21 +124,21 @@ class AnimatedProgressBar extends AnimatedWidget {
               (animation.value * widget.maxValue).toInt().toString() +
                   widget.displayText,
               softWrap: false,
-              style: TextStyle(color: const Color(0xFFFFFFFF), fontSize: 12)));
+              style   : TextStyle(color: const Color(0xFFFFFFFF), fontSize: 12)));
       progressWidgets.add(textProgress);
     }
 
     return Directionality(
       textDirection: TextDirection.ltr,
-      child: Container(
+      child        : Container(
         // width: widget.direction == Axis.vertical ? widget.size : null,
         height: MediaQuery.of(context).size.width * 0.015,
-        child: Flex(
-          direction: widget.direction,
+        child : Flex(
+          direction        : widget.direction,
           verticalDirection: widget.verticalDirection,
-          children: <Widget>[
+          children         : <Widget>[
             Expanded(
-                flex: (animation.value * 100).toInt(),
+                flex : (animation.value * 100).toInt(),
                 child: Stack(children: progressWidgets)),
             Expanded(
                 flex: 100 - (animation.value * 100).toInt(), child: Container())

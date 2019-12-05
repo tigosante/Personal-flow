@@ -8,33 +8,33 @@ List<Widget> geradorLista(quantidade, componente) {
 
 Widget geradorCorpo(quantidade, componente) {
   return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize      : MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: geradorLista(quantidade, componente));
+      children          : geradorLista(quantidade, componente));
 }
 
 Widget barraProgresso() {
   return BarraProgresso(
-    maxValue: 10,
-    currentValue: 5,
+    maxValue     : 10,
+    currentValue : 5,
     progressColor: Colors.blue[300],
   );
 }
 
 modal(context, _tamanhoTela, tipo, tarefa) {
-  String botao = "";
-  String titulo = "";
+  String botao   = "";
+  String titulo  = "";
   String hinText = "";
 
   switch (tipo) {
-    case "adicionar":
-      botao = "Adicionar";
-      titulo = "Adiconar Subtarefa";
+    case "adicionar": 
+      botao   = "Adicionar";
+      titulo  = "Adiconar Subtarefa";
       hinText = "Nova tarefa";
       break;
-    case "editar":
-      botao = "Salvar";
-      titulo = "Editor de título";
+    case "editar": 
+      botao   = "Salvar";
+      titulo  = "Editor de título";
       hinText = "Título";
       break;
   }
@@ -51,8 +51,8 @@ modal(context, _tamanhoTela, tipo, tarefa) {
 class CheckBoxComposta {
   bool _estado = false;
 
-  bool get estadoGet => _estado;
-  set estadoSet(estadoGet) => _estado = !estadoGet;
+  bool get estadoGet        => _estado;
+  set  estadoSet(estadoGet) => _estado = !estadoGet;
 
   mudarEstado() {
     return _estado

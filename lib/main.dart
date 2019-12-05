@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_flow/view/home/home.dart';
-
+import 'package:personal_flow/view/telas.dart';
 
 void main() => runApp(new MyApp());
 
@@ -13,9 +12,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: "Personal Flow",
+      title                     : "Personal Flow",
+      home                      : Telas(),
       debugShowCheckedModeBanner: false,
-      home: Home(),
     );
   }
 }
