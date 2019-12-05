@@ -1,4 +1,4 @@
-# Personal Flow: Aplicativo de tarefas inteligente
+# Personal Flow: Aplicativo de tarefas inteligentes
     Autor: Tiago dos Santos Silva
     e-mail: tsilvasantos38@gmail.com
 
