@@ -15,7 +15,6 @@ class _OpcoesCompostaState extends State<OpcoesComposta> {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
     return Padding(
       padding: EdgeInsets.only(
-        top: _tamanhoTela * 0.03,
         left: _tamanhoTela * 0.02,
         right: _tamanhoTela * 0.02
       ),
@@ -24,31 +23,29 @@ class _OpcoesCompostaState extends State<OpcoesComposta> {
          mainAxisAlignment: MainAxisAlignment.end,
          children: <Widget>[
            FlatButton(
-            splashColor: Colors.amber[200],
-            highlightColor: Colors.amber[200],
+            splashColor: Colors.blueGrey[50],
+            highlightColor: Colors.blueGrey[50],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(_tamanhoTela * 0.02),
             ),
             child: Text(
               "Editar",
               style: TextStyle(
-                color: Colors.amber[700],
+                color: Colors.blueGrey,
               ),
             ),
             onPressed: (){},
            ),
-           RaisedButton(
-            splashColor: Colors.teal[300],
-            highlightColor: Colors.teal[300],
+           FlatButton(
+            splashColor: Colors.blue[50],
+            highlightColor: Colors.blue[50],
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(_tamanhoTela * 0.02),
             ),
-            elevation: 1,
-            color: Colors.teal,
             child: Text(
               "Concluir",
               style: TextStyle(
-                color: Colors.white
+                color: Colors.blue[400]
               ),
             ),
             onPressed: (){},

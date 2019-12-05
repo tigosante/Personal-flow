@@ -17,25 +17,10 @@ class _SubtarefaCompostaState extends State<Subtarefa> {
   Widget build(BuildContext context) {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: _tamanhoTela * 0.02
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-            TituloSubtarefa(),
-            DataHora(),
-            ],
-          ),
-          IconeSubtarefa(),
-        ],
-      ),
+    return ListTile(
+      title: TituloSubtarefa(),
+      subtitle: DataHora(),
+      trailing: IconeSubtarefa(),
     );
   }
 }
