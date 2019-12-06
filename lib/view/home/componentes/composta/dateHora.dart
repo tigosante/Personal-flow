@@ -4,7 +4,6 @@ double _tamanhoTela = 0;
 
 class DataHora extends StatefulWidget {
   DataHora({Key key}): super(key: key);
-
   @override
   _DataHoraState createState() => _DataHoraState();
 }
@@ -15,7 +14,6 @@ class _DataHoraState extends State<DataHora> {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
     return Container(
-      margin: EdgeInsets.only(left: _tamanhoTela * 0.02),
       child : Row(
         children: <Widget>[
           Text("Data"),

@@ -1,15 +1,15 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_flow/controller/tarefas/composta/controllerComposta.dart';
-import 'package:personal_flow/view/home/componentes/composta/adiconarSubtarefa.dart';
+import 'package:personal_flow/view/home/componentes/agendar.dart';
 import 'package:personal_flow/view/home/componentes/composta/opcoesCompost.dart';
 import 'package:personal_flow/view/home/componentes/composta/subtarefa.dart';
 
 double _tamanhoTela = 0;
-String tipo         = "editar";
+String _tipo = "editar";
 
 class Composta extends StatefulWidget {
-  Composta({Key key}): super(key: key);
+  Composta({Key key}) : super(key: key);
 
   @override
   _CompostaState createState() => _CompostaState();
@@ -23,24 +23,22 @@ class _CompostaState extends State<Composta> {
 
     return Center(
       child: Card(
+        elevation: 0.5,
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation   : 0,
-        shape       : RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(_tamanhoTela * 0.02),
         ),
-        color: Colors.white,
         child: Container(
-            width: _tamanhoTela * 0.5,
+            width: _tamanhoTela * 0.95,
             child: ExpandablePanel(
-              iconColor        : Colors.blue,
-              tapHeaderToExpand: true,
-              headerAlignment  : ExpandablePanelHeaderAlignment.center,
-              header           : ListTile(
+              iconColor: Colors.indigo,
+              headerAlignment: ExpandablePanelHeaderAlignment.center,
+              header: ListTile(
                 title: Text(
                   tarefa,
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
-                onTap: () => modal(context, _tamanhoTela, tipo, tarefa),
+                onTap: () => modal(context, _tamanhoTela, _tipo, tarefa),
               ),
               collapsed: Container(
                 child: barraProgresso(),
@@ -51,8 +49,22 @@ class _CompostaState extends State<Composta> {
                 ),
                 child: Column(
                   children: <Widget>[
-                    geradorCorpo(5, Subtarefa()),
-                    AdiconarSubtarefa(),
+                    Agendar(
+                      cor: Colors.indigo,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: _tamanhoTela * 0.03,
+                        bottom: _tamanhoTela * 0.05
+                      ),
+                      child: Container(
+                        width: _tamanhoTela * 0.9,
+                          decoration: BoxDecoration(
+                              color: Colors.indigo[50],
+                              borderRadius:
+                                  BorderRadius.circular(_tamanhoTela * 0.025)),
+                          child: geradorCorpo(5, Subtarefa())),
+                    ),
                     OpcoesComposta(),
                     barraProgresso(),
                   ],

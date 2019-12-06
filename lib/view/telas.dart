@@ -7,16 +7,29 @@ import 'package:personal_flow/view/home/home.dart';
 int          _paginaIndex = 0;
 List<Widget> _pagina      = [Home(), Grafico()];
 
+double _tamanhoTela = 0;
+
 String titulo = "Tarefas";
 
-Color bola      = Colors.amber[700];
-Color barra     = Colors.blue[700];
-Color aciton    = Colors.blue[900];
-Color drawer    = Colors.blue[700];
-Color appbar    = Colors.blue[500];
-Color tarefa    = Colors.black;
-Color grafico   = Colors.white;
-Color corTitulo = Colors.amber[900];
+Color _bola    = Colors.amber[800];
+Color _barra   = Colors.indigo[800];
+Color _aciton  = Colors.indigo[900];
+Color _appbar  = Colors.indigo[800];
+Color _tarefa  = Colors.black;
+Color _grafico = Colors.white;
+
+dynamic _iconeEsquerda = Icon(
+  Icons.list,
+  color: _tarefa,
+);
+
+dynamic _iconeDireita = CircleAvatar(
+  child: Icon(
+    Icons.list,
+    color: _tarefa,
+  ),
+  backgroundColor: _barra,
+);
 
 class Telas extends StatefulWidget {
   Telas({Key key}): super(key: key);
@@ -29,41 +42,72 @@ class _TelasState extends State<Telas> {
   @override
   Widget build(BuildContext context) {
     setState(() {
+      _tamanhoTela = MediaQuery.of(context).size.width;
+
       if (_paginaIndex == 0) {
-        titulo    = "Tarefas";
-        bola      = Colors.amber[700];
-        barra     = Colors.blue[700];
-        aciton    = Colors.blue[900];
-        drawer    = Colors.blue[200];
-        appbar    = Colors.blue[200];
-        tarefa    = Colors.black;
-        grafico   = Colors.white;
-        corTitulo = Colors.blue[800];
+        titulo   = "Tarefas";
+        _bola    = Colors.amber[800];
+        _barra   = Colors.indigo[800];
+        _aciton  = Colors.indigo[900];
+        _appbar  = Colors.indigo[800];
+        _tarefa  = Colors.white;
+        _grafico = Colors.white;
+
+        _iconeEsquerda = Icon(
+          Icons.list,
+          color: _tarefa,
+        );
+
+        _iconeDireita = _iconeDireita = CircleAvatar(
+          child: Icon(
+            Icons.format_line_spacing,
+            color: _bola,
+          ),
+          backgroundColor: _grafico,
+        );
       } else {
-        titulo    = "Gráfico";
-        bola      = Colors.blue[700];
-        barra     = Colors.amber[700];
-        aciton    = Colors.amber[900];
-        drawer    = Colors.amber[200];
-        appbar    = Colors.amber[200];
-        tarefa    = Colors.black;
-        grafico   = Colors.white;
-        corTitulo = Colors.amber[900];
+        titulo   = "Gráfico";
+        _bola    = Colors.indigo[800];
+        _barra   = Colors.amber[800];
+        _aciton  = Colors.amber[900];
+        _appbar  = Colors.amber[800];
+        _tarefa  = Colors.white;
+        _grafico = Colors.white;
+
+        _iconeEsquerda = _iconeDireita = CircleAvatar(
+          child: Icon(
+            Icons.list,
+            color: _bola,
+          ),
+          backgroundColor: _grafico,
+        );
+
+        _iconeDireita = Icon(
+          Icons.format_line_spacing,
+          color: _tarefa,
+        );
       }
     });
+
     return Scaffold(
-      drawerScrimColor: drawer,
-      endDrawer       : Drawer(
+      backgroundColor: Colors.grey[50],
+      drawer         : Drawer(
         elevation: 0,
         child    : DrawerPainel(),
       ),
       appBar: AppBar(
         elevation       : 0,
-        backgroundColor : appbar,
-        actionsIconTheme: IconThemeData(color: aciton),
+        backgroundColor : Colors.transparent,
+        iconTheme: IconThemeData(color: _aciton),
+        actions: <Widget>[
+          _paginaIndex == 0 ?IconButton(
+            icon: Icon(Icons.search),
+            onPressed: (){},
+          ) : Container(color: Colors.transparent,)
+        ],
         title           : Text(
           titulo,
-          style: TextStyle(color: corTitulo),
+          style: TextStyle(color: _appbar),
         ),
       ),
       body: PageView.builder(
@@ -74,21 +118,17 @@ class _TelasState extends State<Telas> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         index                : _paginaIndex,
-        color                : barra,
+        color                : _barra,
+        height               : _tamanhoTela * 0.15,
         backgroundColor      : Colors.white,
-        buttonBackgroundColor: bola,
+        buttonBackgroundColor: _bola,
         items                : <Widget>[
-          Icon(
-            Icons.list,
-            color: tarefa,
-          ),
-          Icon(
-            Icons.format_line_spacing,
-            color: grafico,
-          ),
+          _iconeEsquerda,
+          _iconeDireita,
         ],
         onTap: (index) => setState(() => _paginaIndex = index),
       ),
+
     );
   }
 }

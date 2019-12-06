@@ -37,7 +37,8 @@ class _EdiatarAdicionarTextoState extends State<EdiatarAdicionarTexto> {
             child: Text(
               widget.titulo,
               style: TextStyle(
-                fontSize  : _tamanhoTela * 0.035,
+                color: Colors.indigo[400],
+                fontSize  : _tamanhoTela * 0.04,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -50,21 +51,35 @@ class _EdiatarAdicionarTextoState extends State<EdiatarAdicionarTexto> {
             ),
             child: Row(
               mainAxisSize     : MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children         : <Widget>[
                 Expanded(
-                  child: TextField(
-                      controller: controllerText,
-                      decoration: InputDecoration(
-                        hintText: widget.hinText,
-                        border  : InputBorder.none,
-                      )),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.indigo[50],
+                            width: _tamanhoTela * 0.004),
+                        borderRadius: 
+                            BorderRadius.circular(_tamanhoTela * 0.04)),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: _tamanhoTela * 0.025),
+                      child  : TextField(
+                          controller: controllerText,
+                          decoration: InputDecoration(
+                            hintText: widget.hinText,
+                            border  : InputBorder.none,
+                          )),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: _tamanhoTela * 0.05,
                 ),
                 RaisedButton(
                   elevation     : 0,
-                  color         : Colors.teal[300],
-                  splashColor   : Colors.teal[400],
-                  highlightColor: Colors.teal[400],
+                  color         : Colors.indigo[300],
+                  splashColor   : Colors.indigo[400],
+                  highlightColor: Colors.indigo[400],
                   shape         : RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(_tamanhoTela * 0.02),
                   ),
