@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_flow/controller/tarefas/composta/controllerComposta.dart';
+import 'package:personal_flow/controller/geral.dart';
 
 double _tamanhoTela = 0;
 

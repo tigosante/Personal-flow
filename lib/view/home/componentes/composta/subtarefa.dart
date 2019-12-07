@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_flow/controller/tarefas/composta/controllerComposta.dart';
+import 'package:personal_flow/controller/geral.dart';
 import 'package:personal_flow/view/home/componentes/composta/dateHora.dart';
 import 'package:personal_flow/view/home/componentes/composta/iconeSubtarefa.dart';
 import 'package:personal_flow/view/home/componentes/composta/tituloSubtarefa.dart';

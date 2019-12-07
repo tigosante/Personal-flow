@@ -14,12 +14,13 @@ class Dias extends StatefulWidget {
 }
 
 class _DiasState extends State<Dias> {
+
   @override
   Widget build(BuildContext context) {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
     return Card(
-      color       : _selecionado ? widget.cor : Colors.grey[100],
+      color       : _selecionado ? widget.cor : Color.fromRGBO(242, 242, 242, 0.8),
       elevation   : 0.1,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape       : RoundedRectangleBorder(
@@ -35,7 +36,7 @@ class _DiasState extends State<Dias> {
             widget.dias,
             style: TextStyle(
                 fontWeight: FontWeight.w500,
-                color     : _selecionado ? Colors.white: Colors.grey),
+                color     : _selecionado ? Colors.white: Colors.grey[800]),
           ),
         ),
         onTap: () {

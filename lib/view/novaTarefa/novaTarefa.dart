@@ -15,11 +15,11 @@ class _NovaTarefaState extends State<NovaTarefa> {
         appBar: AppBar(
           title: Text(
             "Nova Tarefa",
-            style: TextStyle(color: Colors.amber),
+            style: TextStyle(color: Colors.amber[700]),
           ),
           elevation      : 0,
-          backgroundColor: Colors.indigo[700],
-          iconTheme      : IconThemeData(color: Colors.amber),
+          backgroundColor: Colors.transparent,
+          iconTheme      : IconThemeData(color: Colors.amber[700]),
         ),
         body                : Corpo(),
         floatingActionButton: FloatingActionButton.extended(

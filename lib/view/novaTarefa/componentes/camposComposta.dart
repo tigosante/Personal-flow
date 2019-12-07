@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personal_flow/controller/tarefas/composta/controllerComposta.dart';
+import 'package:personal_flow/controller/novaTarefa.dart';
 import 'package:personal_flow/view/novaTarefa/componentes/novaSubComposta.dart';
 
 double _tamanhoTela = 0;
@@ -25,7 +25,7 @@ class _CamposCompostaState extends State<CamposComposta> {
       child: Container(
         width: _tamanhoTela * 0.95,
         decoration: BoxDecoration(
-          color: Colors.indigo[50],
+          color: Color.fromRGBO(0, 15, 243, 0.1),
           borderRadius: BorderRadius.circular(_tamanhoTela * 0.025)
         ),
         child: Column(
@@ -33,6 +33,8 @@ class _CamposCompostaState extends State<CamposComposta> {
           children: <Widget>[
             ListTile(
             title: TextField(
+              minLines: 1,
+              maxLines: 8,
               controller: controller,
               decoration: InputDecoration(
                 hintText: "Tarefa",
@@ -41,7 +43,7 @@ class _CamposCompostaState extends State<CamposComposta> {
             ),
             subtitle: Column(
               mainAxisSize: MainAxisSize.min,
-              children: geradorNovaComposta(3, NovaSubComposta()),
+              children: geradorNovaComposta(2, NovaSubComposta()),
             )
           ),
           ],

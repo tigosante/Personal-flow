@@ -18,11 +18,12 @@ class _NovaSubCompostaState extends State<NovaSubComposta> {
 
     return Container(
       decoration: BoxDecoration(
-          color       : Colors.indigo[50],
           borderRadius: BorderRadius.circular(_tamanhoTela * 0.025)),
       child: ListTile(
         title: TextField(
           controller: controller,
+          minLines: 1,
+          maxLines: 8,
           decoration: InputDecoration(
             hintText: "Tarefa",
             border  : InputBorder.none,
@@ -32,7 +33,7 @@ class _NovaSubCompostaState extends State<NovaSubComposta> {
         trailing: IconButton(
           icon: Icon(
             Icons.add_circle,
-            color: Colors.indigo,
+            color: Colors.amber[700],
           ),
           onPressed: () {},
         ),

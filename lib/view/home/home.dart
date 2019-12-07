@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_flow/controller/tarefas/composta/controllerComposta.dart';
+import 'package:personal_flow/controller/geral.dart';
 import 'package:personal_flow/view/home/tarefas/composta.dart';
 import 'package:personal_flow/view/home/tarefas/simples.dart';
 import 'package:personal_flow/view/novaTarefa/novaTarefa.dart';
 
 List<Widget> _telas       = [Simples(), Composta()];
 double       _tamanhoTela = 0;
+
+String _tipo = "tarefas";
 
 class Home extends StatefulWidget {
   Home({Key key}): super(key: key);
@@ -26,8 +28,13 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.only(
               top: _tamanhoTela * 0.02, bottom: _tamanhoTela * 0.2),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children         : geradorTarefas(5, _telas)),
+            children: <Widget>[
+              tituloPaginas(_tipo, _tamanhoTela),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children         : geradorTarefas(5, _telas)),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(

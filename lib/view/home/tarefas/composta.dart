@@ -1,6 +1,7 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_flow/controller/tarefas/composta/controllerComposta.dart';
+import 'package:personal_flow/controller/geral.dart';
+import 'package:personal_flow/controller/composta.dart';
 import 'package:personal_flow/view/home/componentes/agendar.dart';
 import 'package:personal_flow/view/home/componentes/composta/opcoesCompost.dart';
 import 'package:personal_flow/view/home/componentes/composta/subtarefa.dart';
@@ -60,10 +61,10 @@ class _CompostaState extends State<Composta> {
                       child: Container(
                         width: _tamanhoTela * 0.9,
                           decoration: BoxDecoration(
-                              color: Colors.indigo[50],
+                              color: Color.fromRGBO(0, 15, 243, 0.1),
                               borderRadius:
                                   BorderRadius.circular(_tamanhoTela * 0.025)),
-                          child: geradorCorpo(5, Subtarefa())),
+                          child: geradorCorpo(3, Subtarefa())),
                     ),
                     OpcoesComposta(),
                     barraProgresso(),

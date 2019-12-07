@@ -9,12 +9,10 @@ List<Widget> _pagina      = [Home(), Grafico()];
 
 double _tamanhoTela = 0;
 
-String titulo = "Tarefas";
 
 Color _bola    = Colors.amber[800];
 Color _barra   = Colors.indigo[800];
 Color _aciton  = Colors.indigo[900];
-Color _appbar  = Colors.indigo[800];
 Color _tarefa  = Colors.black;
 Color _grafico = Colors.white;
 
@@ -45,11 +43,9 @@ class _TelasState extends State<Telas> {
       _tamanhoTela = MediaQuery.of(context).size.width;
 
       if (_paginaIndex == 0) {
-        titulo   = "Tarefas";
         _bola    = Colors.amber[800];
         _barra   = Colors.indigo[800];
         _aciton  = Colors.indigo[900];
-        _appbar  = Colors.indigo[800];
         _tarefa  = Colors.white;
         _grafico = Colors.white;
 
@@ -66,11 +62,9 @@ class _TelasState extends State<Telas> {
           backgroundColor: _grafico,
         );
       } else {
-        titulo   = "Gráfico";
         _bola    = Colors.indigo[800];
         _barra   = Colors.amber[800];
         _aciton  = Colors.amber[900];
-        _appbar  = Colors.amber[800];
         _tarefa  = Colors.white;
         _grafico = Colors.white;
 
@@ -95,23 +89,8 @@ class _TelasState extends State<Telas> {
         elevation: 0,
         child    : DrawerPainel(),
       ),
-      appBar: AppBar(
-        elevation       : 0,
-        backgroundColor : Colors.transparent,
-        iconTheme: IconThemeData(color: _aciton),
-        actions: <Widget>[
-          _paginaIndex == 0 ?IconButton(
-            icon: Icon(Icons.search),
-            onPressed: (){},
-          ) : Container(color: Colors.transparent,)
-        ],
-        title           : Text(
-          titulo,
-          style: TextStyle(color: _appbar),
-        ),
-      ),
       body: PageView.builder(
-        controller   : PageController(initialPage: _paginaIndex),
+        controller   : PageController(initialPage: 0),
         itemCount    : _pagina.length,
         itemBuilder  : (BuildContext context, int index) => _pagina[_paginaIndex],
         onPageChanged: (index) => setState(() => _paginaIndex = index),
@@ -119,8 +98,8 @@ class _TelasState extends State<Telas> {
       bottomNavigationBar: CurvedNavigationBar(
         index                : _paginaIndex,
         color                : _barra,
-        height               : _tamanhoTela * 0.15,
-        backgroundColor      : Colors.white,
+        height               : _tamanhoTela * 0.13,
+        backgroundColor      : _barra,
         buttonBackgroundColor: _bola,
         items                : <Widget>[
           _iconeEsquerda,

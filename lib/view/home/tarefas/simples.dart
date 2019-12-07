@@ -1,6 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_flow/controller/tarefas/composta/controllerComposta.dart';
+import 'package:personal_flow/controller/geral.dart';
 import 'package:personal_flow/view/home/componentes/agendar.dart';
 import 'package:personal_flow/view/home/componentes/composta/dateHora.dart';
 
