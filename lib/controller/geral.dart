@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_flow/view/componentes/botoes.dart';
 import 'package:personal_flow/view/home/componentes/composta/editarAdiconarTexto.dart';
 import 'package:personal_flow/view/home/componentes/dias.dart';
 
@@ -8,8 +9,12 @@ List<Widget> geradorTarefas(int quantidade, List<Widget> tela) {
       quantidade, (item) => item % 2 == 0 ? tela[0] : tela[1]);
 }
 
-List<Widget> geradorLista(quantidade, componente) {
+List<Widget> geradorLista(int quantidade, Widget componente) {
   return List<Widget>.generate(quantidade, (_) => componente);
+}
+
+List<Widget> gerarBotoesSeletores(int quantidade, String tipo, List<String> textos) {
+  return List<Widget>.generate(quantidade, (int item)=> BotoesSeletores(texto: textos[item],));
 }
 
 List<Widget> geradorListaDias(cor) {
@@ -76,8 +81,8 @@ Widget tituloPaginas(String _tipo, double _tamanhoTela) {
       );
       break;
 
-    case "grafico": 
-      _titulo   = "Gráfico";
+    case "desempenho": 
+      _titulo   = "Desempenho";
       _cor      = Colors.amber[800];
       _trailing = IconButton(
         icon     : Icon(Icons.more_horiz, color: Colors.amber[800]),

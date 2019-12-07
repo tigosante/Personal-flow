@@ -9,11 +9,11 @@ Widget geradorCorpo(int quantidade, Widget componente) {
       children          : geradorLista(quantidade, componente));
 }
 
-Widget barraProgresso() {
+Widget barraProgresso(Color cor) {
   return BarraProgresso(
     maxValue     : 10,
     currentValue : 5,
-    progressColor: Colors.indigo[300],
+    progressColor: cor,
   );
 }
 

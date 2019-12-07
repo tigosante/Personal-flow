@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:personal_flow/view/DrawerPainel.dart';
 import 'package:personal_flow/view/componentes/barraNavegacao.dart';
-import 'package:personal_flow/view/grafico/grafico.dart';
+import 'package:personal_flow/view/desempenho/desempenho.dart';
 import 'package:personal_flow/view/home/home.dart';
 
 int          _paginaIndex = 0;
-List<Widget> _pagina      = [Home(), Grafico()];
+List<Widget> _pagina      = [Home(), Desempenho()];
 
 double _tamanhoTela = 0;
 

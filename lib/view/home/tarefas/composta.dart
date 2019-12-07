@@ -42,7 +42,7 @@ class _CompostaState extends State<Composta> {
                 onTap: () => modal(context, _tamanhoTela, _tipo, tarefa),
               ),
               collapsed: Container(
-                child: barraProgresso(),
+                child: barraProgresso(Colors.indigo[300]),
               ),
               expanded: Container(
                 padding: EdgeInsets.only(
@@ -67,7 +67,7 @@ class _CompostaState extends State<Composta> {
                           child: geradorCorpo(3, Subtarefa())),
                     ),
                     OpcoesComposta(),
-                    barraProgresso(),
+                    barraProgresso(Colors.indigo[300]),
                   ],
                 ),
               ),

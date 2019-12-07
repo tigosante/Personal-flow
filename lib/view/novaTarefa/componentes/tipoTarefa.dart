@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:personal_flow/controller/geral.dart';
 
-int _paginaIndex = 0;
-bool   _selecionada = true;
-double _tamanhoTela = 0;
+int          _paginaIndex = 0;
+double       _tamanhoTela = 0;
+String tipo = "novaTarefa";
+List<bool>   _selecionada = [true, false];
+List<String> _textos      = ["Compostas", "Simples"];
 
 class TipoTarefa extends StatefulWidget {
-  TipoTarefa({Key key, this.tipo}): super(key: key);
-
-  int tipo;
+  TipoTarefa({Key key}): super(key: key);
 
   @override
   _TipoTarefaState createState() => _TipoTarefaState();
@@ -16,81 +17,31 @@ class TipoTarefa extends StatefulWidget {
 class _TipoTarefaState extends State<TipoTarefa> {
   @override
   Widget build(BuildContext context) {
-    setState((){
-      _tamanhoTela = MediaQuery.of(context).size.width;
-      _paginaIndex = widget.tipo;
-    });
+    setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
     return Center(
-      child: Card(
-        elevation   : 0,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape       : RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_tamanhoTela * 0.05),
-        ),
-        child: Container(
-          width     : _tamanhoTela * 0.8,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(_tamanhoTela * 0.05),
-            border      : Border.all(color: Colors.indigo, width: _tamanhoTela * 0.002),
-          ),
-          child: Row(
-            mainAxisSize     : MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children         : <Widget>[
-              InkWell(
-                splashColor   : Colors.indigo[50],
-                highlightColor: Colors.indigo[50],
-                child         : Container(
-                  padding: EdgeInsets.only(
-                    top   : _tamanhoTela * 0.03,
-                    left  : _tamanhoTela * 0.05,
-                    right : _tamanhoTela * 0.05,
-                    bottom: _tamanhoTela * 0.03,
-                  ),
-                  color: _selecionada ? Colors.indigo: Colors.transparent,
-                  width: _tamanhoTela * 0.398,
-                  child: Center(
-                    child: Text(
-                      "Composta",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color     : _selecionada ? Colors.white: Colors.grey,
-                      ),
-                    ),
-                  ),
-                ),
-                onTap: () => setState(() => _selecionada = !(_paginaIndex == 0)),
-              ),
-              InkWell(
-                splashColor   : Colors.indigo[50],
-                highlightColor: Colors.indigo[50],
-                child         : Container(
-                  padding: EdgeInsets.only(
-                    top   : _tamanhoTela * 0.03,
-                    left  : _tamanhoTela * 0.05,
-                    right : _tamanhoTela * 0.05,
-                    bottom: _tamanhoTela * 0.03,
-                  ),
-                  color: _selecionada ? Colors.transparent: Colors.indigo,
-                  width: _tamanhoTela * 0.398,
-                  child: Center(
-                    child: Text(
-                      "Simples",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color     : _selecionada ? Colors.grey: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                onTap: () => setState((){
-                  _selecionada = _paginaIndex == 1;
-                }),
-              ),
-            ],
-          ),
-        ),
+      child: ToggleButtons(
+        isSelected         : _selecionada,
+        color              : Colors.grey,
+        fillColor          : Colors.indigo[700],
+        hoverColor         : Colors.indigo[100],
+        focusColor         : Colors.indigo[100],
+        splashColor        : Colors.indigo[200],
+        borderColor        : Colors.indigo[700],
+        selectedColor      : Colors.white,
+        disabledColor      : Colors.transparent,
+        highlightColor     : Colors.indigo[50],
+        disabledBorderColor: Colors.grey,
+        selectedBorderColor: Colors.indigo[700],
+        borderRadius       : BorderRadius.circular(_tamanhoTela * 0.05),
+        children           : gerarBotoesSeletores(2, tipo, _textos),
+
+        onPressed: (int item) => setState(() {
+          for (int i = 0; i < _selecionada.length; i++) {
+            _selecionada[i] = false;
+          }
+          _selecionada[item] = true;
+        }),
       ),
     );
   }

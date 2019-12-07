@@ -17,19 +17,17 @@ class _EscolhaTarefaState extends State<EscolhaTarefa> {
     return Center(
       child: Padding(
         padding: EdgeInsets.only(
-          top: _tamanhoTela * 0.02,
           bottom: _tamanhoTela * 0.01,
         ),
         child: Container(
-          padding: EdgeInsets.all(_tamanhoTela * 0.03),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.indigo
-            ),
-            borderRadius: BorderRadius.circular(_tamanhoTela * 0.05),
+          padding: EdgeInsets.only(
+            top: _tamanhoTela * 0.02,
+            left: _tamanhoTela * 0.04,
+            right: _tamanhoTela * 0.04,
+            bottom: _tamanhoTela * 0.02,
           ),
           child: Text(
-            "Escolha um tipo de tarefa",
+            "Tipo de tarefa",
             style: TextStyle(
                 fontWeight: FontWeight.w500, color: Colors.indigo),
           ),

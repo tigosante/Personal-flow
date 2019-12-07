@@ -22,6 +22,8 @@ class _CorpoState extends State<Corpo> {
 
     return SingleChildScrollView(
       child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           EscolhaTarefa(),
           TipoTarefa(),
@@ -29,7 +31,7 @@ class _CorpoState extends State<Corpo> {
             padding: EdgeInsets.only(top: _tamanhoTela * 0.05, bottom: _tamanhoTela * 0.03),
             child  : Agendar(cor: Colors.indigo),
           ),
-          
+          true ? CampoSimples() : CamposComposta()
         ],
       ),
     );
