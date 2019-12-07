@@ -18,7 +18,7 @@ class _OpcoesCompostaState extends State<OpcoesComposta> {
     return Row(
       mainAxisSize     : MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children         : geradorBotoes(_tamanhoTela, 4),
+      children         : geradorBotoes(_tamanhoTela, 3, context),
     );
   }
 }

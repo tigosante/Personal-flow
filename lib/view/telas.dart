@@ -95,7 +95,7 @@ class _TelasState extends State<Telas> {
         itemBuilder  : (BuildContext context, int index) => _pagina[_paginaIndex],
         onPageChanged: (index) => setState(() => _paginaIndex = index),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
+      bottomNavigationBar: BarraNavegacao(
         index                : _paginaIndex,
         color                : _barra,
         height               : _tamanhoTela * 0.13,

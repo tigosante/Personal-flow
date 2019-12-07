@@ -48,7 +48,7 @@ class _SimplesState extends State<Simples> {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: geradorBotoes(_tamanhoTela, 2),
+                  children: geradorBotoes(_tamanhoTela, 2, context),
                 )
               ],
             ),

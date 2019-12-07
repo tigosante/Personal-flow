@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+int _paginaIndex = 0;
 bool   _selecionada = true;
 double _tamanhoTela = 0;
 
 class TipoTarefa extends StatefulWidget {
-  TipoTarefa({Key key}): super(key: key);
+  TipoTarefa({Key key, this.tipo}): super(key: key);
+
+  int tipo;
 
   @override
   _TipoTarefaState createState() => _TipoTarefaState();
@@ -13,7 +16,10 @@ class TipoTarefa extends StatefulWidget {
 class _TipoTarefaState extends State<TipoTarefa> {
   @override
   Widget build(BuildContext context) {
-    setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
+    setState((){
+      _tamanhoTela = MediaQuery.of(context).size.width;
+      _paginaIndex = widget.tipo;
+    });
 
     return Center(
       child: Card(
@@ -54,7 +60,7 @@ class _TipoTarefaState extends State<TipoTarefa> {
                     ),
                   ),
                 ),
-                onTap: () => setState(() => _selecionada = !_selecionada),
+                onTap: () => setState(() => _selecionada = !(_paginaIndex == 0)),
               ),
               InkWell(
                 splashColor   : Colors.indigo[50],
@@ -78,7 +84,9 @@ class _TipoTarefaState extends State<TipoTarefa> {
                     ),
                   ),
                 ),
-                onTap: () => setState(() => _selecionada = !_selecionada),
+                onTap: () => setState((){
+                  _selecionada = _paginaIndex == 1;
+                }),
               ),
             ],
           ),

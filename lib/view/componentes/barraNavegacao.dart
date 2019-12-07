@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:personal_flow/view/componentes/navButton.dart';
 import 'package:personal_flow/view/componentes/navCustomPainter.dart';
 
-class CurvedNavigationBar extends StatefulWidget {
+class BarraNavegacao extends StatefulWidget {
   final List<Widget> items;
   final int index;
   final Color color;
@@ -14,7 +14,7 @@ class CurvedNavigationBar extends StatefulWidget {
   final Duration animationDuration;
   final double height;
 
-  CurvedNavigationBar({
+  BarraNavegacao({
     Key key,
     @required this.items,
     this.index = 0,
@@ -32,10 +32,10 @@ class CurvedNavigationBar extends StatefulWidget {
         super(key: key);
 
   @override
-  CurvedNavigationBarState createState() => CurvedNavigationBarState();
+  BarraNavegacaoState createState() => BarraNavegacaoState();
 }
 
-class CurvedNavigationBarState extends State<CurvedNavigationBar>
+class BarraNavegacaoState extends State<BarraNavegacao>
     with SingleTickerProviderStateMixin {
   double _startingPos;
   int _endingIndex = 0;
@@ -68,7 +68,7 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
   }
 
   @override
-  void didUpdateWidget(CurvedNavigationBar oldWidget) {
+  void didUpdateWidget(BarraNavegacao oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.index != widget.index) {
       final newPosition  = widget.index / _length;

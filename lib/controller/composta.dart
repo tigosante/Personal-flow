@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:personal_flow/controller/geral.dart';
 import 'package:personal_flow/view/home/componentes/composta/barraProgresso.dart';
 
-Widget geradorCorpo(quantidade, componente) {
+Widget geradorCorpo(int quantidade, Widget componente) {
   return Column(
       mainAxisSize      : MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,7 +23,7 @@ class CheckBoxComposta {
   bool get estadoGet        => _estado;
   set  estadoSet(estadoGet) => _estado = !estadoGet;
 
-  mudarEstado() {
+  Icon mudarEstado() {
     return _estado
         ? Icon(
             Icons.check_circle,

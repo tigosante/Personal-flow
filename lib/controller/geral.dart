@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_flow/view/home/componentes/composta/editarAdiconarTexto.dart';
 import 'package:personal_flow/view/home/componentes/dias.dart';
 
-List<Widget> geradorTarefas(quantidade, tela) {
+List<Widget> geradorTarefas(int quantidade, List<Widget> tela) {
   return List<Widget>.generate(
       quantidade, (item) => item % 2 == 0 ? tela[0] : tela[1]);
 }
@@ -13,33 +14,32 @@ List<Widget> geradorLista(quantidade, componente) {
 
 List<Widget> geradorListaDias(cor) {
   List<String> dias = [
-    " Dom ",
-    "  Seg  ",
-    "  Ter  ",
-    "  Qua  ",
-    "  Qui  ",
-    "  Sex  ",
-    "  Sáb  "
+    " Dom "
+    ,"  Seg  "
+    ,"  Ter  "
+    ,"  Qua  "
+    ,"  Qui  "
+    ,"  Sex  "
+    ,"  Sáb  "
   ];
 
   return List<Widget>.generate(7, (dia) => Dias(dias: dias[dia], cor: cor));
 }
 
-List<Widget> geradorBotoes(_tamanhoTela, quantidade) {
+List<Widget> geradorBotoes(double _tamanhoTela, int quantidade, BuildContext context) {
   List<String>      _title = ["Excluir", "Concluir"];
   List<List<Color>> _cores = [
     [Colors.red[50], Colors.red],
     [Colors.blue[50], Colors.blue]
   ];
 
-  if (quantidade == 4) {
-    _title = ["Add tarefa", "Editar", "Excluir", "Concluir"];
+  if (quantidade == 3) {
+    _title = ["Adicionar tarefa", "Excluir", "Concluir"];
 
     _cores = [
-      [Colors.teal[50], Colors.teal],
-      [Colors.orange[50], Colors.orange],
-      [Colors.red[50], Colors.red],
-      [Colors.blue[50], Colors.blue]
+      [Colors.teal[50], Colors.teal]
+      ,[Colors.red[50], Colors.red]
+      ,[Colors.blue[50], Colors.blue]
     ];
   }
 
@@ -57,11 +57,11 @@ List<Widget> geradorBotoes(_tamanhoTela, quantidade) {
                 color: _cores[botao][1],
               ),
             ),
-            onPressed: () {},
+            onPressed: (){},
           ));
 }
 
-Widget tituloPaginas(_tipo, _tamanhoTela) {
+Widget tituloPaginas(String _tipo, double _tamanhoTela) {
   Color _cor;
   String _titulo;
   Widget _trailing = Container();
@@ -104,7 +104,7 @@ Widget tituloPaginas(_tipo, _tamanhoTela) {
   );
 }
 
-modal(context, _tamanhoTela, tipo, tarefa) {
+modal(BuildContext context, double _tamanhoTela, String tipo, String tarefa) {
   String botao   = "";
   String titulo  = "";
   String hinText = "";

@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        elevation: 0,
+        elevation      : 0,
         splashColor    : Colors.amber[800],
         hoverColor     : Colors.amber[400],
         backgroundColor: Colors.indigo[700],
@@ -46,13 +46,11 @@ class _HomeState extends State<Home> {
           "Nova Tarefa",
           style: TextStyle(color: Colors.white),
         ),
-        onPressed: () {
-          Navigator.push(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => NovaTarefa(),
-              ));
-        },
+        onPressed: () => Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (context) => NovaTarefa(),
+            )),
       ),
     );
   }
