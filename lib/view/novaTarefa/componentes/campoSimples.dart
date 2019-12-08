@@ -37,7 +37,7 @@ class _CampoSimplesState extends State<CampoSimples> {
           padding: EdgeInsets.only(
             bottom: _tamanhoTela * 0.02
           ),
-          child: DataHora(),
+          child: DataHora(data: "08/12/12", hora: "00:00"),
         ),
       ),
     );

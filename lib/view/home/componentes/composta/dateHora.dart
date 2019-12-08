@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 double _tamanhoTela = 0;
 
 class DataHora extends StatefulWidget {
-  DataHora({Key key}): super(key: key);
+  DataHora({Key key, this.hora, this.data}): super(key: key);
+
+  String data;
+  String hora;
   @override
   _DataHoraState createState() => _DataHoraState();
 }
@@ -16,9 +19,10 @@ class _DataHoraState extends State<DataHora> {
     return Container(
       child : Row(
         children: <Widget>[
-          Text("Data"),
-          Text(" e "),
-          Text("hora"),
+          // Text("Data"),
+          // Text(" e "),
+          // Text("hora"),
+          Text("${widget.data}, ${widget.hora}"),
           Container(
             margin: EdgeInsets.only(
                 top: _tamanhoTela * 0.002, left: _tamanhoTela * 0.005),

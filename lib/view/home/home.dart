@@ -1,11 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_flow/controller/geral.dart';
-import 'package:personal_flow/view/home/tarefas/composta.dart';
-import 'package:personal_flow/view/home/tarefas/simples.dart';
 import 'package:personal_flow/view/novaTarefa/novaTarefa.dart';
-
-List<Widget> _telas       = [Simples(), Composta()];
 double       _tamanhoTela = 0;
 
 String _tipo = "tarefas";
@@ -30,9 +26,7 @@ class _HomeState extends State<Home> {
           child: Column(
             children: <Widget>[
               tituloPaginas(_tipo, _tamanhoTela),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children         : geradorTarefas(5, _telas)),
+              geradorTarefas(),
             ],
           ),
         ),

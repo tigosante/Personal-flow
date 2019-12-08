@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 double _tamanhoTela = 0;
 
 class TituloSubtarefa extends StatefulWidget {
-  TituloSubtarefa({Key key}): super(key: key);
+  TituloSubtarefa({Key key, this.titulo}): super(key: key);
 
+  String titulo;
   @override
   _TituloSubtarefaState createState() => _TituloSubtarefaState();
 }
@@ -22,7 +23,7 @@ class _TituloSubtarefaState extends State<TituloSubtarefa> {
           bottom: _tamanhoTela * 0.01,
         ),
         child: Text(
-          tarefa,
+          widget.titulo,
           style: TextStyle(fontWeight: FontWeight.w500),
         ),
       ),

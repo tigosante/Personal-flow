@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:personal_flow/controller/geral.dart';
 import 'package:personal_flow/view/home/componentes/composta/barraProgresso.dart';
+import 'package:personal_flow/view/home/componentes/composta/subtarefa.dart';
 
-Widget geradorCorpo(int quantidade, Widget componente) {
+Widget geradorCorpo(subtarefa) {
   return Column(
       mainAxisSize      : MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children          : geradorLista(quantidade, componente));
+      children          : List.generate(subtarefa.length, (int item){
+        return Subtarefa(
+          titulo: subtarefa[item].titulo,
+          data: subtarefa[item].data,
+          hora: subtarefa[item].hora,
+        );
+      }));
 }
 
 Widget barraProgresso(Color cor) {

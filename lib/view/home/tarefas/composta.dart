@@ -4,13 +4,16 @@ import 'package:personal_flow/controller/geral.dart';
 import 'package:personal_flow/controller/composta.dart';
 import 'package:personal_flow/view/home/componentes/agendar.dart';
 import 'package:personal_flow/view/home/componentes/composta/opcoesCompost.dart';
-import 'package:personal_flow/view/home/componentes/composta/subtarefa.dart';
 
 double _tamanhoTela = 0;
 String _tipo = "editar";
 
 class Composta extends StatefulWidget {
-  Composta({Key key}) : super(key: key);
+  Composta({Key key, this.titulo, this.subtarefa, this.agendada}) : super(key: key);
+
+  List subtarefa;
+  String titulo;
+  List<bool> agendada;
 
   @override
   _CompostaState createState() => _CompostaState();
@@ -36,7 +39,7 @@ class _CompostaState extends State<Composta> {
               headerAlignment: ExpandablePanelHeaderAlignment.center,
               header: ListTile(
                 title: Text(
-                  tarefa,
+                  this.widget.titulo,
                   style: TextStyle(fontWeight: FontWeight.w500),
                 ),
                 onTap: () => modal(context, _tamanhoTela, _tipo, tarefa),
@@ -52,6 +55,7 @@ class _CompostaState extends State<Composta> {
                   children: <Widget>[
                     Agendar(
                       cor: Colors.indigo,
+                      agendada: widget.agendada
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -64,7 +68,7 @@ class _CompostaState extends State<Composta> {
                               color: Color.fromRGBO(0, 15, 243, 0.1),
                               borderRadius:
                                   BorderRadius.circular(_tamanhoTela * 0.025)),
-                          child: geradorCorpo(3, Subtarefa())),
+                          child: geradorCorpo(this.widget.subtarefa)),
                     ),
                     OpcoesComposta(),
                     barraProgresso(Colors.indigo[300]),

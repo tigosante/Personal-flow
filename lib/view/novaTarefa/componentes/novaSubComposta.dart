@@ -29,7 +29,7 @@ class _NovaSubCompostaState extends State<NovaSubComposta> {
             border  : InputBorder.none,
           ),
         ),
-        subtitle: DataHora(),
+        subtitle: DataHora(data: "08/12/12", hora: "00:00"),
         trailing: IconButton(
           icon: Icon(
             Icons.add_circle,

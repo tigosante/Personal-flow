@@ -10,7 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   
+  # rxdart: ^0.22.6
   expandable: ^3.0.1
+  provider: ^3.2.0
+  # bloc_pattern: ^2.5.1
 
   cupertino_icons: ^0.1.2
 

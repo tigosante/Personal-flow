@@ -4,9 +4,10 @@ import 'package:personal_flow/controller/geral.dart';
 double _tamanhoTela = 0;
 
 class Agendar extends StatefulWidget {
-  Agendar({Key key, this.cor}): super(key: key);
+  Agendar({Key key, this.cor, this.agendada}): super(key: key);
 
   Color cor;
+  List<bool> agendada;
 
   @override
   _AgendarState createState() => _AgendarState();
@@ -16,6 +17,12 @@ class _AgendarState extends State<Agendar> {
   @override
   Widget build(BuildContext context) {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
+
+
+    // remover isso;
+    widget.agendada = [false, false, false, false, false, false, false];
+
+
 
     return Container(
       padding: EdgeInsets.only(
@@ -36,7 +43,7 @@ class _AgendarState extends State<Agendar> {
               ),
             ),
           ),
-          Wrap(children: geradorListaDias(widget.cor)),
+          Wrap(children: geradorListaDias(widget.cor, widget.agendada)),
         ],
       ),
     );

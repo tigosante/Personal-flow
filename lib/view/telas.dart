@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:personal_flow/view/DrawerPainel.dart';
 import 'package:personal_flow/view/componentes/barraNavegacao.dart';
+import 'package:personal_flow/view/componentes/tarefasController.dart';
 import 'package:personal_flow/view/desempenho/desempenho.dart';
 import 'package:personal_flow/view/home/home.dart';
+import 'package:provider/provider.dart';
 
 int          _paginaIndex = 0;
 List<Widget> _pagina      = [Home(), Desempenho()];
@@ -83,7 +85,11 @@ class _TelasState extends State<Telas> {
       }
     });
 
-    return Scaffold(
+    return MultiProvider(
+      providers: [
+        Provider<TarefasController>.value(value: TarefasController(),)
+      ],
+      child: Scaffold(
       backgroundColor: Colors.grey[50],
       drawer         : Drawer(
         elevation: 0,
@@ -108,6 +114,7 @@ class _TelasState extends State<Telas> {
         onTap: (index) => setState(() => _paginaIndex = index),
       ),
 
+      ),
     );
   }
 }

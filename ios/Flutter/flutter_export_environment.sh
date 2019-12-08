@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/home/tiago/development/flutter"
-export "FLUTTER_APPLICATION_PATH=/home/tiago/AndroidStudioProjects/personal_flow"
+export "FLUTTER_APPLICATION_PATH=/home/tiago/Documents/Projetos/Personal_flow/projeto_integrador_i_IESB"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "SYMROOT=${SOURCE_ROOT}/../build/ios"
