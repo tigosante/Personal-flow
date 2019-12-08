@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_flow/model/model.dart';
 import 'package:personal_flow/view/componentes/botoes.dart';
 import 'package:personal_flow/view/componentes/tarefasController.dart';
 import 'package:personal_flow/view/home/componentes/composta/editarAdiconarTexto.dart';
@@ -8,6 +9,14 @@ import 'package:personal_flow/view/home/tarefas/composta.dart';
 import 'package:personal_flow/view/home/tarefas/simples.dart';
 import 'package:provider/provider.dart';
 
+gravar(){
+  gravarBanco();
+}
+receber() async {
+  // for(QuerySnapshot doc in await receberBanco()){
+    print((await receberBanco()).documents.length > 0);
+  // }
+}
 Widget geradorTarefas() {
   return Consumer<TarefasController>(
     builder: (context, tarefasController, widget) {

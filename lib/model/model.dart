@@ -1,9 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+gravarBanco() {
+  Firestore.instance
+      .collection("simples")
+      .document()
+      .setData({"titulo": "indo", "data": "08/12/12", "hora": "00:00"});
+}
+
+receberBanco() async {
+  QuerySnapshot snapshot = 
+      await Firestore.instance.collection("simples").getDocuments();
+
+  return snapshot;
+}
+
 class SimplesModel {
-  String titulo;
   String data;
   String hora;
-  bool concluida;
+  String titulo;
   bool composta;
+  bool concluida;
   List<bool> agendada = [false, true, false, false, false, true, false];
 
   SimplesModel(
@@ -16,11 +32,11 @@ class SimplesModel {
 }
 
 class CompostaModel {
-  String titulo;
   String data;
   String hora;
-  bool concluida;
+  String titulo;
   bool composta;
+  bool concluida;
   List<bool> agendada = [false, true, false, false, false, true, false];
 
   List<Subtarefa> subtarefas = [Subtarefa()];
@@ -36,9 +52,9 @@ class CompostaModel {
 }
 
 class Subtarefa {
-  String titulo;
   String data;
   String hora;
+  String titulo;
   bool concluida;
 
   Subtarefa(
