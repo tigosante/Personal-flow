@@ -25,13 +25,40 @@ class _CorpoState extends State<Corpo> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          EscolhaTarefa(),
-          TipoTarefa(),
-          Padding(
-            padding: EdgeInsets.only(top: _tamanhoTela * 0.05, bottom: _tamanhoTela * 0.03),
-            child  : Agendar(cor: Colors.indigo),
+          Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                EscolhaTarefa(),
+                TipoTarefa(),
+                Padding(
+                  padding: EdgeInsets.only(top: _tamanhoTela * 0.05, bottom: _tamanhoTela * 0.03),
+                  child  : Agendar(cor: Colors.indigo),
+                ),
+              ],
+            ),
           ),
-          false ? CampoSimples() : CamposComposta()
+          Container(
+            height: _tamanhoTela * 0.35,
+            child: PageView.builder(
+              controller: PageController(
+                initialPage: 0
+              ),
+              itemCount: 2,
+              itemBuilder: (BuildContext context, int page){
+                switch (page) {
+                  case 0:
+                    return CamposComposta();
+                    break;
+                  case 1:
+                    return CampoSimples();
+                    break;
+                }
+              },
+
+
+            ),
+          ),
         ],
       ),
     );

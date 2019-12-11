@@ -17,27 +17,33 @@ class _CampoSimplesState extends State<CampoSimples> {
 
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
-    return Container(
-      width: _tamanhoTela * 0.95,
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(0, 15, 243, 0.1),
-        borderRadius: BorderRadius.circular(_tamanhoTela * 0.025)
+    return Padding(
+      padding: EdgeInsets.only(
+        left: _tamanhoTela * 0.03,
+        right: _tamanhoTela * 0.03,
+        bottom: _tamanhoTela * 0.13,
       ),
-      child: ListTile(
-        title: TextField(
-          minLines: 1,
-          maxLines: 8,
-          controller: controller,
-          decoration: InputDecoration(
-            hintText: "Tarefa",
-            border: InputBorder.none,
-          ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(0, 15, 243, 0.1),
+          borderRadius: BorderRadius.circular(_tamanhoTela * 0.025)
         ),
-        subtitle: Padding(
-          padding: EdgeInsets.only(
-            bottom: _tamanhoTela * 0.02
+        child: ListTile(
+          title: TextField(
+            minLines: 1,
+            maxLines: 8,
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: "Tarefa",
+              border: InputBorder.none,
+            ),
           ),
-          child: DataHora(data: "08/12/12", hora: "00:00"),
+          subtitle: Padding(
+            padding: EdgeInsets.only(
+              bottom: _tamanhoTela * 0.02
+            ),
+            child: DataHora(data: "08/12/12", hora: "00:00"),
+          ),
         ),
       ),
     );

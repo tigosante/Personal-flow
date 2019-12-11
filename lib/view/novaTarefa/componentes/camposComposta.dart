@@ -20,7 +20,8 @@ class _CamposCompostaState extends State<CamposComposta> {
 
     return Padding(
       padding: EdgeInsets.only(
-        bottom: _tamanhoTela * 0.2
+        left: _tamanhoTela * 0.03,
+        right: _tamanhoTela * 0.03,
       ),
       child: Container(
         width: _tamanhoTela * 0.95,
@@ -43,7 +44,7 @@ class _CamposCompostaState extends State<CamposComposta> {
             ),
             subtitle: Column(
               mainAxisSize: MainAxisSize.min,
-              children: geradorNovaComposta(2, NovaSubComposta()),
+              children: geradorNovaComposta(1, NovaSubComposta()),
             )
           ),
           ],

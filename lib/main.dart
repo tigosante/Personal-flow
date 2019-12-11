@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:personal_flow/view/login/login.dart';
+import 'package:personal_flow/view/novaTarefa/novaTarefa.dart';
 import 'package:personal_flow/view/telas.dart';
 
 final GoogleSignIn _usuarioGoogle   = GoogleSignIn();
