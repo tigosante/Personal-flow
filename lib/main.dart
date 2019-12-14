@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home                      : usuarioLogado() ? Login() : Telas(),
+      home                      : !usuarioLogado() ? Login() : Telas(),
       title                     : "Personal Flow",
       color                     : Colors.teal,
       debugShowCheckedModeBanner: false,

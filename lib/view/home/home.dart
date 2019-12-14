@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_flow/controller/geral.dart';
@@ -17,6 +18,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
+    final db = Firestore.instance;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -26,7 +28,14 @@ class _HomeState extends State<Home> {
           child: Column(
             children: <Widget>[
               tituloPaginas(_tipo, _tamanhoTela),
-              geradorTarefas(),
+              StreamBuilder(
+                stream: db.collection("tarefas").snapshots(),
+                builder: (BuildContext context, AsyncSnapshot snapshot){
+                  return Column(
+                    children: geradorTarefas(snapshot.data.documents.length > 0 ? snapshot.data.documents : []),
+                  );
+                },
+              ),
             ],
           ),
         ),

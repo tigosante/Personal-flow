@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:personal_flow/controller/geral.dart';
 
 double _tamanhoTela = 0;
 
 class DataHora extends StatefulWidget {
-  DataHora({Key key, this.hora, this.data}): super(key: key);
+  DataHora({Key key, this.hora, this.data}) : super(key: key);
 
   String data;
   String hora;
@@ -17,24 +18,14 @@ class _DataHoraState extends State<DataHora> {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
     return Container(
-      child : Row(
+      child: Row(
         children: <Widget>[
-          // Text("Data"),
-          // Text(" e "),
-          // Text("hora"),
-          Text("${widget.data}, ${widget.hora}"),
-          Container(
-            margin: EdgeInsets.only(
-                top: _tamanhoTela * 0.002, left: _tamanhoTela * 0.005),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(_tamanhoTela * 0.01),
-              child       : Icon(
-                Icons.close,
-                color: Colors.red,
-              ),
-              onTap: () {},
-            ),
-          )
+          Text(verifcaDataHora(widget.data, widget.hora)),
+          Divider(
+            color: Colors.transparent,
+            height: _tamanhoTela * 0.06,
+          ),
+          iconeRemover(widget.data, _tamanhoTela)
         ],
       ),
     );

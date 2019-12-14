@@ -8,8 +8,10 @@ double _tamanhoTela = 0;
 String _tipo        = "editar";
 
 class Subtarefa extends StatefulWidget {
-  Subtarefa({Key key, this.titulo, this.data, this.hora}): super(key: key);
+  Subtarefa({Key key, this.titulo, this.data, this.hora, this.concluida})
+      :  super(key: key);
 
+  bool concluida;
   String titulo;
   String data;
   String hora;
@@ -23,10 +25,22 @@ class _SubtarefaCompostaState extends State<Subtarefa> {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
     return ListTile(
-      title   : TituloSubtarefa(titulo: widget.titulo),
-      subtitle: DataHora(data: widget.data, hora: widget.hora,),
-      trailing: IconeSubtarefa(),
-      onTap   : () => modal(context, _tamanhoTela, _tipo, widget.titulo),
+      title: Padding(
+        padding: EdgeInsets.only(top: _tamanhoTela * 0.02),
+        child  : TituloSubtarefa(titulo: widget.titulo),
+      ),
+      subtitle: Padding(
+        padding: EdgeInsets.only(
+            bottom: widget.data == "" ? _tamanhoTela * 0.05 : 0),
+        child: DataHora(
+          data: widget.data,
+          hora: widget.hora,
+        ),
+      ),
+      trailing: IconeSubtarefa(
+        concluida: widget.concluida,
+      ),
+      onTap: () => modal(context, _tamanhoTela, _tipo, widget.titulo),
     );
   }
 }

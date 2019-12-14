@@ -13,7 +13,6 @@ class TituloSubtarefa extends StatefulWidget {
 class _TituloSubtarefaState extends State<TituloSubtarefa> {
   @override
   Widget build(BuildContext context) {
-    String tarefa = "Título da subtarefa";
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
     return Container(

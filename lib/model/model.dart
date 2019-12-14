@@ -23,7 +23,7 @@ class SimplesModel {
   List<bool> agendada = [false, true, false, false, false, true, false];
 
   SimplesModel(
-      {this.titulo = "",
+      {this.titulo   = "",
       this.concluida = false,
       this.composta  = false,
       this.data      = "",
@@ -42,7 +42,7 @@ class CompostaModel {
   List<Subtarefa> subtarefas = [Subtarefa()];
 
   CompostaModel(
-      {this.titulo = "",
+      {this.titulo   = "",
       this.concluida = false,
       this.composta  = true,
       this.data      = "",
@@ -58,7 +58,7 @@ class Subtarefa {
   bool concluida;
 
   Subtarefa(
-      {this.titulo = "",
+      {this.titulo   = "",
       this.concluida = false,
       this.data      = "",
       this.hora      = ""});

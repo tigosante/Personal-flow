@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:personal_flow/controller/composta.dart';
 
-CheckBoxComposta checkBoxComposta = CheckBoxComposta();
-
 class IconeSubtarefa extends StatefulWidget {
-  IconeSubtarefa({Key key}): super(key: key);
+  IconeSubtarefa({Key key, this.concluida}): super(key: key);
 
+  bool concluida;
   @override
   _IconeSubtarefaState createState() => _IconeSubtarefaState();
 }
@@ -15,9 +14,9 @@ class _IconeSubtarefaState extends State<IconeSubtarefa> {
   Widget build(BuildContext context) {
     return Container(
       child: IconButton(
-          icon     : checkBoxComposta.mudarEstado(),
+          icon     : mudarEstado(widget.concluida),
           onPressed: () => setState(() {
-                checkBoxComposta.estadoSet = checkBoxComposta.estadoGet;
+                widget.concluida = !widget.concluida;
               })),
     );
   }

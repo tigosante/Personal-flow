@@ -18,12 +18,6 @@ class _AgendarState extends State<Agendar> {
   Widget build(BuildContext context) {
     setState(() => _tamanhoTela = MediaQuery.of(context).size.width);
 
-
-    // remover isso;
-    widget.agendada = [false, false, false, false, false, false, false];
-
-
-
     return Container(
       padding: EdgeInsets.only(
           right: _tamanhoTela * 0.1, bottom: _tamanhoTela * 0.05),
