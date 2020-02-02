@@ -54,7 +54,7 @@ class _CompostaState extends State<Composta> {
                 ),
               ),
               collapsed: Container(
-                child: barraProgresso(Colors.indigo[300]),
+                // child: barraProgresso(Colors.indigo[300]),
               ),
               expanded: Container(
                 padding: EdgeInsets.only(
@@ -76,7 +76,7 @@ class _CompostaState extends State<Composta> {
                           child: geradorCorpo(this.widget.documentID)),
                     ),
                     OpcoesComposta(),
-                    barraProgresso(Colors.indigo[300]),
+                    // barraProgresso(Colors.indigo[300]),
                   ],
                 ),
               ),

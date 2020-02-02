@@ -16,7 +16,7 @@ Widget geradorCorpo(documentID) {
           .collection("subtarefa")
           .snapshots(),
       builder: (context, snapshot) {
-        _maxValue = snapshot.data.documents.length;
+        _maxValue = ["", null, false].contains(snapshot.data.documents.length) ? 0 : snapshot.data.documents.length;
         _currentValue = currentValue(snapshot.data.documents);
         return Column(
             mainAxisSize      : MainAxisSize.min,
