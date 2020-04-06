@@ -9,5 +9,5 @@ class BarraPesquisaController = _BarraPesquisaControllerBase
 
 abstract class _BarraPesquisaControllerBase with Store {
   @observable
-  Widget suffixIcon = IconUser();
+  Widget iconBarra = IconUser();
 }

@@ -26,6 +26,23 @@ mixin _$AppController on _AppControllerBase, Store {
     }, _$themeModeAtom, name: '${_$themeModeAtom.name}_set');
   }
 
+  final _$colorBarraAtom = Atom(name: '_AppControllerBase.colorBarra');
+
+  @override
+  Color get colorBarra {
+    _$colorBarraAtom.context.enforceReadPolicy(_$colorBarraAtom);
+    _$colorBarraAtom.reportObserved();
+    return super.colorBarra;
+  }
+
+  @override
+  set colorBarra(Color value) {
+    _$colorBarraAtom.context.conditionallyRunInAction(() {
+      super.colorBarra = value;
+      _$colorBarraAtom.reportChanged();
+    }, _$colorBarraAtom, name: '${_$colorBarraAtom.name}_set');
+  }
+
   final _$_AppControllerBaseActionController =
       ActionController(name: '_AppControllerBase');
 
@@ -41,7 +58,8 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'themeMode: ${themeMode.toString()}';
+    final string =
+        'themeMode: ${themeMode.toString()},colorBarra: ${colorBarra.toString()}';
     return '{$string}';
   }
 }

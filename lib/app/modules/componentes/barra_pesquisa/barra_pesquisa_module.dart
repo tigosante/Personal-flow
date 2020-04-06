@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-
 import 'barra_pesquisa.dart';
 import 'barra_pesquisa_controller.dart';
 
