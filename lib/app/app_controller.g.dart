@@ -9,31 +9,31 @@ part of 'app_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AppController on _AppControllerBase, Store {
-  final _$valueAtom = Atom(name: '_AppControllerBase.value');
+  final _$themeModeAtom = Atom(name: '_AppControllerBase.themeMode');
 
   @override
-  int get value {
-    _$valueAtom.context.enforceReadPolicy(_$valueAtom);
-    _$valueAtom.reportObserved();
-    return super.value;
+  ThemeMode get themeMode {
+    _$themeModeAtom.context.enforceReadPolicy(_$themeModeAtom);
+    _$themeModeAtom.reportObserved();
+    return super.themeMode;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.context.conditionallyRunInAction(() {
-      super.value = value;
-      _$valueAtom.reportChanged();
-    }, _$valueAtom, name: '${_$valueAtom.name}_set');
+  set themeMode(ThemeMode value) {
+    _$themeModeAtom.context.conditionallyRunInAction(() {
+      super.themeMode = value;
+      _$themeModeAtom.reportChanged();
+    }, _$themeModeAtom, name: '${_$themeModeAtom.name}_set');
   }
 
   final _$_AppControllerBaseActionController =
       ActionController(name: '_AppControllerBase');
 
   @override
-  void increment() {
+  void changeTheme(String theme) {
     final _$actionInfo = _$_AppControllerBaseActionController.startAction();
     try {
-      return super.increment();
+      return super.changeTheme(theme);
     } finally {
       _$_AppControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +41,7 @@ mixin _$AppController on _AppControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'value: ${value.toString()}';
+    final string = 'themeMode: ${themeMode.toString()}';
     return '{$string}';
   }
 }

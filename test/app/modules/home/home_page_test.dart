@@ -2,7 +2,7 @@
 import 'package:flutter_test/flutter_test.dart';
 // import 'package:flutter_modular/flutter_modular_test.dart';
 
-// import 'package:personal_flow/app/modules/home/home_page.dart';
+// import 'package:personalflow/app/modules/home/home_page.dart';
 
 main() {
   testWidgets('HomePage has title', (WidgetTester tester) async {

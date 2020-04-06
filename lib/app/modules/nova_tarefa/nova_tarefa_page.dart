@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'nova_tarefa_controller.dart';
 
 class NovaTarefaPage extends StatefulWidget {
   final String title;
@@ -8,9 +10,8 @@ class NovaTarefaPage extends StatefulWidget {
   _NovaTarefaPageState createState() => _NovaTarefaPageState();
 }
 
-class _NovaTarefaPageState
-    extends ModularState<NovaTarefaPage, NovaTarefaController> {
-  //use 'controller' variable to access controller
+class _NovaTarefaPageState extends State<NovaTarefaPage> {
+  final controller = Modular.get<NovaTarefaController>();
 
   @override
   Widget build(BuildContext context) {

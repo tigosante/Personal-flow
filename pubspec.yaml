@@ -1,5 +1,5 @@
-name: personal_flow
-description: Aplicativo de tarefas inteligentes.
+name: personalflow
+description: A new Flutter application.
 
 version: 1.0.0+1
 
@@ -14,15 +14,12 @@ dependencies:
   flutter:
     sdk: flutter
 
-
-
 dev_dependencies:
   mockito: ^4.1.1
   mobx_codegen: ^1.0.3
   build_runner: ^1.8.1
   flutter_test:
     sdk: flutter
-
 
 flutter:
   uses-material-design: true
