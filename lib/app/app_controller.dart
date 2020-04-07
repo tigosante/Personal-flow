@@ -10,6 +10,15 @@ abstract class _AppControllerBase with Store {
   ThemeMode themeMode = ThemeMode.system;
 
   @observable
+  String valorSystem = "system";
+
+  @observable
+  String valorLight = "";
+
+  @observable
+  String valorDark = "";
+
+  @observable
   Color colorBarra = Color.fromRGBO(75, 0, 130, 0.7);
 
   ThemeData lightTheme = ThemeData(
@@ -22,9 +31,7 @@ abstract class _AppControllerBase with Store {
       color: Colors.purple[50],
       brightness: Brightness.light,
     ),
-    cardTheme: CardTheme(
-      color: Color.fromRGBO(238, 215, 255, 1),
-    ),
+    cardTheme: CardTheme(color: Color.fromRGBO(248, 235, 255, 1)),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.purple,
     ),
@@ -40,9 +47,7 @@ abstract class _AppControllerBase with Store {
       color: Color.fromRGBO(52, 52, 52, 1),
       brightness: Brightness.dark,
     ),
-    cardTheme: CardTheme(
-      color: Color.fromRGBO(70, 70, 70, 1),
-    ),
+    cardTheme: CardTheme(color: Color.fromRGBO(70, 70, 70, 1)),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.deepPurple,
     ),
@@ -51,11 +56,47 @@ abstract class _AppControllerBase with Store {
   @action
   void changeTheme(String theme) {
     switch (theme) {
-      case 'dark':
-        themeMode = ThemeMode.dark;
+      case "light":
+        setLightTheme();
         break;
+
+      case "dark":
+        setDarkTheme();
+        break;
+
       default:
-        themeMode = ThemeMode.light;
+        setSystemTheme();
+
+        if (WidgetsBinding.instance.window.platformBrightness ==
+            Brightness.light) {
+          colorBarra = Color.fromRGBO(75, 0, 130, 0.7);
+        } else {
+          colorBarra = Color.fromRGBO(75, 0, 130, 0.3);
+        }
+        break;
     }
+  }
+
+  void setSystemTheme() {
+    themeMode = ThemeMode.system;
+    valorSystem = "system";
+    valorLight = "";
+    valorDark = "";
+  }
+
+  void setLightTheme() {
+    colorBarra = Color.fromRGBO(75, 0, 130, 0.7);
+    themeMode = ThemeMode.light;
+    valorSystem = "";
+    valorLight = "light";
+    valorDark = "";
+  }
+
+  void setDarkTheme() {
+    colorBarra = Color.fromRGBO(75, 0, 130, 0.3);
+    themeMode = ThemeMode.dark;
+    valorSystem = "";
+    valorLight = "";
+    valorDark = "dark";
   }
 }

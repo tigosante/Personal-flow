@@ -26,6 +26,57 @@ mixin _$AppController on _AppControllerBase, Store {
     }, _$themeModeAtom, name: '${_$themeModeAtom.name}_set');
   }
 
+  final _$valorSystemAtom = Atom(name: '_AppControllerBase.valorSystem');
+
+  @override
+  String get valorSystem {
+    _$valorSystemAtom.context.enforceReadPolicy(_$valorSystemAtom);
+    _$valorSystemAtom.reportObserved();
+    return super.valorSystem;
+  }
+
+  @override
+  set valorSystem(String value) {
+    _$valorSystemAtom.context.conditionallyRunInAction(() {
+      super.valorSystem = value;
+      _$valorSystemAtom.reportChanged();
+    }, _$valorSystemAtom, name: '${_$valorSystemAtom.name}_set');
+  }
+
+  final _$valorLightAtom = Atom(name: '_AppControllerBase.valorLight');
+
+  @override
+  String get valorLight {
+    _$valorLightAtom.context.enforceReadPolicy(_$valorLightAtom);
+    _$valorLightAtom.reportObserved();
+    return super.valorLight;
+  }
+
+  @override
+  set valorLight(String value) {
+    _$valorLightAtom.context.conditionallyRunInAction(() {
+      super.valorLight = value;
+      _$valorLightAtom.reportChanged();
+    }, _$valorLightAtom, name: '${_$valorLightAtom.name}_set');
+  }
+
+  final _$valorDarkAtom = Atom(name: '_AppControllerBase.valorDark');
+
+  @override
+  String get valorDark {
+    _$valorDarkAtom.context.enforceReadPolicy(_$valorDarkAtom);
+    _$valorDarkAtom.reportObserved();
+    return super.valorDark;
+  }
+
+  @override
+  set valorDark(String value) {
+    _$valorDarkAtom.context.conditionallyRunInAction(() {
+      super.valorDark = value;
+      _$valorDarkAtom.reportChanged();
+    }, _$valorDarkAtom, name: '${_$valorDarkAtom.name}_set');
+  }
+
   final _$colorBarraAtom = Atom(name: '_AppControllerBase.colorBarra');
 
   @override
@@ -59,7 +110,7 @@ mixin _$AppController on _AppControllerBase, Store {
   @override
   String toString() {
     final string =
-        'themeMode: ${themeMode.toString()},colorBarra: ${colorBarra.toString()}';
+        'themeMode: ${themeMode.toString()},valorSystem: ${valorSystem.toString()},valorLight: ${valorLight.toString()},valorDark: ${valorDark.toString()},colorBarra: ${colorBarra.toString()}';
     return '{$string}';
   }
 }
