@@ -28,10 +28,9 @@ class _HomePageState extends State<HomePage> {
                 // return Observer(builder: (_) {
                 return Padding(
                   padding: EdgeInsets.only(
-                    left: tamanhoTela * 0.01,
-                    right: tamanhoTela * 0.01,
-                    bottom: tamanhoTela * 0.01,
-                  ),
+                      left: tamanhoTela * 0.01,
+                      right: tamanhoTela * 0.01,
+                      bottom: tamanhoTela * 0.01),
                   child: TarefaComposta(),
                 );
                 // });

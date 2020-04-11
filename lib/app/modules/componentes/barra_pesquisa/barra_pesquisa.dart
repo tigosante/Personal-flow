@@ -34,13 +34,13 @@ class BarraPesquisa extends StatelessWidget {
             elevation: 0,
             clipBehavior: Clip.antiAliasWithSaveLayer,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(tamanhoTela * 0.05),
+              borderRadius: BorderRadius.circular(tamanhoTela * 0.1),
             ),
             child: Row(
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.only(left: tamanhoTela * 0.03),
+                    padding: EdgeInsets.only(left: tamanhoTela * 0.04),
                     child: TextField(
                       decoration: InputDecoration(
                         border: InputBorder.none,
