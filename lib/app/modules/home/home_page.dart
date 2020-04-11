@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:personalflow/app/modules/componentes/barra_pesquisa/barra_pesquisa.dart';
 import 'package:personalflow/app/modules/componentes/card_tarefa/composta/tarefa_composta.dart';
-import 'package:personalflow/app/modules/componentes/card_tarefa/simples/tarefa_simples.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -42,8 +40,10 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.playlist_add_check),
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text("Adiconar tarefa"),
+        icon: Icon(Icons.playlist_add_check),
+        backgroundColor: Colors.indigo[700],
         onPressed: () {},
       ),
     );
