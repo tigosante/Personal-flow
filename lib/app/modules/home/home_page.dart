@@ -22,7 +22,10 @@ class _HomePageState extends State<HomePage> {
           BarraPesquisa(),
           Expanded(
             child: ListView.builder(
-              padding: EdgeInsets.only(bottom: tamanhoTela * 0.2),
+              padding: EdgeInsets.only(
+                top: tamanhoTela * 0.03,
+                bottom: tamanhoTela * 0.2,
+              ),
               itemCount: 7,
               itemBuilder: (BuildContext context, int index) {
                 // return Observer(builder: (_) {
@@ -39,10 +42,16 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-          label: Text("Adiconar tarefa"),
-          icon: Icon(Icons.playlist_add_check),
-          backgroundColor: Colors.indigo[700],
-          onPressed: () {}),
+          elevation: 10,
+          label: Text(
+            "Adiconar tarefa",
+            style: TextStyle(color: Colors.white),
+          ),
+          icon: Icon(Icons.playlist_add_check, color: Colors.white),
+          backgroundColor: Colors.black,
+          onPressed: () {
+            Modular.to.pushNamed("/adicionar_tarefa");
+          }),
     );
   }
 }

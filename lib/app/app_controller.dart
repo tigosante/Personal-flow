@@ -31,7 +31,7 @@ abstract class _AppControllerBase with Store {
       color: Colors.purple[50],
       brightness: Brightness.light,
     ),
-    cardTheme: CardTheme(color: Color.fromRGBO(248, 235, 255, 1)),
+    // cardTheme: CardTheme(color: Color.fromRGBO(248, 235, 255, 1)),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: Colors.purple,
     ),

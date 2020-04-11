@@ -16,11 +16,21 @@ class TarefaComposta extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(tamanhoTela * 0.035)),
       child: ExpansionTile(
-        title: Text("Título da composta.",
-            style: TextStyle(fontSize: tamanhoTela * 0.045)),
-        subtitle: DataHora(),
+        title: Padding(
+          padding: EdgeInsets.only(top: tamanhoTela * 0.03),
+          child: Text("Título da composta.",
+              style: TextStyle(fontSize: tamanhoTela * 0.045)),
+        ),
+        subtitle: Column(
+          children: <Widget>[
+            Container(width: tamanhoTela, child: DataHora()),
+            Container(
+                width: tamanhoTela,
+                child: BarraProgresso(tamanhoTela: tamanhoTela)),
+          ],
+        ),
         children: <Widget>[
-          BarraProgresso(tamanhoTela: tamanhoTela),
+          Divider(indent: tamanhoTela * 0.05, endIndent: tamanhoTela * 0.05),
           BodyComposta(),
           BotoesTarefa(tamanhoTela: tamanhoTela),
         ],

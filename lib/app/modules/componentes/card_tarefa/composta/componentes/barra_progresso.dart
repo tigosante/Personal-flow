@@ -9,17 +9,14 @@ class BarraProgresso extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          top: tamanhoTela * 0.02,
-          left: tamanhoTela * 0.04,
-          right: tamanhoTela * 0.04,
-          bottom: tamanhoTela * 0.05),
+      padding:
+          EdgeInsets.only(top: tamanhoTela * 0.01, bottom: tamanhoTela * 0.03),
       child: Container(
         height: tamanhoTela * 0.028,
         child: FAProgressBar(
           currentValue: 80,
-          progressColor: Colors.teal[600],
-          backgroundColor: Colors.black12,
+          progressColor: Color.fromRGBO(0, 137, 123, 0.8),
+          backgroundColor: Color.fromRGBO(0, 137, 123, 0.05),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'componentes/app_bar.dart';
 import 'nova_tarefa_controller.dart';
 
 class NovaTarefaPage extends StatefulWidget {
@@ -15,12 +16,11 @@ class _NovaTarefaPageState extends State<NovaTarefaPage> {
 
   @override
   Widget build(BuildContext context) {
+    double tamanhoTela = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Column(
-        children: <Widget>[],
+        children: <Widget>[NovaTarefaBar(tamanhoTela: tamanhoTela)],
       ),
     );
   }

@@ -17,12 +17,6 @@ class BarraPesquisa extends StatelessWidget {
       return Container(
         height: tamanhoTela * 0.25,
         width: tamanhoTela,
-        decoration: BoxDecoration(
-            color: appController.colorBarra,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(tamanhoTela * 0.03),
-              bottomRight: Radius.circular(tamanhoTela * 0.03),
-            )),
         child: Padding(
           padding: EdgeInsets.only(
               top: tamanhoTela * 0.08,
@@ -30,6 +24,7 @@ class BarraPesquisa extends StatelessWidget {
               right: tamanhoTela * 0.015,
               bottom: tamanhoTela * 0.03),
           child: Card(
+            color: Color.fromRGBO(200, 100, 100, 0.1),
             elevation: 0,
             clipBehavior: Clip.antiAliasWithSaveLayer,
             shape: RoundedRectangleBorder(
@@ -41,9 +36,9 @@ class BarraPesquisa extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.only(left: tamanhoTela * 0.04),
                     child: TextField(
-                      decoration: InputDecoration(
-                          border: InputBorder.none, hintText: "Buscar tarefa"),
-                    ),
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Buscar tarefa")),
                   ),
                 ),
                 controller.iconBarra,
