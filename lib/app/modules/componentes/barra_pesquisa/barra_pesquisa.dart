@@ -25,11 +25,10 @@ class BarraPesquisa extends StatelessWidget {
             )),
         child: Padding(
           padding: EdgeInsets.only(
-            top: tamanhoTela * 0.08,
-            left: tamanhoTela * 0.014,
-            right: tamanhoTela * 0.015,
-            bottom: tamanhoTela * 0.03,
-          ),
+              top: tamanhoTela * 0.08,
+              left: tamanhoTela * 0.014,
+              right: tamanhoTela * 0.015,
+              bottom: tamanhoTela * 0.03),
           child: Card(
             elevation: 0,
             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -43,9 +42,7 @@ class BarraPesquisa extends StatelessWidget {
                     padding: EdgeInsets.only(left: tamanhoTela * 0.04),
                     child: TextField(
                       decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Buscar tarefa",
-                      ),
+                          border: InputBorder.none, hintText: "Buscar tarefa"),
                     ),
                   ),
                 ),

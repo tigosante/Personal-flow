@@ -27,12 +27,11 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (BuildContext context, int index) {
                 // return Observer(builder: (_) {
                 return Padding(
-                  padding: EdgeInsets.only(
-                      left: tamanhoTela * 0.01,
-                      right: tamanhoTela * 0.01,
-                      bottom: tamanhoTela * 0.01),
-                  child: TarefaComposta(),
-                );
+                    padding: EdgeInsets.only(
+                        left: tamanhoTela * 0.01,
+                        right: tamanhoTela * 0.01,
+                        bottom: tamanhoTela * 0.01),
+                    child: TarefaComposta());
                 // });
               },
             ),
@@ -40,11 +39,10 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text("Adiconar tarefa"),
-        icon: Icon(Icons.playlist_add_check),
-        backgroundColor: Colors.indigo[700],
-        onPressed: () {},
-      ),
+          label: Text("Adiconar tarefa"),
+          icon: Icon(Icons.playlist_add_check),
+          backgroundColor: Colors.indigo[700],
+          onPressed: () {}),
     );
   }
 }
