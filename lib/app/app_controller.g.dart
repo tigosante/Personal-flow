@@ -94,6 +94,60 @@ mixin _$AppController on _AppControllerBase, Store {
     }, _$colorBarraAtom, name: '${_$colorBarraAtom.name}_set');
   }
 
+  final _$colorBarraPesquisaAtom =
+      Atom(name: '_AppControllerBase.colorBarraPesquisa');
+
+  @override
+  Color get colorBarraPesquisa {
+    _$colorBarraPesquisaAtom.context
+        .enforceReadPolicy(_$colorBarraPesquisaAtom);
+    _$colorBarraPesquisaAtom.reportObserved();
+    return super.colorBarraPesquisa;
+  }
+
+  @override
+  set colorBarraPesquisa(Color value) {
+    _$colorBarraPesquisaAtom.context.conditionallyRunInAction(() {
+      super.colorBarraPesquisa = value;
+      _$colorBarraPesquisaAtom.reportChanged();
+    }, _$colorBarraPesquisaAtom, name: '${_$colorBarraPesquisaAtom.name}_set');
+  }
+
+  final _$colorTarefaAtom = Atom(name: '_AppControllerBase.colorTarefa');
+
+  @override
+  Color get colorTarefa {
+    _$colorTarefaAtom.context.enforceReadPolicy(_$colorTarefaAtom);
+    _$colorTarefaAtom.reportObserved();
+    return super.colorTarefa;
+  }
+
+  @override
+  set colorTarefa(Color value) {
+    _$colorTarefaAtom.context.conditionallyRunInAction(() {
+      super.colorTarefa = value;
+      _$colorTarefaAtom.reportChanged();
+    }, _$colorTarefaAtom, name: '${_$colorTarefaAtom.name}_set');
+  }
+
+  final _$colorBarNewTaskAtom =
+      Atom(name: '_AppControllerBase.colorBarNewTask');
+
+  @override
+  Color get colorBarNewTask {
+    _$colorBarNewTaskAtom.context.enforceReadPolicy(_$colorBarNewTaskAtom);
+    _$colorBarNewTaskAtom.reportObserved();
+    return super.colorBarNewTask;
+  }
+
+  @override
+  set colorBarNewTask(Color value) {
+    _$colorBarNewTaskAtom.context.conditionallyRunInAction(() {
+      super.colorBarNewTask = value;
+      _$colorBarNewTaskAtom.reportChanged();
+    }, _$colorBarNewTaskAtom, name: '${_$colorBarNewTaskAtom.name}_set');
+  }
+
   final _$_AppControllerBaseActionController =
       ActionController(name: '_AppControllerBase');
 
@@ -110,7 +164,7 @@ mixin _$AppController on _AppControllerBase, Store {
   @override
   String toString() {
     final string =
-        'themeMode: ${themeMode.toString()},valorSystem: ${valorSystem.toString()},valorLight: ${valorLight.toString()},valorDark: ${valorDark.toString()},colorBarra: ${colorBarra.toString()}';
+        'themeMode: ${themeMode.toString()},valorSystem: ${valorSystem.toString()},valorLight: ${valorLight.toString()},valorDark: ${valorDark.toString()},colorBarra: ${colorBarra.toString()},colorBarraPesquisa: ${colorBarraPesquisa.toString()},colorTarefa: ${colorTarefa.toString()},colorBarNewTask: ${colorBarNewTask.toString()}';
     return '{$string}';
   }
 }

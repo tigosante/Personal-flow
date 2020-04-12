@@ -11,8 +11,8 @@ class IconUser extends StatelessWidget {
 
     return IconButton(
       icon: CircleAvatar(
-        child: Icon(Icons.person_outline, color: Colors.grey),
-        backgroundColor: Color.fromRGBO(128, 128, 128, 0.2),
+        child: Icon(Icons.person_outline, color: Colors.grey[600]),
+        backgroundColor: Color.fromRGBO(255, 255, 255, 0.5),
       ),
       onPressed: () => controller.modalUser(context, tamanhoTela),
     );

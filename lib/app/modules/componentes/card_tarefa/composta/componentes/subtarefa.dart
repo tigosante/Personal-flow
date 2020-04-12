@@ -13,7 +13,9 @@ class Subtarefa extends StatelessWidget {
           padding: EdgeInsets.only(top: tamanhoTela * 0.02),
           child: ListTile(
               title: Text("Tarefa",
-                  style: TextStyle(fontSize: tamanhoTela * 0.045)),
+                  style: TextStyle(
+                      fontSize: tamanhoTela * 0.045,
+                      fontWeight: FontWeight.bold)),
               subtitle: DataHora(),
               trailing: IconButton(
                   icon: Icon(Icons.check, color: Colors.teal[700]),

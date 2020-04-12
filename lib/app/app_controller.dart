@@ -19,22 +19,36 @@ abstract class _AppControllerBase with Store {
   String valorDark = "";
 
   @observable
-  Color colorBarra = Color.fromRGBO(75, 0, 130, 0.7);
+  Color colorBarra = Colors.teal[900];
+
+  @observable
+  Color colorBarraPesquisa = Color.fromRGBO(255, 255, 255, 0.6);
+
+  @observable
+  Color colorTarefa = Colors.black;
+
+  @observable
+  Color colorBarNewTask = Colors.indigo[900];
+
+  Color colorBarNewTaskDark = Colors.black38;
+  Color colorBarNewTaskLight = Colors.indigo[900];
+
+  Color colorTarefaDark = Colors.white;
+  Color colorTarefaLight = Colors.black;
+
+  Color colorBarraPesquisaDark = Color.fromRGBO(255, 255, 255, 0.1);
+  Color colorBarraPesquisaLight = Color.fromRGBO(255, 255, 255, 0.6);
+
+  Color colorBarraDark = Colors.black38;
+  Color colorBarraLight = Colors.teal[900];
 
   ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     splashColor: Colors.white60,
     primarySwatch: Colors.purple,
     primaryColor: Colors.purple,
-    appBarTheme: AppBarTheme(
-      elevation: 0,
-      color: Colors.purple[50],
-      brightness: Brightness.light,
-    ),
-    // cardTheme: CardTheme(color: Color.fromRGBO(248, 235, 255, 1)),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.purple,
-    ),
+    floatingActionButtonTheme:
+        FloatingActionButtonThemeData(backgroundColor: Colors.purple),
   );
 
   ThemeData darkTheme = ThemeData(
@@ -42,15 +56,9 @@ abstract class _AppControllerBase with Store {
     splashColor: Colors.black87,
     primarySwatch: Colors.deepPurple,
     primaryColor: Colors.deepPurple,
-    appBarTheme: AppBarTheme(
-      elevation: 1,
-      color: Color.fromRGBO(52, 52, 52, 1),
-      brightness: Brightness.dark,
-    ),
-    cardTheme: CardTheme(color: Color.fromRGBO(70, 70, 70, 1)),
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: Colors.deepPurple,
-    ),
+    cardTheme: CardTheme(color: Color.fromRGBO(30, 30, 30, 1)),
+    floatingActionButtonTheme:
+        FloatingActionButtonThemeData(backgroundColor: Colors.deepPurple),
   );
 
   @action
@@ -69,9 +77,15 @@ abstract class _AppControllerBase with Store {
 
         if (WidgetsBinding.instance.window.platformBrightness ==
             Brightness.light) {
-          colorBarra = Color.fromRGBO(75, 0, 130, 0.7);
+          colorBarra = colorBarraLight;
+          colorBarraPesquisa = colorBarraPesquisaLight;
+          colorTarefa = colorTarefaLight;
+          colorBarNewTask = colorBarNewTaskLight;
         } else {
-          colorBarra = Color.fromRGBO(75, 0, 130, 0.3);
+          colorBarra = colorBarraDark;
+          colorBarraPesquisa = colorBarraPesquisaDark;
+          colorTarefa = colorTarefaDark;
+          colorBarNewTask = colorBarNewTaskDark;
         }
         break;
     }
@@ -85,7 +99,10 @@ abstract class _AppControllerBase with Store {
   }
 
   void setLightTheme() {
-    colorBarra = Color.fromRGBO(75, 0, 130, 0.7);
+    colorBarra = colorBarraLight;
+    colorBarraPesquisa = colorBarraPesquisaLight;
+    colorTarefa = colorTarefaLight;
+    colorBarNewTask = colorBarNewTaskLight;
     themeMode = ThemeMode.light;
     valorSystem = "";
     valorLight = "light";
@@ -93,7 +110,10 @@ abstract class _AppControllerBase with Store {
   }
 
   void setDarkTheme() {
-    colorBarra = Color.fromRGBO(75, 0, 130, 0.3);
+    colorBarra = colorBarraDark;
+    colorBarraPesquisa = colorBarraPesquisaDark;
+    colorTarefa = colorTarefaDark;
+    colorBarNewTask = colorBarNewTaskDark;
     themeMode = ThemeMode.dark;
     valorSystem = "";
     valorLight = "";

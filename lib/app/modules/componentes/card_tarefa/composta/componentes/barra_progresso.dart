@@ -15,8 +15,8 @@ class BarraProgresso extends StatelessWidget {
         height: tamanhoTela * 0.028,
         child: FAProgressBar(
           currentValue: 80,
-          progressColor: Color.fromRGBO(0, 137, 123, 0.8),
-          backgroundColor: Color.fromRGBO(0, 137, 123, 0.05),
+          progressColor: Colors.teal[600],
+          backgroundColor: Color.fromRGBO(0, 137, 123, 0.02),
         ),
       ),
     );
