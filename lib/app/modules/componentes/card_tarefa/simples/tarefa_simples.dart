@@ -10,7 +10,7 @@ class TarefaSimples extends StatelessWidget {
       elevation: 0.5,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(tamanhoTela * 0.035)),
+          borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
       child: ListTile(
         title: Padding(
           padding: EdgeInsets.only(

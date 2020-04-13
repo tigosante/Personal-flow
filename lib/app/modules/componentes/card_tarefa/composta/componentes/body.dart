@@ -33,7 +33,7 @@ class BodyComposta extends StatelessWidget {
             decoration: BoxDecoration(
                 color: cor,
                 borderRadius:
-                    BorderRadius.all(Radius.circular(tamanhoTela * 0.04))),
+                    BorderRadius.all(Radius.circular(tamanhoTela * 0.06))),
             child: Subtarefa(),
           ),
         );

@@ -15,11 +15,15 @@ class BarraPesquisa extends StatelessWidget {
 
     return Padding(
         padding: EdgeInsets.only(
-            top: tamanhoTela * 0.02, bottom: tamanhoTela * 0.03),
+          top: tamanhoTela * 0.04,
+          left: tamanhoTela * 0.06,
+          right: tamanhoTela * 0.06,
+          bottom: tamanhoTela * 0.03,
+        ),
         child: Observer(builder: (_) {
           return Card(
               elevation: 0,
-              color: Colors.white.withOpacity(0.4),
+              color: Colors.teal.withOpacity(0.2),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),

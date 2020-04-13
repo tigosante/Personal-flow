@@ -9,40 +9,34 @@ class NovaTarefaPage extends StatelessWidget {
     double tamanhoTela = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-          leading: Container(
-              width: tamanhoTela * 0.13,
-              child: FlatButton(
-                  splashColor: Colors.white24,
-                  child: Icon(Icons.chevron_left, color: Colors.teal),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
-                  onPressed: () => Navigator.pop(context))),
-          actions: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(
-                    top: tamanhoTela * 0.05, right: tamanhoTela * 0.05),
-                child: Text("Nova Tarefa",
-                    style: TextStyle(
-                        color: Colors.teal[800],
-                        fontSize: tamanhoTela * 0.045,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: tamanhoTela * 0.0025)))
-          ]),
-      body: Column(
-        children: <Widget>[
-          NewTaskBody(),
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          TabComposta(tamanhoTela: tamanhoTela),
-          TabSimples(tamanhoTela: tamanhoTela),
-        ],
-      ),
-    );
+        appBar: AppBar(
+            leading: Container(
+                width: tamanhoTela * 0.13,
+                child: FlatButton(
+                    splashColor: Colors.white24,
+                    child: Icon(Icons.chevron_left, color: Colors.teal),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
+                    onPressed: () => Navigator.pop(context))),
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(
+                      top: tamanhoTela * 0.05, right: tamanhoTela * 0.05),
+                  child: Text("Nova Tarefa",
+                      style: TextStyle(
+                          color: Colors.teal[800],
+                          fontSize: tamanhoTela * 0.045,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: tamanhoTela * 0.0025)))
+            ]),
+        body: NewTaskBody(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              TabComposta(tamanhoTela: tamanhoTela),
+              TabSimples(tamanhoTela: tamanhoTela)
+            ]));
   }
 }

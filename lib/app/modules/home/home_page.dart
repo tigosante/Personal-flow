@@ -23,21 +23,20 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
         appBar: AppBar(title: BarraPesquisa()),
-        body: ListView.builder(
-            padding: EdgeInsets.only(
-              top: tamanhoTela * 0.03,
-              bottom: tamanhoTela * 0.2,
-            ),
-            itemCount: 3,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                  padding: EdgeInsets.only(
-                      left: tamanhoTela * 0.01,
-                      right: tamanhoTela * 0.01,
-                      bottom: tamanhoTela * 0.01),
-                  child: index % 2 == 0 ? TarefaComposta() : TarefaSimples());
-            }),
+        body: Center(
+            child: Container(
+                width: tamanhoTela * 0.9,
+                child: ListView.builder(
+                    padding: EdgeInsets.only(
+                      top: tamanhoTela * 0.03,
+                      bottom: tamanhoTela * 0.2,
+                    ),
+                    itemCount: 3,
+                    itemBuilder: (BuildContext _, int index) =>
+                        index % 2 == 0 ? TarefaComposta() : TarefaSimples()))),
         floatingActionButton: FloatingActionButton.extended(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
             label:
                 Text("Adiconar tarefa", style: TextStyle(color: Colors.black)),
             icon: Icon(Icons.playlist_add_check, color: Colors.black),

@@ -14,7 +14,7 @@ class NewTaskComposed extends StatelessWidget {
 
     return SingleChildScrollView(
       padding:
-          EdgeInsets.only(top: tamanhoTela * 0.05, bottom: tamanhoTela * 0.2),
+          EdgeInsets.only(top: tamanhoTela * 0.02, bottom: tamanhoTela * 0.2),
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
         Container(
             width: tamanhoTela * 0.9,

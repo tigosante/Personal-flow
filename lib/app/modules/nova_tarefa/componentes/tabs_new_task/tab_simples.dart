@@ -14,8 +14,10 @@ class TabSimples extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
         builder: (_) => ChoiceChip(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(tamanhoTela * 0.02)),
             padding: EdgeInsets.all(tamanhoTela * 0.03),
-            elevation: 8,
+            elevation: 0,
             label: Text("Tarefa Simples",
                 style: TextStyle(
                     color: controller.colorText1,

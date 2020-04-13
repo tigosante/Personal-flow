@@ -45,7 +45,7 @@ class BotoesTarefa extends StatelessWidget {
                         style: TextStyle(color: value["color"])))),
             onPressed: () {},
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(tamanhoTela * 0.03)),
+                borderRadius: BorderRadius.circular(tamanhoTela * 0.04)),
           );
         }).toList(),
       ),

@@ -39,7 +39,7 @@ abstract class _AppControllerBase with Store {
     primarySwatch: Colors.teal,
     primaryColor: Colors.teal,
     appBarTheme: AppBarTheme(
-        elevation: 0, brightness: Brightness.light, color: Colors.teal[100]),
+        elevation: 0, brightness: Brightness.light, color: Colors.transparent),
     floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: Colors.red[200]),
   );
@@ -50,9 +50,7 @@ abstract class _AppControllerBase with Store {
       primarySwatch: Colors.teal,
       primaryColor: Colors.teal,
       appBarTheme: AppBarTheme(
-          elevation: 0,
-          brightness: Brightness.dark,
-          color: Colors.teal.withOpacity(0.01)),
+          elevation: 0, brightness: Brightness.dark, color: Colors.transparent),
       cardTheme: CardTheme(color: Color.fromRGBO(30, 30, 30, 1)),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
           backgroundColor: Colors.black38.withRed(100)));

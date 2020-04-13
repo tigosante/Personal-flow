@@ -14,7 +14,7 @@ class TarefaComposta extends StatelessWidget {
       elevation: 0.5,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(tamanhoTela * 0.035)),
+          borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
       child: ExpansionTile(
         title: Padding(
           padding: EdgeInsets.only(
