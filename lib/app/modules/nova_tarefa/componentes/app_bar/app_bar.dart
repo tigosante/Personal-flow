@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../app_controller.dart';
+import '../../../../app_controller.dart';
 
 class NovaTarefaBar extends StatelessWidget {
   NovaTarefaBar({Key key, this.tamanhoTela}) : super(key: key);
