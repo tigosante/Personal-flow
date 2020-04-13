@@ -1,23 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:personalflow/app/modules/nova_tarefa/componentes/new_task_composed/new_task_composed.dart';
-import 'package:personalflow/app/modules/nova_tarefa/componentes/new_task_simple/new_task_simple.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import '../../nova_tarefa_controller.dart';
 
 class NewTaskBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    double tamanhoTela = MediaQuery.of(context).size.width;
-    List<Widget> items = [
-      NewTaskComposed(tamanhoTela: tamanhoTela),
-      NewTaskSimple()
-    ];
+    final controller = Modular.get<NovaTarefaController>();
 
     return Expanded(
       child: PageView.builder(
-        itemCount: items.length,
+        itemCount: controller.items.length,
         scrollDirection: Axis.horizontal,
         controller: PageController(initialPage: 0),
-        itemBuilder: (BuildContext context, int index) => items[index],
-        onPageChanged: (int index) {},
+        itemBuilder: (BuildContext _, int index) =>
+            Observer(builder: (_) => controller.items[controller.indexPage]),
+        onPageChanged: controller.changeTask,
       ),
     );
   }

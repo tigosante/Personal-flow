@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
+import 'componentes/new_task_composed/new_task_composed.dart';
+import 'componentes/new_task_simple/new_task_simple.dart';
+
 part 'nova_tarefa_controller.g.dart';
 
 class NovaTarefaController = _NovaTarefaControllerBase
@@ -31,6 +34,11 @@ abstract class _NovaTarefaControllerBase with Store {
   Color colorTextSelec = Colors.white;
   Color colorTextNoSelec = Colors.black;
 
+  @observable
+  int indexPage = 0;
+
+  List<Widget> items = [NewTaskComposed(), NewTaskSimple()];
+
   @action
   void changeTask(int index) {
     if (index == 0) {
@@ -48,5 +56,7 @@ abstract class _NovaTarefaControllerBase with Store {
       selectValue0 = false;
       selectValue1 = true;
     }
+
+    indexPage = index;
   }
 }

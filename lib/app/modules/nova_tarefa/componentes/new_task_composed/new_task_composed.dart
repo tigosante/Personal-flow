@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 class NewTaskComposed extends StatelessWidget {
-  NewTaskComposed({Key key, this.tamanhoTela}) : super(key: key);
-
-  final double tamanhoTela;
-
   @override
   Widget build(BuildContext context) {
+    double tamanhoTela = MediaQuery.of(context).size.width;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
