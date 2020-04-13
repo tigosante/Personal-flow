@@ -17,16 +17,7 @@ class BarraPesquisa extends StatelessWidget {
       return Container(
         height: tamanhoTela * 0.25,
         width: tamanhoTela,
-        decoration: BoxDecoration(
-            color: appController.colorBarra,
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  blurRadius: 5, color: Colors.black45, offset: Offset(0, 5))
-            ],
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(tamanhoTela * 0.02),
-              bottomRight: Radius.circular(tamanhoTela * 0.02),
-            )),
+        decoration: BoxDecoration(color: appController.colorBarra),
         child: Padding(
           padding: EdgeInsets.only(
               top: tamanhoTela * 0.08,
