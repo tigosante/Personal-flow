@@ -22,10 +22,7 @@ abstract class _AppControllerBase with Store {
   Color colorBarra = Colors.teal[900];
 
   @observable
-  Color colorBarraPesquisa = Color.fromRGBO(255, 255, 255, 0.6);
-
-  @observable
-  Color colorTarefa = Colors.black;
+  Color colorBarraPesquisa = Colors.white.withOpacity(0.25);
 
   @observable
   Color colorBarNewTask = Colors.indigo[900];
@@ -36,29 +33,28 @@ abstract class _AppControllerBase with Store {
   Color colorTarefaDark = Colors.white;
   Color colorTarefaLight = Colors.black;
 
-  Color colorBarraPesquisaDark = Color.fromRGBO(255, 255, 255, 0.1);
-  Color colorBarraPesquisaLight = Color.fromRGBO(255, 255, 255, 0.6);
-
   Color colorBarraDark = Colors.black38;
   Color colorBarraLight = Colors.teal[900];
 
   ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     splashColor: Colors.white60,
-    primarySwatch: Colors.purple,
-    primaryColor: Colors.purple,
+    primarySwatch: Colors.teal,
+    primaryColor: Colors.teal,
+    appBarTheme: AppBarTheme(color: Colors.teal[900]),
     floatingActionButtonTheme:
-        FloatingActionButtonThemeData(backgroundColor: Colors.purple),
+        FloatingActionButtonThemeData(backgroundColor: Colors.teal),
   );
 
   ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     splashColor: Colors.black87,
-    primarySwatch: Colors.deepPurple,
-    primaryColor: Colors.deepPurple,
+    primarySwatch: Colors.teal,
+    primaryColor: Colors.teal,
+    appBarTheme: AppBarTheme(color: Colors.black12),
     cardTheme: CardTheme(color: Color.fromRGBO(30, 30, 30, 1)),
     floatingActionButtonTheme:
-        FloatingActionButtonThemeData(backgroundColor: Colors.deepPurple),
+        FloatingActionButtonThemeData(backgroundColor: Colors.teal),
   );
 
   @action
@@ -78,13 +74,9 @@ abstract class _AppControllerBase with Store {
         if (WidgetsBinding.instance.window.platformBrightness ==
             Brightness.light) {
           colorBarra = colorBarraLight;
-          colorBarraPesquisa = colorBarraPesquisaLight;
-          colorTarefa = colorTarefaLight;
           colorBarNewTask = colorBarNewTaskLight;
         } else {
           colorBarra = colorBarraDark;
-          colorBarraPesquisa = colorBarraPesquisaDark;
-          colorTarefa = colorTarefaDark;
           colorBarNewTask = colorBarNewTaskDark;
         }
         break;
@@ -100,8 +92,6 @@ abstract class _AppControllerBase with Store {
 
   void setLightTheme() {
     colorBarra = colorBarraLight;
-    colorBarraPesquisa = colorBarraPesquisaLight;
-    colorTarefa = colorTarefaLight;
     colorBarNewTask = colorBarNewTaskLight;
     themeMode = ThemeMode.light;
     valorSystem = "";
@@ -111,8 +101,6 @@ abstract class _AppControllerBase with Store {
 
   void setDarkTheme() {
     colorBarra = colorBarraDark;
-    colorBarraPesquisa = colorBarraPesquisaDark;
-    colorTarefa = colorTarefaDark;
     colorBarNewTask = colorBarNewTaskDark;
     themeMode = ThemeMode.dark;
     valorSystem = "";

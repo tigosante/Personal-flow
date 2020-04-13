@@ -9,14 +9,12 @@ class NewTaskBody extends StatelessWidget {
     final controller = Modular.get<NovaTarefaController>();
 
     return Expanded(
-      child: PageView.builder(
-        itemCount: controller.items.length,
-        scrollDirection: Axis.horizontal,
-        controller: PageController(initialPage: 0),
-        itemBuilder: (BuildContext _, int index) =>
-            Observer(builder: (_) => controller.items[controller.indexPage]),
-        onPageChanged: controller.changeTask,
-      ),
-    );
+        child: PageView.builder(
+            itemCount: controller.items.length,
+            scrollDirection: Axis.horizontal,
+            controller: PageController(initialPage: 0),
+            itemBuilder: (BuildContext _, int index) => Observer(
+                builder: (_) => controller.items[controller.indexPage]),
+            onPageChanged: controller.changeTask));
   }
 }
