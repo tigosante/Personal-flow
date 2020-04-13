@@ -1,20 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'componentes/new_task_body/new_task_body.dart';
-import 'componentes/tabs_new_task/tabs_new_task.dart';
-import 'nova_tarefa_controller.dart';
+import 'componentes/tabs_new_task/tab_composta.dart';
+import 'componentes/tabs_new_task/tab_simples.dart';
 
-class NovaTarefaPage extends StatefulWidget {
-  final String title;
-  const NovaTarefaPage({Key key, this.title = "NovaTarefa"}) : super(key: key);
-
-  @override
-  _NovaTarefaPageState createState() => _NovaTarefaPageState();
-}
-
-class _NovaTarefaPageState extends State<NovaTarefaPage> {
-  final controller = Modular.get<NovaTarefaController>();
-
+class NovaTarefaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
@@ -25,7 +14,7 @@ class _NovaTarefaPageState extends State<NovaTarefaPage> {
               width: tamanhoTela * 0.13,
               child: FlatButton(
                   splashColor: Colors.white24,
-                  child: Icon(Icons.chevron_left, color: Colors.white),
+                  child: Icon(Icons.chevron_left, color: Colors.teal),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
                   onPressed: () => Navigator.pop(context))),
@@ -35,15 +24,23 @@ class _NovaTarefaPageState extends State<NovaTarefaPage> {
                     top: tamanhoTela * 0.05, right: tamanhoTela * 0.05),
                 child: Text("Nova Tarefa",
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.teal[800],
                         fontSize: tamanhoTela * 0.045,
                         fontWeight: FontWeight.bold,
                         letterSpacing: tamanhoTela * 0.0025)))
           ]),
       body: Column(
         children: <Widget>[
-          TabsNewTask(tamanhoTela: tamanhoTela),
           NewTaskBody(),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          TabComposta(tamanhoTela: tamanhoTela),
+          TabSimples(tamanhoTela: tamanhoTela),
         ],
       ),
     );

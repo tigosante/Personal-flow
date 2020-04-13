@@ -41,7 +41,8 @@ abstract class _AppControllerBase with Store {
     splashColor: Colors.white60,
     primarySwatch: Colors.teal,
     primaryColor: Colors.teal,
-    appBarTheme: AppBarTheme(color: Colors.teal[900]),
+    appBarTheme: AppBarTheme(
+        elevation: 0, brightness: Brightness.light, color: Colors.teal[100]),
     floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: Colors.teal),
   );
@@ -51,7 +52,8 @@ abstract class _AppControllerBase with Store {
     splashColor: Colors.black87,
     primarySwatch: Colors.teal,
     primaryColor: Colors.teal,
-    appBarTheme: AppBarTheme(color: Colors.black12),
+    appBarTheme: AppBarTheme(
+        elevation: 0, brightness: Brightness.dark, color: Colors.black12),
     cardTheme: CardTheme(color: Color.fromRGBO(30, 30, 30, 1)),
     floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: Colors.teal),

@@ -17,7 +17,7 @@ abstract class _NovaTarefaControllerBase with Store {
   bool selectValue1 = false;
 
   @observable
-  Color colorItemSelect0 = Colors.indigo[900];
+  Color colorItemSelect0 = Colors.indigo[700];
 
   @observable
   Color colorItemSelect1 = Colors.grey.withOpacity(0.2);
@@ -28,7 +28,7 @@ abstract class _NovaTarefaControllerBase with Store {
   @observable
   Color colorText1 = Colors.black;
 
-  Color colorSelect = Colors.indigo[900];
+  Color colorSelect = Colors.indigo[700];
   Color colorNoSelect = Colors.grey.withOpacity(0.2);
 
   Color colorTextSelec = Colors.white;
@@ -38,13 +38,7 @@ abstract class _NovaTarefaControllerBase with Store {
   int indexPage = 0;
 
   @observable
-  List<Subatarefas> subtarefas = <Subatarefas>[
-    Subatarefas(title: "Tarefa"),
-    Subatarefas(title: "Tarefa"),
-    Subatarefas(title: "Tarefa"),
-    Subatarefas(title: "Tarefa"),
-    Subatarefas(title: "Tarefa"),
-  ];
+  List<Subatarefas> subtarefas = <Subatarefas>[Subatarefas(title: "Tarefa")];
 
   List<Widget> items = [NewTaskComposed(), NewTaskSimple()];
 

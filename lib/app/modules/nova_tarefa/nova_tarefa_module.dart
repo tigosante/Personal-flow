@@ -11,7 +11,7 @@ class NovaTarefaModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => NovaTarefaPage()),
+        Router("/adicionar_tarefa", child: (_, args) => NovaTarefaPage()),
       ];
 
   static Inject get to => Inject<NovaTarefaModule>.of();

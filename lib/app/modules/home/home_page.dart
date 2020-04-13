@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
             label:
                 Text("Adiconar tarefa", style: TextStyle(color: Colors.white)),
             icon: Icon(Icons.playlist_add_check, color: Colors.white),
-            backgroundColor: Colors.teal[900],
+            backgroundColor: Colors.indigo[900],
             onPressed: homeController.navigationNewTask));
   }
 }
