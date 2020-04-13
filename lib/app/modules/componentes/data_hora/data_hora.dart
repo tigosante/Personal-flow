@@ -9,19 +9,14 @@ class DataHora extends StatelessWidget {
     double tamanhoTela = MediaQuery.of(context).size.width;
 
     return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        DataTarefa(),
-        Text(
-          ":",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: tamanhoTela * 0.035,
-          ),
-        ),
-        HoraTarefa(),
-      ],
-    );
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          DataTarefa(),
+          Text(":",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold, fontSize: tamanhoTela * 0.035)),
+          HoraTarefa()
+        ]);
   }
 }

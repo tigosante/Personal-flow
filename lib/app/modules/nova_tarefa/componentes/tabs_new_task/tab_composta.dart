@@ -11,20 +11,18 @@ class TabComposta extends StatelessWidget {
   final controller = Modular.get<NovaTarefaController>();
 
   @override
-  Widget build(BuildContext context) {
-    return Observer(
-        builder: (_) => ChoiceChip(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(tamanhoTela * 0.02)),
-            padding: EdgeInsets.all(tamanhoTela * 0.03),
-            elevation: 0,
-            label: Text("Tarefa Composta",
-                style: TextStyle(
-                    color: controller.colorText0,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: tamanhoTela * 0.0035)),
-            selected: controller.selectValue0,
-            selectedColor: controller.colorItemSelect0,
-            onSelected: (_) => controller.changeTask(0)));
-  }
+  Widget build(BuildContext context) => Observer(
+      builder: (_) => ChoiceChip(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(tamanhoTela * 0.02)),
+          padding: EdgeInsets.all(tamanhoTela * 0.03),
+          elevation: 0,
+          label: Text("Tarefa Composta",
+              style: TextStyle(
+                  color: controller.colorText0,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: tamanhoTela * 0.0035)),
+          selected: controller.selectValue0,
+          selectedColor: controller.colorItemSelect0,
+          onSelected: (_) => controller.changeTask(0)));
 }

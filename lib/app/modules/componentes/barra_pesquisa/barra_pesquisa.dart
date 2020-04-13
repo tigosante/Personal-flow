@@ -15,11 +15,10 @@ class BarraPesquisa extends StatelessWidget {
 
     return Padding(
         padding: EdgeInsets.only(
-          top: tamanhoTela * 0.04,
-          left: tamanhoTela * 0.06,
-          right: tamanhoTela * 0.06,
-          bottom: tamanhoTela * 0.03,
-        ),
+            top: tamanhoTela * 0.04,
+            left: tamanhoTela * 0.06,
+            right: tamanhoTela * 0.06,
+            bottom: tamanhoTela * 0.03),
         child: Observer(builder: (_) {
           return Card(
               elevation: 0,

@@ -7,9 +7,8 @@ class Subtarefa extends StatelessWidget {
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
 
-    return Column(
-      children: <Widget>[
-        Padding(
+    return Column(children: <Widget>[
+      Padding(
           padding: EdgeInsets.only(top: tamanhoTela * 0.02),
           child: ListTile(
               title: Text("Tarefa",
@@ -19,9 +18,7 @@ class Subtarefa extends StatelessWidget {
               subtitle: DataHora(),
               trailing: IconButton(
                   icon: Icon(Icons.check, color: Colors.teal[700]),
-                  onPressed: () {})),
-        ),
-      ],
-    );
+                  onPressed: () {})))
+    ]);
   }
 }

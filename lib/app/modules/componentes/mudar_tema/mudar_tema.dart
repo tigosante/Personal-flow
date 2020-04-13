@@ -7,13 +7,9 @@ class MudarTema extends StatelessWidget {
   final controller = Modular.get<AppController>();
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        ListTile(
-          title: Text("Tema"),
-        ),
+  Widget build(BuildContext context) =>
+      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+        ListTile(title: Text("Tema")),
         RadioListTile(
             title: Text("System"),
             value: "system",
@@ -31,8 +27,6 @@ class MudarTema extends StatelessWidget {
             value: "dark",
             groupValue: controller.valorDark,
             onChanged: controller.changeTheme,
-            activeColor: Colors.purple),
-      ],
-    );
-  }
+            activeColor: Colors.purple)
+      ]);
 }

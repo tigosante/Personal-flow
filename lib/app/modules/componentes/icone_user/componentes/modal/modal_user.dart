@@ -8,14 +8,7 @@ class ModalUser extends StatelessWidget {
   final double tamanhoTela;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  Widget build(BuildContext context) => Column(
       mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        IngoUser(),
-        Divider(),
-        MudarTema(),
-      ],
-    );
-  }
+      children: <Widget>[IngoUser(), Divider(), MudarTema()]);
 }
