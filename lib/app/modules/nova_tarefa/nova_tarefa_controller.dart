@@ -37,6 +37,15 @@ abstract class _NovaTarefaControllerBase with Store {
   @observable
   int indexPage = 0;
 
+  @observable
+  List<Subatarefas> subtarefas = <Subatarefas>[
+    Subatarefas(title: "Tarefa"),
+    Subatarefas(title: "Tarefa"),
+    Subatarefas(title: "Tarefa"),
+    Subatarefas(title: "Tarefa"),
+    Subatarefas(title: "Tarefa"),
+  ];
+
   List<Widget> items = [NewTaskComposed(), NewTaskSimple()];
 
   @action
@@ -59,4 +68,10 @@ abstract class _NovaTarefaControllerBase with Store {
 
     indexPage = index;
   }
+}
+
+class Subatarefas {
+  final String title;
+
+  Subatarefas({this.title});
 }

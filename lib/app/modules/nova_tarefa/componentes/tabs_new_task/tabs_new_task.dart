@@ -16,7 +16,8 @@ class TabsNewTask extends StatelessWidget {
         padding: EdgeInsets.only(
             top: tamanhoTela * 0.02, bottom: tamanhoTela * 0.02),
         child: Card(
-            elevation: 1,
+            elevation: 0,
+            color: Colors.indigo.withOpacity(0.1),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
             child: Container(
