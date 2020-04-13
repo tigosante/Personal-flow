@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:personalflow/app/modules/componentes/barra_pesquisa/barra_pesquisa.dart';
 import 'package:personalflow/app/modules/componentes/barra_pesquisa/barra_pesquisa_controller.dart';
 import 'package:personalflow/app/modules/componentes/card_tarefa/composta/tarefa_composta.dart';
 import 'package:personalflow/app/modules/componentes/card_tarefa/simples/tarefa_simples.dart';
@@ -22,55 +22,28 @@ class _HomePageState extends State<HomePage> {
     double tamanhoTela = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        appBar: AppBar(
-            title: Padding(
-                padding: EdgeInsets.only(
-                    top: tamanhoTela * 0.02, bottom: tamanhoTela * 0.03),
-                child: Observer(builder: (_) {
-                  return Card(
-                      elevation: 0,
-                      color: appController.colorBarraPesquisa,
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(tamanhoTela * 0.1)),
-                      child: Row(children: <Widget>[
-                        Expanded(
-                            child: Padding(
-                                padding:
-                                    EdgeInsets.only(left: tamanhoTela * 0.04),
-                                child: TextField(
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: "Buscar tarefa")))),
-                        barraController.iconBarra,
-                      ]));
-                }))),
-        body: Column(children: <Widget>[
-          Expanded(
-              child: ListView.builder(
+        appBar: AppBar(title: BarraPesquisa()),
+        body: ListView.builder(
+            padding: EdgeInsets.only(
+              top: tamanhoTela * 0.03,
+              bottom: tamanhoTela * 0.2,
+            ),
+            itemCount: 3,
+            itemBuilder: (BuildContext context, int index) {
+              return Padding(
                   padding: EdgeInsets.only(
-                    top: tamanhoTela * 0.03,
-                    bottom: tamanhoTela * 0.2,
-                  ),
-                  itemCount: 7,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                        padding: EdgeInsets.only(
-                            left: tamanhoTela * 0.01,
-                            right: tamanhoTela * 0.01,
-                            bottom: tamanhoTela * 0.01),
-                        child: index % 2 == 0
-                            ? TarefaComposta()
-                            : TarefaSimples());
-                  }))
-        ]),
+                      left: tamanhoTela * 0.01,
+                      right: tamanhoTela * 0.01,
+                      bottom: tamanhoTela * 0.01),
+                  child: index % 2 == 0 ? TarefaComposta() : TarefaSimples());
+            }),
         floatingActionButton: FloatingActionButton.extended(
-            elevation: 5,
             label:
-                Text("Adiconar tarefa", style: TextStyle(color: Colors.white)),
-            icon: Icon(Icons.playlist_add_check, color: Colors.white),
-            backgroundColor: Colors.indigo[900],
+                Text("Adiconar tarefa", style: TextStyle(color: Colors.black)),
+            icon: Icon(Icons.playlist_add_check, color: Colors.black),
+            splashColor: Colors.red.withOpacity(0.2),
+            highlightElevation: 0,
+            elevation: 0,
             onPressed: homeController.navigationNewTask));
   }
 }

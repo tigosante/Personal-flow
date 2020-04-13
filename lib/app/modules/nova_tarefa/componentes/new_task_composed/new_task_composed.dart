@@ -13,12 +13,13 @@ class NewTaskComposed extends StatelessWidget {
     final controller = Modular.get<NovaTarefaController>();
 
     return SingleChildScrollView(
-      padding: EdgeInsets.only(bottom: tamanhoTela * 0.2),
+      padding:
+          EdgeInsets.only(top: tamanhoTela * 0.05, bottom: tamanhoTela * 0.2),
       child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
         Container(
             width: tamanhoTela * 0.9,
             child: Card(
-                color: Colors.red.withOpacity(0.5),
+                color: Colors.blue[700].withOpacity(0.5),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),

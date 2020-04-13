@@ -22,9 +22,6 @@ abstract class _AppControllerBase with Store {
   Color colorBarra = Colors.teal[900];
 
   @observable
-  Color colorBarraPesquisa = Colors.white.withOpacity(0.25);
-
-  @observable
   Color colorBarNewTask = Colors.indigo[900];
 
   Color colorBarNewTaskDark = Colors.black38;
@@ -44,20 +41,21 @@ abstract class _AppControllerBase with Store {
     appBarTheme: AppBarTheme(
         elevation: 0, brightness: Brightness.light, color: Colors.teal[100]),
     floatingActionButtonTheme:
-        FloatingActionButtonThemeData(backgroundColor: Colors.teal),
+        FloatingActionButtonThemeData(backgroundColor: Colors.red[200]),
   );
 
   ThemeData darkTheme = ThemeData(
-    brightness: Brightness.dark,
-    splashColor: Colors.black87,
-    primarySwatch: Colors.teal,
-    primaryColor: Colors.teal,
-    appBarTheme: AppBarTheme(
-        elevation: 0, brightness: Brightness.dark, color: Colors.black12),
-    cardTheme: CardTheme(color: Color.fromRGBO(30, 30, 30, 1)),
-    floatingActionButtonTheme:
-        FloatingActionButtonThemeData(backgroundColor: Colors.teal),
-  );
+      brightness: Brightness.dark,
+      splashColor: Colors.black87,
+      primarySwatch: Colors.teal,
+      primaryColor: Colors.teal,
+      appBarTheme: AppBarTheme(
+          elevation: 0,
+          brightness: Brightness.dark,
+          color: Colors.teal.withOpacity(0.01)),
+      cardTheme: CardTheme(color: Color.fromRGBO(30, 30, 30, 1)),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Colors.black38.withRed(100)));
 
   @action
   void changeTheme(String theme) {

@@ -21,7 +21,6 @@ class Subtarefa extends StatelessWidget {
                   icon: Icon(Icons.check, color: Colors.teal[700]),
                   onPressed: () {})),
         ),
-        Divider(indent: tamanhoTela * 0.05, endIndent: tamanhoTela * 0.05),
       ],
     );
   }

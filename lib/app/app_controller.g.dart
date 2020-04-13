@@ -94,25 +94,6 @@ mixin _$AppController on _AppControllerBase, Store {
     }, _$colorBarraAtom, name: '${_$colorBarraAtom.name}_set');
   }
 
-  final _$colorBarraPesquisaAtom =
-      Atom(name: '_AppControllerBase.colorBarraPesquisa');
-
-  @override
-  Color get colorBarraPesquisa {
-    _$colorBarraPesquisaAtom.context
-        .enforceReadPolicy(_$colorBarraPesquisaAtom);
-    _$colorBarraPesquisaAtom.reportObserved();
-    return super.colorBarraPesquisa;
-  }
-
-  @override
-  set colorBarraPesquisa(Color value) {
-    _$colorBarraPesquisaAtom.context.conditionallyRunInAction(() {
-      super.colorBarraPesquisa = value;
-      _$colorBarraPesquisaAtom.reportChanged();
-    }, _$colorBarraPesquisaAtom, name: '${_$colorBarraPesquisaAtom.name}_set');
-  }
-
   final _$colorBarNewTaskAtom =
       Atom(name: '_AppControllerBase.colorBarNewTask');
 
@@ -147,7 +128,7 @@ mixin _$AppController on _AppControllerBase, Store {
   @override
   String toString() {
     final string =
-        'themeMode: ${themeMode.toString()},valorSystem: ${valorSystem.toString()},valorLight: ${valorLight.toString()},valorDark: ${valorDark.toString()},colorBarra: ${colorBarra.toString()},colorBarraPesquisa: ${colorBarraPesquisa.toString()},colorBarNewTask: ${colorBarNewTask.toString()}';
+        'themeMode: ${themeMode.toString()},valorSystem: ${valorSystem.toString()},valorLight: ${valorLight.toString()},valorDark: ${valorDark.toString()},colorBarra: ${colorBarra.toString()},colorBarNewTask: ${colorBarNewTask.toString()}';
     return '{$string}';
   }
 }

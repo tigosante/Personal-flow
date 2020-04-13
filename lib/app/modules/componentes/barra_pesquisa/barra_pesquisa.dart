@@ -13,41 +13,26 @@ class BarraPesquisa extends StatelessWidget {
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
 
-    return Observer(builder: (_) {
-      return Container(
-        height: tamanhoTela * 0.25,
-        width: tamanhoTela,
-        decoration: BoxDecoration(color: appController.colorBarra),
-        child: Padding(
-          padding: EdgeInsets.only(
-              top: tamanhoTela * 0.08,
-              left: tamanhoTela * 0.014,
-              right: tamanhoTela * 0.015,
-              bottom: tamanhoTela * 0.03),
-          child: Card(
-            color: appController.colorBarraPesquisa,
-            elevation: 0,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(tamanhoTela * 0.1),
-            ),
-            child: Row(
-              children: <Widget>[
+    return Padding(
+        padding: EdgeInsets.only(
+            top: tamanhoTela * 0.02, bottom: tamanhoTela * 0.03),
+        child: Observer(builder: (_) {
+          return Card(
+              elevation: 0,
+              color: Colors.white.withOpacity(0.4),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
+              child: Row(children: <Widget>[
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: tamanhoTela * 0.04),
-                    child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Buscar tarefa")),
-                  ),
-                ),
+                    child: Padding(
+                        padding: EdgeInsets.only(left: tamanhoTela * 0.04),
+                        child: TextField(
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Buscar tarefa")))),
                 controller.iconBarra,
-              ],
-            ),
-          ),
-        ),
-      );
-    });
+              ]));
+        }));
   }
 }

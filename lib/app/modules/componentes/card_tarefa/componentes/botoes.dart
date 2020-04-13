@@ -21,17 +21,17 @@ class BotoesTarefa extends StatelessWidget {
           {
             "title": "Nova tarefa",
             "color": Colors.indigo[600],
-            "splash": Color.fromRGBO(56, 72, 171, 0.1)
+            "splash": Colors.indigo.withOpacity(0.2)
           },
           {
             "title": "Apagar",
             "color": Colors.red[600],
-            "splash": Color.fromRGBO(229, 56, 53, 0.1)
+            "splash": Colors.red.withOpacity(0.2)
           },
           {
             "title": "Concluir",
             "color": Colors.teal[600],
-            "splash": Color.fromRGBO(0, 137, 123, 0.1)
+            "splash": Colors.teal.withOpacity(0.2)
           },
         ].map((value) {
           return FlatButton(
