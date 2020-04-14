@@ -34,12 +34,12 @@ abstract class _AppControllerBase with Store {
   Color colorBarraLight = Colors.teal[900];
 
   ThemeData lightTheme = ThemeData(
-    scaffoldBackgroundColor: Colors.yellow[50],
+    scaffoldBackgroundColor: Colors.white,
     brightness: Brightness.light,
     splashColor: Colors.white60,
     primarySwatch: Colors.teal,
     primaryColor: Colors.teal,
-    cardTheme: CardTheme(color: Colors.white),
+    cardTheme: CardTheme(color: Colors.yellow[50]),
     appBarTheme: AppBarTheme(
         elevation: 0, brightness: Brightness.light, color: Colors.transparent),
     floatingActionButtonTheme:

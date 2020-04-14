@@ -22,7 +22,7 @@ class BarraPesquisa extends StatelessWidget {
         child: Observer(builder: (_) {
           return Card(
               elevation: 0,
-              color: Colors.teal.withOpacity(0.05),
+              color: Colors.teal.withOpacity(0.2),
               clipBehavior: Clip.antiAliasWithSaveLayer,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
