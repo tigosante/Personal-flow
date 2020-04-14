@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'componentes/new_task_body/new_task_body.dart';
-import 'componentes/tabs_new_task/tab_composta.dart';
-import 'componentes/tabs_new_task/tab_simples.dart';
+import 'nova_tarefa_controller.dart';
 
 class NovaTarefaPage extends StatelessWidget {
+  final controller = Modular.get<NovaTarefaController>();
+
   @override
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
@@ -30,13 +33,27 @@ class NovaTarefaPage extends StatelessWidget {
                           letterSpacing: tamanhoTela * 0.0025)))
             ]),
         body: NewTaskBody(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              TabComposta(tamanhoTela: tamanhoTela),
-              TabSimples(tamanhoTela: tamanhoTela)
-            ]));
+        bottomNavigationBar: Observer(
+            builder: (_) => BottomNavigationBar(
+                  elevation: 0,
+                  onTap: controller.changeTask,
+                  currentIndex: controller.indexPage,
+                  backgroundColor: Colors.transparent,
+                  selectedItemColor: Colors.red,
+                  items: [
+                    {
+                      "title": "Composta",
+                      "icon": Icon(Icons.playlist_add_check)
+                    },
+                    {"title": "Simples", "icon": Icon(Icons.check)}
+                  ]
+                      .map((value) => BottomNavigationBarItem(
+                          icon: value["icon"],
+                          title: Text(value["title"],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: tamanhoTela * 0.0035))))
+                      .toList(),
+                )));
   }
 }

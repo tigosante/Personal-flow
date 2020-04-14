@@ -11,7 +11,7 @@ class SubtarefaInput extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
       padding: EdgeInsets.only(bottom: tamanhoTela * 0.02),
       child: Container(
-          width: tamanhoTela * 0.9,
+          width: tamanhoTela * 0.95,
           child: Card(
               elevation: 0,
               color: Colors.yellow.withOpacity(0.5),

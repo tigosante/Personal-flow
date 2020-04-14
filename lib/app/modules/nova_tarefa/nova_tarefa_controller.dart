@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
-import 'componentes/new_task_composed/new_task_composed.dart';
-import 'componentes/new_task_simple/new_task_simple.dart';
-
 part 'nova_tarefa_controller.g.dart';
 
 class NovaTarefaController = _NovaTarefaControllerBase
@@ -40,27 +37,15 @@ abstract class _NovaTarefaControllerBase with Store {
   @observable
   List<Subatarefas> subtarefas = <Subatarefas>[Subatarefas(title: "Tarefa")];
 
-  List<Widget> items = [NewTaskComposed(), NewTaskSimple()];
+  @observable
+  PageController pageController =
+      PageController(initialPage: 0, keepPage: true);
 
   @action
   void changeTask(int index) {
-    if (index == 0) {
-      colorText0 = colorTextSelec;
-      colorItemSelect0 = colorSelect;
-      colorText1 = colorTextNoSelec;
-      colorItemSelect1 = colorNoSelect;
-      selectValue0 = true;
-      selectValue1 = false;
-    } else {
-      colorText0 = colorTextNoSelec;
-      colorItemSelect0 = colorNoSelect;
-      colorText1 = colorTextSelec;
-      colorItemSelect1 = colorSelect;
-      selectValue0 = false;
-      selectValue1 = true;
-    }
-
     indexPage = index;
+    pageController.animateToPage(index,
+        duration: Duration(milliseconds: 500), curve: Curves.ease);
   }
 }
 

@@ -149,6 +149,24 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
     }, _$subtarefasAtom, name: '${_$subtarefasAtom.name}_set');
   }
 
+  final _$pageControllerAtom =
+      Atom(name: '_NovaTarefaControllerBase.pageController');
+
+  @override
+  PageController get pageController {
+    _$pageControllerAtom.context.enforceReadPolicy(_$pageControllerAtom);
+    _$pageControllerAtom.reportObserved();
+    return super.pageController;
+  }
+
+  @override
+  set pageController(PageController value) {
+    _$pageControllerAtom.context.conditionallyRunInAction(() {
+      super.pageController = value;
+      _$pageControllerAtom.reportChanged();
+    }, _$pageControllerAtom, name: '${_$pageControllerAtom.name}_set');
+  }
+
   final _$_NovaTarefaControllerBaseActionController =
       ActionController(name: '_NovaTarefaControllerBase');
 
@@ -166,7 +184,7 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
   @override
   String toString() {
     final string =
-        'selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()}';
+        'selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
     return '{$string}';
   }
 }
