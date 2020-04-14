@@ -33,6 +33,10 @@ class NovaTarefaPage extends StatelessWidget {
                           letterSpacing: tamanhoTela * 0.0025)))
             ]),
         body: NewTaskBody(),
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.playlist_add),
+            backgroundColor: Colors.indigo,
+            onPressed: () {}),
         bottomNavigationBar: Observer(
             builder: (_) => BottomNavigationBar(
                   elevation: 0,
