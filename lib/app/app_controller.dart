@@ -34,14 +34,16 @@ abstract class _AppControllerBase with Store {
   Color colorBarraLight = Colors.teal[900];
 
   ThemeData lightTheme = ThemeData(
+    scaffoldBackgroundColor: Colors.yellow[50],
     brightness: Brightness.light,
     splashColor: Colors.white60,
     primarySwatch: Colors.teal,
     primaryColor: Colors.teal,
+    cardTheme: CardTheme(color: Colors.white),
     appBarTheme: AppBarTheme(
         elevation: 0, brightness: Brightness.light, color: Colors.transparent),
     floatingActionButtonTheme:
-        FloatingActionButtonThemeData(backgroundColor: Colors.red[200]),
+        FloatingActionButtonThemeData(backgroundColor: Colors.red[400]),
   );
 
   ThemeData darkTheme = ThemeData(
@@ -53,7 +55,7 @@ abstract class _AppControllerBase with Store {
           elevation: 0, brightness: Brightness.dark, color: Colors.transparent),
       cardTheme: CardTheme(color: Color.fromRGBO(30, 30, 30, 1)),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: Colors.black38.withRed(100)));
+          backgroundColor: Colors.black87.withRed(50)));
 
   @action
   void changeTheme(String theme) {

@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(title: BarraPesquisa()),
         body: Center(
             child: Container(
-                width: tamanhoTela * 0.9,
+                width: tamanhoTela * 0.95,
                 child: ListView.builder(
                     padding: EdgeInsets.only(
                       top: tamanhoTela * 0.03,
@@ -38,8 +38,8 @@ class _HomePageState extends State<HomePage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
             label:
-                Text("Adiconar tarefa", style: TextStyle(color: Colors.black)),
-            icon: Icon(Icons.playlist_add_check, color: Colors.black),
+                Text("Adiconar tarefa", style: TextStyle(color: Colors.white)),
+            icon: Icon(Icons.playlist_add_check, color: Colors.white),
             splashColor: Colors.red.withOpacity(0.2),
             highlightElevation: 0,
             elevation: 0,

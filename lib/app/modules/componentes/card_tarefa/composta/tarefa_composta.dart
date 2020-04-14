@@ -11,7 +11,7 @@ class TarefaComposta extends StatelessWidget {
     double tamanhoTela = MediaQuery.of(context).size.width;
 
     return Card(
-        elevation: 1.5,
+        elevation: 0,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
