@@ -115,6 +115,24 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
     }, _$colorText1Atom, name: '${_$colorText1Atom.name}_set');
   }
 
+  final _$iconButtonNewTaskAtom =
+      Atom(name: '_NovaTarefaControllerBase.iconButtonNewTask');
+
+  @override
+  Icon get iconButtonNewTask {
+    _$iconButtonNewTaskAtom.context.enforceReadPolicy(_$iconButtonNewTaskAtom);
+    _$iconButtonNewTaskAtom.reportObserved();
+    return super.iconButtonNewTask;
+  }
+
+  @override
+  set iconButtonNewTask(Icon value) {
+    _$iconButtonNewTaskAtom.context.conditionallyRunInAction(() {
+      super.iconButtonNewTask = value;
+      _$iconButtonNewTaskAtom.reportChanged();
+    }, _$iconButtonNewTaskAtom, name: '${_$iconButtonNewTaskAtom.name}_set');
+  }
+
   final _$indexPageAtom = Atom(name: '_NovaTarefaControllerBase.indexPage');
 
   @override
@@ -184,7 +202,7 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
   @override
   String toString() {
     final string =
-        'selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
+        'selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},iconButtonNewTask: ${iconButtonNewTask.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
     return '{$string}';
   }
 }

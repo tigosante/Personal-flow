@@ -25,6 +25,9 @@ abstract class _NovaTarefaControllerBase with Store {
   @observable
   Color colorText1 = Colors.black;
 
+  @observable
+  Icon iconButtonNewTask = Icon(Icons.playlist_add_check);
+
   Color colorSelect = Colors.indigo[700];
   Color colorNoSelect = Colors.grey.withOpacity(0.2);
 
@@ -44,6 +47,8 @@ abstract class _NovaTarefaControllerBase with Store {
   @action
   void changeTask(int index) {
     indexPage = index;
+    iconButtonNewTask =
+        index == 0 ? Icon(Icons.playlist_add_check) : Icon(Icons.check);
     pageController.animateToPage(index,
         duration: Duration(milliseconds: 500), curve: Curves.ease);
   }
