@@ -12,15 +12,14 @@ class ModelTarefaSimples {
     this.reference,
   });
 
-  factory ModelTarefaSimples.fromDocument(DocumentSnapshot doc) {
-    return ModelTarefaSimples(
-        title: doc["title"], check: doc["check"], reference: doc.reference);
-  }
+  factory ModelTarefaSimples.fromDocument(DocumentSnapshot doc) =>
+      ModelTarefaSimples(
+          title: doc["title"], check: doc["check"], reference: doc.reference);
 
   void updateCheck() => reference.updateData({'check': !check});
   void updateTitulo(text) => reference.updateData({'title': text});
 
-  void addTarefa() => Firestore.instance
+  void addNovaTarefa() => Firestore.instance
       .collection(collectionSimples)
       .add({"title": title, "check": check});
 }

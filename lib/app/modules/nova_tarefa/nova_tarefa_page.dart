@@ -10,6 +10,7 @@ class NovaTarefaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
+    controller.indexPage = 0;
 
     return Scaffold(
         appBar: AppBar(
@@ -37,7 +38,10 @@ class NovaTarefaPage extends StatelessWidget {
             builder: (_) => FloatingActionButton(
                 child: controller.iconButtonNewTask,
                 backgroundColor: Colors.indigo,
-                onPressed: controller.addNovaTare)),
+                onPressed: () {
+                  controller.addNovaTarefa();
+                  Navigator.of(context).pop();
+                })),
         bottomNavigationBar: Observer(
             builder: (_) => BottomNavigationBar(
                   elevation: 0,

@@ -12,7 +12,7 @@ abstract class _NovaTarefaControllerBase with Store {
   TextEditingController controllerSimples = TextEditingController(text: "");
 
   @observable
-  Function addNovaTare;
+  Function addNovaTarefa;
 
   @observable
   bool selectValue0 = true;
@@ -59,7 +59,7 @@ abstract class _NovaTarefaControllerBase with Store {
       iconButtonNewTask = Icon(Icons.playlist_add_check);
     } else {
       iconButtonNewTask = Icon(Icons.check);
-      addNovaTare = addNovaTarefaSimplis;
+      addNovaTarefa = addNovaTarefaSimplis;
     }
 
     pageController.animateToPage(index,
@@ -70,7 +70,7 @@ abstract class _NovaTarefaControllerBase with Store {
   void addNovaTarefaSimplis() {
     ModelTarefaSimples model =
         ModelTarefaSimples(title: controllerSimples.text);
-    model.addTarefa();
+    model.addNovaTarefa();
   }
 
   @action

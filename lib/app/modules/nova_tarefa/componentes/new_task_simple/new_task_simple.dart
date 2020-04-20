@@ -23,12 +23,14 @@ class NewTaskSimple extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
                   child: ListTile(
-                      title: Observer(
-                          builder: (_) => TextField(
-                              controller: controller.controllerSimples,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Título da Tarefa"))),
+                      title: Observer(builder: (_) {
+                        controller.controllerSimples.text = "";
+                        return TextField(
+                            controller: controller.controllerSimples,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Título da Tarefa"));
+                      }),
                       subtitle: DataHora())),
             )),
       ],

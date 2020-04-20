@@ -27,21 +27,22 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
     }, _$controllerSimplesAtom, name: '${_$controllerSimplesAtom.name}_set');
   }
 
-  final _$addNovaTareAtom = Atom(name: '_NovaTarefaControllerBase.addNovaTare');
+  final _$addNovaTarefaAtom =
+      Atom(name: '_NovaTarefaControllerBase.addNovaTarefa');
 
   @override
-  Function get addNovaTare {
-    _$addNovaTareAtom.context.enforceReadPolicy(_$addNovaTareAtom);
-    _$addNovaTareAtom.reportObserved();
-    return super.addNovaTare;
+  Function get addNovaTarefa {
+    _$addNovaTarefaAtom.context.enforceReadPolicy(_$addNovaTarefaAtom);
+    _$addNovaTarefaAtom.reportObserved();
+    return super.addNovaTarefa;
   }
 
   @override
-  set addNovaTare(Function value) {
-    _$addNovaTareAtom.context.conditionallyRunInAction(() {
-      super.addNovaTare = value;
-      _$addNovaTareAtom.reportChanged();
-    }, _$addNovaTareAtom, name: '${_$addNovaTareAtom.name}_set');
+  set addNovaTarefa(Function value) {
+    _$addNovaTarefaAtom.context.conditionallyRunInAction(() {
+      super.addNovaTarefa = value;
+      _$addNovaTarefaAtom.reportChanged();
+    }, _$addNovaTarefaAtom, name: '${_$addNovaTarefaAtom.name}_set');
   }
 
   final _$selectValue0Atom =
@@ -259,7 +260,7 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
   @override
   String toString() {
     final string =
-        'controllerSimples: ${controllerSimples.toString()},addNovaTare: ${addNovaTare.toString()},selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},iconButtonNewTask: ${iconButtonNewTask.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
+        'controllerSimples: ${controllerSimples.toString()},addNovaTarefa: ${addNovaTarefa.toString()},selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},iconButtonNewTask: ${iconButtonNewTask.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
     return '{$string}';
   }
 }

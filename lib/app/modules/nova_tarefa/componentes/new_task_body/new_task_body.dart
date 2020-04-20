@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:personalflow/app/modules/nova_tarefa/componentes/new_task_composed/new_task_composed.dart';
 import 'package:personalflow/app/modules/nova_tarefa/componentes/new_task_simple/new_task_simple.dart';
@@ -13,8 +14,10 @@ class _NewTaskBodyState extends State<NewTaskBody> {
   final controller = Modular.get<NovaTarefaController>();
 
   @override
-  Widget build(BuildContext context) => PageView(
-      controller: controller.pageController,
-      children: <Widget>[NewTaskComposed(), NewTaskSimple()],
-      onPageChanged: controller.changeTask);
+  Widget build(BuildContext context) => Observer(
+        builder: (BuildContext _) => PageView(
+            controller: controller.pageController,
+            children: <Widget>[NewTaskComposed(), NewTaskSimple()],
+            onPageChanged: controller.changeTask),
+      );
 }
