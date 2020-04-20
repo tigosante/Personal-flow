@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:personalflow/app/model/simples/model.dart';
 
 part 'nova_tarefa_controller.g.dart';
 
@@ -7,6 +8,12 @@ class NovaTarefaController = _NovaTarefaControllerBase
     with _$NovaTarefaController;
 
 abstract class _NovaTarefaControllerBase with Store {
+  @observable
+  TextEditingController controllerSimples = TextEditingController(text: "");
+
+  @observable
+  Function addNovaTare;
+
   @observable
   bool selectValue0 = true;
 
@@ -47,11 +54,27 @@ abstract class _NovaTarefaControllerBase with Store {
   @action
   void changeTask(int index) {
     indexPage = index;
-    iconButtonNewTask =
-        index == 0 ? Icon(Icons.playlist_add_check) : Icon(Icons.check);
+
+    if (index == 0) {
+      iconButtonNewTask = Icon(Icons.playlist_add_check);
+    } else {
+      iconButtonNewTask = Icon(Icons.check);
+      addNovaTare = addNovaTarefaSimplis;
+    }
+
     pageController.animateToPage(index,
         duration: Duration(milliseconds: 500), curve: Curves.ease);
   }
+
+  @action
+  void addNovaTarefaSimplis() {
+    ModelTarefaSimples model =
+        ModelTarefaSimples(title: controllerSimples.text);
+    model.addTarefa();
+  }
+
+  @action
+  void addNovaTarefaComposta() {}
 }
 
 class Subatarefas {

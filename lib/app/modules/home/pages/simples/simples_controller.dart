@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:personalflow/app/controller/contr_simples.dart';
 import 'package:personalflow/app/model/simples/model.dart';
 import 'package:personalflow/app/model/simples/simple_repository.interface.dart';
 
@@ -20,7 +22,11 @@ abstract class _SimplesControllerBase with Store {
   ObservableStream<List<ModelTarefaSimples>> tarefaSimples;
 
   @action
-  getList() {
+  void getList() {
     tarefaSimples = repository.getTarefas().asObservable();
   }
+
+  @action
+  dialogTarefa(BuildContext context, dynamic data, double tamanhoTela) =>
+      returnDialogTarefa(context, data, tamanhoTela);
 }

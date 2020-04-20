@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:personalflow/app/modules/componentes/data_hora/data_hora.dart';
+
+import '../../nova_tarefa_controller.dart';
 
 class NewTaskSimple extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final controller = Modular.get<NovaTarefaController>();
     double tamanhoTela = MediaQuery.of(context).size.width;
 
     return Column(
@@ -18,10 +23,12 @@ class NewTaskSimple extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
                   child: ListTile(
-                      title: TextField(
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Título da Tarefa")),
+                      title: Observer(
+                          builder: (_) => TextField(
+                              controller: controller.controllerSimples,
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Título da Tarefa"))),
                       subtitle: DataHora())),
             )),
       ],

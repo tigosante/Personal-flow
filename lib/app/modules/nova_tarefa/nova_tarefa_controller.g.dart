@@ -9,6 +9,41 @@ part of 'nova_tarefa_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
+  final _$controllerSimplesAtom =
+      Atom(name: '_NovaTarefaControllerBase.controllerSimples');
+
+  @override
+  TextEditingController get controllerSimples {
+    _$controllerSimplesAtom.context.enforceReadPolicy(_$controllerSimplesAtom);
+    _$controllerSimplesAtom.reportObserved();
+    return super.controllerSimples;
+  }
+
+  @override
+  set controllerSimples(TextEditingController value) {
+    _$controllerSimplesAtom.context.conditionallyRunInAction(() {
+      super.controllerSimples = value;
+      _$controllerSimplesAtom.reportChanged();
+    }, _$controllerSimplesAtom, name: '${_$controllerSimplesAtom.name}_set');
+  }
+
+  final _$addNovaTareAtom = Atom(name: '_NovaTarefaControllerBase.addNovaTare');
+
+  @override
+  Function get addNovaTare {
+    _$addNovaTareAtom.context.enforceReadPolicy(_$addNovaTareAtom);
+    _$addNovaTareAtom.reportObserved();
+    return super.addNovaTare;
+  }
+
+  @override
+  set addNovaTare(Function value) {
+    _$addNovaTareAtom.context.conditionallyRunInAction(() {
+      super.addNovaTare = value;
+      _$addNovaTareAtom.reportChanged();
+    }, _$addNovaTareAtom, name: '${_$addNovaTareAtom.name}_set');
+  }
+
   final _$selectValue0Atom =
       Atom(name: '_NovaTarefaControllerBase.selectValue0');
 
@@ -200,9 +235,31 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
   }
 
   @override
+  void addNovaTarefaSimplis() {
+    final _$actionInfo =
+        _$_NovaTarefaControllerBaseActionController.startAction();
+    try {
+      return super.addNovaTarefaSimplis();
+    } finally {
+      _$_NovaTarefaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addNovaTarefaComposta() {
+    final _$actionInfo =
+        _$_NovaTarefaControllerBaseActionController.startAction();
+    try {
+      return super.addNovaTarefaComposta();
+    } finally {
+      _$_NovaTarefaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     final string =
-        'selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},iconButtonNewTask: ${iconButtonNewTask.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
+        'controllerSimples: ${controllerSimples.toString()},addNovaTare: ${addNovaTare.toString()},selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},iconButtonNewTask: ${iconButtonNewTask.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
     return '{$string}';
   }
 }

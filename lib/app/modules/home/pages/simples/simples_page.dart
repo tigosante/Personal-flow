@@ -27,19 +27,12 @@ class SimplesPage extends StatelessWidget {
               if (snapshot.data == null)
                 return Center(child: CircularProgressIndicator());
 
-              List<ModelTarefaSimples> tarefas = snapshot.data;
-
               return ListView.builder(
                   padding: EdgeInsets.only(
-                    top: tamanhoTela * 0.03,
-                    bottom: tamanhoTela * 0.2,
-                  ),
-                  itemCount: tarefas.length,
-                  itemBuilder: (BuildContext _, int index) {
-                    return TarefaSimples(
-                        title: tarefas[index].title,
-                        check: tarefas[index].check);
-                  });
+                      top: tamanhoTela * 0.03, bottom: tamanhoTela * 0.2),
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext _, int index) =>
+                      TarefaSimples(index: index));
             })));
   }
 }

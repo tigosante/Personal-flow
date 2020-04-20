@@ -48,10 +48,20 @@ mixin _$SimplesController on _SimplesControllerBase, Store {
       ActionController(name: '_SimplesControllerBase');
 
   @override
-  dynamic getList() {
+  void getList() {
     final _$actionInfo = _$_SimplesControllerBaseActionController.startAction();
     try {
       return super.getList();
+    } finally {
+      _$_SimplesControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic dialogTarefa(BuildContext context, dynamic data, double tamanhoTela) {
+    final _$actionInfo = _$_SimplesControllerBaseActionController.startAction();
+    try {
+      return super.dialogTarefa(context, data, tamanhoTela);
     } finally {
       _$_SimplesControllerBaseActionController.endAction(_$actionInfo);
     }

@@ -37,7 +37,7 @@ class NovaTarefaPage extends StatelessWidget {
             builder: (_) => FloatingActionButton(
                 child: controller.iconButtonNewTask,
                 backgroundColor: Colors.indigo,
-                onPressed: () {})),
+                onPressed: controller.addNovaTare)),
         bottomNavigationBar: Observer(
             builder: (_) => BottomNavigationBar(
                   elevation: 0,
