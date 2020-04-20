@@ -9,6 +9,9 @@ class NovaTarefaController = _NovaTarefaControllerBase
 
 abstract class _NovaTarefaControllerBase with Store {
   @observable
+  int qntTarefas = 0;
+
+  @observable
   TextEditingController controllerSimples = TextEditingController(text: "");
 
   @observable
@@ -70,7 +73,7 @@ abstract class _NovaTarefaControllerBase with Store {
   void addNovaTarefaSimplis() {
     ModelTarefaSimples model =
         ModelTarefaSimples(title: controllerSimples.text);
-    model.addNovaTarefa();
+    model.addNovaTarefa(qntTarefas);
   }
 
   @action

@@ -9,6 +9,23 @@ part of 'nova_tarefa_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
+  final _$qntTarefasAtom = Atom(name: '_NovaTarefaControllerBase.qntTarefas');
+
+  @override
+  int get qntTarefas {
+    _$qntTarefasAtom.context.enforceReadPolicy(_$qntTarefasAtom);
+    _$qntTarefasAtom.reportObserved();
+    return super.qntTarefas;
+  }
+
+  @override
+  set qntTarefas(int value) {
+    _$qntTarefasAtom.context.conditionallyRunInAction(() {
+      super.qntTarefas = value;
+      _$qntTarefasAtom.reportChanged();
+    }, _$qntTarefasAtom, name: '${_$qntTarefasAtom.name}_set');
+  }
+
   final _$controllerSimplesAtom =
       Atom(name: '_NovaTarefaControllerBase.controllerSimples');
 
@@ -260,7 +277,7 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
   @override
   String toString() {
     final string =
-        'controllerSimples: ${controllerSimples.toString()},addNovaTarefa: ${addNovaTarefa.toString()},selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},iconButtonNewTask: ${iconButtonNewTask.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
+        'qntTarefas: ${qntTarefas.toString()},controllerSimples: ${controllerSimples.toString()},addNovaTarefa: ${addNovaTarefa.toString()},selectValue0: ${selectValue0.toString()},selectValue1: ${selectValue1.toString()},colorItemSelect0: ${colorItemSelect0.toString()},colorItemSelect1: ${colorItemSelect1.toString()},colorText0: ${colorText0.toString()},colorText1: ${colorText1.toString()},iconButtonNewTask: ${iconButtonNewTask.toString()},indexPage: ${indexPage.toString()},subtarefas: ${subtarefas.toString()},pageController: ${pageController.toString()}';
     return '{$string}';
   }
 }

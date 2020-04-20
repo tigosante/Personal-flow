@@ -10,7 +10,11 @@ class TarefasRepository implements ISimpleRepository {
 
   @override
   Stream<List<ModelTarefaSimples>> getTarefas() {
-    return firestore.collection(collectionSimples).snapshots().map((query) {
+    return firestore
+        .collection(collectionSimples)
+        .orderBy("posicao", descending: true)
+        .snapshots()
+        .map((query) {
       return query.documents.map((doc) {
         return ModelTarefaSimples.fromDocument(doc);
       }).toList();

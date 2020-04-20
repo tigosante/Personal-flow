@@ -3,12 +3,14 @@ import 'package:personalflow/app/controller/contr_simples.dart';
 
 class ModelTarefaSimples {
   final DocumentReference reference;
+  int posicao;
   String title;
   bool check;
 
   ModelTarefaSimples({
     this.title = "",
     this.check = false,
+    this.posicao,
     this.reference,
   });
 
@@ -19,7 +21,7 @@ class ModelTarefaSimples {
   void updateCheck() => reference.updateData({'check': !check});
   void updateTitulo(text) => reference.updateData({'title': text});
 
-  void addNovaTarefa() => Firestore.instance
+  void addNovaTarefa(int qntTarefas) => Firestore.instance
       .collection(collectionSimples)
-      .add({"title": title, "check": check});
+      .add({"title": title, "check": check, "posicao": qntTarefas});
 }
