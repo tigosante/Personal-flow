@@ -6,7 +6,7 @@ Future returnDialogTarefa(
         BuildContext context, dynamic data, double tamanhoTela) =>
     showDialog(
       context: context,
-      barrierDismissible: false, // user must tap button!
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
             title: Text("Editar título",

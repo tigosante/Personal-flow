@@ -70,10 +70,24 @@ abstract class _NovaTarefaControllerBase with Store {
   }
 
   @action
-  void addNovaTarefaSimplis() {
+  void novaTarefa(BuildContext context) {
+    if (addNovaTarefaSimplis()) {
+      Navigator.of(context).pop();
+    } else {
+      SnackBar snackBar = SnackBar(
+          backgroundColor: Colors.yellow,
+          content: Text("Título vazio!",
+              style:
+                  TextStyle(color: Colors.red, fontWeight: FontWeight.bold)));
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
+  }
+
+  @action
+  bool addNovaTarefaSimplis() {
     ModelTarefaSimples model =
         ModelTarefaSimples(title: controllerSimples.text);
-    model.addNovaTarefa(qntTarefas);
+    return model.addNovaTarefa(qntTarefas);
   }
 
   @action

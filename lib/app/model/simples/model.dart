@@ -21,7 +21,15 @@ class ModelTarefaSimples {
   void updateCheck() => reference.updateData({'check': !check});
   void updateTitulo(text) => reference.updateData({'title': text});
 
-  void addNovaTarefa(int qntTarefas) => Firestore.instance
-      .collection(collectionSimples)
-      .add({"title": title, "check": check, "posicao": qntTarefas});
+  bool addNovaTarefa(int qntTarefas) {
+    bool validacao = title.trim() != "";
+
+    if (validacao) {
+      Firestore.instance
+          .collection(collectionSimples)
+          .add({"title": title, "check": check, "posicao": qntTarefas});
+    }
+
+    return validacao;
+  }
 }

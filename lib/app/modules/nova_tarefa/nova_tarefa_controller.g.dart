@@ -253,7 +253,18 @@ mixin _$NovaTarefaController on _NovaTarefaControllerBase, Store {
   }
 
   @override
-  void addNovaTarefaSimplis() {
+  void novaTarefa(BuildContext context) {
+    final _$actionInfo =
+        _$_NovaTarefaControllerBaseActionController.startAction();
+    try {
+      return super.novaTarefa(context);
+    } finally {
+      _$_NovaTarefaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  bool addNovaTarefaSimplis() {
     final _$actionInfo =
         _$_NovaTarefaControllerBaseActionController.startAction();
     try {
