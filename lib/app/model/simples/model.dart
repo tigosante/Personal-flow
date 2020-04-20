@@ -19,7 +19,7 @@ class ModelTarefaSimples {
           title: doc["title"], check: doc["check"], reference: doc.reference);
 
   void updateCheck() => reference.updateData({'check': !check});
-  Future delete(text) => reference.delete();
+  Future delete() => reference.delete();
   void updateTitulo(text) => reference.updateData({'title': text});
 
   bool addNovaTarefa(int qntTarefas) {

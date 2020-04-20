@@ -21,7 +21,21 @@ class TarefaSimples extends StatelessWidget {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
         child: Slidable(
-          actionPane: null,
+          actionPane: SlidableDrawerActionPane(),
+          controller: SlidableController(),
+          secondaryActions: <Widget>[
+            IconSlideAction(
+                icon: Icons.remove_circle_outline,
+                color: Colors.red[700],
+                caption: 'Remover',
+                onTap: tarefas[index].delete),
+            IconSlideAction(
+              icon: Icons.archive,
+              caption: 'Arquivar',
+              color: Colors.yellow[800],
+              // onTap: tarefas[index].delete
+            )
+          ],
           child: ListTile(
               onTap: () {
                 controller.dialogTarefa(context, tarefas[index], tamanhoTela);
