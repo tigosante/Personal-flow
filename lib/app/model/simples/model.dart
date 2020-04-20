@@ -6,17 +6,23 @@ class ModelTarefaSimples {
   int posicao;
   String title;
   bool check;
+  DateTime dateTime;
 
   ModelTarefaSimples({
     this.title = "",
     this.check = false,
     this.posicao,
     this.reference,
+    this.dateTime,
   });
 
-  factory ModelTarefaSimples.fromDocument(DocumentSnapshot doc) =>
-      ModelTarefaSimples(
-          title: doc["title"], check: doc["check"], reference: doc.reference);
+  factory ModelTarefaSimples.fromDocument(DocumentSnapshot doc) {
+    print(Timestamp(doc["dataTime"].seconds, doc["dataTime"].nanoseconds)
+        .toDate());
+
+    return ModelTarefaSimples(
+        title: doc["title"], check: doc["check"], reference: doc.reference);
+  }
 
   void updateCheck() => reference.updateData({'check': !check});
   Future delete() => reference.delete();
