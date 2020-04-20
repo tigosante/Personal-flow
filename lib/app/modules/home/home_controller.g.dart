@@ -9,31 +9,31 @@ part of 'home_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
-  final _$tarefaSimplesAtom = Atom(name: '_HomeControllerBase.tarefaSimples');
+  final _$telaAtualAtom = Atom(name: '_HomeControllerBase.telaAtual');
 
   @override
-  ObservableStream<List<ModelTarefaSimples>> get tarefaSimples {
-    _$tarefaSimplesAtom.context.enforceReadPolicy(_$tarefaSimplesAtom);
-    _$tarefaSimplesAtom.reportObserved();
-    return super.tarefaSimples;
+  int get telaAtual {
+    _$telaAtualAtom.context.enforceReadPolicy(_$telaAtualAtom);
+    _$telaAtualAtom.reportObserved();
+    return super.telaAtual;
   }
 
   @override
-  set tarefaSimples(ObservableStream<List<ModelTarefaSimples>> value) {
-    _$tarefaSimplesAtom.context.conditionallyRunInAction(() {
-      super.tarefaSimples = value;
-      _$tarefaSimplesAtom.reportChanged();
-    }, _$tarefaSimplesAtom, name: '${_$tarefaSimplesAtom.name}_set');
+  set telaAtual(int value) {
+    _$telaAtualAtom.context.conditionallyRunInAction(() {
+      super.telaAtual = value;
+      _$telaAtualAtom.reportChanged();
+    }, _$telaAtualAtom, name: '${_$telaAtualAtom.name}_set');
   }
 
   final _$_HomeControllerBaseActionController =
       ActionController(name: '_HomeControllerBase');
 
   @override
-  dynamic getList() {
+  void changeTela(int tela) {
     final _$actionInfo = _$_HomeControllerBaseActionController.startAction();
     try {
-      return super.getList();
+      return super.changeTela(tela);
     } finally {
       _$_HomeControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -51,7 +51,7 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'tarefaSimples: ${tarefaSimples.toString()}';
+    final string = 'telaAtual: ${telaAtual.toString()}';
     return '{$string}';
   }
 }
