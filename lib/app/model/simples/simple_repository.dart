@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:personalflow/app/model/simples/simple_repository.interface.dart';
 
 import 'model.dart';
-import 'repository.interface.dart';
 
-class TarefasRepository implements IRepository {
+class TarefasRepository implements ISimpleRepository {
   final Firestore firestore;
   TarefasRepository(this.firestore);
 
   @override
   Stream<List<ModelTarefaSimples>> getTarefas() {
-    return firestore.collection("tarefaSimples").snapshots().map((query) {
+    return firestore.collection("tarefasSimples").snapshots().map((query) {
       return query.documents.map((doc) {
         return ModelTarefaSimples.fromDocument(doc);
       }).toList();

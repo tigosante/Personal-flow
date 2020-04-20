@@ -1,16 +1,16 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:personalflow/app/model/model.dart';
-import 'package:personalflow/app/model/repository.interface.dart';
+import 'package:personalflow/app/model/simples/model.dart';
+import 'package:personalflow/app/model/simples/simple_repository.interface.dart';
 
 part 'home_controller.g.dart';
 
 class HomeController = _HomeControllerBase with _$HomeController;
 
 abstract class _HomeControllerBase with Store {
-  final IRepository repository;
+  final ISimpleRepository repository;
 
-  _HomeControllerBase(IRepository this.repository) {
+  _HomeControllerBase(ISimpleRepository this.repository) {
     getList();
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/app/model/model.dart';
+import 'package:personalflow/app/model/simples/model.dart';
 import 'package:personalflow/app/modules/componentes/barra_pesquisa/barra_pesquisa.dart';
 import 'package:personalflow/app/modules/componentes/barra_pesquisa/barra_pesquisa_controller.dart';
 import 'package:personalflow/app/modules/componentes/card_tarefa/simples/tarefa_simples.dart';
@@ -63,16 +63,6 @@ class _HomePageState extends State<HomePage> {
             highlightElevation: 0,
             elevation: 0,
             onPressed: homeController.navigationNewTask));
-  }
-
-  dynamic tratamento(controller) {
-    if (controller.tarefaSimples.hasError) {
-      return Center(
-        child: RaisedButton(
-          onPressed: controller.getList,
-        ),
-      );
-    }
   }
 }
 // index % 2 == 0 ? TarefaComposta() : TarefaSimples()

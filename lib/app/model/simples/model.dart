@@ -1,9 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Tarefas {
-  ModelTarefaSimples tarefaSimples;
-}
-
 class ModelTarefaSimples {
   final DocumentReference reference;
   String title;
@@ -17,9 +13,6 @@ class ModelTarefaSimples {
 
   factory ModelTarefaSimples.fromDocument(DocumentSnapshot doc) {
     return ModelTarefaSimples(
-      title: doc["title"],
-      check: doc["check"],
-      reference: doc.reference,
-    );
+        title: doc["title"], check: doc["check"], reference: doc.reference);
   }
 }
