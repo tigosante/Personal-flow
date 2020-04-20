@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/app/model/simples/model.dart';
 import 'package:personalflow/app/modules/componentes/card_tarefa/simples/tarefa_simples.dart';
 import 'package:personalflow/app/modules/home/pages/simples/simples_controller.dart';
 
