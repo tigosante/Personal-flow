@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:personalflow/app/model/repository.dart';
+import 'package:personalflow/app/model/repository.interface.dart';
 import 'package:personalflow/app/modules/componentes/barra_pesquisa/barra_pesquisa_controller.dart';
 import 'package:personalflow/app/modules/componentes/icone_user/icone_user_controller.dart';
 import 'package:personalflow/app/modules/home/home_controller.dart';
@@ -10,10 +13,11 @@ import '../nova_tarefa/nova_tarefa_page.dart';
 class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => HomeController()),
+        Bind((i) => HomeController(i.get())),
         Bind((i) => IconUserController()),
         Bind((i) => BarraPesquisaController()),
         Bind((i) => NovaTarefaController()),
+        Bind<IRepository>((i) => TarefasRepository(Firestore.instance)),
       ];
 
   @override
