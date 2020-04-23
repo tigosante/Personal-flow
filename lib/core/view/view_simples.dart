@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:personalflow/app/app_controller.dart';
 
 class ViewSimples {
   static ThemeData virificaTema() {
-    String tema = WidgetsBinding.instance.window.platformBrightness
+    String temaApp =
+        Modular.get<AppController>().themeMode.toString().split(".")[1];
+    String temaSystem = WidgetsBinding.instance.window.platformBrightness
         .toString()
         .split(".")[1];
-    return tema == "light" ? ThemeData.light() : ThemeData.dark();
+
+    bool systemVal = temaSystem == "light";
+    if (temaApp == "system") {
+      return systemVal ? ThemeData.light() : ThemeData.dark();
+    } else if (temaApp == "light") {
+      return ThemeData.light();
+    } else {
+      return ThemeData.dark();
+    }
   }
 
   static Future<DateTime> popUpData(BuildContext context) => showDatePicker(
