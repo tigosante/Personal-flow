@@ -8,8 +8,8 @@ class ModelTarefaSimples {
   int posicao;
   bool check;
   String title;
-  String data;
-  String hora;
+  String data = "data";
+  String hora = "hora";
 
   ModelTarefaSimples({
     this.title = "",
@@ -63,7 +63,7 @@ class ModelTarefaSimples {
       .split("-")
       .toList()
       .reversed
-      .join("-");
+      .join("/");
 
   String _horaTratada(TimeOfDay data) =>
       data.toString().split("TimeOfDay(")[1].split(")")[0];

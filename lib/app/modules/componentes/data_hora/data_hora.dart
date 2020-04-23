@@ -16,7 +16,7 @@ class DataHora extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           DataTarefa(index: index),
-          Text(":",
+          Text("-",
               style: TextStyle(
                   fontWeight: FontWeight.bold, fontSize: tamanhoTela * 0.035)),
           HoraTarefa(index: index)
