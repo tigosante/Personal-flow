@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/app/modules/componentes/data_hora/data_hora.dart';
+import 'package:personalflow/app/modules/nova_tarefa/componentes/data_hora/data_hora_nova_tarefa.dart';
 
 import '../../nova_tarefa_controller.dart';
 
@@ -24,14 +24,13 @@ class NewTaskSimple extends StatelessWidget {
                       borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),
                   child: ListTile(
                       title: Observer(builder: (_) {
-                        controller.controllerSimples.text = "";
                         return TextField(
-                            controller: controller.controllerSimples,
+                            controller: controller.cSimples,
                             decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: "Título da Tarefa"));
                       }),
-                      subtitle: DataHora())),
+                      subtitle: DataHoraNovaTarefa())),
             )),
       ],
     );

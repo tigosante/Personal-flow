@@ -10,7 +10,6 @@ class NovaTarefaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
-    controller.indexPage = 0;
 
     return Scaffold(
         appBar: AppBar(

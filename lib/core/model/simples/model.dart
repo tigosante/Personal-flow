@@ -37,26 +37,30 @@ class ModelTarefaSimples {
   bool addNovaTarefa(int qntTarefas) {
     bool validacao = title.trim() != "";
     if (validacao) {
-      Firestore.instance
-          .collection(collectionSimples)
-          .add({"title": title, "check": check, "posicao": qntTarefas});
+      Firestore.instance.collection(collectionSimples).add({
+        "title": title,
+        "check": check,
+        "data": data,
+        "hora": hora,
+        "posicao": qntTarefas,
+      });
     }
     return validacao;
   }
 
   void saveData(DateTime data) {
     if (data != null) {
-      reference.updateData({'data': _dataTratada(data)});
+      reference.updateData({'data': dataTratada(data)});
     }
   }
 
   void saveHora(TimeOfDay hora) {
     if (hora != null) {
-      reference.updateData({'hora': _horaTratada(hora)});
+      reference.updateData({'hora': horaTratada(hora)});
     }
   }
 
-  String _dataTratada(DateTime data) => data
+  static String dataTratada(DateTime data) => data
       .toString()
       .split(" ")
       .toList()[0]
@@ -65,6 +69,6 @@ class ModelTarefaSimples {
       .reversed
       .join("/");
 
-  String _horaTratada(TimeOfDay data) =>
-      data.toString().split("TimeOfDay(")[1].split(")")[0];
+  static String horaTratada(TimeOfDay hora) =>
+      hora.toString().split("TimeOfDay(")[1].split(")")[0];
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:personalflow/app/modules/home/pages/simples/simples_page.dart';
+import 'package:personalflow/app/modules/nova_tarefa/nova_tarefa_controller.dart';
 
 part 'home_controller.g.dart';
 
@@ -26,7 +27,11 @@ abstract class _HomeControllerBase with Store {
   }
 
   @action
-  void navigationNewTask() => Modular.to.pushNamed("/adicionar_tarefa");
+  void navigationNewTask() {
+    Modular.get<NovaTarefaController>().indexPage = 0;
+    Modular.get<NovaTarefaController>().cSimples.text = "";
+    Modular.to.pushNamed("/adicionar_tarefa");
+  }
 }
 
 class Pages {

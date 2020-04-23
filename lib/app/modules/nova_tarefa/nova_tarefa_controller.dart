@@ -9,10 +9,16 @@ class NovaTarefaController = _NovaTarefaControllerBase
 
 abstract class _NovaTarefaControllerBase with Store {
   @observable
+  String dataNovaTarefa;
+
+  @observable
+  String horaNovaTarefa;
+
+  @observable
   int qntTarefas = 0;
 
   @observable
-  TextEditingController controllerSimples = TextEditingController(text: "");
+  TextEditingController cSimples = TextEditingController(text: "");
 
   @observable
   Function addNovaTarefa;
@@ -38,12 +44,6 @@ abstract class _NovaTarefaControllerBase with Store {
   @observable
   Icon iconButtonNewTask = Icon(Icons.playlist_add_check);
 
-  Color colorSelect = Colors.indigo[700];
-  Color colorNoSelect = Colors.grey.withOpacity(0.2);
-
-  Color colorTextSelec = Colors.white;
-  Color colorTextNoSelec = Colors.black;
-
   @observable
   int indexPage = 0;
 
@@ -53,6 +53,12 @@ abstract class _NovaTarefaControllerBase with Store {
   @observable
   PageController pageController =
       PageController(initialPage: 0, keepPage: true);
+
+  Color colorSelect = Colors.indigo[700];
+  Color colorNoSelect = Colors.grey.withOpacity(0.2);
+
+  Color colorTextSelec = Colors.white;
+  Color colorTextNoSelec = Colors.black;
 
   @action
   void changeTask(int index) {
@@ -74,20 +80,21 @@ abstract class _NovaTarefaControllerBase with Store {
     if (addNovaTarefaSimplis()) {
       Navigator.of(context).pop();
     } else {
-      SnackBar snackBar = SnackBar(
+      Scaffold.of(context).showSnackBar(SnackBar(
           backgroundColor: Colors.yellow,
           content: Text("Título vazio!",
               style:
-                  TextStyle(color: Colors.red, fontWeight: FontWeight.bold)));
-      Scaffold.of(context).showSnackBar(snackBar);
+                  TextStyle(color: Colors.red, fontWeight: FontWeight.bold))));
     }
   }
 
   @action
   bool addNovaTarefaSimplis() {
-    ModelTarefaSimples model =
-        ModelTarefaSimples(title: controllerSimples.text);
-    return model.addNovaTarefa(qntTarefas);
+    return ModelTarefaSimples(
+            title: cSimples.text,
+            data: dataNovaTarefa ?? "",
+            hora: horaNovaTarefa ?? "")
+        .addNovaTarefa(qntTarefas);
   }
 
   @action
