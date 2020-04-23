@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'model.dart';
 
 class TarefasRepository implements ISimpleRepository {
@@ -8,15 +7,11 @@ class TarefasRepository implements ISimpleRepository {
   TarefasRepository(this.firestore);
 
   @override
-  Stream<List<ModelTarefaSimples>> getTarefas() {
-    return firestore
-        .collection(collectionSimples)
-        .orderBy("posicao", descending: true)
-        .snapshots()
-        .map((query) {
-      return query.documents.map((doc) {
-        return ModelTarefaSimples.fromDocument(doc);
-      }).toList();
-    });
-  }
+  Stream<List<ModelTarefaSimples>> getTarefas() => firestore
+      .collection(collectionSimples)
+      .orderBy("posicao", descending: true)
+      .snapshots()
+      .map((query) => query.documents
+          .map((doc) => ModelTarefaSimples.fromDocument(doc))
+          .toList());
 }

@@ -47,4 +47,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-// index % 2 == 0 ? TarefaComposta() : TarefaSimples()

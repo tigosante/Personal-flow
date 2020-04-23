@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personalflow/app/modules/componentes/data_hora/data_hora.dart';
+import 'package:personalflow/app/modules/nova_tarefa/componentes/data_hora/data_hora_nova_tarefa.dart';
 
 class SubtarefaInput extends StatelessWidget {
   SubtarefaInput({Key key, this.subtarefa, this.tamanhoTela}) : super(key: key);
@@ -23,7 +23,8 @@ class SubtarefaInput extends StatelessWidget {
                           decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: "Título da subtarefa"))),
-                  subtitle: Container(width: tamanhoTela, child: DataHora()),
+                  subtitle: Container(
+                      width: tamanhoTela, child: DataHoraNovaTarefa()),
                   trailing: IconButton(
                       icon:
                           Icon(Icons.remove_circle_outline, color: Colors.red),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personalflow/app/modules/componentes/data_hora/data_hora.dart';
+import 'package:personalflow/app/modules/nova_tarefa/componentes/data_hora/data_hora_nova_tarefa.dart';
 
 class CardTituloComposta extends StatelessWidget {
   @override
@@ -18,6 +18,6 @@ class CardTituloComposta extends StatelessWidget {
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Título da Tarefa")),
-                subtitle: DataHora())));
+                subtitle: DataHoraNovaTarefa())));
   }
 }

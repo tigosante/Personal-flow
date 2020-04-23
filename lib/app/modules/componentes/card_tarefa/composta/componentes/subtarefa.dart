@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../data_hora/data_hora.dart';
+import 'package:personalflow/app/modules/nova_tarefa/componentes/data_hora/data_hora_nova_tarefa.dart';
 
 class Subtarefa extends StatelessWidget {
   @override
@@ -15,7 +14,7 @@ class Subtarefa extends StatelessWidget {
                   style: TextStyle(
                       fontSize: tamanhoTela * 0.045,
                       fontWeight: FontWeight.bold)),
-              subtitle: DataHora(),
+              subtitle: DataHoraNovaTarefa(),
               trailing: IconButton(
                   icon: Icon(Icons.check, color: Colors.teal[700]),
                   onPressed: () {})))
