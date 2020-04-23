@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:personalflow/app/model/simples/model.dart';
+import 'package:personalflow/core/model/simples/model.dart';
 
 part 'nova_tarefa_controller.g.dart';
 

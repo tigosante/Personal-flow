@@ -1,4 +1,4 @@
-import 'package:personalflow/app/model/simples/model.dart';
+import 'model.dart';
 
 abstract class ISimpleRepository {
   Stream<List<ModelTarefaSimples>> getTarefas();

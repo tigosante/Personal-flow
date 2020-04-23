@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:personalflow/app/model/simples/model.dart';
 import 'package:personalflow/app/modules/componentes/data_hora/data_hora.dart';
 import 'package:personalflow/app/modules/home/pages/simples/simples_controller.dart';
+import 'package:personalflow/core/model/simples/model.dart';
 
 class TarefaSimples extends StatelessWidget {
   final int index;
@@ -14,7 +14,6 @@ class TarefaSimples extends StatelessWidget {
     final controller = Modular.get<SimplesController>();
     double tamanhoTela = MediaQuery.of(context).size.width;
     List<ModelTarefaSimples> tarefas = controller.tarefaSimples.data;
-
     return Card(
         elevation: 0,
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -47,7 +46,7 @@ class TarefaSimples extends StatelessWidget {
                       style: TextStyle(
                           fontSize: tamanhoTela * 0.045,
                           fontWeight: FontWeight.bold))),
-              subtitle: DataHora(),
+              subtitle: DataHora(index: index),
               trailing: IconButton(
                   icon: Icon(
                       tarefas[index].check

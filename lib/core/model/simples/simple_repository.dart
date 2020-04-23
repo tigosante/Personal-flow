@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:personalflow/app/controller/contr_simples.dart';
-import 'package:personalflow/app/model/simples/simple_repository.interface.dart';
+import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
 
 import 'model.dart';
 

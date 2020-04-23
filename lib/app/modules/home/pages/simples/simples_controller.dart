@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:personalflow/app/controller/contr_simples.dart';
-import 'package:personalflow/app/model/simples/model.dart';
-import 'package:personalflow/app/model/simples/simple_repository.interface.dart';
+import 'package:personalflow/core/model/simples/model.dart';
+import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
+import 'package:personalflow/core/view/view_simples.dart';
 
 part 'simples_controller.g.dart';
 
@@ -28,5 +28,5 @@ abstract class _SimplesControllerBase with Store {
 
   @action
   dialogTarefa(BuildContext context, dynamic data, double tamanhoTela) =>
-      returnDialogTarefa(context, data, tamanhoTela);
+      ViewSimples.returnDialogTarefa(context, data, tamanhoTela);
 }
