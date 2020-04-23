@@ -59,15 +59,24 @@ class ModelTarefaSimples {
     }
   }
 
-  static String dataTratada(DateTime data) => data
-      .toString()
-      .split(" ")
-      .toList()[0]
-      .split("-")
-      .toList()
-      .reversed
-      .join("/");
+  static String dataTratada(DateTime data) {
+    if (data != null) {
+      return data
+          .toString()
+          .split(" ")
+          .toList()[0]
+          .split("-")
+          .toList()
+          .reversed
+          .join("/");
+    }
+    return "";
+  }
 
-  static String horaTratada(TimeOfDay hora) =>
-      hora.toString().split("TimeOfDay(")[1].split(")")[0];
+  static String horaTratada(TimeOfDay hora) {
+    if (hora != null) {
+      return hora.toString().split("TimeOfDay(")[1].split(")")[0];
+    }
+    return "";
+  }
 }
