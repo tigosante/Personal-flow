@@ -11,6 +11,7 @@ class ViewSimples {
         .split(".")[1];
 
     bool systemVal = temaSystem == "light";
+
     if (temaApp == "system") {
       return systemVal ? ThemeData.light() : ThemeData.dark();
     } else if (temaApp == "light") {
