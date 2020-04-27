@@ -3,7 +3,6 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:personalflow/app/screens/home/pages/composta/composta_page.dart';
 import 'package:personalflow/app/screens/home/pages/simples/simples_page.dart';
-import 'package:personalflow/app/screens/login/login_controller.dart';
 import 'package:personalflow/app/screens/nova_tarefa/nova_tarefa_controller.dart';
 
 part 'home_controller.g.dart';
