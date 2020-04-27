@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-const String collectionComposta = "tarefasComposta";
+const String collectionComposta = "tarefaComposta";
 
 class ModelTarefaComposta {
   final DocumentReference reference;
