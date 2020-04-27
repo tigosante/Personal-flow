@@ -50,15 +50,16 @@ class ModelTarefaComposta {
 
   bool addNovaTarefa(int qntTarefas) {
     bool validacao = title.trim() != "";
-    if (validacao) {
+    if (validacao)
       Firestore.instance.collection(collectionComposta).add({
         "title": title,
         "check": check,
         "data": data,
         "hora": hora,
         "posicao": qntTarefas,
+        "concluidas": concluidas,
       });
-    }
+
     return validacao;
   }
 
