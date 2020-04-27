@@ -26,6 +26,23 @@ mixin _$HomeController on _HomeControllerBase, Store {
     }, _$telaAtualAtom, name: '${_$telaAtualAtom.name}_set');
   }
 
+  final _$pagesAtom = Atom(name: '_HomeControllerBase.pages');
+
+  @override
+  List<Pages> get pages {
+    _$pagesAtom.context.enforceReadPolicy(_$pagesAtom);
+    _$pagesAtom.reportObserved();
+    return super.pages;
+  }
+
+  @override
+  set pages(List<Pages> value) {
+    _$pagesAtom.context.conditionallyRunInAction(() {
+      super.pages = value;
+      _$pagesAtom.reportChanged();
+    }, _$pagesAtom, name: '${_$pagesAtom.name}_set');
+  }
+
   final _$_HomeControllerBaseActionController =
       ActionController(name: '_HomeControllerBase');
 
@@ -51,7 +68,8 @@ mixin _$HomeController on _HomeControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'telaAtual: ${telaAtual.toString()}';
+    final string =
+        'telaAtual: ${telaAtual.toString()},pages: ${pages.toString()}';
     return '{$string}';
   }
 }

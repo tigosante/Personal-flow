@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:personalflow/app/componentes/card_tarefa/componentes/botoes.dart';
-import 'package:personalflow/app/componentes/data_hora/data_hora.dart';
+import 'package:personalflow/app/screens/nova_tarefa/widgets/data_hora/data_hora_nova_tarefa.dart';
 
 import 'componentes/barra_progresso.dart';
 import 'componentes/body.dart';
 
 class TarefaComposta extends StatelessWidget {
+  TarefaComposta({Key key, this.index}) : super(key: key);
+  final int index;
+  final controller = Modular.get<CompostaController>();
+
   @override
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
@@ -24,7 +29,7 @@ class TarefaComposta extends StatelessWidget {
                         fontSize: tamanhoTela * 0.045,
                         fontWeight: FontWeight.bold))),
             subtitle: Column(children: <Widget>[
-              Container(width: tamanhoTela, child: DataHora()),
+              Container(width: tamanhoTela, child: DataHoraNovaTarefa()),
               Padding(
                   padding: EdgeInsets.only(left: tamanhoTela * 0.02),
                   child: Container(

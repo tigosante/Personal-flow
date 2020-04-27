@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'composed_repository.interface.dart';
 import 'model.dart';
 
-class TarefasRepository implements IComposedRepository {
+class TarefaCompostaRepository implements IComposedRepository {
   final Firestore firestore;
-  TarefasRepository(this.firestore);
+  TarefaCompostaRepository(this.firestore);
 
   @override
   Stream<List<ModelTarefaComposta>> getTarefas() => firestore

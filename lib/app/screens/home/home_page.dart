@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:personalflow/app/componentes/barra_pesquisa/barra_pesquisa.dart';
 import 'package:personalflow/app/componentes/barra_pesquisa/barra_pesquisa_controller.dart';
@@ -20,8 +21,8 @@ class _HomePageState extends State<HomePage> {
     double tamanhoTela = MediaQuery.of(context).size.width;
 
     return DefaultTabController(
-      length: 1,
       initialIndex: 0,
+      length: homeController.pages.length,
       child: Scaffold(
           appBar: AppBar(
               title: BarraPesquisa(),
@@ -29,11 +30,13 @@ class _HomePageState extends State<HomePage> {
                   onTap: homeController.changeTela,
                   indicatorColor: Colors.indigo,
                   labelColor: Colors.indigo,
-                  // isScrollable: false,
+                  isScrollable: true,
                   tabs: homeController.pages
                       .map((page) => Tab(text: page.tabTitle))
                       .toList())),
-          body: homeController.pages[homeController.telaAtual].body,
+          body: Observer(
+              builder: (_) =>
+                  homeController.pages[homeController.telaAtual].body),
           floatingActionButton: FloatingActionButton.extended(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(tamanhoTela * 0.05)),

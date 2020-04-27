@@ -9,7 +9,8 @@ class SimplesModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => SimplesController(i.get())),
-        Bind<ISimpleRepository>((i) => TarefasRepository(Firestore.instance)),
+        Bind<ISimpleRepository>(
+            (i) => TarefaSimplesRepository(Firestore.instance)),
       ];
 
   @override
