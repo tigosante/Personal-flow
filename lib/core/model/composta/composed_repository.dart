@@ -11,7 +11,7 @@ class TarefaCompostaRepository implements IComposedRepository {
       .collection(collectionComposta)
       .orderBy("posicao", descending: true)
       .snapshots()
-      .map((query) => query.documents
+      .map((QuerySnapshot query) => query.documents
           .map((doc) => ModelTarefaComposta.fromDocument(doc))
           .toList());
 }

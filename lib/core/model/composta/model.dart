@@ -6,30 +6,42 @@ const String collectionComposta = "tarefaComposta";
 class ModelTarefaComposta {
   final DocumentReference reference;
   int posicao;
+  int concluidas;
   bool check;
   String title;
   String data = "data";
   String hora = "hora";
-  Subtarefa subtarefa;
+  Stream<List<Subtarefa>> subtarefa;
 
   ModelTarefaComposta({
     this.title = "",
     this.check = false,
     this.posicao,
+    this.concluidas,
     this.reference,
     this.data,
     this.hora,
     this.subtarefa,
   });
 
-  factory ModelTarefaComposta.fromDocument(DocumentSnapshot doc) =>
-      ModelTarefaComposta(
-          title: doc["title"],
-          check: doc["check"],
-          data: doc["data"],
-          hora: doc["hora"],
-          reference: doc.reference,
-          subtarefa: Subtarefa.fromDocument(doc));
+  factory ModelTarefaComposta.fromDocument(DocumentSnapshot doc) {
+    return ModelTarefaComposta(
+        title: doc["title"],
+        check: doc["check"],
+        data: doc["data"],
+        hora: doc["hora"],
+        concluidas: doc["concluidas"],
+        reference: doc.reference,
+        subtarefa: Firestore.instance
+            .collection(collectionComposta)
+            .document(doc.documentID)
+            .collection("subtarefas")
+            .orderBy("posicao", descending: false)
+            .snapshots()
+            .map((QuerySnapshot query) => query.documents
+                .map((doc) => Subtarefa.fromDocument(doc))
+                .toList()));
+  }
 
   Future delete() => reference.delete();
   void updateCheck() => reference.updateData({'check': !check});

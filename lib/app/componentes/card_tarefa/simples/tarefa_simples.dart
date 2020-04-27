@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:personalflow/app/componentes/data_hora/data_hora.dart';
+import 'package:personalflow/app/componentes/data_hora/simples/data_hora.dart';
 import 'package:personalflow/app/screens/home/pages/simples/simples_controller.dart';
 import 'package:personalflow/core/model/simples/model.dart';
 
@@ -46,7 +46,7 @@ class TarefaSimples extends StatelessWidget {
                       style: TextStyle(
                           fontSize: tamanhoTela * 0.045,
                           fontWeight: FontWeight.bold))),
-              subtitle: DataHora(index: index),
+              subtitle: DataHoraSimples(index: index),
               trailing: IconButton(
                   icon: Icon(
                       tarefas[index].check

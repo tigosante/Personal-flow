@@ -4,9 +4,9 @@ import 'package:personalflow/app/screens/home/pages/simples/simples_controller.d
 import 'package:personalflow/core/model/simples/model.dart';
 import 'package:personalflow/core/view/view_simples.dart';
 
-class HoraTarefa extends StatelessWidget {
+class DataTarefaSimples extends StatelessWidget {
   final int index;
-  HoraTarefa({Key key, this.index}) : super(key: key);
+  DataTarefaSimples({Key key, this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +27,12 @@ class HoraTarefa extends StatelessWidget {
                     left: tamanhoTela * 0.01,
                     right: tamanhoTela * 0.01,
                     bottom: tamanhoTela * 0.02),
-                child: Text(tarefa.hora,
+                child: Text(tarefa.data,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: tamanhoTela * 0.035))),
             onTap: () async {
-              tarefa.saveHora(await ViewSimples.popUpHora(context));
+              tarefa.saveData(await ViewSimples.popUpData(context));
             }));
   }
 }

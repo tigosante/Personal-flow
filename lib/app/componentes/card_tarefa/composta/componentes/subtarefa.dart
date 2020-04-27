@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:personalflow/app/screens/nova_tarefa/widgets/data_hora/data_hora_nova_tarefa.dart';
+import 'package:personalflow/app/componentes/data_hora/composta/data_hora.dart';
+import 'package:personalflow/core/model/composta/model.dart';
 
-class Subtarefa extends StatelessWidget {
+class SubtarefaWidget extends StatelessWidget {
+  SubtarefaWidget({Key key, this.subtarefa}) : super(key: key);
+
+  final Subtarefa subtarefa;
+
   @override
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
@@ -10,13 +15,19 @@ class Subtarefa extends StatelessWidget {
       Padding(
           padding: EdgeInsets.only(top: tamanhoTela * 0.02),
           child: ListTile(
-              title: Text("Tarefa",
+              title: Text(subtarefa.title,
                   style: TextStyle(
                       fontSize: tamanhoTela * 0.045,
                       fontWeight: FontWeight.bold)),
-              subtitle: DataHoraNovaTarefa(),
+              subtitle: DataHoraComsposta(
+                dataHora: [subtarefa.data, subtarefa.hora],
+              ),
               trailing: IconButton(
-                  icon: Icon(Icons.check, color: Colors.teal[700]),
+                  icon: Icon(
+                      subtarefa.check
+                          ? Icons.check
+                          : Icons.radio_button_unchecked,
+                      color: Colors.teal[700]),
                   onPressed: () {})))
     ]);
   }
