@@ -9,8 +9,6 @@ import 'package:personalflow/core/model/composta/composed_repository.interface.d
 import 'package:personalflow/core/model/simples/simple_repository.dart';
 import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
 
-import '../nova_tarefa/nova_tarefa_controller.dart';
-import '../nova_tarefa/nova_tarefa_page.dart';
 import 'home_controller.dart';
 import 'home_page.dart';
 
@@ -19,7 +17,6 @@ class HomeModule extends ChildModule {
   List<Bind> get binds => [
         Bind((i) => HomeController()),
         Bind((i) => IconUserController()),
-        Bind((i) => NovaTarefaController()),
         Bind((i) => BarraPesquisaController()),
         Bind((i) => SimplesController(i.get())),
         Bind((i) => CompostaController(i.get())),
@@ -32,9 +29,6 @@ class HomeModule extends ChildModule {
   @override
   List<Router> get routers => [
         Router("/home", child: (_, args) => HomePage()),
-        Router("/adicionar_tarefa",
-            child: (_, args) => NovaTarefaPage(),
-            transition: TransitionType.rightToLeft),
       ];
 
   static Inject get to => Inject<HomeModule>.of();

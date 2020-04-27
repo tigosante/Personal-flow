@@ -15,7 +15,7 @@ class SimplesModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => SimplesPage()),
+        Router("/simples", child: (_, args) => SimplesPage()),
       ];
 
   static Inject get to => Inject<SimplesModule>.of();

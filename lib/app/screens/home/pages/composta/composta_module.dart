@@ -16,7 +16,7 @@ class CompostaModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router(Modular.initialRoute, child: (_, args) => CompostaPage()),
+        Router("/composta", child: (_, args) => CompostaPage()),
       ];
 
   static Inject get to => Inject<CompostaModule>.of();
