@@ -31,7 +31,7 @@ class HomeModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router("/", child: (_, args) => HomePage()),
+        Router("/home", child: (_, args) => HomePage()),
         Router("/adicionar_tarefa",
             child: (_, args) => NovaTarefaPage(),
             transition: TransitionType.rightToLeft),

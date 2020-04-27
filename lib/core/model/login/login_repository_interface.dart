@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 abstract class ILoginRepository {
-  Future getGoogleLogin();
-  Future getUser();
+  Future<FirebaseUser> getGoogleLogin();
+  Future<FirebaseUser> getUser();
+  Future getLogOut();
 }
