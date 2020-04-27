@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:personalflow/core/model/modelDefault.dart';
 
 const String collectionSimples = "tarefasSimples";
 
@@ -47,36 +48,9 @@ class ModelTarefaSimples {
     return validacao;
   }
 
-  void saveData(DateTime data) {
-    if (data != null) {
-      reference.updateData({'data': dataTratada(data)});
-    }
-  }
+  void saveData(DateTime data) =>
+      reference.updateData({'data': ModelDefault.dataTratada(data)});
 
-  void saveHora(TimeOfDay hora) {
-    if (hora != null) {
-      reference.updateData({'hora': horaTratada(hora)});
-    }
-  }
-
-  static String dataTratada(DateTime data) {
-    if (data != null) {
-      return data
-          .toString()
-          .split(" ")
-          .toList()[0]
-          .split("-")
-          .toList()
-          .reversed
-          .join("/");
-    }
-    return "";
-  }
-
-  static String horaTratada(TimeOfDay hora) {
-    if (hora != null) {
-      return hora.toString().split("TimeOfDay(")[1].split(")")[0];
-    }
-    return "";
-  }
+  void saveHora(TimeOfDay hora) =>
+      reference.updateData({'hora': ModelDefault.horaTratada(hora)});
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/core/model/simples/model.dart';
+import 'package:personalflow/core/model/modelDefault.dart';
 import 'package:personalflow/core/view/view_simples.dart';
 
 import '../../../nova_tarefa_controller.dart';
@@ -32,7 +32,7 @@ class HoraNovaTarefa extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             fontSize: tamanhoTela * 0.035))),
                 onTap: () async {
-                  ctrl.horaNovaTarefa = ModelTarefaSimples.horaTratada(
+                  ctrl.horaNovaTarefa = ModelDefault.horaTratada(
                       await ViewSimples.popUpHora(context));
                 })));
   }
