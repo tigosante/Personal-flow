@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:personalflow/app/screens/login/login_controller.dart';
 import 'package:personalflow/core/controller/login/auth_controller.dart';
 
-class SplashPage extends StatefulWidget {
+class PhotoUser extends StatefulWidget {
   @override
-  _SplashPageState createState() => _SplashPageState();
+  _PhotoUserState createState() => _PhotoUserState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _PhotoUserState extends State<PhotoUser> {
+  final authController = Modular.get<LoginController>().authController;
+  Widget img;
+
   ReactionDisposer _disposer;
 
   @override
@@ -18,9 +22,9 @@ class _SplashPageState extends State<SplashPage> {
       AuthStatus status = Modular.get<AuthController>().status;
 
       if (status == AuthStatus.logoff)
-        Modular.to.pushReplacementNamed("/login");
+        img = Icon(Icons.person_outline, color: Colors.grey[600]);
       else if (status == AuthStatus.login)
-        Modular.to.pushReplacementNamed("/home");
+        img = ClipOval(child: Image.network(authController.user.photoUrl));
     });
   }
 
@@ -31,7 +35,5 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: CircularProgressIndicator()));
-  }
+  Widget build(BuildContext context) => CircleAvatar(child: img);
 }
