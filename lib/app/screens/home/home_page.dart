@@ -6,12 +6,7 @@ import 'package:personalflow/app/componentes/barra_pesquisa/barra_pesquisa_contr
 import '../../app_controller.dart';
 import 'home_controller.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomePage extends StatelessWidget {
   final appController = Modular.get<AppController>();
   final homeController = Modular.get<HomeController>();
   final barraController = Modular.get<BarraPesquisaController>();

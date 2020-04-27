@@ -25,7 +25,11 @@ abstract class _LoginControllerBase with Store {
 
   @action
   Future logOut() async {
-    await Modular.get<AuthController>().logOut();
-    Modular.to.pushReplacementNamed("/login");
+    try {
+      await Modular.get<AuthController>().logOut();
+      Modular.to.pushReplacementNamed("/login");
+    } catch (e) {
+      //
+    }
   }
 }
