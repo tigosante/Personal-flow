@@ -12,11 +12,9 @@ abstract class IconUserControllerBase with Store {
   void modalUser(BuildContext context, double tamanhoTela) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(tamanhoTela * 0.025),
-            topRight: Radius.circular(tamanhoTela * 0.025),
-          ),
-        ),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(tamanhoTela * 0.025),
+                topRight: Radius.circular(tamanhoTela * 0.025))),
         context: context,
         builder: (_) => ModalUser(tamanhoTela: tamanhoTela));
   }
