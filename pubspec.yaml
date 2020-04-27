@@ -13,7 +13,7 @@ dependencies:
     dio: ^3.0.9
     flutter_mobx: ^1.1.0
     mobx: ^1.1.1
-    flutter_modular: ^1.0.0
+    flutter_modular: ^1.1.2
     flutter_animation_progress_bar: ^1.0.0
     flutter:
         sdk: flutter
@@ -21,7 +21,7 @@ dependencies:
 dev_dependencies:
     mockito: ^4.1.1
     mobx_codegen: ^1.0.3
-    build_runner: ^1.8.1
+    build_runner: ^1.9.0
     flutter_test:
         sdk: flutter
 

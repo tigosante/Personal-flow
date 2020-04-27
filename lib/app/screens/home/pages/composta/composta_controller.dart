@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:personalflow/core/model/composta/composed_repository.interface.dart';
 import 'package:personalflow/core/model/composta/model.dart';
