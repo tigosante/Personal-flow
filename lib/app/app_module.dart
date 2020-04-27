@@ -6,6 +6,8 @@ import 'package:personalflow/app/screens/home/home_controller.dart';
 import 'package:personalflow/app/screens/home/home_module.dart';
 import 'package:personalflow/app/screens/login/login_controller.dart';
 import 'package:personalflow/app/screens/login/login_module.dart';
+import 'package:personalflow/app/screens/nova_tarefa/nova_tarefa_controller.dart';
+import 'package:personalflow/app/screens/nova_tarefa/nova_tarefa_module.dart';
 import 'package:personalflow/app/screens/splash/splash_page.dart';
 import 'package:personalflow/core/controller/login/auth_controller.dart';
 import 'package:personalflow/core/model/login/login_repository.dart';
@@ -17,6 +19,7 @@ class AppModule extends MainModule {
         Bind((i) => AppController()),
         Bind((i) => HomeController()),
         Bind((i) => LoginController()),
+        Bind((i) => NovaTarefaController()),
         Bind((i) => AuthController()),
         Bind<ILoginRepository>((i) => LoginRepository()),
       ];
@@ -26,6 +29,7 @@ class AppModule extends MainModule {
         Router("/", child: (_, args) => SplashPage()),
         Router("/login", module: LoginModule()),
         Router("/home", module: HomeModule()),
+        Router("/adicionar_tarefa", module: NovaTarefaModule()),
       ];
 
   @override

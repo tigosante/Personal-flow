@@ -20,7 +20,7 @@ class NovaTarefaPage extends StatelessWidget {
                     child: Icon(Icons.chevron_left, color: Colors.teal),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
-                    onPressed: () => Navigator.pop(context))),
+                    onPressed: () => Modular.to.pop())),
             actions: <Widget>[
               Padding(
                   padding: EdgeInsets.only(
