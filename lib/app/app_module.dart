@@ -1,17 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:personalflow/app/app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
 import 'package:personalflow/app/app_widget.dart';
 import 'package:personalflow/app/screens/home/home_controller.dart';
 import 'package:personalflow/app/screens/home/home_module.dart';
+import 'package:personalflow/app/screens/home/pages/simples/simples_controller.dart';
 import 'package:personalflow/app/screens/login/login_controller.dart';
 import 'package:personalflow/app/screens/login/login_module.dart';
 import 'package:personalflow/app/screens/nova_tarefa/nova_tarefa_controller.dart';
 import 'package:personalflow/app/screens/nova_tarefa/nova_tarefa_module.dart';
 import 'package:personalflow/app/screens/splash/splash_page.dart';
 import 'package:personalflow/core/controller/login/auth_controller.dart';
+import 'package:personalflow/core/model/composta/composed_repository.dart';
+import 'package:personalflow/core/model/composta/composed_repository.interface.dart';
 import 'package:personalflow/core/model/login/login_repository.dart';
 import 'package:personalflow/core/model/login/login_repository_interface.dart';
+import 'package:personalflow/app/screens/home/pages/composta/composta_controller.dart';
+import 'package:personalflow/core/model/simples/simple_repository.dart';
+import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
+
+import 'componentes/barra_pesquisa/barra_pesquisa_controller.dart';
+import 'componentes/icone_user/icone_user_controller.dart';
 
 class AppModule extends MainModule {
   @override
@@ -19,9 +29,17 @@ class AppModule extends MainModule {
         Bind((i) => AppController()),
         Bind((i) => HomeController()),
         Bind((i) => LoginController()),
-        Bind((i) => NovaTarefaController()),
         Bind((i) => AuthController()),
+        Bind((i) => IconUserController()),
+        Bind((i) => BarraPesquisaController()),
+        Bind((i) => NovaTarefaController()),
+        Bind((i) => SimplesController(i.get())),
+        Bind<ISimpleRepository>(
+            (i) => TarefaSimplesRepository(Firestore.instance)),
         Bind<ILoginRepository>((i) => LoginRepository()),
+        Bind((i) => CompostaController(i.get())),
+        Bind<IComposedRepository>(
+            (i) => TarefaCompostaRepository(Firestore.instance)),
       ];
 
   @override
