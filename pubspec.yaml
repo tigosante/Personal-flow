@@ -7,6 +7,8 @@ environment:
     sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+    flutter:
+        sdk: flutter
     google_sign_in: ^4.4.4
     firebase_auth: ^0.16.0
     flutter_launcher_icons: ^0.7.5
@@ -18,8 +20,7 @@ dependencies:
     mobx: ^1.1.1
     flutter_modular: ^1.1.2
     flutter_animation_progress_bar: ^1.0.0
-    flutter:
-        sdk: flutter
+    eva_icons_flutter: ^2.0.0
 
 dev_dependencies:
     mockito: ^4.1.1

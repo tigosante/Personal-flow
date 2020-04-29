@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/app/screens/login/login_controller.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
+import './widgets/bt_google/btn_login_google.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(backgroundColor: Colors.transparent),
         body: Center(
-          child: RaisedButton(
-              child: Text("Login Google"),
-              onPressed: Modular.get<LoginController>().loginWithGoogle),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              BtnLoginGoogle(),
+            ],
+          ),
         ),
+        persistentFooterButtons: <Widget>[
+          Text("Personal FLow"),
+          IconButton(
+            icon: Icon(EvaIcons.sun),
+            onPressed: () {},
+          )
+        ],
       );
 }

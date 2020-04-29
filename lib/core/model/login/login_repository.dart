@@ -3,8 +3,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:personalflow/core/model/login/login_repository_interface.dart';
 
 class LoginRepository implements ILoginRepository {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   @override
   Future<FirebaseUser> getGoogleLogin() async {
@@ -13,9 +13,7 @@ class LoginRepository implements ILoginRepository {
         await googleUser.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
+        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
     final FirebaseUser user =
         (await _auth.signInWithCredential(credential)).user;
