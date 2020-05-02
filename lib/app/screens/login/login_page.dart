@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import './widgets/bt_google/btn_login_google.dart';
+import 'package:personalflow/app/screens/login/widgets/buttons/btn_facebook/btn_login_facebook.dart';
+import 'package:personalflow/app/screens/login/widgets/buttons/btn_google/btn_login_google.dart';
+import 'package:personalflow/app/screens/login/widgets/buttons/btn_login/btn_login.dart';
+import 'package:personalflow/app/screens/login/widgets/campos_login/campos_login.dart';
+import 'package:personalflow/app/screens/login/widgets/title_app/title_app.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(backgroundColor: Colors.transparent),
+        appBar: AppBar(
+            actions: <Widget>[TitleApp()], backgroundColor: Colors.transparent),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              BtnLoginGoogle(),
+              CamposLogin(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  BtnLoginGoogle(),
+                  BtnLoginFacebook(),
+                  BtnLogin(),
+                ],
+              )
             ],
           ),
         ),
-        persistentFooterButtons: <Widget>[
-          Text("Personal FLow"),
-          IconButton(
-            icon: Icon(EvaIcons.sun),
-            onPressed: () {},
-          )
-        ],
       );
 }
