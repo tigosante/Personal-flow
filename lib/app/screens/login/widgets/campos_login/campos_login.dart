@@ -26,20 +26,21 @@ class CamposLogin extends StatelessWidget {
                         style: TextStyle(
                             fontSize: tamanhoTela * 0.04,
                             fontWeight: FontWeight.bold,
-                            color: Colors.purple[900]))),
+                            color: Colors.purple[700]))),
                 Container(
                   padding: paddingInput,
                   decoration: BoxDecoration(
+                    // color: Colors.teal[700],
+                    border: Border.all(color: Colors.teal[700]),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.teal[700],
                   ),
                   child: TextField(
                     decoration: InputDecoration(
-                        suffixIcon:
-                            Icon(EvaIcons.checkmarkCircle, color: Colors.white),
+                        suffixIcon: Icon(EvaIcons.checkmarkCircle,
+                            color: Colors.teal[700]),
                         border: InputBorder.none),
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                        color: Colors.teal[700], fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -64,6 +65,7 @@ class CamposLogin extends StatelessWidget {
                     color: Colors.indigo[700],
                   ),
                   child: TextField(
+                    obscureText: true,
                     decoration: InputDecoration(
                         suffixIcon:
                             Icon(EvaIcons.checkmarkCircle, color: Colors.white),
