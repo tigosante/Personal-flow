@@ -61,17 +61,18 @@ class CamposLogin extends StatelessWidget {
                 Container(
                   padding: paddingInput,
                   decoration: BoxDecoration(
+                    // color: Colors.indigo[700],
+                    border: Border.all(color: Colors.indigo[700]),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
-                    color: Colors.indigo[700],
                   ),
                   child: TextField(
                     obscureText: true,
                     decoration: InputDecoration(
-                        suffixIcon:
-                            Icon(EvaIcons.checkmarkCircle, color: Colors.white),
+                        suffixIcon: Icon(EvaIcons.checkmarkCircle,
+                            color: Colors.indigo[700]),
                         border: InputBorder.none),
                     style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+                        color: Colors.indigo[700], fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
