@@ -13,24 +13,20 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-            actions: <Widget>[TitleApp()], backgroundColor: Colors.transparent),
-        body: Center(
+      appBar: AppBar(
+          actions: <Widget>[TitleApp()], backgroundColor: Colors.transparent),
+      body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              CamposLogin(),
-              Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+            CamposLogin(),
+            Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   BtnLoginGoogle(),
                   BtnLoginFacebook(),
                   BtnLogin(),
-                ],
-              )
-            ],
-          ),
-        ),
-      );
+                ])
+          ])));
 }

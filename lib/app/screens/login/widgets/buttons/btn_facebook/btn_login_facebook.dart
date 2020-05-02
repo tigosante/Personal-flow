@@ -9,13 +9,13 @@ class BtnLoginFacebook extends StatelessWidget {
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
     return Container(
-        child: RaisedButton.icon(
+        child: FlatButton.icon(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
             label: Icon(EvaIcons.facebook,
-                color: Colors.white, size: tamanhoTela * 0.04),
-            color: Colors.blue[900],
-            icon: Text("Facebook", style: TextStyle(color: Colors.white)),
+                color: Colors.blue, size: tamanhoTela * 0.04),
+            color: Colors.blue[900].withOpacity(0.1),
+            icon: Text("Facebook", style: TextStyle(color: Colors.blue)),
             onPressed: Modular.get<LoginController>().loginWithGoogle));
   }
 }

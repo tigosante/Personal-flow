@@ -10,16 +10,15 @@ class BtnLoginGoogle extends StatelessWidget {
   Widget build(BuildContext context) {
     double tamanhoTela = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.only(left: tamanhoTela * 0.05),
-      child: Container(
-          child: RaisedButton.icon(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
-              label: Icon(EvaIcons.google,
-                  color: Colors.white, size: tamanhoTela * 0.04),
-              color: Colors.red[900],
-              icon: Text("Google", style: TextStyle(color: Colors.white)),
-              onPressed: Modular.get<LoginController>().loginWithGoogle)),
-    );
+        padding: EdgeInsets.only(left: tamanhoTela * 0.05),
+        child: Container(
+            child: FlatButton.icon(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(tamanhoTela * 0.1)),
+                label: Icon(EvaIcons.google,
+                    color: Colors.red, size: tamanhoTela * 0.04),
+                color: Colors.red[900].withOpacity(0.1),
+                icon: Text("Google", style: TextStyle(color: Colors.red)),
+                onPressed: Modular.get<LoginController>().loginWithGoogle)));
   }
 }

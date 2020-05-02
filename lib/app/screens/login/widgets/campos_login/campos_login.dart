@@ -13,11 +13,10 @@ class CamposLogin extends StatelessWidget {
         EdgeInsets.only(left: tamanhoTela * 0.03, right: tamanhoTela * 0.03);
 
     return Container(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: paddingContainer,
-            child: Column(
+        child: Column(children: <Widget>[
+      Padding(
+          padding: paddingContainer,
+          child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
@@ -26,29 +25,25 @@ class CamposLogin extends StatelessWidget {
                         style: TextStyle(
                             fontSize: tamanhoTela * 0.04,
                             fontWeight: FontWeight.bold,
-                            color: Colors.purple[700]))),
+                            color: Colors.purple))),
                 Container(
-                  padding: paddingInput,
-                  decoration: BoxDecoration(
-                    // color: Colors.teal[700],
-                    border: Border.all(color: Colors.teal[700]),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: TextField(
-                    decoration: InputDecoration(
-                        suffixIcon: Icon(EvaIcons.checkmarkCircle,
-                            color: Colors.teal[700]),
-                        border: InputBorder.none),
-                    style: TextStyle(
-                        color: Colors.teal[700], fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: paddingContainer,
-            child: Column(
+                    padding: paddingInput,
+                    decoration: BoxDecoration(
+                      color: Colors.teal[700].withOpacity(0.1),
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(tamanhoTela * 0.05)),
+                    ),
+                    child: TextField(
+                        decoration: InputDecoration(
+                            suffixIcon: Icon(EvaIcons.checkmarkCircle,
+                                color: Colors.teal),
+                            border: InputBorder.none),
+                        style: TextStyle(
+                            color: Colors.teal, fontWeight: FontWeight.bold)))
+              ])),
+      Padding(
+          padding: paddingContainer,
+          child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
@@ -59,27 +54,20 @@ class CamposLogin extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: Colors.yellow[900]))),
                 Container(
-                  padding: paddingInput,
-                  decoration: BoxDecoration(
-                    // color: Colors.indigo[700],
-                    border: Border.all(color: Colors.indigo[700]),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        suffixIcon: Icon(EvaIcons.checkmarkCircle,
-                            color: Colors.indigo[700]),
-                        border: InputBorder.none),
-                    style: TextStyle(
-                        color: Colors.indigo[700], fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
+                    padding: paddingInput,
+                    decoration: BoxDecoration(
+                        color: Colors.indigo[700].withOpacity(0.1),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(tamanhoTela * 0.05))),
+                    child: TextField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            suffixIcon: Icon(EvaIcons.checkmarkCircle,
+                                color: Colors.indigo),
+                            border: InputBorder.none),
+                        style: TextStyle(
+                            color: Colors.indigo, fontWeight: FontWeight.bold)))
+              ]))
+    ]));
   }
 }
