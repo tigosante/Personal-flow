@@ -14,8 +14,10 @@ import 'package:personalflow/app/screens/splash/splash_page.dart';
 import 'package:personalflow/core/controller/login/auth_controller.dart';
 import 'package:personalflow/core/model/composta/composed_repository.dart';
 import 'package:personalflow/core/model/composta/composed_repository.interface.dart';
-import 'package:personalflow/core/model/login/login_repository.dart';
-import 'package:personalflow/core/model/login/login_repository_interface.dart';
+import 'package:personalflow/core/model/login/email/email_interface.dart';
+import 'package:personalflow/core/model/login/email/email_repository.dart';
+import 'package:personalflow/core/model/login/google/google_interface.dart';
+import 'package:personalflow/core/model/login/google/google_repository.dart';
 import 'package:personalflow/app/screens/home/pages/composta/composta_controller.dart';
 import 'package:personalflow/core/model/simples/simple_repository.dart';
 import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
@@ -36,7 +38,8 @@ class AppModule extends MainModule {
         Bind((i) => SimplesController(i.get())),
         Bind<ISimpleRepository>(
             (i) => TarefaSimplesRepository(Firestore.instance)),
-        Bind<ILoginRepository>((i) => LoginRepository()),
+        Bind<EmailInterface>((i) => LoginEmailRepository()),
+        Bind<GoogleInterface>((i) => LoginGoogleRepository()),
         Bind((i) => CompostaController(i.get())),
         Bind<IComposedRepository>(
             (i) => TarefaCompostaRepository(Firestore.instance)),

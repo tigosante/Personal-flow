@@ -19,6 +19,7 @@ class BtnLoginGoogle extends StatelessWidget {
                     color: Colors.red, size: tamanhoTela * 0.04),
                 color: Colors.red[900].withOpacity(0.1),
                 icon: Text("Google", style: TextStyle(color: Colors.red)),
-                onPressed: Modular.get<LoginController>().loginWithGoogle)));
+                onPressed: () =>
+                    Modular.get<LoginController>().loginWith("google"))));
   }
 }

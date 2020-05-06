@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:personalflow/core/controller/login/auth_controller.dart';
@@ -10,26 +11,48 @@ abstract class _LoginControllerBase with Store {
   AuthController authController = Modular.get();
 
   @observable
-  bool load = false;
+  TextEditingController controllerEmail = TextEditingController(text: "");
+
+  @observable
+  TextEditingController controllerSenhaEmail = TextEditingController(text: "");
 
   @action
-  Future loginWithGoogle() async {
+  Future<void> loginWith(String service) async {
     try {
-      load = true;
-      await authController.authWithGoogle();
-      Modular.to.pushReplacementNamed("/home");
+      switch (service) {
+        case "google":
+          await authController.authWithGoogle();
+          break;
+        default:
+          await authController.signInEmail(
+              controllerEmail.text.trim(), controllerSenhaEmail.text);
+      }
+      goToHomeScreen();
     } catch (e) {
-      load = false;
+      print(e);
+    }
+  }
+
+  @action
+  Future<void> loginWithEmil() async {
+    try {
+      await authController.authWithGoogle();
+      goToHomeScreen();
+    } catch (e) {
+      print(e);
     }
   }
 
   @action
   Future logOut() async {
     try {
-      await Modular.get<AuthController>().logOut();
-      Modular.to.pushReplacementNamed("/login");
+      await authController.logOut();
+      goToLoginScreen();
     } catch (e) {
-      //
+      print(e);
     }
   }
+
+  void goToHomeScreen() => Modular.to.pushReplacementNamed("/home");
+  void goToLoginScreen() => Modular.to.pushReplacementNamed("/login");
 }

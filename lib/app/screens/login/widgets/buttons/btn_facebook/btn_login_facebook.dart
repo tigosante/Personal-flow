@@ -16,6 +16,7 @@ class BtnLoginFacebook extends StatelessWidget {
                 color: Colors.blue, size: tamanhoTela * 0.04),
             color: Colors.blue[900].withOpacity(0.1),
             icon: Text("Facebook", style: TextStyle(color: Colors.blue)),
-            onPressed: Modular.get<LoginController>().loginWithGoogle));
+            onPressed: () =>
+                Modular.get<LoginController>().loginWith("facebook")));
   }
 }

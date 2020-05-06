@@ -9,28 +9,56 @@ part of 'login_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginController on _LoginControllerBase, Store {
-  final _$loadAtom = Atom(name: '_LoginControllerBase.load');
+  final _$controllerEmailAtom =
+      Atom(name: '_LoginControllerBase.controllerEmail');
 
   @override
-  bool get load {
-    _$loadAtom.context.enforceReadPolicy(_$loadAtom);
-    _$loadAtom.reportObserved();
-    return super.load;
+  TextEditingController get controllerEmail {
+    _$controllerEmailAtom.context.enforceReadPolicy(_$controllerEmailAtom);
+    _$controllerEmailAtom.reportObserved();
+    return super.controllerEmail;
   }
 
   @override
-  set load(bool value) {
-    _$loadAtom.context.conditionallyRunInAction(() {
-      super.load = value;
-      _$loadAtom.reportChanged();
-    }, _$loadAtom, name: '${_$loadAtom.name}_set');
+  set controllerEmail(TextEditingController value) {
+    _$controllerEmailAtom.context.conditionallyRunInAction(() {
+      super.controllerEmail = value;
+      _$controllerEmailAtom.reportChanged();
+    }, _$controllerEmailAtom, name: '${_$controllerEmailAtom.name}_set');
   }
 
-  final _$loginWithGoogleAsyncAction = AsyncAction('loginWithGoogle');
+  final _$controllerSenhaEmailAtom =
+      Atom(name: '_LoginControllerBase.controllerSenhaEmail');
 
   @override
-  Future<dynamic> loginWithGoogle() {
-    return _$loginWithGoogleAsyncAction.run(() => super.loginWithGoogle());
+  TextEditingController get controllerSenhaEmail {
+    _$controllerSenhaEmailAtom.context
+        .enforceReadPolicy(_$controllerSenhaEmailAtom);
+    _$controllerSenhaEmailAtom.reportObserved();
+    return super.controllerSenhaEmail;
+  }
+
+  @override
+  set controllerSenhaEmail(TextEditingController value) {
+    _$controllerSenhaEmailAtom.context.conditionallyRunInAction(() {
+      super.controllerSenhaEmail = value;
+      _$controllerSenhaEmailAtom.reportChanged();
+    }, _$controllerSenhaEmailAtom,
+        name: '${_$controllerSenhaEmailAtom.name}_set');
+  }
+
+  final _$loginWithAsyncAction = AsyncAction('loginWith');
+
+  @override
+  Future<void> loginWith(String service) {
+    return _$loginWithAsyncAction.run(() => super.loginWith(service));
+  }
+
+  final _$loginWithEmilAsyncAction = AsyncAction('loginWithEmil');
+
+  @override
+  Future<void> loginWithEmil() {
+    return _$loginWithEmilAsyncAction.run(() => super.loginWithEmil());
   }
 
   final _$logOutAsyncAction = AsyncAction('logOut');
@@ -42,7 +70,8 @@ mixin _$LoginController on _LoginControllerBase, Store {
 
   @override
   String toString() {
-    final string = 'load: ${load.toString()}';
+    final string =
+        'controllerEmail: ${controllerEmail.toString()},controllerSenhaEmail: ${controllerSenhaEmail.toString()}';
     return '{$string}';
   }
 }
