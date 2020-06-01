@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/app/screens/home/pages/simples/simples_controller.dart';
+import 'package:personalflow/app/page/home/pages/simples/simples_controller.dart';
 import 'package:personalflow/core/models/simples_model.dart';
 import 'package:personalflow/core/views/view_simples.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:personalflow/app/screens/home/home_module.dart';
+import 'package:personalflow/app/page/home/home_module.dart';
 
 // import 'package:personalflow/app/modules/home/home_controller.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:personalflow/app/componentes/card_tarefa/componentes/botoes.dart';
 import 'package:personalflow/app/componentes/data_hora/composta/data_hora.dart';
-import '../../../screens/home/pages/composta/composta_controller.dart';
+import '../../../page/home/pages/composta/composta_controller.dart';
 import 'componentes/barra_progresso.dart';
 import 'componentes/body.dart';
 

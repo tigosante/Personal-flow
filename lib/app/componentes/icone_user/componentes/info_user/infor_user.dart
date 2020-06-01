@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:personalflow/app/componentes/icone_user/componentes/info_user/photo_user.dart';
-import 'package:personalflow/app/screens/login/login_controller.dart';
+import 'package:personalflow/app/page/login/login_controller.dart';
 
 class InfoUser extends StatelessWidget {
   final controller = Modular.get<LoginController>();

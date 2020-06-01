@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:personalflow/app/componentes/data_hora/simples/data_hora.dart';
-import 'package:personalflow/app/screens/home/pages/simples/simples_controller.dart';
+import 'package:personalflow/app/page/home/pages/simples/simples_controller.dart';
 import 'package:personalflow/core/models/simples_model.dart';
 
 class TarefaSimples extends StatelessWidget {
