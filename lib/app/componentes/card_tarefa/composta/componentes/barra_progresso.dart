@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
-import 'package:personalflow/core/model/composta/model.dart';
+import 'package:personalflow/core/models/composta_model.dart';
 
 class BarraProgresso extends StatelessWidget {
   BarraProgresso({Key key, this.tamanhoTela, this.data, this.max})

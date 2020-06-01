@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:personalflow/core/model/login/google/google_interface.dart';
+import 'package:personalflow/core/interfaces/google_interface.dart';
 
 class LoginGoogleRepository implements GoogleInterface {
   final FirebaseAuth _auth = FirebaseAuth.instance;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personalflow/app/componentes/data_hora/composta/data_hora.dart';
-import 'package:personalflow/core/model/composta/model.dart';
+import 'package:personalflow/core/models/composta_model.dart';
 
 class SubtarefaWidget extends StatelessWidget {
   SubtarefaWidget({Key key, this.subtarefa}) : super(key: key);

@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:personalflow/core/model/login/email/email_interface.dart';
-import 'package:personalflow/core/model/login/email/email_repository.dart';
-import 'package:personalflow/core/model/login/google/google_interface.dart';
-import 'package:personalflow/core/model/login/google/google_repository.dart';
+import 'package:personalflow/core/interfaces/email_interface.dart';
+import 'package:personalflow/core/interfaces/google_interface.dart';
+import 'package:personalflow/core/repositorys/email_repository.dart';
+import 'package:personalflow/core/repositorys/google_repository.dart';
 
 part 'auth_controller.g.dart';
 

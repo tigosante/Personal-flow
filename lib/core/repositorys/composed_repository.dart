@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'composed_repository.interface.dart';
-import 'model.dart';
+import 'package:personalflow/core/interfaces/composed_repository.interface.dart';
+import 'package:personalflow/core/models/composta_model.dart';
 
 class TarefaCompostaRepository implements IComposedRepository {
   final Firestore firestore;

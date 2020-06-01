@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:personalflow/core/controller/login/auth_controller.dart';
+import 'package:personalflow/core/controllers/auth_controller.dart';
 
 class SplashPage extends StatefulWidget {
   @override

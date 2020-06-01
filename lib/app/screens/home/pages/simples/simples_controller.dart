@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
-import 'package:personalflow/core/model/simples/model.dart';
-import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
-import 'package:personalflow/core/view/view_simples.dart';
+import 'package:personalflow/core/interfaces/simple_repository.interface.dart';
+import 'package:personalflow/core/models/simples_model.dart';
+import 'package:personalflow/core/views/view_simples.dart';
 
 part 'simples_controller.g.dart';
 

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/core/model/modelDefault.dart';
-import 'package:personalflow/core/view/view_simples.dart';
-
-import '../../../nova_tarefa_controller.dart';
+import 'package:personalflow/app/screens/nova_tarefa/nova_tarefa_controller.dart';
+import 'package:personalflow/core/models/modelDefault.dart';
+import 'package:personalflow/core/views/view_simples.dart';
 
 class DataNovaTarefa extends StatelessWidget {
   final ctrl = Modular.get<NovaTarefaController>();

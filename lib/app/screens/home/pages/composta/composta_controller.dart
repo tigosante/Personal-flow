@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:personalflow/core/model/composta/composed_repository.interface.dart';
-import 'package:personalflow/core/model/composta/model.dart';
+import 'package:personalflow/core/interfaces/composed_repository.interface.dart';
+import 'package:personalflow/core/models/composta_model.dart';
 
 part 'composta_controller.g.dart';
 

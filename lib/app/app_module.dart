@@ -11,16 +11,16 @@ import 'package:personalflow/app/screens/login/login_module.dart';
 import 'package:personalflow/app/screens/nova_tarefa/nova_tarefa_controller.dart';
 import 'package:personalflow/app/screens/nova_tarefa/nova_tarefa_module.dart';
 import 'package:personalflow/app/screens/splash/splash_page.dart';
-import 'package:personalflow/core/controller/login/auth_controller.dart';
-import 'package:personalflow/core/model/composta/composed_repository.dart';
-import 'package:personalflow/core/model/composta/composed_repository.interface.dart';
-import 'package:personalflow/core/model/login/email/email_interface.dart';
-import 'package:personalflow/core/model/login/email/email_repository.dart';
-import 'package:personalflow/core/model/login/google/google_interface.dart';
-import 'package:personalflow/core/model/login/google/google_repository.dart';
 import 'package:personalflow/app/screens/home/pages/composta/composta_controller.dart';
-import 'package:personalflow/core/model/simples/simple_repository.dart';
-import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
+import 'package:personalflow/core/controllers/auth_controller.dart';
+import 'package:personalflow/core/interfaces/composed_repository.interface.dart';
+import 'package:personalflow/core/interfaces/email_interface.dart';
+import 'package:personalflow/core/interfaces/google_interface.dart';
+import 'package:personalflow/core/interfaces/simple_repository.interface.dart';
+import 'package:personalflow/core/repositorys/composed_repository.dart';
+import 'package:personalflow/core/repositorys/email_repository.dart';
+import 'package:personalflow/core/repositorys/google_repository.dart';
+import 'package:personalflow/core/repositorys/simple_repository.dart';
 
 import 'componentes/barra_pesquisa/barra_pesquisa_controller.dart';
 import 'componentes/icone_user/icone_user_controller.dart';
@@ -47,8 +47,8 @@ class AppModule extends MainModule {
 
   @override
   List<Router> get routers => [
-        Router("/", child: (_, args) => SplashPage()),
-        Router("/home", module: HomeModule()),
+        // Router("/", child: (_, args) => SplashPage()),
+        Router("/", module: HomeModule()),
         Router("/login", module: LoginModule()),
         Router("/adicionar_tarefa", module: NovaTarefaModule()),
       ];

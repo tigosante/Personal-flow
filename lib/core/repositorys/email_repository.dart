@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:personalflow/core/model/login/email/email_interface.dart';
+import 'package:personalflow/core/interfaces/email_interface.dart';
 
 class LoginEmailRepository implements EmailInterface {
   final FirebaseAuth _auth = FirebaseAuth.instance;

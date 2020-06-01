@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/core/model/composta/composed_repository.dart';
-import 'package:personalflow/core/model/composta/composed_repository.interface.dart';
+import 'package:personalflow/core/interfaces/composed_repository.interface.dart';
+import 'package:personalflow/core/repositorys/composed_repository.dart';
 
 import 'composta_controller.dart';
 import 'composta_page.dart';

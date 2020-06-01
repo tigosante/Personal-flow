@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:personalflow/core/model/modelDefault.dart';
+import 'package:personalflow/core/models/modelDefault.dart';
 
 const String collectionComposta = "tarefaComposta";
 

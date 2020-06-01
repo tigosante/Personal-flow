@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:personalflow/app/screens/login/login_controller.dart';
-import 'package:personalflow/core/controller/login/auth_controller.dart';
+import 'package:personalflow/core/controllers/auth_controller.dart';
 
 class PhotoUser extends StatefulWidget {
   @override
@@ -30,8 +30,8 @@ class _PhotoUserState extends State<PhotoUser> {
 
   @override
   void dispose() {
-    super.dispose();
     _disposer();
+    super.dispose();
   }
 
   @override

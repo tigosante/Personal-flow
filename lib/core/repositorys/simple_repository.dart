@@ -1,6 +1,6 @@
-import 'package:personalflow/core/model/simples/simple_repository.interface.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'model.dart';
+import 'package:personalflow/core/interfaces/simple_repository.interface.dart';
+import 'package:personalflow/core/models/simples_model.dart';
 
 class TarefaSimplesRepository implements ISimpleRepository {
   final Firestore firestore;

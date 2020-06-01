@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personalflow/core/model/composta/model.dart';
+import 'package:personalflow/core/models/composta_model.dart';
 
 import 'subtarefa.dart';
 
