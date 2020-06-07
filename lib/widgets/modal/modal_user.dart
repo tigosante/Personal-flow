@@ -10,7 +10,7 @@ class ModalUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-        InfoUser(),
+        // InfoUser(),
         Divider(),
         MudarTema(),
       ]);
