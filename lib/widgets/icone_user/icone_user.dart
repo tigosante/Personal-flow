@@ -20,6 +20,6 @@ class _IconUserState extends State<IconUser> {
                 topLeft: Radius.circular(tamanhoTela * 0.025),
                 topRight: Radius.circular(tamanhoTela * 0.025))),
         context: context,
-        builder: (_) => ModalUser(tamanhoTela: tamanhoTela));
+        builder: (_) => ModalUser());
   }
 }
