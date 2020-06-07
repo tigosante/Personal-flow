@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:personalflow/app/app_controller.dart';
+import 'package:personalflow/app/controllers/app_controller.dart';
 
 class ViewSimples {
   static ThemeData virificaTema() {
