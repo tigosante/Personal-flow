@@ -46,20 +46,19 @@ class NovaTarefaPage extends StatelessWidget {
                   currentIndex: controller.indexPage,
                   backgroundColor: Colors.transparent,
                   selectedItemColor: Colors.red,
-                  items: [
-                    {
-                      "title": "Composta",
-                      "icon": Icon(Icons.playlist_add_check)
-                    },
-                    {"title": "Simples", "icon": Icon(Icons.check)}
-                  ]
-                      .map((value) => BottomNavigationBarItem(
-                          icon: value["icon"],
-                          title: Text(value["title"],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: tamanhoTela * 0.0035))))
-                      .toList(),
+                  items: _getItems(tamanhoTela),
                 )));
   }
+
+  List<BottomNavigationBarItem> _getItems(double tamanhoTela) => [
+        {"title": "Composta", "icon": Icon(Icons.playlist_add_check)},
+        {"title": "Simples", "icon": Icon(Icons.check)}
+      ]
+          .map((value) => BottomNavigationBarItem(
+              icon: value["icon"],
+              title: Text(value["title"],
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: tamanhoTela * 0.0035))))
+          .toList();
 }

@@ -25,24 +25,23 @@ class ModelTarefaComposta {
     this.subtarefa,
   });
 
-  factory ModelTarefaComposta.fromDocument(DocumentSnapshot doc) {
-    return ModelTarefaComposta(
-        title: doc["title"],
-        check: doc["check"],
-        data: doc["data"],
-        hora: doc["hora"],
-        concluidas: doc["concluidas"],
-        reference: doc.reference,
-        subtarefa: Firestore.instance
-            .collection(collectionComposta)
-            .document(doc.documentID)
-            .collection("subtarefas")
-            .orderBy("posicao", descending: false)
-            .snapshots()
-            .map((QuerySnapshot query) => query.documents
-                .map((doc) => Subtarefa.fromDocument(doc))
-                .toList()));
-  }
+  factory ModelTarefaComposta.fromDocument(DocumentSnapshot doc) =>
+      ModelTarefaComposta(
+          title: doc["title"],
+          check: doc["check"],
+          data: doc["data"],
+          hora: doc["hora"],
+          concluidas: doc["concluidas"],
+          reference: doc.reference,
+          subtarefa: Firestore.instance
+              .collection(collectionComposta)
+              .document(doc.documentID)
+              .collection("subtarefas")
+              .orderBy("posicao", descending: false)
+              .snapshots()
+              .map((QuerySnapshot query) => query.documents
+                  .map((doc) => Subtarefa.fromDocument(doc))
+                  .toList()));
 
   Future delete() => reference.delete();
   void updateCheck() => reference.updateData({'check': !check});
@@ -87,13 +86,11 @@ class Subtarefa {
     this.hora,
   });
 
-  factory Subtarefa.fromDocument(DocumentSnapshot doc) {
-    return Subtarefa(
-      title: doc["title"],
-      check: doc["check"],
-      data: doc["data"],
-      hora: doc["hora"],
-      reference: doc.reference,
-    );
-  }
+  factory Subtarefa.fromDocument(DocumentSnapshot doc) => Subtarefa(
+        title: doc["title"],
+        check: doc["check"],
+        data: doc["data"],
+        hora: doc["hora"],
+        reference: doc.reference,
+      );
 }
