@@ -9,23 +9,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_sign_in:
-  firebase_auth:
-  flutter_launcher_icons:
-  flutter_slidable:
-  firebase_core:
-  cloud_firestore:
-  dio:
-  flutter_mobx:
-  mobx:
-  flutter_modular:
-  flutter_animation_progress_bar:
-  eva_icons_flutter:
+  http: ^0.12.2
 
 dev_dependencies:
-  mockito:
-  mobx_codegen:
-  build_runner:
   flutter_test:
     sdk: flutter
 
