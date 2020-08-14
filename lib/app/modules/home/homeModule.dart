@@ -1,4 +1,4 @@
-import 'HomeController.dart';
+import 'homeController.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'HomePage.dart';
 
