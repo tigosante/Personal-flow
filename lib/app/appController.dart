@@ -12,4 +12,5 @@ abstract class _AppControllerBase with Store {
   void increment() {
     value++;
   }
+  //
 }
