@@ -1,8 +1,8 @@
-import 'appController.dart';
+import 'AppController.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_flow/app/appWidget.dart';
-import 'package:personal_flow/app/modules/home/homeModule.dart';
+import 'package:personal_flow/app/AppWidget.dart';
+import 'package:personal_flow/app/modules/home/HomeModule.dart';
 
 class AppModule extends MainModule {
   @override

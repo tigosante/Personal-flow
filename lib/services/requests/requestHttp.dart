@@ -1,3 +1,3 @@
-import 'package:personal_flow/services/interfaces/requestInterface.dart';
+import 'package:personal_flow/services/interfaces/RequestInterface.dart';
 
 class RequestHttp implements RequestInterface {}

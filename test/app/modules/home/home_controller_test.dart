@@ -1,7 +1,7 @@
 import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:personal_flow/app/modules/home/homeController.dart';
-import 'package:personal_flow/app/modules/home/homeModule.dart';
+import 'package:personal_flow/app/modules/home/HomeController.dart';
+import 'package:personal_flow/app/modules/home/HomeModule.dart';
 
 void main() {
   initModule(HomeModule());

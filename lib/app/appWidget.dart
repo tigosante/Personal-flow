@@ -9,5 +9,6 @@ class AppWidget extends StatelessWidget {
         initialRoute: '/',
         navigatorKey: Modular.navigatorKey,
         onGenerateRoute: Modular.generateRoute,
+        debugShowCheckedModeBanner: false,
       );
 }
