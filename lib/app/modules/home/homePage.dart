@@ -11,9 +11,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
+  final TextEditingController _textEditingController = TextEditingController();
   @override
-  Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
-        body: Column(children: <Widget>[]),
-      );
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.title)),
+      body: Column(children: <Widget>[
+        Center(
+          child: TextFormField(controller: _textEditingController),
+        ),
+        RaisedButton(
+          child: Text("Criar"),
+          onPressed: () => controller.create(_textEditingController.text),
+        )
+      ]),
+    );
+  }
 }
