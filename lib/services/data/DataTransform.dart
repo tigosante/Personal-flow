@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:personal_flow/app/modules/home/interfaces/DataTransformInterface.dart';
+import 'package:personal_flow/services/interfaces/DataTransformInterface.dart';
 
 class DataTransform implements DataTransformInterface {
   @override

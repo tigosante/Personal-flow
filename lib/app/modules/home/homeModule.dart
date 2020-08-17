@@ -1,5 +1,5 @@
-import 'package:personal_flow/app/modules/home/data/DataTransform.dart';
-import 'package:personal_flow/app/modules/home/interfaces/DataTransformInterface.dart';
+import 'package:personal_flow/services/data/DataTransform.dart';
+import 'package:personal_flow/services/interfaces/DataTransformInterface.dart';
 import 'package:personal_flow/services/interfaces/RequestHttpInterface.dart';
 import 'package:personal_flow/services/requests/RequestHttp.dart';
 
