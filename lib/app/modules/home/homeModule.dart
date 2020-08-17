@@ -1,3 +1,5 @@
+import 'package:personal_flow/app/modules/home/data/DataTransform.dart';
+import 'package:personal_flow/app/modules/home/interfaces/DataTransformInterface.dart';
 import 'package:personal_flow/services/interfaces/RequestHttpInterface.dart';
 import 'package:personal_flow/services/requests/RequestHttp.dart';
 
@@ -10,6 +12,7 @@ class HomeModule extends ChildModule {
   List<Bind> get binds => [
         Bind((i) => HomeController()),
         Bind<RequestHttpInterface>((i) => RequestHttp()),
+        Bind<DataTransformInterface>((i) => DataTransform()),
       ];
 
   @override
