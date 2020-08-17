@@ -1,3 +1,3 @@
 class DataBaseUrl {
-  static const URL = "https://aplicativo-personal-flow-673d9.firebaseio.com/";
+  static const URL = "https://personal-flow-fb8bf.firebaseio.com/";
 }
