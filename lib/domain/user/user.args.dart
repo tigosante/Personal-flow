@@ -1,5 +1,17 @@
-class UserFindArgs {}
+class UserFindArgs {
+  UserFindArgs({
+    required this.id,
+  });
 
-class UserSaveArgs {}
+  final int id;
+}
 
-class UserUpdateArgs {}
+class UserUpdateArgs {
+  UserUpdateArgs({
+    required this.id,
+    required this.name,
+  });
+
+  final int id;
+  final String name;
+}

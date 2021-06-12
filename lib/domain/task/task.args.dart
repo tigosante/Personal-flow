@@ -1,3 +1,5 @@
+import 'package:personal_flow/domain/task/task.entity.dart';
+
 class TaskFindArgs {
   TaskFindArgs({
     required this.id,
@@ -26,6 +28,14 @@ class TaskSaveArgs {
   final int idUser;
   final String title;
   final String description;
+}
+
+class TaskSaveListArgs {
+  TaskSaveListArgs({
+    required this.tasks,
+  });
+
+  final List<TaskEntity> tasks;
 }
 
 class TaskUpdateArgs {

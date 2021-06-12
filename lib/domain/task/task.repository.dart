@@ -24,6 +24,11 @@ class TaskRepository implements TaskRepositoryInterface {
   }
 
   @override
+  Future<TaskEntity> saveList(TaskSaveListArgs args) async {
+    return {} as TaskEntity;
+  }
+
+  @override
   Future<TaskEntity> update(TaskUpdateArgs args) async {
     return {} as TaskEntity;
   }

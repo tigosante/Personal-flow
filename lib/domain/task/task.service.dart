@@ -1,10 +1,11 @@
 import 'package:personal_flow/domain/task/task.args.dart'
     show
-        TaskFindArgs,
+        TaskDeleteArgs,
         TaskFindAllArgs,
+        TaskFindArgs,
         TaskSaveArgs,
-        TaskUpdateArgs,
-        TaskDeleteArgs;
+        TaskSaveListArgs,
+        TaskUpdateArgs;
 import 'package:personal_flow/domain/task/task.entity.dart';
 import 'package:personal_flow/domain/task/task.repository.interface.dart';
 
@@ -22,6 +23,10 @@ class TaskService {
 
   Future<TaskEntity> save(TaskSaveArgs args) async {
     return await _repository.save(args);
+  }
+
+  Future<TaskEntity> saveList(TaskSaveListArgs args) async {
+    return await _repository.saveList(args);
   }
 
   Future<TaskEntity> update(TaskUpdateArgs args) async {
