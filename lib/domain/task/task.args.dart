@@ -1,9 +1,51 @@
-class TaskFindArgs {}
+class TaskFindArgs {
+  TaskFindArgs({
+    required this.id,
+  });
 
-class TaskFindAllArgs {}
+  final int id;
+}
 
-class TaskSaveArgs {}
+class TaskFindAllArgs {
+  TaskFindAllArgs({
+    required this.idUser,
+  });
 
-class TaskUpdateArgs {}
+  final int idUser;
+}
 
-class TaskDeleteArgs {}
+class TaskSaveArgs {
+  TaskSaveArgs({
+    required this.id,
+    required this.idUser,
+    required this.title,
+    required this.description,
+  });
+
+  final int id;
+  final int idUser;
+  final String title;
+  final String description;
+}
+
+class TaskUpdateArgs {
+  TaskUpdateArgs({
+    required this.id,
+    required this.title,
+    required this.description,
+  });
+
+  final int id;
+  final String title;
+  final String description;
+}
+
+class TaskDeleteArgs {
+  TaskDeleteArgs({
+    required this.id,
+    required this.idUser,
+  });
+
+  final int id;
+  final int idUser;
+}

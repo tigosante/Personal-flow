@@ -13,22 +13,22 @@ class TaskService {
   final TaskRepositoryInterface _repository;
 
   Future<TaskEntity> find(TaskFindArgs args) async {
-    return TaskEntity();
+    return await _repository.find(args);
   }
 
   Future<TaskEntity> findAll(TaskFindAllArgs args) async {
-    return TaskEntity();
+    return await _repository.findAll(args);
   }
 
   Future<TaskEntity> save(TaskSaveArgs args) async {
-    return TaskEntity();
+    return await _repository.save(args);
   }
 
   Future<TaskEntity> update(TaskUpdateArgs args) async {
-    return TaskEntity();
+    return await _repository.update(args);
   }
 
   Future<TaskEntity> delete(TaskDeleteArgs args) async {
-    return TaskEntity();
+    return await _repository.delete(args);
   }
 }
